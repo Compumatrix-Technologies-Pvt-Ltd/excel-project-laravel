@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,7 @@ use App\Http\Controllers\Admin\DashboardController;
 
 //Admin Routes
 
-Route::get('/', [HomeController::class, 'home']);
+Route::get('/', [HomeController::class, 'home'])->name('/');
 
 
 
@@ -53,7 +54,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     # Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-   
+    Route::resource('users', AdminUserController::class)->names('users');
+
 
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');
