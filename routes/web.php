@@ -37,6 +37,8 @@ use App\Http\Controllers\Admin\DashboardController;
 //Admin Routes
 
 Route::get('/', [HomeController::class, 'home'])->name('/');
+Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy.policy');
+Route::get('terms-conditions', [HomeController::class, 'termsConditions'])->name('terms.conditions');
 
 
 

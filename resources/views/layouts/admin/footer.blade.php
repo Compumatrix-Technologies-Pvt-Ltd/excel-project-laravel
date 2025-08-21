@@ -43,7 +43,7 @@
     </div>
 
     <!-- Theme Settings -->
-    <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-settings-offcanvas">
+  <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-settings-offcanvas">
         <div class="d-flex align-items-center bg-primary bg-gradient p-3 offcanvas-header">
             <h5 class="m-0 me-2 text-white">Theme Customizer</h5>
 
@@ -52,7 +52,225 @@
         <div class="offcanvas-body p-0">
             <div data-simplebar class="h-100">
                 <div class="p-4">
-                  
+                    <h6 class="mb-0 fw-semibold text-uppercase">Layout</h6>
+                    <p class="text-muted">Choose your layout</p>
+
+                    <div class="row gy-3">
+                        <div class="col-4">
+                            <div class="form-check card-radio">
+                                <input id="customizer-layout01" name="data-layout" type="radio" value="vertical" class="form-check-input">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="customizer-layout01">
+                                    <span class="d-flex gap-1 h-100">
+                                        <span class="flex-shrink-0">
+                                            <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                            </span>
+                                        </span>
+                                        <span class="flex-grow-1">
+                                            <span class="d-flex h-100 flex-column">
+                                                <span class="bg-light d-block p-1"></span>
+                                                <span class="bg-light d-block p-1 mt-auto"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">Vertical</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check card-radio">
+                                <input id="customizer-layout02" name="data-layout" type="radio" value="horizontal" class="form-check-input">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="customizer-layout02">
+                                    <span class="d-flex h-100 flex-column gap-1">
+                                        <span class="bg-light d-flex p-1 gap-1 align-items-center">
+                                            <span class="d-block p-1 bg-primary-subtle rounded me-1"></span>
+                                            <span class="d-block p-1 pb-0 px-2 bg-primary-subtle ms-auto"></span>
+                                            <span class="d-block p-1 pb-0 px-2 bg-primary-subtle"></span>
+                                        </span>
+                                        <span class="bg-light d-block p-1"></span>
+                                        <span class="bg-light d-block p-1 mt-auto"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">Horizontal</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check card-radio">
+                                <input id="customizer-layout03" name="data-layout" type="radio" value="twocolumn" class="form-check-input">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="customizer-layout03">
+                                    <span class="d-flex gap-1 h-100">
+                                        <span class="flex-shrink-0">
+                                            <span class="bg-light d-flex h-100 flex-column gap-1">
+                                                <span class="d-block p-1 bg-primary-subtle mb-2"></span>
+                                                <span class="d-block p-1 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 pb-0 bg-primary-subtle"></span>
+                                            </span>
+                                        </span>
+                                        <span class="flex-shrink-0">
+                                            <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                            </span>
+                                        </span>
+                                        <span class="flex-grow-1">
+                                            <span class="d-flex h-100 flex-column">
+                                                <span class="bg-light d-block p-1"></span>
+                                                <span class="bg-light d-block p-1 mt-auto"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">Two Column</h5>
+                        </div>
+                        <!-- end col -->
+
+                        <div class="col-4">
+                            <div class="form-check card-radio">
+                                <input id="customizer-layout04" name="data-layout" type="radio" value="semibox" class="form-check-input">
+                                <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="customizer-layout04">
+                                    <span class="d-flex gap-1 h-100">
+                                        <span class="flex-shrink-0 p-1">
+                                            <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                            </span>
+                                        </span>
+                                        <span class="flex-grow-1">
+                                            <span class="d-flex h-100 flex-column pt-1 pe-2">
+                                                <span class="bg-light d-block p-1"></span>
+                                                <span class="bg-light d-block p-1 mt-auto"></span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center mt-2">Semi Box</h5>
+                        </div>
+                        <!-- end col -->
+                    </div>
+
+                    <div class="form-check form-switch form-switch-md mb-3 mt-4">
+                        <input type="checkbox" class="form-check-input" id="sidebarUserProfile">
+                        <label class="form-check-label" for="sidebarUserProfile">Sidebar User Profile Avatar</label>
+                    </div>
+
+                    <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Theme</h6>
+                    <p class="text-muted">Choose your suitable Theme.</p>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme01" name="data-theme" type="radio" value="default" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme01">
+                                    <img src="{{asset('/assets/admin/images/demo/default.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Default</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme02" name="data-theme" type="radio" value="saas" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme02">
+                                    <img src="{{asset('/assets/admin/images/demo/saas.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Sass</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme03" name="data-theme" type="radio" value="corporate" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme03">
+                                    <img src="{{asset('/assets/admin/images/demo/corporate.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Corporate</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme04" name="data-theme" type="radio" value="galaxy" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme04">
+                                    <img src="{{asset('/assets/admin/images/demo/galaxy.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Galaxy</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme05" name="data-theme" type="radio" value="material" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme05">
+                                    <img src="{{asset('/assets/admin/images/demo/material.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Material</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme06" name="data-theme" type="radio" value="creative" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme06">
+                                    <img src="{{asset('/assets/admin/images/demo/creative.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Creative</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme07" name="data-theme" type="radio" value="minimal" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme07">
+                                    <img src="{{asset('/assets/admin/images/demo/minimal.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Minimal</h5>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme08" name="data-theme" type="radio" value="modern" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme08">
+                                    <img src="{{asset('/assets/admin/images/demo/modern.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Modern</h5>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme09" name="data-theme" type="radio" value="interactive" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme09">
+                                    <img src="{{asset('/assets/admin/images/demo/interactive.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Interactive</h5>
+                        </div><!-- end col -->
+
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme10" name="data-theme" type="radio" value="classic" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme10">
+                                    <img src="{{asset('/assets/admin/images/demo/classic.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Classic</h5>
+                        </div><!-- end col -->
+
+                        <div class="col-6">
+                            <div class="form-check card-radio">
+                                <input id="customizer-theme11" name="data-theme" type="radio" value="vintage" class="form-check-input">
+                                <label class="form-check-label p-0" for="customizer-theme11">
+                                    <img src="{{asset('/assets/admin/images/demo/vintage.png')}}" alt="" class="img-fluid">
+                                </label>
+                            </div>
+                            <h5 class="fs-13 text-center fw-medium mt-2">Vintage</h5>
+                        </div><!-- end col -->
+                    </div>
+
                     <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Color Scheme</h6>
                     <p class="text-muted">Choose Light or Dark Scheme.</p>
 
@@ -158,8 +376,74 @@
                         </div>
                     </div>
 
-                    
-                   
+                    <div id="layout-width">
+                        <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Layout Width</h6>
+                        <p class="text-muted">Choose Fluid or Boxed layout.</p>
+
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-check card-radio">
+                                    <input class="form-check-input" type="radio" name="data-layout-width" id="layout-width-fluid" value="fluid">
+                                    <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="layout-width-fluid">
+                                        <span class="d-flex gap-1 h-100">
+                                            <span class="flex-shrink-0">
+                                                <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                    <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="flex-grow-1">
+                                                <span class="d-flex h-100 flex-column">
+                                                    <span class="bg-light d-block p-1"></span>
+                                                    <span class="bg-light d-block p-1 mt-auto"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Fluid</h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check card-radio">
+                                    <input class="form-check-input" type="radio" name="data-layout-width" id="layout-width-boxed" value="boxed">
+                                    <label class="form-check-label p-0 avatar-md w-100 px-2 material-shadow" for="layout-width-boxed">
+                                        <span class="d-flex gap-1 h-100 border-start border-end">
+                                            <span class="flex-shrink-0">
+                                                <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                    <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="flex-grow-1">
+                                                <span class="d-flex h-100 flex-column">
+                                                    <span class="bg-light d-block p-1"></span>
+                                                    <span class="bg-light d-block p-1 mt-auto"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Boxed</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="layout-position">
+                        <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Layout Position</h6>
+                        <p class="text-muted">Choose Fixed or Scrollable Layout Position.</p>
+
+                        <div class="btn-group radio" role="group">
+                            <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-fixed" value="fixed">
+                            <label class="btn btn-light w-sm" for="layout-position-fixed">Fixed</label>
+
+                            <input type="radio" class="btn-check" name="data-layout-position" id="layout-position-scrollable" value="scrollable">
+                            <label class="btn btn-light w-sm ms-0" for="layout-position-scrollable">Scrollable</label>
+                        </div>
+                    </div>
                     <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Topbar Color</h6>
                     <p class="text-muted">Choose Light or Dark Topbar Color.</p>
 
@@ -502,26 +786,26 @@
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-01" value="img-1">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-01">
-                                    <img src="{{ asset('/assets/admin/images/sidebar/img-1.jpg') }}" alt="" class="avatar-md w-auto object-fit-cover">
+                                    <img src="assets/images/sidebar/img-1.jpg" alt="" class="avatar-md w-auto object-fit-cover">
                                 </label>
                             </div>	
 
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-02" value="img-2">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-02">
-                                    <img src="{{ asset('/assets/admin/images/sidebar/img-2.jpg') }}" alt="" class="avatar-md w-auto object-fit-cover">
+                                    <img src="assets/images/sidebar/img-2.jpg" alt="" class="avatar-md w-auto object-fit-cover">
                                 </label>
                             </div>
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-03" value="img-3">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-03">
-                                    <img src="{{ asset('/assets/admin/images/sidebar/img-3.jpg') }}" alt="" class="avatar-md w-auto object-fit-cover">
+                                    <img src="assets/images/sidebar/img-3.jpg" alt="" class="avatar-md w-auto object-fit-cover">
                                 </label>
                             </div>
                             <div class="form-check sidebar-setting card-radio">
                                 <input class="form-check-input" type="radio" name="data-sidebar-image" id="sidebarimg-04" value="img-4">
                                 <label class="form-check-label p-0 avatar-sm h-auto" for="sidebarimg-04">
-                                    <img src="{{ asset('/assets/admin/images/sidebar/img-4.jpg') }}" alt="" class="avatar-md w-auto object-fit-cover">
+                                    <img src="assets/images/sidebar/img-4.jpg" alt="" class="avatar-md w-auto object-fit-cover">
                                 </label>
                             </div>
                         </div>
@@ -551,7 +835,69 @@
                         </div>
                     </div>
 
-                
+                    <div id="preloader-menu">
+                        <h6 class="mt-4 mb-0 fw-semibold text-uppercase">Preloader</h6>
+                        <p class="text-muted">Choose a preloader.</p>
+                    
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="form-check sidebar-setting card-radio">
+                                    <input class="form-check-input" type="radio" name="data-preloader" id="preloader-view-custom" value="enable">
+                                    <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="preloader-view-custom">
+                                        <span class="d-flex gap-1 h-100">
+                                            <span class="flex-shrink-0">
+                                                <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                    <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="flex-grow-1">
+                                                <span class="d-flex h-100 flex-column">
+                                                    <span class="bg-light d-block p-1"></span>
+                                                    <span class="bg-light d-block p-1 mt-auto"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                        <!-- <div id="preloader"> -->
+                                        <div id="status" class="d-flex align-items-center justify-content-center">
+                                            <div class="spinner-border text-primary avatar-xxs m-auto" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                        <!-- </div> -->
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Enable</h5>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-check sidebar-setting card-radio">
+                                    <input class="form-check-input" type="radio" name="data-preloader" id="preloader-view-none" value="disable">
+                                    <label class="form-check-label p-0 avatar-md w-100 material-shadow" for="preloader-view-none">
+                                        <span class="d-flex gap-1 h-100">
+                                            <span class="flex-shrink-0">
+                                                <span class="bg-light d-flex h-100 flex-column gap-1 p-1">
+                                                    <span class="d-block p-1 px-2 bg-primary-subtle rounded mb-2"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                    <span class="d-block p-1 px-2 pb-0 bg-primary-subtle"></span>
+                                                </span>
+                                            </span>
+                                            <span class="flex-grow-1">
+                                                <span class="d-flex h-100 flex-column">
+                                                    <span class="bg-light d-block p-1"></span>
+                                                    <span class="bg-light d-block p-1 mt-auto"></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <h5 class="fs-13 text-center mt-2">Disable</h5>
+                            </div>
+                        </div>
+                    
+                    </div>
                     <!-- end preloader-menu -->
 
                     <div id="body-img" style="display: none;">
@@ -621,7 +967,16 @@
             </div>
 
         </div>
-       
+        <div class="offcanvas-footer border-top p-3 text-center">
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-light w-100" id="reset-layout">Reset</button>
+                </div>
+                <div class="col-6">
+                    <a href="https://1.envato.market/velzon-admin" target="_blank" class="btn btn-primary w-100">Buy Now</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 

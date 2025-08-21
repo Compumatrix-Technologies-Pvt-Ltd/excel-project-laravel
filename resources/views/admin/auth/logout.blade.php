@@ -16,7 +16,7 @@
                                         <div class="bg-overlay"></div>
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
-                                                <a href="index-2.html" class="d-block">
+                                                <a href="{{route('/')}}" class="d-block">
                                                     <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="" height="100">
                                                 </a>
                                             </div>
