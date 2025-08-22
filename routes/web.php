@@ -67,6 +67,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('suppliers/create', [AdminUserController::class,'suppliersCreate'])->name('suppliers.create');
     Route::get('suppliers/edit', [AdminUserController::class,'suppliersedit'])->name('suppliers.edit');
     Route::get('transactions', [AdminUserController::class,'transactionIndex'])->name('transactions.index');
+    Route::get('banks', [AdminUserController::class,'bankIndex'])->name('banks.index');
+    Route::get('deductions', [AdminUserController::class,'deductionIndex'])->name('deductions.index');
 
 
     #Update Profile

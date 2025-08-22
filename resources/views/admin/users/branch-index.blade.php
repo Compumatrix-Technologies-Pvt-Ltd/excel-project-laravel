@@ -64,7 +64,8 @@
                                                     <textarea class="form-control" id="addressInput" rows="3"></textarea>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="branchPersonInput" class="form-label"></label>
+                                                    <label for="branchPersonInput" class="form-label">Branch Contact
+                                                        Person</label>
                                                     <input type="text" class="form-control" id="branchPersonInput">
                                                 </div>
                                                 <div class="col-md-6">
