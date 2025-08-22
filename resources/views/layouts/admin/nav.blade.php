@@ -7,7 +7,7 @@
                 <img src="{{ asset('/assets/admin/images/logo-sm.png') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" alt="" height="17">
+                <img src="{{ asset('/assets/admin/images/old/logo-dark.png') }}" alt="" height="17">
             </span>
         </a>
         <!-- Light Logo-->
@@ -17,7 +17,7 @@
                     style="border-radius: 10px;">
             </span>
             <span class="logo-lg" style="color: white;font-size: 17px;">
-                <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="" height="100">
+                <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" alt="" height="17">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -58,11 +58,11 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link menu-link {{ request()->is('admin/user-noticeboard') ? 'active' : '' }}" href="">
                         <i class="mdi mdi-bell-ring-outline"></i> <span data-key="t-widgets">Noticeboard</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ (request()->is('admin/users', 'admin/users/*')) ? ' collapsed active' : ''  }}"

@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Landing | Velzon - Admin & Dashboard Template</title>
+    <title>Landing | Excel Project</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -25,8 +25,8 @@
         <nav class="navbar navbar-expand-lg navbar-landing navbar-light fixed-top" id="navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{route('/')}}">
-                    <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="17">
-                    <img src="{{ asset('/assets/admin/images/new-logo.png') }}" class="card-logo card-logo-light" alt="logo light" height="17">
+                    <img src="{{ asset('/assets/admin/images/old/logo-dark.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="17">
+                    <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" class="card-logo card-logo-light" alt="logo light" height="17">
                 </a>
                 <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="mdi mdi-menu"></i>
@@ -101,11 +101,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="text-muted">
-                            <div class="avatar-sm icon-effect mb-4">
-                                <div class="avatar-title bg-transparent rounded-circle text-success h1">
-                                    <i class="ri-collage-line fs-36"></i>
-                                </div>
-                            </div>
+                            
                             <h3 class="mb-3 fs-20">Huge collection of widgets</h3>
                             <p class="mb-4 fs-16">Vc Majumas Sdn. Bhd. is a company based in Malaysia, with its head office in Sandakan. The enterprise operates in the Farm Product Raw Material Merchant Wholesalers industry. The company was established on March 18, 2013. Its total assets decreased by 24.65% over the same period. The net profit margin of Vc Majumas Sdn. Bhd. decreased by 0.62% in 2023.</p>
                              <div class="row text-center gy-4">
@@ -154,7 +150,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/wallet.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/supplier.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Supplier Management</h5>
                                 <p class="text-muted fs-14">Licensing (MPOB/MSPO), banking details, subsidy rates, land size, and contact info.</p>
                             </div>
@@ -172,7 +168,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/add.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/Credit.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Credit & Cash Purchases</h5>
                                 <p class="text-muted fs-14">Price/MT, incentives, subsidies, debit/credit balances, and net pay.</p>
                             </div>
@@ -181,7 +177,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/sell.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/deductions.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Deductions</h5>
                                 <p class="text-muted fs-14">Transport, advances, and others—applied with remarks and approval controls.</p>
                             </div>
@@ -192,7 +188,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/wallet.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/documents.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Documents & Exports</h5>
                                 <p class="text-muted fs-14">Supplier invoices, cash bills, payment vouchers, deduction lists, credit/cash summaries, and “Via Bank” files.</p>
                             </div>
@@ -201,7 +197,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/money.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/analytics.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Analytics</h5>
                                 <p class="text-muted fs-14">Credit vs cash comparisons, supplier summaries, branch period dashboards.</p>
                             </div>
@@ -210,7 +206,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/add.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/security.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Security</h5>
                                 <p class="text-muted fs-14">Tenant isolation, role-based access (Super Admin, HQ, Branch), activity logs.</p>
                             </div>
@@ -694,7 +690,7 @@
                     <div class="col-lg-4">
                         <div>
                             <div>
-                                <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="logo light" height="17">
+                                <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" alt="logo light" height="17">
                             </div>
                             <div class="mt-4 fs-13">
                                 <p>Premium Multipurpose Admin & Dashboard Template</p>

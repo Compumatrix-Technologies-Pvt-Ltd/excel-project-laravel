@@ -27,9 +27,9 @@
         <nav class="navbar navbar-expand-lg navbar-landing navbar-light fixed-top" id="navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{route('/')}}">
-                    <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" class="card-logo card-logo-dark"
+                    <img src="{{ asset('/assets/admin/images/old/logo-dark.png') }}" class="card-logo card-logo-dark"
                         alt="logo dark" height="17">
-                    <img src="{{ asset('/assets/admin/images/new-logo.png') }}" class="card-logo card-logo-light"
+                    <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" class="card-logo card-logo-light"
                         alt="logo light" height="17 ">
                 </a>
                 <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse"
@@ -220,7 +220,7 @@
                     <div class="col-lg-4">
                         <div>
                             <div>
-                                <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="logo light" height="17">
+                                <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" alt="logo light" height="17">
                             </div>
                             <div class="mt-4 fs-13">
                                 <p>Premium Multipurpose Admin & Dashboard Template</p>

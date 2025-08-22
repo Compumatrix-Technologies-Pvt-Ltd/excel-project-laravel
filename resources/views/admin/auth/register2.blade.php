@@ -17,7 +17,7 @@
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
                                                 <a href="{{route('/')}}" class="d-block">
-                                                    <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="" height="100">
+                                                    <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" alt="" height="17">
                                                 </a>
                                             </div>
                                             <div class="mt-auto">
@@ -57,8 +57,8 @@
                                 <div class="card-body">
                                     <form action="#" class="form-steps" autocomplete="off">
                                         <div class="text-center pt-3 pb-4 mb-1 d-flex justify-content-center">
-                                            <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="50">
-                                            <img src="{{ asset('/assets/admin/images/new-logo.png') }}" class="card-logo card-logo-light" alt="logo light" height="17">
+                                            <img src="{{ asset('/assets/admin/images/old/logo-dark.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="17">
+                                            <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" class="card-logo card-logo-light" alt="logo light" height="17">
                                         </div>
                                         <div class="step-arrow-nav mb-4">
 

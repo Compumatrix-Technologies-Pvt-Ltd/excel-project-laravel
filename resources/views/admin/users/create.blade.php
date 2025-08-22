@@ -3,6 +3,7 @@
     {{ $moduleAction }}
 @endsection
 @section('toolbar')
+    
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
@@ -19,9 +20,6 @@
     </div>
 @endsection
 @section('content')
-
-
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -32,7 +30,7 @@
                     <div class="container-fluid">
                         <div class="row gy-4">
                             <form action="javascript:void(0);" class="row g-3">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="fullnameInput" class="form-label">Name<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="fullnameInput">
                                 </div>
