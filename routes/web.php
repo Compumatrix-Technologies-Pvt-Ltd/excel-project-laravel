@@ -44,6 +44,7 @@ Route::get('terms-conditions', [HomeController::class, 'termsConditions'])->name
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
 Route::get('/register', [LoginController::class, 'register'])->name('register')->middleware('guest');
+Route::get('/register2', [LoginController::class, 'register2'])->name('register2')->middleware('guest');
 Route::get('/email-verification', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
 Route::get('/verification-success', [LoginController::class, 'verificationSuccess'])->name('verification.success')->middleware('guest');
 
