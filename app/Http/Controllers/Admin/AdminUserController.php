@@ -105,5 +105,14 @@ class AdminUserController extends Controller
         return view('admin.daily-transactions.index', $this->ViewData);
     }
 
-
+    public function bankIndex(){
+         $this->ModuleTitle = __('Bank Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.banks.index', $this->ViewData);
+    }
+    public function deductionIndex(){
+         $this->ModuleTitle = __('Deduction Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.banks.deduction-index', $this->ViewData);
+    }
 }

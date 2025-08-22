@@ -81,7 +81,8 @@
                                     data-key="t-horizontal">Create Users</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.users.index') }}" class="nav-link {{ (request()->is('admin/users')) ? 'active' : ''  }}"
+                                <a href="{{ route('admin.users.index') }}"
+                                    class="nav-link {{ (request()->is('admin/users')) ? 'active' : ''  }}"
                                     data-key="t-horizontal">Manage Users</a>
                             </li>
                             <!-- <li class="nav-item">
@@ -95,11 +96,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}" href="{{ route('admin.branches.index') }}">
+                    <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
+                        href="{{ route('admin.branches.index') }}">
                         <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Branch Management</span>
                     </a>
                 </li>
-               
+
                 <li class="nav-item">
                     <a class="nav-link menu-link {{ (request()->is('admin/suppliers', 'admin/suppliers/*')) ? ' collapsed active' : ''  }}"
                         href="#SupplierManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
@@ -126,11 +128,11 @@
                         </ul>
                     </div>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link menu-link {{ (request()->is('admin/transactions', 'admin/transactions/*')) ? ' collapsed active' : ''  }}"
                         href="#TransactionManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="TransactionManagement">
-                       <i class="mdi mdi-bank-transfer"></i>
+                        <i class="mdi mdi-cash-multiple"></i>
                         <span data-key="t-base-ui">Transactions</span>
 
                     </a>
@@ -145,6 +147,18 @@
 
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
+                        href="{{ route('admin.banks.index') }}">
+                        <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Bank Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
+                        href="{{ route('admin.deductions.index') }}">
+                        <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Deductions</span>
+                    </a>
                 </li>
 
             </ul>
