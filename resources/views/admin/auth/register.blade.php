@@ -49,11 +49,10 @@
                                     </div>
                                 </div>
                                 <!-- end col -->
-
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4">
                                         <div>
-                                            <h5 class="text-primary">Welcome Back !</h5>
+                                            <h5 class="text-primary">Register Account</h5>
                                             <p class="text-muted"> 
                                                 @if(session()->has('error') && !empty(session('error')))
                                                     <div class="alert alert-danger">{{ session('error') }}</div>
@@ -62,28 +61,40 @@
                                         </div>
 
                                         <div class="mt-4">
-                                             <form action="{{ route('admin.checkLogin') }}" id="kt_sign_in_form" novalidate="novalidate">
-                                                {{ csrf_field() }}
+                                             <form action="{{ route('email.verification') }}" id="kt_sign_in_form" novalidate="novalidate" method="get">
+                                               
+                                                <div class="mb-3 form-group">
+                                                    <label for="username" class="form-label">Name <span class="text-danger">*</span></label>
+                                                       <input type="text" class="form-control" id="name" name="name"
+                                                        placeholder="Enter Name" data-error="Please enter name."
+                                                        >
+                                                        <span class="help-block with-errors err_email" style="color:red;"></span>
+                                                </div>
                                                 <div class="mb-3 form-group">
                                                     <label for="username" class="form-label">Email <span class="text-danger">*</span></label>
                                                        <input type="text" class="form-control" id="email" name="email"
                                                         placeholder="Enter Email" data-error="Please enter email."
                                                         pattern='([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}'
                                                         data-pattern-error="Email format is invalid." autocomplete="off"
-                                                        required>
+                                                        >
                                                         <span class="help-block with-errors err_email" style="color:red;"></span>
                                                 </div>
-
+                                                 <div class="mb-3 form-group">
+                                                    <label for="username" class="form-label">Mobile Number <span class="text-danger">*</span></label>
+                                                       <input type="text" class="form-control" id="mobile" name="mobile"
+                                                        placeholder="Enter Mobile Number" data-error="Please enter mobile number."
+                                                        pattern='^[0-9]{10}$'
+                                                        data-pattern-error="Mobile number format is invalid." autocomplete="off"
+                                                        >
+                                                        <span class="help-block with-errors err_mobile" style="color:red;"></span>
+                                                </div>
                                                 <div class="mb-3 form-group">
-                                                    <div class="float-end">
-                                                        <a href="{{ route('admin.auth.password.reset') }}" class="text-muted">Forgot password?</a>
-                                                    </div>
                                                     <label class="form-label" for="password-input">Password <span class="text-danger">*</span></label>
                                                     <div class="position-relative auth-pass-inputgroup mb-3">
                                                         <input type="password" class="form-control pe-5 password-input"
                                                             placeholder="Enter password" name="password" id="password-input"
                                                             autocomplete="off" class="form-control bg-transparent"
-                                                            data-error="Please enter password." required>
+                                                            data-error="Please enter password." >
                                                         <button
                                                             class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon material-shadow-none"
                                                             type="button" id="password-addon"><i
@@ -91,21 +102,30 @@
                                                         <span class="help-block with-errors err_password" style="color:red;">
                                                     </div>
                                                 </div>
-
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                                    <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                                                <div class="mb-3 form-group">
+                                                    <label class="form-label" for="password-input">Confirm Password <span class="text-danger">*</span></label>
+                                                    <div class="position-relative auth-pass-inputgroup mb-3">
+                                                        <input type="password" class="form-control pe-5 password-input"
+                                                            placeholder="Enter password" name="password_confirmation" id="password-confirmation-input"
+                                                            autocomplete="off" class="form-control bg-transparent"
+                                                            data-error="Please enter confirm password." >
+                                                        <button
+                                                            class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon material-shadow-none"
+                                                            type="button" id="password-addon"><i
+                                                                class="ri-eye-fill align-middle"></i></button>
+                                                        <span class="help-block with-errors err_password" style="color:red;">
+                                                    </div>
                                                 </div>
-
                                                 <div class="mt-4">
-                                                    <button class="btn btn-success w-100" type="submit">Sign In</button>
+                                                    {{-- <button class="btn btn-success w-100" type="submit">Sign Up</button> --}}
+                                                    <a href="{{ route('email.verification') }}" class="btn btn-success w-100">Send Verification Email</a>
                                                 </div>
 
                                                 
                                             </form>
                                         </div>
                                         <div class="mt-5 text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="{{route('register')}}" class="fw-semibold text-primary text-decoration-underline"> Signup</a> </p>
+                                            <p class="mb-0">Already have an account ? <a href="{{route('admin.login')}}" class="fw-semibold text-primary text-decoration-underline"> Signin</a> </p>
                                         </div>
                                     </div>
                                 </div>

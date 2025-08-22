@@ -28,9 +28,9 @@
             <div class="container">
                 <a class="navbar-brand" href="{{route('/')}}">
                     <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" class="card-logo card-logo-dark"
-                        alt="logo dark" height="100">
+                        alt="logo dark" height="17">
                     <img src="{{ asset('/assets/admin/images/new-logo.png') }}" class="card-logo card-logo-light"
-                        alt="logo light" height="100">
+                        alt="logo light" height="17 ">
                 </a>
                 <button class="navbar-toggler py-0 fs-20 text-body" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -217,22 +217,21 @@
         <footer class="custom-footer bg-dark py-5 position-relative">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-4 mt-4">
+                    <div class="col-lg-4">
                         <div>
                             <div>
-                                <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="logo light" height="40">
+                                <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="logo light" height="17">
                             </div>
                             <div class="mt-4 fs-13">
                                 <p>Premium Multipurpose Admin & Dashboard Template</p>
-                                <p class="ff-secondary">You can build any type of web application like eCommerce, CRM, CMS, Project management apps, Admin Panels, etc using Velzon.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-7 ms-lg-auto">
                         <div class="row">
-                            <div class="col-sm-4 mt-4">
-                                <h5 class="text-white mb-0">Company</h5>
+                            <div class="col-sm-4">
+                                <h5 class="text-white mb-0">Pages</h5>
                                 <div class="text-muted mt-3">
                                     <ul class="list-unstyled ff-secondary footer-list">
                                         <li><a href="{{route('privacy.policy')}}">Privacy Policy</a></li>
@@ -240,18 +239,28 @@
                                     </ul>
                                 </div>
                             </div>
-                        
+                        <!-- Add this column to occupy the empty space -->
+                            <div class="col-sm-8 mt-4 justify-content-sm-end">
+                                <div class="store-badges scale-85 d-flex gap-3 ">
+                                    <a href="https://apps.apple.com/app/idXXXXXXXXX" class="store-btn store-apple" aria-label="Download on the App Store">
+                                    <span class="store-icon"><i class="ri-apple-fill"></i></span>
+                                    <span class="store-text">App Store</span>
+                                    </a>
+                                    <a href="https://play.google.com/store/apps/details?id=com.yourapp" class="store-btn store-google" aria-label="Get it on Google Play">
+                                    <span class="store-icon"><i class="ri-android-fill"></i></span>
+                                    <span class="store-text">Play Store</span>
+                                    </a>
+                                </div>
+                        </div>
+
                         </div>
                     </div>
-
                 </div>
-
-                <div class="row text-center text-sm-start align-items-center mt-5">
+                <div class="row text-center text-sm-start align-items-center">
                     <div class="col-sm-6">
-
                         <div>
                             <p class="copy-rights mb-0">
-                                <script> document.write(new Date().getFullYear()) </script> © Velzon - Themesbrand
+                                <script> document.write(new Date().getFullYear()) </script>Compumatrix Technologies Pvt Ltd
                             </p>
                         </div>
                     </div>
