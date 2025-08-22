@@ -95,7 +95,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}" href="">
+                    <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}" href="{{ route('admin.branches.index') }}">
                         <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Branch Management</span>
                     </a>
                 </li>
@@ -114,13 +114,13 @@
                         id="SupplierManagement">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href=""
-                                    class="nav-link {{ (request()->is('admin/suppliers', 'admin/create-suppliers', 'admin/suppliers/*')) ? 'active' : ''  }}"
+                                <a href="{{ route('admin.suppliers.create') }}"
+                                    class="nav-link {{ (request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers/*')) ? 'active' : ''  }}"
                                     data-key="t-horizontal">Create Suppliers</a>
                             </li>
                             <li class="nav-item">
-                                <a href=""
-                                    class="nav-link {{ (request()->is('admin/manage-suppliers')) ? 'active' : ''  }}"
+                                <a href="{{ route('admin.suppliers.index') }}"
+                                    class="nav-link {{ (request()->is('admin/suppliers')) ? 'active' : ''  }}"
                                     data-key="t-horizontal">Manage Suppliers</a>
                             </li>
                         </ul>
@@ -131,22 +131,18 @@
                         href="#TransactionManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="TransactionManagement">
                        <i class="mdi mdi-bank-transfer"></i>
-                        <span data-key="t-base-ui">Daily Transactions</span>
+                        <span data-key="t-base-ui">Transactions</span>
 
                     </a>
                     <div class="collapse menu-dropdown {{ (request()->is('admin/transactions', 'admin/transactions/*')) ? 'show' : ''  }}"
                         id="TransactionManagement">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href=""
+                                <a href="{{ route('admin.transactions.index') }}"
                                     class="nav-link {{ (request()->is('admin/transactions', 'admin/create-transactions', 'admin/transactions/*')) ? 'active' : ''  }}"
-                                    data-key="t-horizontal">Create Transactions</a>
+                                    data-key="t-horizontal">Daily Transactions</a>
                             </li>
-                            <li class="nav-item">
-                                <a href=""
-                                    class="nav-link {{ (request()->is('admin/manage-transactions')) ? 'active' : ''  }}"
-                                    data-key="t-horizontal">Manage Transactions</a>
-                            </li>
+
                         </ul>
                     </div>
                 </li>

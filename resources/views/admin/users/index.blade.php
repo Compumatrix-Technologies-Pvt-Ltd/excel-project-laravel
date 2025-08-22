@@ -46,7 +46,6 @@
                                         <th>Role</th>
                                         <th>Branch</th>
                                         <th>Status</th>
-                                        <th>MFA</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -63,7 +62,6 @@
                                         <td>HQ</td>
                                         <td>Branch 1</td>
                                         <td><span class="badge bg-success">Active</span></td>
-                                        <td><span class="badge bg-primary">Enabled</span></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -71,12 +69,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
+
+                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
                                                     <li>
                                                         <a class="dropdown-item remove-item-btn">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
@@ -99,7 +98,6 @@
                                         <td>Branch User</td>
                                         <td>Branch 2</td>
                                         <td><span class="badge bg-warning">Inactive</span></td>
-                                        <td><span class="badge bg-primary">Disabled</span></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -107,12 +105,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
+
+                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
                                                     <li>
                                                         <a class="dropdown-item remove-item-btn">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
@@ -135,7 +134,6 @@
                                         <td>Auditor</td>
                                         <td>Branch 3</td>
                                         <td><span class="badge bg-success">Active</span></td>
-                                        <td><span class="badge bg-primary">Enabled</span></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -143,12 +141,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
+
+                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
                                                     <li>
                                                         <a class="dropdown-item remove-item-btn">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
@@ -171,7 +170,6 @@
                                         <td>HQ</td>
                                         <td>Branch 2</td>
                                         <td><span class="badge bg-danger">Locked</span></td>
-                                        <td><span class="badge bg-primary">Enabled</span></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -179,12 +177,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
+
+                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
                                                     <li>
                                                         <a class="dropdown-item remove-item-btn">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
@@ -207,7 +206,6 @@
                                         <td>Branch User</td>
                                         <td>Branch 1</td>
                                         <td><span class="badge bg-success">Active</span></td>
-                                        <td><span class="badge bg-secondary">Disabled</span></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -215,12 +213,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
+
+                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
                                                     <li>
                                                         <a class="dropdown-item remove-item-btn">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
@@ -243,7 +242,6 @@
                                         <td>Auditor</td>
                                         <td>Branch 3</td>
                                         <td><span class="badge bg-warning">Inactive</span></td>
-                                        <td><span class="badge bg-primary">Enabled</span></td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -251,12 +249,13 @@
                                                     <i class="ri-more-fill align-middle"></i>
                                                 </button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a href="#!" class="dropdown-item"><i
-                                                                class="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                            View</a></li>
-                                                    <li><a class="dropdown-item edit-item-btn"><i
-                                                                class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit</a></li>
+
+                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
                                                     <li>
                                                         <a class="dropdown-item remove-item-btn">
                                                             <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
@@ -271,6 +270,89 @@
                             </table>
 
                         </div><!--end row-->
+
+                        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="editUerModalLabel"
+                            aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editUerModalLabel">Edit User</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="row gy-4">
+                                            <form action="javascript:void(0);" class="row g-3">
+                                                <div class="col-md-12">
+                                                    <label for="fullnameInput" class="form-label">Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="fullnameInput" value="Rajesh Kumar">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputEmail4" class="form-label">Email<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="email" class="form-control" id="inputEmail4" value="rajesh.kumar@example.com">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="phoneNumberInput" class="form-label">Phone Number</label>
+                                                    <input type="tel" class="form-control" id="phoneNumberInput" value="+91 9876543210">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputRole" class="form-label">Roles<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="inputRole" class="form-select">
+                                                        <option selected>HQ</option>
+                                                        <option>HQ</option>
+                                                        <option>Branch User</option>
+                                                        <option>Auditor </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputBranch" class="form-label">Assign Branch<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="inputBranch" class="form-select">
+                                                        <option selected>Branch 1</option>
+                                                        <option>Branch 1</option>
+                                                        <option>Branch 2</option>
+                                                        <option>Branch 3</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <label for="status" class="form-label d-block">Status</label>
+                                                    <div class="d-flex gap-3">
+                                                        <div class="form-check form-check-inline form-radio-success">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="statusActive" value="active" checked>
+                                                            <label class="form-check-label"
+                                                                for="statusActive">Active</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline form-radio-warning">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="statusInactive" value="inactive">
+                                                            <label class="form-check-label"
+                                                                for="statusInactive">Inactive</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline form-radio-danger">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="statusLocked" value="locked">
+                                                            <label class="form-check-label"
+                                                                for="statusLocked">Locked</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-success ">Save Changes</button>
+                                    </div>
+                                    </form>
+
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
                     </div>
 
                 </div>
