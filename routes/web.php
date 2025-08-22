@@ -57,6 +57,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('users', AdminUserController::class)->names('users');
+    Route::get('branches', [AdminUserController::class,'branchIndex'])->name('branches.index');
+    Route::get('suppliers', [AdminUserController::class,'suppliersIndex'])->name('suppliers.index');
+    Route::get('suppliers/create', [AdminUserController::class,'suppliersCreate'])->name('suppliers.create');
+    Route::get('suppliers/edit', [AdminUserController::class,'suppliersedit'])->name('suppliers.edit');
+    Route::get('transactions', [AdminUserController::class,'transactionIndex'])->name('transactions.index');
 
 
     #Update Profile

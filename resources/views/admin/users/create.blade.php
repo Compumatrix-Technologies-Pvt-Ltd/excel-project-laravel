@@ -34,16 +34,15 @@
                             <form action="javascript:void(0);" class="row g-3">
                                 <div class="col-md-12">
                                     <label for="fullnameInput" class="form-label">Name<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="fullnameInput"
-                                        placeholder="Enter your name">
+                                    <input type="text" class="form-control" id="fullnameInput">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputEmail4" class="form-label">Email<span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                    <input type="email" class="form-control" id="inputEmail4">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="phoneNumberInput" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phoneNumberInput" placeholder="Phone Number">
+                                    <input type="tel" class="form-control" id="phoneNumberInput">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="inputRole" class="form-label">Roles<span class="text-danger">*</span></label>
@@ -84,17 +83,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <label for="mpfEnabled" class="form-label d-block">MFA</label>
-                                    <div class="d-flex gap-3">
-                                        <div class="form-check form-switch form-switch-secondary">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="mpfEnabled"
-                                                checked>
-                                            <label class="form-check-label" for="mpfEnabled">Enabled</label>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="col-12">
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-success">Submit</button>

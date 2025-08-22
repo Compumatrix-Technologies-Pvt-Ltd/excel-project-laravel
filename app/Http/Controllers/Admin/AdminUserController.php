@@ -75,4 +75,35 @@ class AdminUserController extends Controller
     {
         //
     }
+
+    public function branchIndex(){
+         $this->ModuleTitle = __('Branch Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view($this->ModuleView . 'branch-index', $this->ViewData);
+    }
+
+    public function suppliersIndex(){
+         $this->ModuleTitle = __('Suppliers Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.suppliers.index', $this->ViewData);
+    }
+
+    public function suppliersCreate(){
+         $this->ModuleTitle = __('Create Supplier');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.suppliers.create', $this->ViewData);
+    }
+    public function suppliersedit(){
+         $this->ModuleTitle = __('Edit Supplier');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.suppliers.edit', $this->ViewData);
+    }
+    
+    public function transactionIndex(){
+         $this->ModuleTitle = __('Transactions');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.daily-transactions.index', $this->ViewData);
+    }
+
+
 }
