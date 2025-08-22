@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,12 @@ Route::get('terms-conditions', [HomeController::class, 'termsConditions'])->name
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
+Route::get('/register', [LoginController::class, 'register'])->name('register')->middleware('guest');
+Route::get('/register2', [LoginController::class, 'register2'])->name('register2')->middleware('guest');
+Route::get('/email-verification', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
+Route::get('/verification-success', [LoginController::class, 'verificationSuccess'])->name('verification.success')->middleware('guest');
+
+
 Route::post('admin/checkLogin', [LoginController::class, 'checkLogin'])->name('admin.checkLogin');
 Route::post('/admin/password/email', [ForgotPasswordController::class, 'forgotPasswordSubmit'])->name('admin.auth.password.submit');
 Route::get('/admin/password/reset', [ForgotPasswordController::class, 'show'])->name('admin.auth.password.reset')->middleware('guest');
@@ -55,7 +62,15 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     # Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-   
+    Route::resource('users', AdminUserController::class)->names('users');
+    Route::get('branches', [AdminUserController::class,'branchIndex'])->name('branches.index');
+    Route::get('suppliers', [AdminUserController::class,'suppliersIndex'])->name('suppliers.index');
+    Route::get('suppliers/create', [AdminUserController::class,'suppliersCreate'])->name('suppliers.create');
+    Route::get('suppliers/edit', [AdminUserController::class,'suppliersedit'])->name('suppliers.edit');
+    Route::get('transactions', [AdminUserController::class,'transactionIndex'])->name('transactions.index');
+    Route::get('banks', [AdminUserController::class,'bankIndex'])->name('banks.index');
+    Route::get('deductions', [AdminUserController::class,'deductionIndex'])->name('deductions.index');
+
 
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');

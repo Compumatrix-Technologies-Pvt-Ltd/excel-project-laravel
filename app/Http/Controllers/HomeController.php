@@ -19,6 +19,7 @@ class HomeController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle; 
         return view($this->ModuleView . 'home', $this->ViewData);
     }
+   
     public function privacyPolicy()
     {
         $this->ModuleTitle              = __('Privacy Policy');

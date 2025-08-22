@@ -13,7 +13,7 @@
                                 <img src="{{asset('/assets/admin/images/logo-sm.png')}}" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{asset('/assets/admin/images/logo-dark.png')}}" alt="" height="17">
+                                <img src="{{asset('/assets/admin/images/old/logo-dark.png')}}" alt="" height="17">
                             </span>
                         </a>
 
@@ -22,7 +22,7 @@
                                 <img src="{{asset('/assets/admin/images/logo-sm.png')}}" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="{{asset('/assets/admin/images/logo-light.png')}}" alt="" height="17">
+                                <img src="{{asset('/assets/admin/images/old/logo-light.png')}}" alt="" height="17">
                             </span>
                         </a>
                     </div>

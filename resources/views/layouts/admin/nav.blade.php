@@ -7,7 +7,7 @@
                 <img src="{{ asset('/assets/admin/images/logo-sm.png') }}" alt="" height="22">
             </span>
             <span class="logo-lg">
-                <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" alt="" height="17">
+                <img src="{{ asset('/assets/admin/images/old/logo-dark.png') }}" alt="" height="17">
             </span>
         </a>
         <!-- Light Logo-->
@@ -17,7 +17,7 @@
                     style="border-radius: 10px;">
             </span>
             <span class="logo-lg" style="color: white;font-size: 17px;">
-                <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="" height="100">
+                <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" alt="" height="17">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -58,12 +58,109 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
-                <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->is('admin/user-noticeboard') ? 'active' : '' }}"
-                        href="">
+                {{-- <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/user-noticeboard') ? 'active' : '' }}" href="">
                         <i class="mdi mdi-bell-ring-outline"></i> <span data-key="t-widgets">Noticeboard</span>
                     </a>
-                </li> 
+                </li> --}}
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ (request()->is('admin/users', 'admin/users/*')) ? ' collapsed active' : ''  }}"
+                        href="#UserManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="UserManagement">
+                        <i class="mdi mdi-account-group"></i> <span data-key="t-base-ui">User
+                            Management</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown {{ (request()->is('admin/users', 'admin/users/*')) ? 'show' : ''  }}"
+                        id="UserManagement">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.create') }}"
+                                    class="nav-link {{ (request()->is('admin/users', 'admin/users/create', 'admin/users/*')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Create Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.users.index') }}"
+                                    class="nav-link {{ (request()->is('admin/users')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Manage Users</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a href=""
+                                    class="nav-link {{ (request()->is('admin/assign-branches')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Branch Assignment</a>
+                            </li> -->
+
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
+                        href="{{ route('admin.branches.index') }}">
+                        <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Branch Management</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ (request()->is('admin/suppliers', 'admin/suppliers/*')) ? ' collapsed active' : ''  }}"
+                        href="#SupplierManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="SupplierManagement">
+                        <i class="mdi mdi-store"></i>
+
+                        <span data-key="t-base-ui">Supplier
+                            Management</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown {{ (request()->is('admin/suppliers', 'admin/suppliers/*')) ? 'show' : ''  }}"
+                        id="SupplierManagement">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.suppliers.create') }}"
+                                    class="nav-link {{ (request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers/*')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Create Suppliers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.suppliers.index') }}"
+                                    class="nav-link {{ (request()->is('admin/suppliers')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Manage Suppliers</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ (request()->is('admin/transactions', 'admin/transactions/*')) ? ' collapsed active' : ''  }}"
+                        href="#TransactionManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="TransactionManagement">
+                        <i class="mdi mdi-cash-multiple"></i>
+                        <span data-key="t-base-ui">Transactions</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown {{ (request()->is('admin/transactions', 'admin/transactions/*')) ? 'show' : ''  }}"
+                        id="TransactionManagement">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.transactions.index') }}"
+                                    class="nav-link {{ (request()->is('admin/transactions', 'admin/create-transactions', 'admin/transactions/*')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Daily Transactions</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
+                        href="{{ route('admin.banks.index') }}">
+                        <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Bank Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
+                        href="{{ route('admin.deductions.index') }}">
+                        <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Deductions</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

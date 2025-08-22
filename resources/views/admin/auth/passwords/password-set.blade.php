@@ -17,7 +17,7 @@
                                         <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
                                                 <a href="{{route('/')}}" class="d-block">
-                                                    <img src="{{ asset('/assets/admin/images/new-logo.png') }}" alt="Logo" height="100">
+                                                    <img src="{{ asset('/assets/admin/images/old/logo-light.png') }}" alt="Logo" height="17">
                                                 </a>
                                             </div>
                                             <div class="mt-auto">

@@ -21,11 +21,36 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        $this->ModuleTitle              = __('Sign Up');
+        $this->ModuleTitle              = __('Sign In');
         $this->ViewData['moduleAction'] = $this->ModuleTitle; 
         return view($this->ModuleView . 'login', $this->ViewData);
 
     }
+    public function register()
+    {
+        $this->ModuleTitle              = __('Sing Up');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle; 
+        return view($this->ModuleView . 'register', $this->ViewData);
+    }
+    public function register2()
+    {
+        $this->ModuleTitle              = __('Sing Up');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle; 
+        return view($this->ModuleView . 'register2', $this->ViewData);
+    }
+    public function emailVerification()
+    {
+        $this->ModuleTitle              = __('Email Verification');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle; 
+        return view($this->ModuleView . 'email-verification', $this->ViewData);
+    }
+    public function verificationSuccess()
+    {
+        $this->ModuleTitle              = __('Verification Success');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle; 
+        return view($this->ModuleView . 'verification-success', $this->ViewData);
+    }
+
     // Login check function
     public function checkLogin(LoginRequest $request)
     {
