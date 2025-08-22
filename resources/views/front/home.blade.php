@@ -168,7 +168,7 @@
                     <div class="col-lg-3">
                         <div class="card shadow-none">
                             <div class="card-body">
-                                <img src="{{ asset('/assets/admin/images/nft/credit.png') }}" alt="" class="avatar-sm">
+                                <img src="{{ asset('/assets/admin/images/nft/Credit.png') }}" alt="" class="avatar-sm">
                                 <h5 class="mt-4">Credit & Cash Purchases</h5>
                                 <p class="text-muted fs-14">Price/MT, incentives, subsidies, debit/credit balances, and net pay.</p>
                             </div>

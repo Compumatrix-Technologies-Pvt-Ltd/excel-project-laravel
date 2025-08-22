@@ -2,7 +2,7 @@
     {{ $moduleAction }}
 @endsection
 @include('layouts.admin.header')
-<div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
+      <div class="auth-page-wrapper auth-bg-cover py-5 d-flex justify-content-center align-items-center min-vh-100">
         <div class="bg-overlay"></div>
         <!-- auth-page content -->
         <div class="auth-page-content overflow-hidden pt-lg-5">
@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card overflow-hidden">
-                            <div class="row justify-content-center g-0">
+                            <div class="row g-0">
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4 auth-one-bg h-100">
                                         <div class="bg-overlay"></div>
@@ -49,17 +49,18 @@
                                     </div>
                                 </div>
                                 <!-- end col -->
-
-                                <div class="col-lg-6">
+                              <div class="col-lg-6">
                                     <div class="p-lg-5 p-4 text-center">
-                                        <lord-icon src="https://cdn.lordicon.com/hzomhqxz.json" trigger="loop" colors="primary:#405189,secondary:#08a88a" style="width:180px;height:180px">
-                                        </lord-icon>
-
+                                        <div class="avatar-lg mx-auto mt-2">
+                                            <div class="avatar-title bg-light text-success display-3 rounded-circle">
+                                                <i class="ri-checkbox-circle-fill"></i>
+                                            </div>
+                                        </div>
                                         <div class="mt-4 pt-2">
-                                            <h5>You are Logged Out</h5>
-                                            <p class="text-muted">Thank you for using <span class="fw-semibold">{{ config('constants.FOOTER_COPYRIGHT') }}</span> admin template</p>
+                                            <h4>Well done !</h4>
+                                            <p class="text-muted mx-4">Aww yeah, you successfully read this important message.</p>
                                             <div class="mt-4">
-                                                <a href="{{ route('admin.login') }}" class="btn btn-success w-100">Sign In</a>
+                                                <a href="{{route('admin.login')}}" class="btn btn-success w-100">Back to Dashboard</a>
                                             </div>
                                         </div>
                                     </div>
@@ -80,12 +81,12 @@
         <!-- end auth page content -->
 
         <!-- footer -->
-       <footer class="footer">
+        <footer class="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center">
-                            <p class="mb-0 text-muted">{{ config('constants.FOOTER_COPYRIGHT') }}
+                            <p class="mb-0">{{ config('constants.FOOTER_COPYRIGHT') }}
                             </p>
                         </div>
                     </div>
@@ -94,5 +95,9 @@
         </footer>
         <!-- end Footer -->
     </div>
-
-@include('layouts.admin.js-files')
+    
+    @section('login-script')
+        <script src="{{ asset('/assets/admin//js/pages/password-addon.init.js') }}"></script>
+        <script src="{{ asset('/assets/admin/js/auth/login.js') }}"></script>
+    @endsection
+    @include('layouts.admin.js-files')
