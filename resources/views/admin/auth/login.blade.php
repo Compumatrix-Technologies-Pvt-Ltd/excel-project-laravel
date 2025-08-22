@@ -108,7 +108,7 @@
                                             <p class="mb-0">Don't have an account ? <a href="{{route('register')}}" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
                                         </div>
                                          <div class="mt-5 text-center">
-                                            <p class="mb-0">Don't have an account ? <a href="{{route('register')}}" class="fw-semibold text-primary text-decoration-underline"> Signup ( Steper )</a> </p>
+                                            <p class="mb-0">Don't have an account ? <a href="{{route('register2')}}" class="fw-semibold text-primary text-decoration-underline"> Signup ( Steper )</a> </p>
                                         </div>
                                     </div>
                                 </div>

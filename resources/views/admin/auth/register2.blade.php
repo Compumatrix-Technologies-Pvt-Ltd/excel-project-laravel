@@ -49,86 +49,143 @@
                                     </div>
                                 </div>
                                 <!-- end col -->
-                                <div class="col-lg-6">
-                                    <div class="p-lg-5 p-4">
-                                        <div>
-                                            <h5 class="text-primary">Register Account</h5>
-                                            <p class="text-muted"> 
-                                                @if(session()->has('error') && !empty(session('error')))
-                                                    <div class="alert alert-danger">{{ session('error') }}</div>
-                                                @endif
-                                            </p>
+                                 <div class="col-xl-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Create Account</h4>
+                                </div><!-- end card header -->
+                                <div class="card-body">
+                                    <form action="#" class="form-steps" autocomplete="off">
+                                        <div class="text-center pt-3 pb-4 mb-1 d-flex justify-content-center">
+                                            <img src="{{ asset('/assets/admin/images/logo-dark.png') }}" class="card-logo card-logo-dark" alt="logo dark" height="50">
+                                            <img src="{{ asset('/assets/admin/images/new-logo.png') }}" class="card-logo card-logo-light" alt="logo light" height="17">
+                                        </div>
+                                        <div class="step-arrow-nav mb-4">
+
+                                            <ul class="nav nav-pills custom-nav nav-justified" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link done" id="steparrow-gen-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-gen-info" type="button" role="tab" aria-controls="steparrow-gen-info" aria-selected="true">User Info</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="steparrow-description-info-tab" data-bs-toggle="pill" data-bs-target="#steparrow-description-info" type="button" role="tab" aria-controls="steparrow-description-info" aria-selected="false">Company Profile</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-experience-tab" data-bs-toggle="pill" data-bs-target="#pills-experience" type="button" role="tab" aria-controls="pills-experience" aria-selected="false">Finish</button>
+                                                </li>
+                                            </ul>
                                         </div>
 
-                                        <div class="mt-4">
-                                             <form action="{{ route('email.verification') }}" id="kt_sign_in_form" novalidate="novalidate" method="get">
-                                               
-                                                <div class="mb-3 form-group">
-                                                    <label for="username" class="form-label">Name <span class="text-danger">*</span></label>
-                                                       <input type="text" class="form-control" id="name" name="name"
-                                                        placeholder="Enter Name" data-error="Please enter name."
-                                                        >
-                                                        <span class="help-block with-errors err_email" style="color:red;"></span>
-                                                </div>
-                                                <div class="mb-3 form-group">
-                                                    <label for="username" class="form-label">Email <span class="text-danger">*</span></label>
-                                                       <input type="text" class="form-control" id="email" name="email"
-                                                        placeholder="Enter Email" data-error="Please enter email."
-                                                        pattern='([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}'
-                                                        data-pattern-error="Email format is invalid." autocomplete="off"
-                                                        >
-                                                        <span class="help-block with-errors err_email" style="color:red;"></span>
-                                                </div>
-                                                 <div class="mb-3 form-group">
-                                                    <label for="username" class="form-label">Mobile Number <span class="text-danger">*</span></label>
-                                                       <input type="text" class="form-control" id="mobile" name="mobile"
-                                                        placeholder="Enter Mobile Number" data-error="Please enter mobile number."
-                                                        pattern='^[0-9]{10}$'
-                                                        data-pattern-error="Mobile number format is invalid." autocomplete="off"
-                                                        >
-                                                        <span class="help-block with-errors err_mobile" style="color:red;"></span>
-                                                </div>
-                                                <div class="mb-3 form-group">
-                                                    <label class="form-label" for="password-input">Password <span class="text-danger">*</span></label>
-                                                    <div class="position-relative auth-pass-inputgroup mb-3">
-                                                        <input type="password" class="form-control pe-5 password-input"
-                                                            placeholder="Enter password" name="password" id="password-input"
-                                                            autocomplete="off" class="form-control bg-transparent"
-                                                            data-error="Please enter password." >
-                                                        <button
-                                                            class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon material-shadow-none"
-                                                            type="button" id="password-addon"><i
-                                                                class="ri-eye-fill align-middle"></i></button>
-                                                        <span class="help-block with-errors err_password" style="color:red;">
+                                        <div class="tab-content">
+                                            <div class="tab-pane fade" id="steparrow-gen-info" role="tabpanel" aria-labelledby="steparrow-gen-info-tab">
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="steparrow-gen-info-username-input">User Name</label>
+                                                                <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Enter user name" required >
+                                                                <div class="invalid-feedback">Please enter a user name</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label" for="steparrow-gen-info-email-input">Email</label>
+                                                                <input type="email" class="form-control" id="steparrow-gen-info-email-input" placeholder="Enter email" required >
+                                                                <div class="invalid-feedback">Please enter an email address</div>
+                                                            </div>
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="steparrow-gen-info-password-input">Password</label>
+                                                        <input type="password" class="form-control" id="steparrow-gen-info-password-input" placeholder="Enter password" required >
+                                                        <div class="invalid-feedback">Please enter a password</div>
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-label" for="steparrow-gen-info-confirm-password-input">Confirm Password</label>
+                                                        <input type="password" class="form-control" id="steparrow-gen-info-confirm-password-input" placeholder="Enter confirm password" required >
+                                                        <div class="invalid-feedback">Please enter a confirm password</div>
                                                     </div>
                                                 </div>
-                                                <div class="mb-3 form-group">
-                                                    <label class="form-label" for="password-input">Confirm Password <span class="text-danger">*</span></label>
-                                                    <div class="position-relative auth-pass-inputgroup mb-3">
-                                                        <input type="password" class="form-control pe-5 password-input"
-                                                            placeholder="Enter password" name="password_confirmation" id="password-confirmation-input"
-                                                            autocomplete="off" class="form-control bg-transparent"
-                                                            data-error="Please enter confirm password." >
-                                                        <button
-                                                            class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon material-shadow-none"
-                                                            type="button" id="password-addon"><i
-                                                                class="ri-eye-fill align-middle"></i></button>
-                                                        <span class="help-block with-errors err_password" style="color:red;">
-                                                    </div>
+                                                <div class="d-flex align-items-start gap-3 mt-4">
+                                                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="steparrow-description-info-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Go to more info</button>
                                                 </div>
-                                                <div class="mt-4">
-                                                    {{-- <button class="btn btn-success w-100" type="submit">Sign Up</button> --}}
-                                                    <a href="{{ route('email.verification') }}" class="btn btn-success w-100">Send Verification Email</a>
-                                                </div>
+                                            </div>
+                                            <!-- end tab pane -->
 
-                                                
-                                            </form>
+                                            <div class="tab-pane fade show active" id="steparrow-description-info" role="tabpanel" aria-labelledby="steparrow-description-info-tab">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="steparrow-gen-info-username-input">Company Name</label>
+                                                            <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Enter company name" required >
+                                                            <div class="invalid-feedback">Please enter a company name</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="steparrow-gen-info-email-input">	Registration No</label>
+                                                            <input type="text" class="form-control" id="steparrow-gen-info-email-input" placeholder="Enter registration no" required >
+                                                            <div class="invalid-feedback">Please enter a registration no</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="steparrow-gen-info-username-input">	Registered Address</label>
+                                                            <input type="text" class="form-control" id="steparrow-gen-info-username-input" placeholder="Enter registered address" required >
+                                                            <div class="invalid-feedback">Please enter a registered address</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="form-label" for="steparrow-gen-info-email-input">	•	Tax ID </label>
+                                                            <input type="text" class="form-control" id="steparrow-gen-info-email-input" placeholder="Enter tax ID" required >
+                                                            <div class="invalid-feedback">Please enter a tax ID</div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div>
+                                                    <div class="mb-3">
+                                                        <label for="formFile" class="form-label">Logo</label>
+                                                        <input class="form-control" type="file" id="formFile" />
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-label" for="des-info-description-input">Description</label>
+                                                        <textarea class="form-control" placeholder="Enter Description" id="des-info-description-input" rows="3" required></textarea>
+                                                        <div class="invalid-feedback">Please enter a description</div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex align-items-start gap-3 mt-4">
+                                                    <button type="button" class="btn btn-light btn-label previestab" data-previous="steparrow-gen-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i> Back to General</button>
+                                                    <button type="button" class="btn btn-success btn-label right ms-auto nexttab nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>Submit</button>
+                                                </div>
+                                            </div>
+                                            <!-- end tab pane -->
+
+                                            <div class="tab-pane fade" id="pills-experience" role="tabpanel">
+                                                <div class="text-center">
+
+                                                    <div class="avatar-md mt-5 mb-4 mx-auto">
+                                                        <div class="avatar-title bg-light text-success display-4 rounded-circle">
+                                                            <i class="ri-checkbox-circle-fill"></i>
+                                                        </div>
+                                                    </div>
+                                                    <h5>Well Done !</h5>
+                                                    <p class="text-muted">You have Successfully Signed Up</p>
+                                                </div>
+                                            </div>
+                                            <!-- end tab pane -->
                                         </div>
-                                        <div class="mt-5 text-center">
-                                            <p class="mb-0">Already have an account ? <a href="{{route('admin.login')}}" class="fw-semibold text-primary text-decoration-underline"> Signin</a> </p>
-                                        </div>
-                                    </div>
+                                        <!-- end tab content -->
+                                    </form>
                                 </div>
+                                <!-- end card body -->
+                            </div>
+                            <!-- end card -->
+                        </div>
                                 <!-- end col -->
                             </div>
                             <!-- end row -->

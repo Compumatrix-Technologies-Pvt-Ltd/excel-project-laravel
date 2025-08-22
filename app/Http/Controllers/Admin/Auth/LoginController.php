@@ -32,6 +32,12 @@ class LoginController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle; 
         return view($this->ModuleView . 'register', $this->ViewData);
     }
+    public function register2()
+    {
+        $this->ModuleTitle              = __('Sing Up');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle; 
+        return view($this->ModuleView . 'register2', $this->ViewData);
+    }
     public function emailVerification()
     {
         $this->ModuleTitle              = __('Email Verification');
