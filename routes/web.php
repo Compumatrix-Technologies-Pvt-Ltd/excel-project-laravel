@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CommonController;
 
 
 
@@ -70,6 +71,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('transactions', [AdminUserController::class,'transactionIndex'])->name('transactions.index');
     Route::get('banks', [AdminUserController::class,'bankIndex'])->name('banks.index');
     Route::get('deductions', [AdminUserController::class,'deductionIndex'])->name('deductions.index');
+
+    Route::get('payments', [CommonController::class,'paymentIndex'])->name('payments.index');
+    Route::get('cash-purchase-pdf', [CommonController::class,'cashPurchasePdf'])->name('cash.purchase.pdf');
+    Route::get('cash-purchase-list', [CommonController::class,'cashPurchaseList'])->name('cash.purchase.list');
+    Route::get('cash-purchase-summary', [CommonController::class,'cashPurchaseSummary'])->name('cash.purchase.summary');
+    Route::get('daily-cash-purchase-summary', [CommonController::class,'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
+
 
 
     #Update Profile
