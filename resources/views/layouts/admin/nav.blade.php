@@ -201,6 +201,43 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/payments') ? 'active' : '' }}"
+                        href="{{ route('admin.payments.index') }}">
+                        <i class=" bx bx-money-withdraw"></i> <span data-key="t-widgets">Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ (request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary','admin/daily-cash-purchase-summary')) ? ' collapsed active' : ''  }}"
+                        href="#CashPurchasesManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                        aria-controls="CashPurchasesManagement">
+                        <i class="mdi mdi mdi-bank-plus"></i>
+                        <span data-key="t-base-ui">Cash Purchases</span>
+
+                    </a>
+                    <div class="collapse menu-dropdown {{ (request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary','admin/daily-cash-purchase-summary')) ? 'show' : ''  }}"
+                        id="CashPurchasesManagement">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.cash.purchase.list') }}"
+                                    class="nav-link {{ (request()->is('admin/cash-purchase-list')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Purchase Listing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.cash.purchase.summary') }}"
+                                    class="nav-link {{ (request()->is('admin/cash-purchase-summary')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Purchase Summary</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.daily.cash.purchase.summary') }}"
+                                    class="nav-link {{ (request()->is('admin/daily-cash-purchase-summary')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">Daily Purchase Summary</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+                
 
             </ul>
         </div>
