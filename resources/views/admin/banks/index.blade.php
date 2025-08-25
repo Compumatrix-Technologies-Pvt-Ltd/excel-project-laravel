@@ -10,7 +10,7 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item active"><a href="">Bank Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.banks.index') }}">Branch Listing</a>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.banks.index') }}">Bank Listing</a>
                         </li>
                     </ol>
                 </div>
@@ -29,18 +29,18 @@
                     <h4 class="card-title mb-0 flex-grow-1">Bank Listing</h4>
                     <div class="card-toolbar">
                         <!-- <a href="javascript:void(0)" class="btn btn-primary fw-bold me-2">
-                                                                                <i class="flaticon2-plus"></i> Create Branch
-                                                                            </a> -->
+                                                                                    <i class="flaticon2-plus"></i> Create Branch
+                                                                                </a> -->
                         <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#branchModal">
+                            data-bs-target="#bankModal">
                             <i class="flaticon2-plus"></i> Create Bank
                         </button>
-                        <div id="branchModal" class="modal fade" tabindex="-1" aria-labelledby="branchModalLabel"
+                        <div id="bankModal" class="modal fade" tabindex="-1" aria-labelledby="bankModalLabel"
                             aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="branchModalLabel">Create Bank</h5>
+                                        <h5 class="modal-title" id="bankModalLabel">Create Bank</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
@@ -667,11 +667,13 @@
                                                 <div class="col-md-6">
                                                     <label for="bankNameInput" class="form-label">Bank Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="bankNameInput" value="AFFIN BANK BERHAD">
+                                                    <input type="text" class="form-control" id="bankNameInput"
+                                                        value="AFFIN BANK BERHAD">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="bicCodeInput" class="form-label">BIC Code</label>
-                                                    <input type="text" class="form-control" id="bicCodeInput" value="PHBMMYKL">
+                                                    <input type="text" class="form-control" id="bicCodeInput"
+                                                        value="PHBMMYKL">
                                                 </div>
                                                 <div class="col-6">
                                                     <label for="payType" class="form-label d-block">Pay Type</label>

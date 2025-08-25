@@ -70,6 +70,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('transactions', [AdminUserController::class,'transactionIndex'])->name('transactions.index');
     Route::get('banks', [AdminUserController::class,'bankIndex'])->name('banks.index');
     Route::get('deductions', [AdminUserController::class,'deductionIndex'])->name('deductions.index');
+    Route::get('deduction-reports', [AdminUserController::class,'deductionReportIndex'])->name('deductions.report.index');
+    Route::get('credit-purchases', [AdminUserController::class,'creditPurchaseIndex'])->name('creditPurchase.index');
 
 
     #Update Profile
