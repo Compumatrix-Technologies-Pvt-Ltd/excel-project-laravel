@@ -201,7 +201,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ (request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary', 'admin/daily-cash-purchase-summary')) ? ' collapsed active' : ''  }}"
+                    <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
+                        href="{{ route('admin.mill.management') }}">
+                        <i class=" bx bx-money-withdraw"></i> <span data-key="t-widgets">Mill Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
+                        href="{{ route('admin.mill.management') }}">
+                        <i class=" bx bx-money-withdraw"></i> <span data-key="t-widgets">Mill Management</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ (request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary','admin/daily-cash-purchase-summary')) ? ' collapsed active' : ''  }}"
                         href="#CashPurchasesManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="CashPurchasesManagement">
                         <i class="mdi mdi mdi-bank-plus"></i>
