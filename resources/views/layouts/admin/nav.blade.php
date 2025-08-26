@@ -129,14 +129,14 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link {{ (request()->is('admin/transactions', 'admin/transactions/*')) ? ' collapsed active' : ''  }}"
+                    <a class="nav-link menu-link {{ (request()->is('admin/transactions', 'admin/transactions/*','admin/hq-transactions')) ? ' collapsed active' : ''  }}"
                         href="#TransactionManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                         aria-controls="TransactionManagement">
                         <i class="mdi mdi-cash-multiple"></i>
                         <span data-key="t-base-ui">Transactions</span>
 
                     </a>
-                    <div class="collapse menu-dropdown {{ (request()->is('admin/transactions', 'admin/transactions/*')) ? 'show' : ''  }}"
+                    <div class="collapse menu-dropdown {{ (request()->is('admin/transactions', 'admin/transactions/*','admin/hq-transactions')) ? 'show' : ''  }}"
                         id="TransactionManagement">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
@@ -144,7 +144,11 @@
                                     class="nav-link {{ (request()->is('admin/transactions', 'admin/create-transactions', 'admin/transactions/*')) ? 'active' : ''  }}"
                                     data-key="t-horizontal">Daily Transactions</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a href="{{ route('admin.hq.transactions.index') }}"
+                                    class="nav-link {{ (request()->is('admin/hq-transactions')) ? 'active' : ''  }}"
+                                    data-key="t-horizontal">HQ - Transactions</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -164,6 +168,12 @@
                     <a class="nav-link menu-link {{ request()->is('admin/payments') ? 'active' : '' }}"
                         href="{{ route('admin.payments.index') }}">
                         <i class=" bx bx-money-withdraw"></i> <span data-key="t-widgets">Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
+                        href="{{ route('admin.mill.management') }}">
+                        <i class=" bx bx-money-withdraw"></i> <span data-key="t-widgets">Mill Management</span>
                     </a>
                 </li>
                 <li class="nav-item">

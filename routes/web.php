@@ -77,6 +77,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash-purchase-list', [CommonController::class,'cashPurchaseList'])->name('cash.purchase.list');
     Route::get('cash-purchase-summary', [CommonController::class,'cashPurchaseSummary'])->name('cash.purchase.summary');
     Route::get('daily-cash-purchase-summary', [CommonController::class,'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
+    Route::get('mill-management', [CommonController::class,'millManagement'])->name('mill.management');
+    Route::get('hq-transactions', [CommonController::class,'hqTransactionIndex'])->name('hq.transactions.index');
 
 
 
