@@ -115,4 +115,14 @@ class AdminUserController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         return view('admin.banks.deduction-index', $this->ViewData);
     }
+    public function deductionReportIndex(){
+         $this->ModuleTitle = __('Deduction Reports');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.banks.deduction-reports', $this->ViewData);
+    }
+    public function creditPurchaseIndex(){
+         $this->ModuleTitle = __('Credit Purches Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.banks.credit-purchase', $this->ViewData);
+    }
 }
