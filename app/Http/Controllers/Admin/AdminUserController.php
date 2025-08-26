@@ -99,6 +99,18 @@ class AdminUserController extends Controller
         return view('admin.suppliers.edit', $this->ViewData);
     }
     
+    public function suppliersGpsList(){
+         $this->ModuleTitle = __('Supplier GPS Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.suppliers.suppliers-gps-list', $this->ViewData);
+    }
+    
+    public function suppliersHqIndex(){
+         $this->ModuleTitle = __('Supplier Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.suppliers.suppliers-hq', $this->ViewData);
+    }
+    
     public function transactionIndex(){
          $this->ModuleTitle = __('Transactions');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
@@ -113,16 +125,28 @@ class AdminUserController extends Controller
     public function deductionIndex(){
          $this->ModuleTitle = __('Deduction Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.banks.deduction-index', $this->ViewData);
+        return view('admin.deductions.deduction-index', $this->ViewData);
     }
     public function deductionReportIndex(){
          $this->ModuleTitle = __('Deduction Reports');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.banks.deduction-reports', $this->ViewData);
+        return view('admin.deductions.deduction-reports', $this->ViewData);
     }
     public function creditPurchaseIndex(){
          $this->ModuleTitle = __('Credit Purches Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.banks.credit-purchase', $this->ViewData);
+        return view('admin.credit-purchases.credit-purchase', $this->ViewData);
+    }
+
+    public function creditPurchaseAnalysisIndex(){
+         $this->ModuleTitle = __('Credit Purches Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.analysis.credit-purchase-analysis', $this->ViewData);
+    }
+
+    public function purchaseAnalysisIndex(){
+         $this->ModuleTitle = __('Purches Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.analysis.purchase-analysis', $this->ViewData);
     }
 }

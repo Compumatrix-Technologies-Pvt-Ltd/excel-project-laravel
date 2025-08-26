@@ -104,7 +104,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <table id="DeductionListing" class="table nowrap dt-responsive align-middle" style="width:100%">
-                                <thead>
+                                <thead class="table-light">
                                     <tr>
                                         <th scope="col" style="width: 10px;">
                                             <div class="form-check">

@@ -64,21 +64,29 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('users', AdminUserController::class)->names('users');
-    Route::get('branches', [AdminUserController::class,'branchIndex'])->name('branches.index');
-    Route::get('suppliers', [AdminUserController::class,'suppliersIndex'])->name('suppliers.index');
-    Route::get('suppliers/create', [AdminUserController::class,'suppliersCreate'])->name('suppliers.create');
-    Route::get('suppliers/edit', [AdminUserController::class,'suppliersedit'])->name('suppliers.edit');
-    Route::get('transactions', [AdminUserController::class,'transactionIndex'])->name('transactions.index');
-    Route::get('banks', [AdminUserController::class,'bankIndex'])->name('banks.index');
-    Route::get('deductions', [AdminUserController::class,'deductionIndex'])->name('deductions.index');
-    Route::get('deduction-reports', [AdminUserController::class,'deductionReportIndex'])->name('deductions.report.index');
-    Route::get('credit-purchases', [AdminUserController::class,'creditPurchaseIndex'])->name('creditPurchase.index');
+    Route::get('branches', [AdminUserController::class, 'branchIndex'])->name('branches.index');
 
-    Route::get('payments', [CommonController::class,'paymentIndex'])->name('payments.index');
-    Route::get('cash-purchase-pdf', [CommonController::class,'cashPurchasePdf'])->name('cash.purchase.pdf');
-    Route::get('cash-purchase-list', [CommonController::class,'cashPurchaseList'])->name('cash.purchase.list');
-    Route::get('cash-purchase-summary', [CommonController::class,'cashPurchaseSummary'])->name('cash.purchase.summary');
-    Route::get('daily-cash-purchase-summary', [CommonController::class,'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
+    Route::get('suppliers', [AdminUserController::class, 'suppliersIndex'])->name('suppliers.index');
+    Route::get('suppliers/create', [AdminUserController::class, 'suppliersCreate'])->name('suppliers.create');
+    Route::get('suppliers/edit', [AdminUserController::class, 'suppliersedit'])->name('suppliers.edit');
+    Route::get('suppliers-gps-list', [AdminUserController::class, 'suppliersGpsList'])->name('suppliersGps.index');
+
+    // HQ- Suppliers
+    Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
+
+    Route::get('transactions', [AdminUserController::class, 'transactionIndex'])->name('transactions.index');
+    Route::get('banks', [AdminUserController::class, 'bankIndex'])->name('banks.index');
+    Route::get('deductions', [AdminUserController::class, 'deductionIndex'])->name('deductions.index');
+    Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
+    Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
+    Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
+    Route::get('purchase-analysis', [AdminUserController::class, 'purchaseAnalysisIndex'])->name('purchaseAnalysis.index');
+
+    Route::get('payments', [CommonController::class, 'paymentIndex'])->name('payments.index');
+    Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
+    Route::get('cash-purchase-list', [CommonController::class, 'cashPurchaseList'])->name('cash.purchase.list');
+    Route::get('cash-purchase-summary', [CommonController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
+    Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
 
 
 

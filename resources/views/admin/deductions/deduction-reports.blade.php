@@ -27,10 +27,12 @@
                     <h4 class="card-title mb-0 flex-grow-1">Deduction Listing for the month of [05/2025]</h4>
                     <div class="card-toolbar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#viewDeductionListModal"
-                            class="btn btn-warning btn-label waves-effect waves-ligh">
+                            class="btn btn-warning btn-label waves-effect waves-light">
                             <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
                         </button>
-                        <a href="" class="btn btn-primary btn-label waves-effect waves-light">
+                        <a href="{{ asset('storage/app/public/deductions-pdf/VC_202505_Deduction_List.pdf') }}"
+                            class="btn btn-primary btn-label waves-effect waves-light"
+                            download="VC_202505_Deduction_List.pdf">
                             <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create PDF
                         </a>
                         <div id="viewDeductionListModal" class="modal fade" tabindex="-1"
@@ -43,7 +45,9 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body" style="height: 80vh;">
-                                        <iframe src="" width="100%" height="100%" style="border: none;"></iframe>
+                                        <iframe
+                                            src="{{ asset('storage/app/public/deductions-pdf/VC_202505_Deduction_List.pdf') }}"
+                                            width="100%" height="100%" style="border: none;"></iframe>
                                         <!-- OR -->
                                         <!-- <embed src="assets/docs/sample.pdf" type="application/pdf" width="100%" height="100%"> -->
                                     </div>
@@ -53,7 +57,10 @@
                     </div>
 
                 </div>
-                <div class="card-body border-bottom pb-3">
+
+
+
+                <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-2">
                             <label for="startDate" class="form-label">Start Date</label>
@@ -96,13 +103,11 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-4">
                         <div class="table-responsive">
                             <table id="DeductionReportsListing"
                                 class="table table-bordered table-striped nowrap align-middle" style="width:100%">
-                                <thead>
+                                <thead class="table-light">
                                     <tr>
                                         <th rowspan="2">Date</th>
                                         <th colspan="2">Supplier</th>
@@ -211,7 +216,7 @@
                                     </tr>
                                 </tbody>
 
-                                <tfoot>
+                                <tfoot class="table-light">
                                     <tr class="fw-bold">
                                         <td colspan="3" class="text-center">Grand Total</td>
                                         <td></td>
@@ -226,7 +231,8 @@
                 </div>
             </div>
         </div>
-        <!--end col-->
+    </div>
+    <!--end col-->
     </div>
 
 @endsection

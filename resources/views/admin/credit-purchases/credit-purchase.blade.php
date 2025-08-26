@@ -26,28 +26,130 @@
                 <div class="card-header align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Credit Purchase Listing for the month of [05/2025]</h4>
                     <div class="card-toolbar">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#viewCreditPurchaseListModal"
+                        <button type="button" id="PreviewPdf" data-bs-toggle="modal"
+                            data-bs-target="#viewCreditPurchaseListModal"
                             class="btn btn-warning btn-label waves-effect waves-light">
                             <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
                         </button>
-                        <a href="{{ asset('storage/app/public/deductions-pdf/VC_202505_Deduction_List.pdf') }}"
-                            class="btn btn-primary btn-label waves-effect waves-light"
-                            download="VC_202505_Deduction_List.pdf">
+                        <button type="button" id="CreatePdf" data-bs-toggle="modal"
+                            data-bs-target="#viewCreditPurchaseListModal"
+                            class="btn btn-primary btn-label waves-effect waves-light">
                             <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create PDF
-                        </a>
+                        </button>
+
                         <div id="viewCreditPurchaseListModal" class="modal fade" tabindex="-1"
                             aria-labelledby="viewCreditPurchaseListModalLabel" aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog modal-xl">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="viewCreditPurchaseListModalLabel">View PDF</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body" style="height: 80vh;">
-                                        <iframe
-                                            src="{{ asset('storage/app/public/deductions-pdf/VC_202505_Deduction_List.pdf') }}"
-                                            width="100%" height="100%" style="border: none;"></iframe>
+                                    <div class="modal-body">
+                                        <form action="javascript:void(0);" class="row g-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="selectYear" class="form-label">Select Year</label>
+                                                <select id="selectYear" class="form-select">
+                                                    <option value="">--Year--</option>
+                                                    @for ($i = date('Y'); $i >= 2000; $i--)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="selectMonth" class="form-label">Select Month</label>
+                                                <select id="selectMonth" class="form-select">
+                                                    <option value="">--Month--</option>
+                                                    <option>January</option>
+                                                    <option>February</option>
+                                                    <option>March</option>
+                                                    <option>April</option>
+                                                    <option>May</option>
+                                                    <option>June</option>
+                                                    <option>July</option>
+                                                    <option>August</option>
+                                                    <option>September</option>
+                                                    <option>October</option>
+                                                    <option>November</option>
+                                                    <option>December</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <label for="mspo-certification" class="form-label d-block">MSPO
+                                                    Certifications</label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="registered"
+                                                            value="registered" checked>
+                                                        <label class="form-check-label" for="registered">Registered</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="non-registered"
+                                                            value="non-registered">
+                                                        <label class="form-check-label"
+                                                            for="non-registered">Non-Registered</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="both" value="both">
+                                                        <label class="form-check-label" for="RENType">Both</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <label for="purchases" class="form-label d-block">Purchases</label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="credit"
+                                                            value="credit" checked>
+                                                        <label class="form-check-label" for="credit">Credit</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="cash" value="cash">
+                                                        <label class="form-check-label" for="cash">Cash</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <label for="analyse-in" class="form-label d-block">Analyse In</label>
+                                                <div class="d-flex gap-3">
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="m-ton"
+                                                            value="m-ton">
+                                                        <label class="form-check-label" for="m-ton">M/Ton</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline form-radio-primary">
+                                                        <input class="form-check-input" type="radio" id="rm" value="rm">
+                                                        <label class="form-check-label" for="rm">RM</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+
+                                            <button type="button" id="showPdfBtn" class="btn btn-success">Show PDF</button>
+
+                                            <a id="createPdfBtn"
+                                                href="{{ asset('storage/app/public/deductions-pdf/VC_202505_Deduction_List.pdf') }}"
+                                                download="VC_202505_Deduction_List.pdf" class="btn btn-success">
+                                                Create PDF
+                                            </a>
+                                        </div>
+
+                                        </form>
                                         <!-- OR -->
                                         <!-- <embed src="assets/docs/sample.pdf" type="application/pdf" width="100%" height="100%"> -->
                                     </div>
@@ -56,7 +158,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body border-bottom pb-3">
+
+                <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-2">
                             <label for="startDate" class="form-label">Start Date</label>
@@ -99,13 +202,11 @@
                             </button>
                         </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="container-fluid">
+                    <div class="container-fluid mt-4">
                         <div class="table-responsive">
                             <table id="CreditPurchaseListing" class="table table-bordered table-striped nowrap align-middle"
                                 style="width:100%">
-                                <thead>
+                                <thead class="table-light">
                                     <tr>
                                         <th colspan="2">Supplier</th>
                                         <th rowspan="2">Supplier Name</th>
@@ -291,7 +392,7 @@
                                     </tr>
                                     <!-- Add 10 more rows like above -->
                                 </tbody>
-                                <tfoot>
+                                <tfoot class="table-light">
                                     <tr>
                                         <td>68</td>
                                         <td></td>
@@ -338,6 +439,25 @@
                 searching: true,
                 ordering: true,
             });
+
+
+            $('#showPdfBtn').on("click", function () {
+                let url = "{{ asset('storage/app/public/deductions-pdf/VC_202505_Deduction_List.pdf') }}";
+                window.open(url, '_blank');
+            });
+            $('#PreviewPdf').on("click", function () {
+                $('#showPdfBtn').show();
+                $('#createPdfBtn').hide();
+
+            });
+            $('#CreatePdf').on("click", function () {
+                $('#createPdfBtn').show();
+                $('#showPdfBtn').hide();
+
+            });
+
+
+
         });
     </script>
 

@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="gradient-4" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="corporate" data-theme-colors="default" data-sidebar-visibility="show" data-layout-style="default" data-bs-theme="light" data-layout-width="fluid" data-layout-position="fixed" data-body-image="none">
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="gradient-4" data-sidebar-size="lg"
+    data-sidebar-image="none" data-preloader="disable" data-theme="corporate" data-theme-colors="default"
+    data-sidebar-visibility="show" data-layout-style="default" data-bs-theme="light" data-layout-width="fluid"
+    data-layout-position="fixed" data-body-image="none">
 
 <head>
     <meta charset="utf-8" />
@@ -23,6 +26,9 @@
     <link href="{{ asset('/assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/admin/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/libs/%40simonwep/pickr/themes/classic.min.css" /> <!-- 'classic' theme -->
+    <link rel="stylesheet" href="assets/libs/%40simonwep/pickr/themes/monolith.min.css" /> <!-- 'monolith' theme -->
+    <link rel="stylesheet" href="assets/libs/%40simonwep/pickr/themes/nano.min.css" /> <!-- 'nano' theme -->
 
 </head>
 
