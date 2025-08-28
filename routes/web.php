@@ -74,6 +74,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     // HQ- Suppliers
     Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
 
+
+    // Supplies
+    Route::get('supplies-details', [AdminUserController::class, 'suppliesDetails'])->name('supplies.details.index');
+    Route::get('supplies-summary', [AdminUserController::class, 'suppliesSummary'])->name('supplies.summary.index');
+    Route::get('supplies-analysis', [AdminUserController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+
+
     Route::get('transactions', [AdminUserController::class, 'transactionIndex'])->name('transactions.index');
     Route::get('banks', [AdminUserController::class, 'bankIndex'])->name('banks.index');
     Route::get('deductions', [AdminUserController::class, 'deductionIndex'])->name('deductions.index');
@@ -87,8 +94,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash-purchase-list', [CommonController::class, 'cashPurchaseList'])->name('cash.purchase.list');
     Route::get('cash-purchase-summary', [CommonController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
     Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
-
-
+    Route::get('mill-management', [CommonController::class, 'millManagement'])->name('mill.management');
+    Route::get('transaction-management', [CommonController::class, 'hqTransactionIndex'])->name('transaction.management');
 
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');

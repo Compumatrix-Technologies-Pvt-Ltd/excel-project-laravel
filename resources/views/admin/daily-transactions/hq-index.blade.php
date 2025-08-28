@@ -28,11 +28,11 @@
                     <h4 class="card-title mb-0 flex-grow-1">Transaction Listing</h4>
                     <div class="card-toolbar">
                         <!-- <a href="javascript:void(0)" class="btn btn-primary fw-bold me-2">
-                                                                                                                                        <i class="flaticon2-plus"></i> Create Branch
-                                                                                                                                    </a> -->
+                                                                                                                                                        <i class="flaticon2-plus"></i> Create Branch
+                                                                                                                                                    </a> -->
                         <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
                             data-bs-target="#transactionModal">
-                            <i class="flaticon2-plus"></i> Create Transaction
+                            <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Create Transaction
                         </button>
                         <div id="transactionModal" class="modal fade" tabindex="-1" aria-labelledby="transactionModalLabel"
                             aria-hidden="true" style="display: none;">
@@ -47,16 +47,27 @@
                                         <div class="row gy-4">
                                             <form action="javascript:void(0);" class="row g-3">
                                                 <div class="col-md-6">
+                                                    <label for="ticketNoInput" class="form-label">Ticket Number<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="ticketNoInput">
+                                                </div>
+                                                <div class="col-md-6">
                                                     <label for="TRXDate" class="form-label">TRX Date</label>
                                                     <input type="date" class="form-control" id="TRXDate">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="trxNoInput" class="form-label">TRX No.<span
+                                                    <label for="inputSupplier" class="form-label">Vehicles<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="trxNoInput">
+                                                    <select id="inputSupplier" class="form-select">
+                                                        <option selected>Select Vehicles</option>
+                                                        <option>SS268W</option>
+                                                        <option>QAB8330G</option>
+                                                        <option>SYJ9683</option>
+                                                        <option>SS1871T</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="inputSupplier" class="form-label">Suppliers<span
+                                                    <label for="inputSupplier" class="form-label">Supplier Id<span
                                                             class="text-danger">*</span></label>
                                                     <select id="inputSupplier" class="form-select">
                                                         <option selected>Select Supplier code</option>
@@ -67,10 +78,17 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="ticketNoInput" class="form-label">Ticket Number<span
+                                                    <label for="inputSupplier" class="form-label">Mill Id<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="ticketNoInput">
+                                                    <select id="inputSupplier" class="form-select">
+                                                        <option selected>Select Mill Id</option>
+                                                        <option>LCH</option>
+                                                        <option>KSBA</option>
+                                                        <option>TEOPP</option>
+                                                        <option>KLK Agri</option>
+                                                    </select>
                                                 </div>
+
                                                 <div class="col-md-6">
                                                     <label for="wieghtMtInput" class="form-label">Weight (MT)<span
                                                             class="text-danger">*</span></label>
@@ -91,7 +109,49 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="container-fluid">
+                    <div class="row g-3">
+                        <div class="col-md-2">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" id="startDate" class="form-control">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" id="endDate" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="selectMonth" class="form-label">Select Month</label>
+                            <select id="selectMonth" class="form-select">
+                                <option value="">--Month--</option>
+                                <option>January</option>
+                                <option>February</option>
+                                <option>March</option>
+                                <option>April</option>
+                                <option>May</option>
+                                <option>June</option>
+                                <option>July</option>
+                                <option>August</option>
+                                <option>September</option>
+                                <option>October</option>
+                                <option>November</option>
+                                <option>December</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="selectYear" class="form-label">Select Year</label>
+                            <select id="selectYear" class="form-select">
+                                <option value="">--Year--</option>
+                                @for ($i = date('Y'); $i >= 2000; $i--)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-warning btn-label waves-effect waves-light">
+                                <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
+                            </button>
+                        </div>
+                    </div>
+                    <div class="container-fluid mt-4">
                         <div class="row">
                             <table id="BranchListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead>
@@ -107,6 +167,7 @@
                                         <th>Vehicle</th>
                                         <th>Mill_Id</th>
                                         <th>Weight</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -122,6 +183,24 @@
                                         <td>SS268W</td>
                                         <td>LCH</td>
                                         <td>0.00</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -135,6 +214,24 @@
                                         <td>QAB8330G</td>
                                         <td>KSBA</td>
                                         <td>17.43</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -148,6 +245,24 @@
                                         <td>SYJ9683</td>
                                         <td>TEOPP</td>
                                         <td>22.34</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -161,6 +276,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>16.74</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -174,6 +307,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>14.56</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -187,6 +338,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>16.45</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -200,6 +369,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>12.93</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -213,6 +400,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>12.92</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -226,6 +431,24 @@
                                         <td>SAB8489D</td>
                                         <td>TEOPP</td>
                                         <td>23.95</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -239,6 +462,24 @@
                                         <td>SAB9121J</td>
                                         <td>TEOPP</td>
                                         <td>21.16</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -252,6 +493,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>14.13</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -265,6 +524,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>15.28</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -278,6 +555,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>16.65</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -291,6 +586,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>14.77</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -304,6 +617,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>13.33</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -317,6 +648,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>16.70</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -330,6 +679,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>13.19</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -343,6 +710,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>16.98</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -356,6 +741,24 @@
                                         <td>SS8979U</td>
                                         <td>TEOPP</td>
                                         <td>25.70</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -369,6 +772,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>14.05</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -382,6 +803,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>14.79</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -395,6 +834,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>14.04</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -408,6 +865,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>16.79</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -421,6 +896,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>12.31</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -434,6 +927,24 @@
                                         <td>SS1871T</td>
                                         <td>TEOPP</td>
                                         <td>14.38</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -447,6 +958,24 @@
                                         <td>SS8979U</td>
                                         <td>TEOPP</td>
                                         <td>29.99</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -460,6 +989,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>15.47</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -473,6 +1020,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>5.33</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -486,6 +1051,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>10.78</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -499,6 +1082,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>15.36</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -512,6 +1113,24 @@
                                         <td>SA8216V</td>
                                         <td>TEOPP</td>
                                         <td>11.84</td>
+                                        <td>
+                                            <div class="dropdown d-inline-block">
+                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#transactionEditModal">
+                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -523,27 +1142,35 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="transactionEditModalLabel">Edit Transaction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close">
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
                                     <div class="modal-body">
-
                                         <div class="row gy-4">
                                             <form action="javascript:void(0);" class="row g-3">
                                                 <div class="col-md-6">
-                                                    <label for="TRXDate" class="form-label">TRX Date</label>
-                                                    <input type="" class="form-control" id="TRXDate"
-                                                        value="03-Jan-2025">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="trxNoInput" class="form-label">TRX No.<span
+                                                    <label for="ticketNoInput" class="form-label">Ticket Number<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="trxNoInput"
-                                                        value="T25010002">
+                                                    <input type="text" class="form-control" id="ticketNoInput"
+                                                        value="T013121">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="inputSupplier" class="form-label">Suppliers<span
+                                                    <label for="TRXDate" class="form-label">TRX Date</label>
+                                                    <input type="" class="form-control" id="TRXDate" value="30-Jun-2025	">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputSupplier" class="form-label">Vehicles<span
+                                                            class="text-danger">*</span></label>
+                                                    <select id="inputSupplier" class="form-select">
+                                                        <option selected>SS268W</option>
+                                                        <option>SS268W</option>
+                                                        <option>QAB8330G</option>
+                                                        <option>SYJ9683</option>
+                                                        <option>SS1871T</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputSupplier" class="form-label">Supplier Id<span
                                                             class="text-danger">*</span></label>
                                                     <select id="inputSupplier" class="form-select">
                                                         <option selected>VC-A-F013</option>
@@ -554,22 +1181,26 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="ticketNoInput" class="form-label">Ticket Number<span
+                                                    <label for="inputSupplier" class="form-label">Mill Id<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="ticketNoInput"
-                                                        value="088020">
+                                                    <select id="inputSupplier" class="form-select">
+                                                        <option selected>LCH</option>
+                                                        <option>LCH</option>
+                                                        <option>KSBA</option>
+                                                        <option>TEOPP</option>
+                                                        <option>KLK Agri</option>
+                                                    </select>
                                                 </div>
+
                                                 <div class="col-md-6">
                                                     <label for="wieghtMtInput" class="form-label">Weight (MT)<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="tel" class="form-control" id="wieghtMtInput"
-                                                        value="1.20">
+                                                    <input type="tel" class="form-control" id="wieghtMtInput" value="0.00">
                                                 </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light"
-                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-success ">Save Changes</button>
                                     </div>
                                     </form>
@@ -595,7 +1226,7 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#BranchListing').DataTable({
                 paging: true,
                 searching: true,

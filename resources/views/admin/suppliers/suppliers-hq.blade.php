@@ -27,16 +27,13 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Supplier Listing</h4>
                     <div class="card-toolbar">
-                        <!-- <a href="javascript:void(0)" class="btn btn-primary fw-bold me-2">
-                                                                                                                                                                                <i class="flaticon2-plus"></i> Create Branch
-                                                                                                                                                                            </a> -->
-                        <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
+                         <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
                             data-bs-target="#supplierModal">
-                            <i class="flaticon2-plus"></i> Add Supplier
+                            <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add Supplier
                         </button>
                         <div id="supplierModal" class="modal fade" tabindex="-1" aria-labelledby="supplierModalLabel"
                             aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="supplierModalLabel">Add New Supplier</h5>
@@ -48,45 +45,52 @@
                                         <div class="row gy-4">
                                             <form action="javascript:void(0);" class="row g-3">
                                                 <div class="col-md-6">
-                                                    <label for="deductionDate" class="form-label">Date<span
+                                                    <label for="supplierCodeInput" class="form-label">
+                                                        Supplier Id <span class="text-danger">*</span>
+                                                    </label>
+                                                    <input type="text" class="form-control" id="supplierCodeInput">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="supplierNameInput" class="form-label">Supplier Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="date" class="form-control" id="deductionDate">
+                                                    <input type="text" class="form-control" id="supplierNameInput">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="supplierAddress1" class="form-label">Address 1<span
+                                                            class="text-danger">*</span></label>
+                                                    <textarea class="form-control" id="supplierAddress1"
+                                                        rows="3"></textarea>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="supplierAddress2" class="form-label">Address 2</label>
+                                                    <textarea class="form-control" id="supplierAddress2"
+                                                        rows="3"></textarea>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="inputEmail" class="form-label">Email<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="email" class="form-control" id="inputEmail">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="inputTel1" class="form-label">Telphone 1<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="tel" class="form-control" id="inputTel1">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="inputTel2" class="form-label">Telephone 2</label>
+                                                    <input type="tel" class="form-control" id="inputTel2">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputBankId" class="form-label">Bank ID<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="tel" class="form-control" id="inputBankId">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputBankAcc" class="form-label">Bank Acc.No<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="tel" class="form-control" id="inputBankAcc">
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <label for="periodInput" class="form-label">Period<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="periodInput">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="inputSupplier" class="form-label">Suppliers<span
-                                                            class="text-danger">*</span></label>
-                                                    <select id="inputSupplier" class="form-select">
-                                                        <option selected>Select Supplier code</option>
-                                                        <option>VC-A-F013</option>
-                                                        <option>VC-A-M106</option>
-                                                        <option>VC-A-R027</option>
-                                                        <option>VC-A-S070</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="typeInput" class="form-label">Type<span
-                                                            class="text-danger">*</span></label>
-                                                    <select id="typeInput" class="form-select">
-                                                        <option selected>Select Type</option>
-                                                        <option>Transpost</option>
-                                                        <option>Advance</option>
-                                                        <option>Others</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="amountInput" class="form-label">Amount</label>
-                                                    <input type="text" class="form-control" id="amountInput">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="remarkInput" class="form-label">Remark</label>
-                                                    <input type="text" class="form-control" id="remarkInput">
-                                                </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -103,7 +107,8 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <table id="SupplierListing" class="table nowrap dt-responsive align-middle" style="width:100%">
+                            <table id="HqSupplierListing" class="table nowrap dt-responsive align-middle"
+                                style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 10px;">
@@ -112,13 +117,11 @@
                                             </div>
                                         </th>
                                         <th>SR No.</th>
-                                        <th>Supplier Code</th>
-                                        <th>Supplier Type(A/B)</th>
+                                        <th>Supplier Id</th>
                                         <th>Supplier Name</th>
                                         <th>Telephone Number</th>
                                         <th>Email</th>
-                                        <th>MPOB License No</th>
-                                        <th>MSPO Cert. No</th>
+                                        <th>Bank Id</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -129,32 +132,25 @@
                                             </div>
                                         </td>
                                         <td>1</td>
-                                        <td>VC-A-001</td>
-                                        <td>A</td>
-                                        <td>Green Palm Suppliers</td>
-                                        <td>+60 12-3456789</td>
-                                        <td>greenpalm@example.com</td>
-                                        <td>MPOB-1001</td>
-                                        <td>MSPO-5001</td>
+                                        <td>ACH</td>
+                                        <td>ACH FFB Collecting (KDT/2022/3545)</td>
+                                        <td>0196685729</td>
+                                        <td>venusleong18@yahoo.com</td>
+                                        <td>AMB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -166,32 +162,26 @@
                                             </div>
                                         </td>
                                         <td>2</td>
-                                        <td>VC-B-002</td>
-                                        <td>B</td>
-                                        <td>Sunrise Agro</td>
-                                        <td>+60 11-2233445</td>
-                                        <td>sunriseagro@example.com</td>
-                                        <td>MPOB-1002</td>
-                                        <td>MSPO-5002</td>
+                                        <td>Aplas</td>
+                                        <td>Aplas Sawit Sdn Bhd 201801007441 (1269455-K)</td>
+                                        <td>0124119791</td>
+                                        <td>-</td>
+                                        <td>PBB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -203,32 +193,26 @@
                                             </div>
                                         </td>
                                         <td>3</td>
-                                        <td>VC-A-003</td>
-                                        <td>A</td>
-                                        <td>Tropical Oils Sdn Bhd</td>
-                                        <td>+60 16-3344556</td>
-                                        <td>tropoils@example.com</td>
-                                        <td>MPOB-1003</td>
-                                        <td>MSPO-5003</td>
+                                        <td>Arunamari</td>
+                                        <td>Arunamari Estates Sdn Bhd 200501006007 (683054-D)</td>
+                                        <td>0126291283</td>
+                                        <td>arunamarisandakan@gmail.com</td>
+                                        <td>CIMB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -240,32 +224,25 @@
                                             </div>
                                         </td>
                                         <td>4</td>
-                                        <td>VC-B-004</td>
-                                        <td>B</td>
-                                        <td>Harvest Traders</td>
-                                        <td>+60 19-4455667</td>
-                                        <td>harvesttraders@example.com</td>
-                                        <td>MPOB-1004</td>
-                                        <td>MSPO-5004</td>
+                                        <td>B&F Coll.</td>
+                                        <td>B & F Collection Sdn Bhd</td>
+                                        <td>0168068982</td>
+                                        <td>zihjunfam524@gmail.com</td>
+                                        <td>-</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -277,32 +254,25 @@
                                             </div>
                                         </td>
                                         <td>5</td>
-                                        <td>VC-A-005</td>
-                                        <td>A</td>
-                                        <td>Evergreen Supplies</td>
-                                        <td>+60 13-5566778</td>
-                                        <td>evergreen@example.com</td>
-                                        <td>MPOB-1005</td>
-                                        <td>MSPO-5005</td>
+                                        <td>B&F Collection</td>
+                                        <td>B & F Collection Centre Sdn Bhd 201001035502 (919421-P)</td>
+                                        <td>0168318581</td>
+                                        <td>-</td>
+                                        <td>PBB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -314,32 +284,25 @@
                                             </div>
                                         </td>
                                         <td>6</td>
-                                        <td>VC-B-006</td>
-                                        <td>B</td>
-                                        <td>AgroFresh Malaysia</td>
-                                        <td>+60 18-6677889</td>
-                                        <td>agrofresh@example.com</td>
-                                        <td>MPOB-1006</td>
-                                        <td>MSPO-5006</td>
+                                        <td>BF</td>
+                                        <td>B & F Enterprise</td>
+                                        <td>-</td>
+                                        <td>bf@gmail.com</td>
+                                        <td>-</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -351,32 +314,25 @@
                                             </div>
                                         </td>
                                         <td>7</td>
-                                        <td>VC-A-007</td>
-                                        <td>A</td>
-                                        <td>Golden Palm Oils</td>
-                                        <td>+60 14-7788990</td>
-                                        <td>goldenpalm@example.com</td>
-                                        <td>MPOB-1007</td>
-                                        <td>MSPO-5007</td>
+                                        <td>Borneo Crops</td>
+                                        <td>Borneo Crops Sdn Bhd 197901008441 (52728-T)</td>
+                                        <td>089237900</td>
+                                        <td>borneocrops@yahoo.com</td>
+                                        <td>CIMB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -388,32 +344,25 @@
                                             </div>
                                         </td>
                                         <td>8</td>
-                                        <td>VC-B-008</td>
-                                        <td>B</td>
-                                        <td>Prime Agro Products</td>
-                                        <td>+60 10-8899001</td>
-                                        <td>primeagro@example.com</td>
-                                        <td>MPOB-1008</td>
-                                        <td>MSPO-5008</td>
+                                        <td>Bumimas</td>
+                                        <td>Bumimas Sawit 88 Sdn Bhd 200901020762 (1376992-U)</td>
+                                        <td>0185931315</td>
+                                        <td>bumimas88sdnbhd@gmail.com</td>
+                                        <td>CIMB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -425,32 +374,25 @@
                                             </div>
                                         </td>
                                         <td>9</td>
-                                        <td>VC-A-009</td>
-                                        <td>A</td>
-                                        <td>NatureLink Oils</td>
-                                        <td>+60 17-9911223</td>
-                                        <td>naturelink@example.com</td>
-                                        <td>MPOB-1009</td>
-                                        <td>MSPO-5009</td>
+                                        <td>Cemerleng</td>
+                                        <td>Cemerleng Enterprise</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -462,32 +404,25 @@
                                             </div>
                                         </td>
                                         <td>10</td>
-                                        <td>VC-B-010</td>
-                                        <td>B</td>
-                                        <td>Agro Alliance</td>
-                                        <td>+60 11-2233112</td>
-                                        <td>agroalliance@example.com</td>
-                                        <td>MPOB-1010</td>
-                                        <td>MSPO-5010</td>
+                                        <td>COC Sawit</td>
+                                        <td>COC Sawit Sdn Bhd 201401022839 (109825-P)</td>
+                                        <td>089631368</td>
+                                        <td>cocsawit.sdk@gmail.com</td>
+                                        <td>CIMB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -499,375 +434,109 @@
                                             </div>
                                         </td>
                                         <td>11</td>
-                                        <td>VC-A-011</td>
-                                        <td>A</td>
-                                        <td>EcoPalm Resources</td>
-                                        <td>+60 12-3344556</td>
-                                        <td>ecopalm@example.com</td>
-                                        <td>MPOB-1011</td>
-                                        <td>MSPO-5011</td>
+                                        <td>Emasawit</td>
+                                        <td>Emasawit Awana Sdn Bhd (116081-H)</td>
+                                        <td>0138371223</td>
+                                        <td>habibal.79@yahoo.com</td>
+                                        <td>ALB</td>
                                         <td>
                                             <div class="dropdown d-inline-block">
                                                 <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="ri-more-fill align-middle"></i></button>
                                                 <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
+                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
                                                             <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                             Edit
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
+                                                    <li><a class="dropdown-item remove-item-btn"><i
+                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>12</td>
-                                        <td>VC-B-012</td>
-                                        <td>B</td>
-                                        <td>FreshHarvest Oils</td>
-                                        <td>+60 13-4455667</td>
-                                        <td>freshharvest@example.com</td>
-                                        <td>MPOB-1012</td>
-                                        <td>MSPO-5012</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>13</td>
-                                        <td>VC-A-013</td>
-                                        <td>A</td>
-                                        <td>Unity Agro</td>
-                                        <td>+60 15-5566778</td>
-                                        <td>unityagro@example.com</td>
-                                        <td>MPOB-1013</td>
-                                        <td>MSPO-5013</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>14</td>
-                                        <td>VC-B-014</td>
-                                        <td>B</td>
-                                        <td>BioPalm Trading</td>
-                                        <td>+60 19-6677889</td>
-                                        <td>biopalm@example.com</td>
-                                        <td>MPOB-1014</td>
-                                        <td>MSPO-5014</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>15</td>
-                                        <td>VC-A-015</td>
-                                        <td>A</td>
-                                        <td>AgriWorld Sdn Bhd</td>
-                                        <td>+60 16-7788990</td>
-                                        <td>agriworld@example.com</td>
-                                        <td>MPOB-1015</td>
-                                        <td>MSPO-5015</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>16</td>
-                                        <td>VC-B-016</td>
-                                        <td>B</td>
-                                        <td>PalmRich Supplies</td>
-                                        <td>+60 18-8899001</td>
-                                        <td>palmrich@example.com</td>
-                                        <td>MPOB-1016</td>
-                                        <td>MSPO-5016</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>17</td>
-                                        <td>VC-A-017</td>
-                                        <td>A</td>
-                                        <td>FarmLink Oils</td>
-                                        <td>+60 14-9911223</td>
-                                        <td>farmlink@example.com</td>
-                                        <td>MPOB-1017</td>
-                                        <td>MSPO-5017</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>18</td>
-                                        <td>VC-B-018</td>
-                                        <td>B</td>
-                                        <td>Vista Agro</td>
-                                        <td>+60 17-2233445</td>
-                                        <td>vistaagro@example.com</td>
-                                        <td>MPOB-1018</td>
-                                        <td>MSPO-5018</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>19</td>
-                                        <td>VC-A-019</td>
-                                        <td>A</td>
-                                        <td>AgroLink Resources</td>
-                                        <td>+60 12-3344667</td>
-                                        <td>agrolink@example.com</td>
-                                        <td>MPOB-1019</td>
-                                        <td>MSPO-5019</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>20</td>
-                                        <td>VC-B-020</td>
-                                        <td>B</td>
-                                        <td>Harvest Palm Oils</td>
-                                        <td>+60 13-4455778</td>
-                                        <td>harvestpalm@example.com</td>
-                                        <td>MPOB-1020</td>
-                                        <td>MSPO-5020</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn"
-                                                            href="{{ route('admin.suppliers.edit') }}">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
                                 </tbody>
+
                             </table>
 
+                           
                         </div><!--end row-->
+                         <div id="editSupplierModal" class="modal fade" tabindex="-1"
+                                aria-labelledby="editSupplierModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editSupplierModalLabel">Edit Supplier</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="row gy-4">
+                                                <form action="javascript:void(0);" class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label for="supplierCodeInput" class="form-label">
+                                                            Supplier Id <span class="text-danger">*</span>
+                                                        </label>
+                                                        <input type="text" class="form-control" id="supplierCodeInput" value="ACH">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="supplierNameInput" class="form-label">Supplier Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="supplierNameInput" value="ACH FFB Collecting (KDT/2022/3545)">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="supplierAddress1" class="form-label">Address 1<span
+                                                                class="text-danger">*</span></label>
+                                                        <textarea class="form-control" id="supplierAddress1"
+                                                            rows="3">CL 055311414, Kg Tinangol, Jalan Tinangol, 89050 Kudat, Sabah.</textarea>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="supplierAddress2" class="form-label">Address 2</label>
+                                                        <textarea class="form-control" id="supplierAddress2"
+                                                            rows="3"></textarea>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="inputEmail" class="form-label">Email<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="email" class="form-control" id="inputEmail" value="venusleong18@yahoo.com">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="inputTel1" class="form-label">Telphone 1<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="tel" class="form-control" id="inputTel1" value="0196685729">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="inputTel2" class="form-label">Telephone 2</label>
+                                                        <input type="tel" class="form-control" id="inputTel2">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="inputBankId" class="form-label">Bank ID<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="tel" class="form-control" id="inputBankId" value="AMB">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="inputBankAcc" class="form-label">Bank Acc.No<span
+                                                                class="text-danger">*</span></label>
+                                                        <input type="tel" class="form-control" id="inputBankAcc" value="1692022005890">
+                                                    </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success ">Save Changes</button>
+                                        </div>
+                                        </form>
+
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div>
                     </div>
 
                 </div>
@@ -887,7 +556,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#SupplierListing').DataTable({
+            $('#HqSupplierListing').DataTable({
                 paging: true,
                 searching: true,
                 ordering: true
