@@ -26,12 +26,9 @@
                 <div class="card-header align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Deduction Listing</h4>
                     <div class="card-toolbar">
-                        <!-- <a href="javascript:void(0)" class="btn btn-primary fw-bold me-2">
-                                                                                                                                                                            <i class="flaticon2-plus"></i> Create Branch
-                                                                                                                                                                        </a> -->
-                        <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
+                       <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
                             data-bs-target="#deductionModal">
-                            <i class="flaticon2-plus"></i> Add Deduction
+                            <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add Deduction
                         </button>
                         <div id="deductionModal" class="modal fade" tabindex="-1" aria-labelledby="deductionModalLabel"
                             aria-hidden="true" style="display: none;">
