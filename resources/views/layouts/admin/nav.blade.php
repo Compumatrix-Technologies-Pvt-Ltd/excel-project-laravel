@@ -64,6 +64,13 @@
                     </a>
                 </li> --}}
 
+                 <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
+                            href="{{ route('admin.mainForm.index') }}">
+                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Master Module</span>
+                        </a>
+                    </li>
+
                 @if (Auth::user()->role == 'hq')
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->is('admin/yearly-cash-credit', 'admin/credit/purchase', 'admin/cash/purchase', 'admin/purchase-salse')) ? ' collapsed active' : ''  }}"
