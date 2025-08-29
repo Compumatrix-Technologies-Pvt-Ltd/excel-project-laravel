@@ -165,4 +165,14 @@ class AdminUserController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         return view('admin.analysis.supplies-analysis', $this->ViewData);
     }
+    public function plansIndex(){
+         $this->ModuleTitle = __('Plans');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.subscriptions.plans', $this->ViewData);
+    }
+    public function planUsersIndex(){
+         $this->ModuleTitle = __('Users');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.subscriptions.users', $this->ViewData);
+    }
 }

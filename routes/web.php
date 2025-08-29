@@ -63,6 +63,9 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     # Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('plans', [AdminUserController::class, 'plansIndex'])->name('plans');
+    Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
+
     Route::resource('users', AdminUserController::class)->names('users');
     Route::get('branches', [AdminUserController::class, 'branchIndex'])->name('branches.index');
 
