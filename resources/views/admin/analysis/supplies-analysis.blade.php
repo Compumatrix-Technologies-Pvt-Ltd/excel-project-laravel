@@ -96,7 +96,7 @@
                 <div class="card-body">
                     <div class="row g-3">
                         <div class="col-md-3">
-                            <label for="selectYear" class="form-label">From</label>
+                            <label for="selectYear" class="form-label">Year</label>
                             <select id="selectYear" class="form-select">
                                 <option value="">--Year--</option>
                                 @for ($i = date('Y'); $i >= 2000; $i--)
