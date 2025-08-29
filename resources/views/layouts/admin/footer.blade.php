@@ -1088,10 +1088,10 @@
 <script src="{{ asset('/assets/admin/js/plugins.js') }}"></script>
 <script src="{{ asset('/assets/admin/js/app.js') }}"></script>
 <!-- Modern colorpicker bundle -->
-<script src="assets/libs/%40simonwep/pickr/pickr.min.js"></script>
+<script src="{{ asset('/assets/admin/libs/%40simonwep/pickr/pickr.min.js') }}"></script>
 
 <!-- init js -->
-<script src="assets/js/pages/form-pickers.init.js"></script>
+<script src="{{ asset('/assets/admin/js/pages/form-pickers.init.js') }}"></script>
 
 
 @yield('scripts')
