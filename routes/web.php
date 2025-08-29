@@ -100,6 +100,15 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('mill-management', [CommonController::class, 'millManagement'])->name('mill.management');
     Route::get('transaction-management', [CommonController::class, 'hqTransactionIndex'])->name('transaction.management');
 
+
+    // Consolidated FFB Routes(HQ)
+    Route::get('yearly-cash-credit', [AdminUserController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
+    Route::get('credit/purchase', [AdminUserController::class, 'creditPurchase'])->name('credit.purchase.index');
+    Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
+    Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+
+
+
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');
     Route::put('/profile/{encid}', [ProfileController::class, 'update'])->name('profile.update');

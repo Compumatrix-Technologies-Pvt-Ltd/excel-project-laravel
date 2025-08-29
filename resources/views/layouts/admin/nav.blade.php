@@ -64,6 +64,45 @@
                     </a>
                 </li> --}}
 
+                @if (Auth::user()->role == 'hq')
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ (request()->is('admin/yearly-cash-credit', 'admin/credit/purchase', 'admin/cash/purchase', 'admin/purchase-salse')) ? ' collapsed active' : ''  }}"
+                            href="#ConsolidatedFFB" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="ConsolidatedFFB">
+                            <i class="mdi mdi-file-chart-outline me-2" aria-hidden="true"></i>
+                            <span data-key="t-widgets">Consolidated FFB</span>
+
+                        </a>
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/yearly-cash-credit', 'admin/credit/purchase', 'admin/cash/purchase', 'admin/purchase-salse')) ? 'show' : ''  }}"
+                            id="ConsolidatedFFB">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.YearlyCashCredit.index') }}"
+                                        class="nav-link {{ (request()->is('admin/yearly-cash-credit')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Yearly Cash VS Credit</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.credit.purchase.index') }}"
+                                        class="nav-link {{ (request()->is('admin/credit/purchase')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Credit Prchase
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.cash.purchase.index') }}"
+                                        class="nav-link {{ (request()->is('admin/cash/purchase')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Cash Purchase</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.purchaseSalse.index') }}"
+                                        class="nav-link {{ (request()->is('admin/purchase-salse')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Purchase & Salse</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                @endif
+
                 @if (Auth::user()->role == 'super-admin')
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->is('admin/plans', 'admin/plans/users')) ? ' collapsed active' : ''  }}"
@@ -116,10 +155,10 @@
                                         data-key="t-horizontal">Manage Users</a>
                                 </li>
                                 <!-- <li class="nav-item">
-                                                <a href=""
-                                                    class="nav-link {{ (request()->is('admin/assign-branches')) ? 'active' : ''  }}"
-                                                    data-key="t-horizontal">Branch Assignment</a>
-                                            </li> -->
+                                                            <a href=""
+                                                                class="nav-link {{ (request()->is('admin/assign-branches')) ? 'active' : ''  }}"
+                                                                data-key="t-horizontal">Branch Assignment</a>
+                                                        </li> -->
 
                             </ul>
                         </div>

@@ -1087,6 +1087,7 @@
 <script src="{{ asset('/assets/admin/libs/feather-icons/feather.min.js') }}"></script>
 <script src="{{ asset('/assets/admin/js/plugins.js') }}"></script>
 <script src="{{ asset('/assets/admin/js/app.js') }}"></script>
+<script src="{{ asset('assets/admin/libs/apexcharts/apexcharts.min.js') }}"></script>
 <!-- Modern colorpicker bundle -->
 <script src="assets/libs/%40simonwep/pickr/pickr.min.js"></script>
 
