@@ -6,11 +6,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Clients Management </h4>
+                <h4 class="mb-sm-0">Usages & Feature Flags </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">Clients Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">Clients Listing</a></li>
+                        <li class="breadcrumb-item active"><a href="">Usages & Feature Flags Management</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">Usages & Feature Flags Listing</a></li>
                     </ol>
                 </div>
 
@@ -32,7 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th>SR No.</th>
-                                        <th>Tenant</th>
+                                        <th>Client</th>
                                         <th>Plan</th>
                                         <th>Cycle</th>
                                         <th>Status</th>
@@ -153,7 +153,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body small">
-                                <div class="d-flex justify-content-between"><span>Tenant</span><span
+                                <div class="d-flex justify-content-between"><span>Client</span><span
                                         id="svTenant">TCS</span></div>
                                 <div class="d-flex justify-content-between"><span>Plan</span><span id="svPlan">Pro
                                         (Monthly)</span></div>

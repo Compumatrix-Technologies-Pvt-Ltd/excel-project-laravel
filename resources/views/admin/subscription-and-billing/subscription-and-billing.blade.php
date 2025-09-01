@@ -32,7 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th>SR No.</th>
-                                        <th>Tenant</th>
+                                        <th>Client</th>
                                         <th>Plan</th>
                                         <th>Cycle</th>
                                         <th>Status</th>
@@ -153,7 +153,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body small">
-                                <div class="d-flex justify-content-between"><span>Tenant</span><span
+                                <div class="d-flex justify-content-between"><span>Client</span><span
                                         id="svTenant">TCS</span></div>
                                 <div class="d-flex justify-content-between"><span>Plan</span><span id="svPlan">Pro
                                         (Monthly)</span></div>

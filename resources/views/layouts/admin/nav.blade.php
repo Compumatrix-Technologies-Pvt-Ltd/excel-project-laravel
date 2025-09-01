@@ -89,21 +89,67 @@
                             <i class=" bx bxs-bar-chart-alt-2"></i> <span data-key="t-widgets">Usage & Feature Flags</span>
                         </a>
                     </li>
+                
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="#">
-                            <i class="mdi mdi-content-save-edit"></i> <span data-key="t-widgets">Global Masters & CMS</span>
+                        <a class="nav-link menu-link {{ (request()->is('admin/emails-sms-edit/1','admin/emails-sms','admin/cms-pages','admin/cms-pages-edit/1')) ? ' collapsed active' : ''  }}"
+                            href="#CMSPages" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="CMSPages">
+                            <i class="mdi mdi-content-save-edit" aria-hidden="true"></i>
+                            <span data-key="t-widgets">Global Masters & CMS</span>
                         </a>
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/emails-sms-edit/1','admin/emails-sms','admin/cms-pages','admin/cms-pages-edit/1')) ? 'show' : ''  }}"
+                            id="CMSPages">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.emails.and.sms') }}"
+                                        class="nav-link {{ (request()->is('admin/emails-sms','admin/emails-sms-edit/1')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Email/SMS Templates</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.cms.pages') }}"
+                                        class="nav-link {{ (request()->is('admin/cms-pages','admin/cms-pages-edit/1')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">CMS Pages</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="#">
-                            <i class="mdi mdi-security"></i> <span data-key="t-widgets">Security & Audit</span>
+                        <a class="nav-link menu-link {{ (request()->is('admin/roles','admin/audit-logs','admin/impersonation-console','admin/security-settings')) ? ' collapsed active' : ''  }}"
+                            href="#SecurityAudit" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="SecurityAudit">
+                            <i class="mdi mdi-security" aria-hidden="true"></i>
+                            <span data-key="t-widgets">Security & Audit</span>
                         </a>
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/roles','admin/audit-logs','admin/impersonation-console','admin/security-settings')) ? 'show' : ''  }}"
+                            id="SecurityAudit">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.roles.index') }}"
+                                        class="nav-link {{ (request()->is('admin/roles')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Admin Users & Roles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.audit.logs.index') }}"
+                                        class="nav-link {{ (request()->is('admin/audit-logs')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Audit Logs</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.impersonation.console.index') }}"
+                                        class="nav-link {{ (request()->is('admin/impersonation-console')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Impersonation Console</a>
+                                </li>
+                               
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.security.settings.index') }}"
+                                        class="nav-link {{ (request()->is('admin/security-settings')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Security Settings</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="#">
-                            <i class="mdi mdi-help-circle-outline"></i> <span data-key="t-widgets">Education/Help</span>
-                        </a>
-                    </li>
+                   
+                   
                   
                     
                 @endif

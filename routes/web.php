@@ -104,6 +104,14 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     Route::get('subscription-&-billing', [CommonController::class, 'subscriptionAndBilling'])->name('subscription.and.billing');
     Route::get('usages-&-feature-flags', [CommonController::class, 'usagesAndFeatureFlags'])->name('usages.and.feature.flags');
+    Route::get('emails-sms', [CommonController::class, 'emailsAndSms'])->name('emails.and.sms');
+    Route::get('emails-sms-edit/{id}', [CommonController::class, 'emailsAndSmsEdit'])->name('emails.and.sms.edit');
+    Route::get('cms-pages', [CommonController::class, 'cmsPages'])->name('cms.pages');
+    Route::get('cms-pages-edit/{id}', [CommonController::class, 'cmsPagesEdit'])->name('cms.pages.edit');
+    Route::get('roles', [CommonController::class, 'roles'])->name('roles.index');
+    Route::get('audit-logs', [CommonController::class, 'auditLogs'])->name('audit.logs.index');
+    Route::get('impersonation-console', [CommonController::class, 'impersonationConsole'])->name('impersonation.console.index');
+    Route::get('security-settings', [CommonController::class, 'securitySettings'])->name('security.settings.index');
 
 
     // Consolidated FFB Routes(HQ)
