@@ -96,6 +96,46 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "Usages & Feature Flags";
         return view('admin.usages-and-feature-flags.usages-and-feature-flags', $this->ViewData);
     }
+    public function emailsAndSms(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Emails & SMS";
+        return view('admin.cms.emails-and-sms', $this->ViewData);
+    }
+    public function emailsAndSmsEdit(Request $request, $id)
+    {
+        $this->ViewData['moduleAction'] = "Emails & SMS";
+        return view('admin.cms.edit', $this->ViewData);
+    }
+    public function cmsPages(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "CMS Pages";
+        return view('admin.cms.cms-index', $this->ViewData);
+    }
+    public function cmsPagesEdit(Request $request, $id)
+    {
+        $this->ViewData['moduleAction'] = "CMS Pages Edit";
+        return view('admin.cms.cms-edit', $this->ViewData);
+    }
+    public function roles(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Roles";
+        return view('admin.audit.index', $this->ViewData);
+    }
+    public function auditLogs(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Audit Logs";
+        return view('admin.audit.logs-index', $this->ViewData);
+    }
+    public function impersonationConsole(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Impersonation Console";
+        return view('admin.audit.impersonation-console', $this->ViewData);
+    }
+    public function securitySettings(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Security Settings";
+        return view('admin.audit.security-settings', $this->ViewData);
+    }
    
     
     
