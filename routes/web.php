@@ -107,6 +107,10 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
     Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
 
+    // Master Module route
+
+    Route::get('main', [AdminUserController::class, 'mainForm'])->name('mainForm.index');
+
 
 
     #Update Profile
