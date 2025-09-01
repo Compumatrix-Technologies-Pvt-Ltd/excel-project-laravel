@@ -6,11 +6,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">User Management </h4>
+                <h4 class="mb-sm-0">Clients Management </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">User Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">User Listing</a></li>
+                        <li class="breadcrumb-item active"><a href="">Clients Management</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">Clients Listing</a></li>
                     </ol>
                 </div>
 
@@ -23,7 +23,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">User Listing</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Clients Listing</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="container-fluid">
@@ -37,10 +37,13 @@
                                             </div>
                                         </th>
                                         <th>SR No.</th>
+                                        <th>Company Logo</th>
+                                        <th>Company Name</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone Number</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -50,11 +53,13 @@
                                             </div>
                                         </th>
                                         <td>1</td>
+                                        <td><img src="{{ asset('assets/admin/images/companies/img-2.png') }}" class="avatar-sm p-2" alt=""></td>
+                                        <td>TCS</td>
                                         <td>Amit Joshi</td>
                                         <td>amit.joshi@example.com</td>
                                         <td>+91 9812234455</td>
                                         <td><span class="badge bg-success">Active</span></td>
-                                        
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">
@@ -62,10 +67,13 @@
                                             </div>
                                         </th>
                                         <td>2</td>
+                                        <td><img src="{{ asset('assets/admin/images/companies/img-3.png') }}" class="avatar-sm p-2" alt=""></td>
+                                        <td>TCS</td>
                                         <td>Neha Reddy</td>
                                         <td>neha.reddy@example.com</td>
                                         <td>+91 9823456789</td>
                                         <td><span class="badge bg-warning">Inactive</span></td>
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
                                         
                                     </tr>
                                     <tr>
@@ -74,10 +82,13 @@
                                             </div>
                                         </th>
                                         <td>3</td>
+                                        <td><img src="{{ asset('assets/admin/images/companies/img-4.png') }}" class="avatar-sm p-2" alt=""></td>
+                                        <td>TCS</td>
                                         <td>Rohan Malhotra</td>
                                         <td>rohan.malhotra@example.com</td>
                                         <td>+91 9933445566</td>
                                         <td><span class="badge bg-danger">Locked</span></td>
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
                                         
                                     </tr>
                                     <tr>
@@ -86,10 +97,13 @@
                                             </div>
                                         </th>
                                         <td>4</td>
+                                        <td><img src="{{ asset('assets/admin/images/companies/img-5.png') }}" class="avatar-sm p-2" alt=""></td>
+                                        <td>TCS</td>
                                         <td>Sapna Chawla</td>
                                         <td>sapna.chawla@example.com</td>
                                         <td>+91 9755123400</td>
                                         <td><span class="badge bg-success">Active</span></td>
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
                                         
                                     </tr>
                                     <tr>
@@ -98,10 +112,13 @@
                                             </div>
                                         </th>
                                         <td>5</td>
+                                        <td><img src="{{ asset('assets/admin/images/companies/img-6.png') }}" class="avatar-sm p-2" alt=""></td>
+                                        <td>TCS</td>
                                         <td>Farhan Sheikh</td>
                                         <td>farhan.sheikh@example.com</td>
                                         <td>+91 9876543201</td>
                                         <td><span class="badge bg-warning">Inactive</span></td>
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
                                         
                                     </tr>
                                     <tr>
@@ -110,10 +127,13 @@
                                             </div>
                                         </th>
                                         <td>6</td>
+                                        <td><img src="{{ asset('assets/admin/images/companies/img-1.png') }}" class="avatar-sm p-2" alt=""></td>
+                                        <td>TCS</td>
                                         <td>Divya Kapoor</td>
                                         <td>divya.kapoor@example.com</td>
                                         <td>+91 9123409876</td>
                                         <td><span class="badge bg-danger">Locked</span></td>
+                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
                                         
                                     </tr>
                                 </tbody>
@@ -122,12 +142,12 @@
 
                         </div><!--end row-->
 
-                        <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="editUerModalLabel"
+                        <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModal"
                             aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="editUerModalLabel">Edit User</h5>
+                                        <h5 class="modal-title" id="myModal">View Details</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
@@ -176,11 +196,33 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-6">
+                                                    <label for="fullnameInput" class="form-label">Company Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" id="fullnameInput"
+                                                        value="TCS">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="inputEmail4" class="form-label">Company Logo<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="file" class="form-control" id="inputEmail4">
+                                                    <div>
+                                                        <img src="{{ asset('assets/admin/images/companies/img-1.png') }}" class="avatar-sm p-2" alt=""></div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="phoneNumberInput" class="form-label">MPOB Lic Number</label>
+                                                    <input type="tel" class="form-control" id="phoneNumberInput"
+                                                        value="675687436536">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="phoneNumberInput" class="form-label">TIN</label>
+                                                    <input type="tel" class="form-control" id="phoneNumberInput"
+                                                        value="675687436536">
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success ">Save Changes</button>
                                     </div>
                                     </form>
 

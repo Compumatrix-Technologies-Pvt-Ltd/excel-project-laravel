@@ -7,11 +7,11 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">User Management </h4>
+                <h4 class="mb-sm-0">Branch User Management </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">User Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.create') }}">Create User</a></li>
+                        <li class="breadcrumb-item active"><a href="">BranchUser Management</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.create') }}">Create Branch User</a></li>
                     </ol>
                 </div>
 
@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Create User</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Create Branch User</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="container-fluid">
@@ -42,7 +42,7 @@
                                     <label for="phoneNumberInput" class="form-label">Phone Number</label>
                                     <input type="tel" class="form-control" id="phoneNumberInput">
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label for="inputRole" class="form-label">Roles<span class="text-danger">*</span></label>
                                     <select id="inputRole" class="form-select">
                                         <option selected>Select Role</option>
@@ -50,7 +50,7 @@
                                         <option>Branch User</option>
                                         <option>Auditor </option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <label for="inputBranch" class="form-label">Assign Branch<span class="text-danger">*</span></label>
                                     <select id="inputBranch" class="form-select">

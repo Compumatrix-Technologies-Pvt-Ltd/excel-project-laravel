@@ -99,6 +99,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
     Route::get('mill-management', [CommonController::class, 'millManagement'])->name('mill.management');
     Route::get('transaction-management', [CommonController::class, 'hqTransactionIndex'])->name('transaction.management');
+    Route::get('sales-invoice', [CommonController::class, 'salesInvoice'])->name('sales.invoice');
+    Route::get('supplier-cash-bill', [CommonController::class, 'supplierCashBill'])->name('supplier.cash.bill');
+
+    Route::get('subscription-&-billing', [CommonController::class, 'subscriptionAndBilling'])->name('subscription.and.billing');
+    Route::get('usages-&-feature-flags', [CommonController::class, 'usagesAndFeatureFlags'])->name('usages.and.feature.flags');
 
 
     // Consolidated FFB Routes(HQ)
@@ -110,6 +115,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     // Master Module route
 
     Route::get('main', [AdminUserController::class, 'mainForm'])->name('mainForm.index');
+    Route::get('hq-main', [AdminUserController::class, 'HQmainForm'])->name('hqMainForm.index');
 
 
 

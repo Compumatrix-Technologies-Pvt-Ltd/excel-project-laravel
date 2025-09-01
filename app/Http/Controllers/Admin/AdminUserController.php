@@ -201,4 +201,9 @@ class AdminUserController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         return view('admin.masters.masterForm', $this->ViewData);
     }
+    public function HQmainForm(){
+         $this->ModuleTitle = __('Main');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.masters.hq-masterForm', $this->ViewData);
+    }
 }
