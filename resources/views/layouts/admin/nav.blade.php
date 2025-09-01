@@ -57,46 +57,105 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                {{-- <li class="nav-item">
-                    <a class="nav-link menu-link {{ request()->is('admin/user-noticeboard') ? 'active' : '' }}" href="">
-                        <i class="mdi mdi-bell-ring-outline"></i> <span data-key="t-widgets">Noticeboard</span>
-                    </a>
-                </li> --}}
+                
 
                 @if (Auth::user()->role == 'super-admin')
-                    <li class="menu-title"><span data-key="t-menu" class="text-info">Super Admin Modules</span></li>
-                    <li class="text-info">
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">Super Admin Modules</span></li>
+                    <li class="text-light">
                         <hr>
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/plans', 'admin/plans/users') ? ' collapsed active' : '' }}"
-                            href="#SubscriptionManagement" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="SubscriptionManagement">
-                            <i class="mdi mdi-card-account-details-outline me-2" aria-hidden="true"></i>
-                            <span data-key="t-widgets">Subscription Management</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                            <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/plans', 'admin/plans/users') ? 'show' : '' }}"
-                            id="SubscriptionManagement">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/plans/users') ? 'active' : '' }}" href="{{ route('admin.plans.users') }}">
+                            <i class="ri-user-2-fill"></i> <span data-key="t-widgets">Clients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/plans') ? 'active' : '' }}" href="{{ route('admin.plans') }}">
+                            <i class="mdi mdi-clipboard-list-outline"></i> <span data-key="t-widgets">Plans</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('admin.subscription.and.billing') }}">
+                            <i class=" bx bx-dollar-circle"></i> <span data-key="t-widgets">Subscriptions & Billing</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('admin.usages.and.feature.flags') }}">
+                            <i class=" bx bxs-bar-chart-alt-2"></i> <span data-key="t-widgets">Usage & Feature Flags</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#">
+                            <i class="mdi mdi-content-save-edit"></i> <span data-key="t-widgets">Global Masters & CMS</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#">
+                            <i class="mdi mdi-security"></i> <span data-key="t-widgets">Security & Audit</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#">
+                            <i class="mdi mdi-help-circle-outline"></i> <span data-key="t-widgets">Education/Help</span>
+                        </a>
+                    </li>
+                  
+                    
+                @endif
+
+                @if (Auth::user()->role == 'hq')
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">HQ Modules</span></li>
+                    <li class="text-light">
+                        <hr>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                            <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
+                        </a>
+                    </li>
+                    <!-- Consolidated FFB -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ (request()->is('admin/yearly-cash-credit', 'admin/credit/purchase', 'admin/cash/purchase', 'admin/purchase-salse')) ? ' collapsed active' : ''  }}"
+                            href="#ConsolidatedFFB" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="ConsolidatedFFB">
+                            <i class="mdi mdi-file-chart-outline me-2" aria-hidden="true"></i>
+                            <span data-key="t-widgets">Consolidated FFB</span>
+
+                        </a>
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/yearly-cash-credit', 'admin/credit/purchase', 'admin/cash/purchase', 'admin/purchase-salse')) ? 'show' : ''  }}"
+                            id="ConsolidatedFFB">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.plans') }}"
-                                        class="nav-link {{ request()->is('admin/plans') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Plans Listing</a>
+                                    <a href="{{ route('admin.YearlyCashCredit.index') }}"
+                                        class="nav-link {{ (request()->is('admin/yearly-cash-credit')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Yearly Cash VS Credit</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.plans.users') }}"
-                                        class="nav-link {{ request()->is('admin/plans/users') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Plan Purchased Users</a>
+                                    <a href="{{ route('admin.credit.purchase.index') }}"
+                                        class="nav-link {{ (request()->is('admin/credit/purchase')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Credit Prchase
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.cash.purchase.index') }}"
+                                        class="nav-link {{ (request()->is('admin/cash/purchase')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Cash Purchase</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.purchaseSalse.index') }}"
+                                        class="nav-link {{ (request()->is('admin/purchase-salse')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Purchase & Salse</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                @endif
 
-                @if (Auth::user()->role == 'hq')
-                    <li class="menu-title"><span data-key="t-menu" class="text-info">HQ Modules</span></li>
-                    <li class="text-info">
-                        <hr>
-                    </li>
+
                     <!-- Branch Management -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
@@ -123,6 +182,14 @@
                         <a class="nav-link menu-link {{ request()->is('admin/transaction-management') ? 'active' : '' }}"
                             href="{{ route('admin.transaction.management') }}">
                             <i class="mdi mdi-cash-sync"></i> <span data-key="t-widgets">Transaction</span>
+                        </a>
+                    </li>
+
+                    <!-- Main -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/hq-main') ? 'active' : '' }}"
+                            href="{{ route('admin.hqMainForm.index') }}">
+                            <i class="mdi mdi-form-select"></i> <span data-key="t-widgets">Main</span>
                         </a>
                     </li>
 
@@ -189,10 +256,16 @@
                 @endif
 
                 @if (Auth::user()->role == 'branch-user')
-                    <li class="menu-title"><span data-key="t-menu" class="text-info">Branch Modules</span></li>
-                    <li class="text-info">
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
+                    <li class="text-light">
                         <hr>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                            <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
                             href="{{ route('admin.mainForm.index') }}">
@@ -261,6 +334,15 @@
                             </ul>
                         </div>
                     </li>
+
+                    <!-- Sales Invoice -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/sales-invoice') ? 'active' : '' }}"
+                            href="{{ route('admin.sales.invoice') }}">
+                            <i class="ri-bill-line"></i> <span data-key="t-widgets">Sales Invoice</span>
+                        </a>
+                    </li>
+
                     <!-- Credit Purchases -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/credit-purchases') ? 'active' : '' }}"
@@ -318,9 +400,9 @@
 
                     <!-- Suplier Cash Bill -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/payments') ? 'active' : '' }}"
-                            href="{{ route('admin.payments.index') }}">
-                            <i class=" bx bx-money-withdraw"></i> <span data-key="t-widgets">CSB</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/supplier-cash-bill') ? 'active' : '' }}"
+                            href="{{ route('admin.supplier.cash.bill') }}">
+                            <i class=" las la-file-invoice-dollar"></i> <span data-key="t-widgets">SCB</span>
                         </a>
                     </li>
 
@@ -352,7 +434,7 @@
                     </li>
                 @endif
 
-                
+
             </ul>
         </div>
     </div>

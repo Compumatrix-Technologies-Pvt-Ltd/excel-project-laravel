@@ -6,10 +6,10 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">User Management </h4>
+                <h4 class="mb-sm-0">Branch User Management </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">User Management</a></li>
+                        <li class="breadcrumb-item active"><a href="">Branch User Management</a></li>
                         <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">User Listing</a></li>
                     </ol>
                 </div>
@@ -26,7 +26,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">User Listing</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Branch User Listing</h4>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="container-fluid">
@@ -43,7 +43,6 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone Number</th>
-                                        <th>Role</th>
                                         <th>Branch</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -59,7 +58,6 @@
                                         <td>Rajesh Kumar</td>
                                         <td>rajesh.kumar@example.com</td>
                                         <td>+91 9876543210</td>
-                                        <td>HQ</td>
                                         <td>Branch 1</td>
                                         <td><span class="badge bg-success">Active</span></td>
                                         <td>
@@ -95,7 +93,6 @@
                                         <td>Anita Sharma</td>
                                         <td>anita.sharma@example.com</td>
                                         <td>+91 9123456780</td>
-                                        <td>Branch User</td>
                                         <td>Branch 2</td>
                                         <td><span class="badge bg-warning">Inactive</span></td>
                                         <td>
@@ -131,7 +128,6 @@
                                         <td>Sunil Patil</td>
                                         <td>sunil.patil@example.com</td>
                                         <td>+91 9988776655</td>
-                                        <td>Auditor</td>
                                         <td>Branch 3</td>
                                         <td><span class="badge bg-success">Active</span></td>
                                         <td>
@@ -167,7 +163,6 @@
                                         <td>Pooja Mehta</td>
                                         <td>pooja.mehta@example.com</td>
                                         <td>+91 9876001122</td>
-                                        <td>HQ</td>
                                         <td>Branch 2</td>
                                         <td><span class="badge bg-danger">Locked</span></td>
                                         <td>
@@ -203,7 +198,6 @@
                                         <td>Imran Khan</td>
                                         <td>imran.khan@example.com</td>
                                         <td>+91 9765432100</td>
-                                        <td>Branch User</td>
                                         <td>Branch 1</td>
                                         <td><span class="badge bg-success">Active</span></td>
                                         <td>
@@ -239,7 +233,6 @@
                                         <td>Kavita Desai</td>
                                         <td>kavita.desai@example.com</td>
                                         <td>+91 9350011223</td>
-                                        <td>Auditor</td>
                                         <td>Branch 3</td>
                                         <td><span class="badge bg-warning">Inactive</span></td>
                                         <td>
@@ -298,7 +291,7 @@
                                                     <label for="phoneNumberInput" class="form-label">Phone Number</label>
                                                     <input type="tel" class="form-control" id="phoneNumberInput" value="+91 9876543210">
                                                 </div>
-                                                <div class="col-md-6">
+                                                {{-- <div class="col-md-6">
                                                     <label for="inputRole" class="form-label">Roles<span
                                                             class="text-danger">*</span></label>
                                                     <select id="inputRole" class="form-select">
@@ -307,7 +300,7 @@
                                                         <option>Branch User</option>
                                                         <option>Auditor </option>
                                                     </select>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-md-6">
                                                     <label for="inputBranch" class="form-label">Assign Branch<span
                                                             class="text-danger">*</span></label>
