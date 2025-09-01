@@ -194,6 +194,12 @@
                         <hr>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
+                            href="{{ route('admin.mainForm.index') }}">
+                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Master Module</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? ' collapsed active' : '' }}"
                             href="#SupplierManagement" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="SupplierManagement">
