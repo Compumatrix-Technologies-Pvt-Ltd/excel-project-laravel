@@ -92,6 +92,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     Route::resource('suppliers', SupplierController::class)->names('suppliers');
     Route::post('suppliers/import', [SupplierController::class,'importSuppliers'])->name('suppliers.import');
+    Route::post('suppliers/export', [SupplierController::class,'exportSuppliers'])->name('suppliers.export');
 
     Route::get('suppliers-gps-list', [AdminUserController::class, 'suppliersGpsList'])->name('suppliersGps.index');
 

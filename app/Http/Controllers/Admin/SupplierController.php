@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SuppliersExport;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Suppliersrequest;
-use App\Imports\SuppliersImport;
 use App\Models\Suppliers;
 use Exception;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SuppliersImport;
 
 class SupplierController extends Controller
 {
@@ -255,37 +256,7 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function generateSupplierId($prefix, $type)
-    {
-        $lastSupplier = Suppliers::where('supplier_id', 'LIKE', $prefix . '-' . $type . '-%')
-            ->orderBy('id', 'desc')
-            ->first();
 
-        if ($lastSupplier) {
-            $parts = explode('-', $lastSupplier->supplier_id);
-            $lastSequence = $parts[2] ?? $type . '000';
-            $lastNumber = (int) substr($lastSequence, 1);
-        } else {
-            $lastNumber = 0;
-        }
-
-        $newNumber = $lastNumber + 1;
-
-        $letter = $type;
-        if ($newNumber > 99) {
-            $letter = chr(ord($type) + 1);
-            $newNumber = 1;
-
-            if ($letter > 'Z') {
-                $letter = 'Z';
-                $newNumber = 99;
-            }
-        }
-
-        $formatted = $letter . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
-
-        return $prefix . '-' . $letter . '-' . $formatted;
-    }
 
 
     public function importSuppliers(Request $request)
@@ -300,14 +271,27 @@ class SupplierController extends Controller
             Excel::import(new SuppliersImport, $file);
 
             $this->JsonData['status'] = 'success';
-            $this->JsonData['url'] = '';
+            $this->JsonData['url'] = route('admin.suppliers.index');
             $this->JsonData['msg'] = 'Import Successfully';
         } catch (Exception $e) {
             $this->JsonData['status'] = 'error';
-            $this->JsonData['url'] = '';
+            $this->JsonData['url'] = route('admin.suppliers.index');
             $this->JsonData['msg'] = $e->getMessage();
         }
 
         return response()->json($this->JsonData);
     }
+
+    public function exportSuppliers()
+    {
+        try {
+            $fileName = 'suppliers_' . date('Y-m-d') . '.xlsx';
+            return Excel::download(new SuppliersExport(), $fileName);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error exporting patients.'], 500);
+
+        }
+    }
+
+
 }
