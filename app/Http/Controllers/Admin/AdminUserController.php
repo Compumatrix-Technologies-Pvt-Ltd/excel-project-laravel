@@ -82,17 +82,17 @@ class AdminUserController extends Controller
         return view($this->ModuleView . 'branch-index', $this->ViewData);
     }
 
-    public function suppliersIndex(){
-         $this->ModuleTitle = __('Suppliers Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.suppliers.index', $this->ViewData);
-    }
+    // public function suppliersIndex(){
+    //     $this->ModuleTitle = __('Suppliers Listing');
+    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
+    //     return view('admin.suppliers.index', $this->ViewData);
+    // }
 
-    public function suppliersCreate(){
-         $this->ModuleTitle = __('Create Supplier');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.suppliers.create', $this->ViewData);
-    }
+    // public function suppliersCreate(){
+    //      $this->ModuleTitle = __('Create Supplier');
+    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
+    //     return view('admin.suppliers.create', $this->ViewData);
+    // }
     public function suppliersedit(){
          $this->ModuleTitle = __('Edit Supplier');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
@@ -117,11 +117,11 @@ class AdminUserController extends Controller
         return view('admin.daily-transactions.index', $this->ViewData);
     }
 
-    public function bankIndex(){
-         $this->ModuleTitle = __('Bank Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.banks.index', $this->ViewData);
-    }
+    // public function bankIndex(){
+    //      $this->ModuleTitle = __('Bank Listing');
+    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
+    //     return view('admin.banks.index', $this->ViewData);
+    // }
     public function deductionIndex(){
          $this->ModuleTitle = __('Deduction Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
