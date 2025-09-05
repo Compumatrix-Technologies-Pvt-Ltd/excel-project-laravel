@@ -21,140 +21,221 @@
 @endsection
 @section('content')
 
-
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Edit Supplier</h4>
-                </div><!-- end card header -->
+                </div>
                 <div class="card-body">
-                    <div class="container-fluid">
-                        <div class="row gy-4">
-                            <form action="javascript:void(0);" class="row g-3">
+                    <div class="container-fluid mt-4">
+                        <form id="updateForm"
+                            action="{{ route('admin.suppliers.update', base64_encode(base64_encode($supplier->id))) }}"
+                            method="post" class="form" autocomplete="off" role="form">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="row align-items-center mb-3">
+                                <input type="hidden" id="hidden_id" name="id">
+
+                                @if (Auth::user()->role == 'branch-user')
+                                    <div class="col-md-6 d-flex align-items-center form-group">
+                                        <label class="me-3">Supplier Type: <span class="text-danger">*</span></label>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="supplier_type" id="creditType"
+                                                value="credit" {{ old('supplier_type', $supplier->supplier_type) == 'credit' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="creditType">Credit</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="supplier_type" id="cashType"
+                                                value="cash" {{ old('supplier_type', $supplier->supplier_type) == 'cash' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="cashType">Cash</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 d-flex align-items-center">
+                                        <label class="me-2">Supplier ID:</label>
+                                        <input type="text" name="prefix" class="form-control form-control-sm me-1"
+                                            style="width: 60px;" value="{{ old('prefix', $supplier->prefix) }}" required>
+
+                                        <input type="text" name="type" id="supplierTypeLetter"
+                                            class="form-control form-control-sm me-1" style="width: 60px;"
+                                            value="{{ old('type', $supplier->type) }}" required>
+
+                                        <input type="text" name="sequence" class="form-control form-control-sm"
+                                            style="width: 100px;" value="{{ old('sequence', $supplier->sequence) }}" readonly>
+                                    </div>
+
+                                @else
+                                    <div class="col-md-6">
+                                        <label for="supplier_id" class="form-label">Supplier Id:</label>
+                                        <input type="text" name="supplier_id" id="supplier_id"
+                                            class="form-control form-control-sm"
+                                            value="{{ old('supplier_id', $supplier->supplier_id) }}" required>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="suplierType" class="form-label">Supplier Type</label>
-                                    <select id="suplierType" class="form-select">
-                                        <option selected>Credit</option>
-                                        <option>Credit</option>
-                                        <option>Cash User</option>
-                                    </select>
+                                    <label for="supplier_name" class="form-label">Supplier Name:</label>
+                                    <input type="text" name="supplier_name" id="supplier_name"
+                                        class="form-control form-control-sm"
+                                        value="{{ old('supplier_name', $supplier->supplier_name) }}" required>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="supplierCodeInput" class="form-label">
-                                        Supplier Code <span class="text-danger">*</span>
-                                    </label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="prefixInput">A</span>
-                                        <input type="text" class="form-control" id="supplierCodeInput"
-                                            aria-label="Supplier Code" aria-describedby="prefixInput" value="VC-A-001">
+                                    <label for="address1" class="form-label">Address 1</label>
+                                    <input type="text" name="address1" id="address1" class="form-control form-control-sm"
+                                        value="{{ old('address1', $supplier->address1) }}">
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                @if (Auth::user()->role == 'branch-user')
+                                    <div class="col-md-3">
+                                        <label for="mpob_lic_no" class="form-label">MPOB Licence No.:</label>
+                                        <input type="text" name="mpob_lic_no" id="mpob_lic_no"
+                                            class="form-control form-control-sm"
+                                            value="{{ old('mpob_lic_no', $supplier->mpob_lic_no) }}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="mpob_exp_date" class="form-label">Expiry Date:</label>
+                                        <input type="date" name="mpob_exp_date" id="mpob_exp_date"
+                                            class="form-control form-control-sm"
+                                            value="{{ old('mpob_exp_date', $supplier->mpob_exp_date) }}">
+                                    </div>
+                                @endif
+                                <div class="col-md-6">
+                                    <label for="address2" class="form-label">Address 2</label>
+                                    <input type="text" name="address2" id="address2" class="form-control form-control-sm"
+                                        value="{{ old('address2', $supplier->address2) }}">
+                                </div>
+                            </div>
+
+                            @if (Auth::user()->role == 'branch-user')
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="mspo_cert_no" class="form-label">MSPO Cert. No.:</label>
+                                        <input type="text" name="mspo_cert_no" id="mspo_cert_no"
+                                            class="form-control form-control-sm"
+                                            value="{{ old('mspo_cert_no', $supplier->mspo_cert_no) }}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="mspo_exp_date" class="form-label">Expiry Date:</label>
+                                        <input type="date" name="mspo_exp_date" id="mspo_exp_date"
+                                            class="form-control form-control-sm"
+                                            value="{{ old('mspo_exp_date', $supplier->mspo_exp_date) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="supplierNameInput" class="form-label">Supplier Name<span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="supplierNameInput" value="Green Palm Suppliers">
-                                </div>
-                                <div class="col-6">
-                                    <label for="inputStatus" class="form-label">Status</label>
-                                    <select id="inputStatus" class="form-select">
-                                        <option selected>Active</option>
-                                        <option>Active</option>
-                                        <option>Inactive</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="supplierAddress1" class="form-label">Address 1<span
-                                            class="text-danger">*</span></label>
-                                    <textarea class="form-control" id="supplierAddress1" rows="3">123, Dummy Street, Green Park</textarea>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="supplierAddress2" class="form-label">Address 2</label>
-                                    <textarea class="form-control" id="supplierAddress2" rows="3">Near City Mall, Sample Town, 400001</textarea>
-                                </div>
 
-                                <div class="col-md-6">
-                                    <label for="inputMPOB" class="form-label">MPOB License No</label>
-                                    <input type="text" class="form-control" id="inputMPOB" value="MPOB-1001	">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="MPOBExpiryDate" class="form-label">MPOB Expiry Date</label>
-                                    <input type="date" class="form-control" id="MPOBExpiryDate" value="2025-12-31">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputMSOPCertficate" class="form-label">MSPO Cert. No</label>
-                                    <input type="text" class="form-control" id="inputMSOPCertficate" value="MSPO-5001">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="MSPOExpiryDate" class="form-label">MSPO Expiry Date</label>
-                                    <input type="date" class="form-control" id="MSPOExpiryDate" value="2026-06-15">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputTIN" class="form-label">TIN</label>
-                                    <input type="text" class="form-control" id="inputTIN" value="TIN123456789">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputSupsidy" class="form-label">Subsidy Rate(%)</label>
-                                    <input type="text" class="form-control" id="inputSupsidy" value="12.5">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputlandSize" class="form-label">Land Size(Ha)</label>
-                                    <input type="text" class="form-control" id="inputlandSize" value="25.5">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputLatitude" class="form-label">Latitude</label>
-                                    <input type="text" class="form-control" id="inputLatitude" value="101.6869">
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="inputLongitude" class="form-label">Longitude</label>
-                                    <input type="text" class="form-control" id="inputLongitude" value="3.1390">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputEmail" class="form-label">Email<span
-                                            class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="inputEmail" value="greenpalm@example.com">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputTel1" class="form-label">Telphone 1<span
-                                            class="text-danger">*</span></label>
-                                    <input type="tel" class="form-control" id="inputTel1" value="+91 9876543210">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="inputTel2" class="form-label">Telephone 2</label>
-                                    <input type="tel" class="form-control" id="inputTel2" value="+91 9123456780">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputBankId" class="form-label">Bank ID</label>
-                                    <input type="tel" class="form-control" id="inputBankId" value="BANK123">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputBankAcc" class="form-label">Bank Acc.No</label>
-                                    <input type="tel" class="form-control" id="inputBankAcc" value="1234567890123456">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="inputRemark" class="form-label">Remark</label>
-                                    <textarea class="form-control" id="inputRemark" rows="3">This is a dummy remark for testing purposes.</textarea>
-
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="text-end">
-                                        <button type="submit" class="btn btn-success">Submit</button>
+                                <div class="row mb-3">
+                                    <div class="col-md-3">
+                                        <label for="tin" class="form-label">TIN:</label>
+                                        <input type="text" name="tin" id="tin" class="form-control form-control-sm"
+                                            value="{{ old('tin', $supplier->tin) }}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="subsidy" class="form-label">Subsidy (%):</label>
+                                        <input type="number" name="subsidy" id="subsidy" class="form-control form-control-sm"
+                                            value="{{ old('subsidy', $supplier->subsidy_rate) }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="land_size" class="form-label">Land Size (Ha):</label>
+                                        <input type="text" name="land_size" id="land_size" class="form-control form-control-sm"
+                                            value="{{ old('land_size', $supplier->land_size) }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="latitude" class="form-label">Lat:</label>
+                                        <input type="text" name="latitude" id="latitude" class="form-control form-control-sm"
+                                            value="{{ old('latitude', $supplier->latitude) }}">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="longitude" class="form-label">Long:</label>
+                                        <input type="text" name="longitude" id="longitude" class="form-control form-control-sm"
+                                            value="{{ old('longitude', $supplier->longitude) }}">
                                     </div>
                                 </div>
-                            </form>
+                            @endif
 
-                        </div>
-                        <!--end row-->
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="email" class="form-label">Email:</label>
+                                    <input type="email" name="email" id="email" class="form-control form-control-sm"
+                                        value="{{ old('email', $supplier->email) }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="telphone_1" class="form-label">Tel. 1:</label>
+                                    <input type="tel" name="telphone_1" id="telphone_1" class="form-control form-control-sm"
+                                        value="{{ old('telphone_1', $supplier->telphone_1) }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="telphone_2" class="form-label">Tel. 2:</label>
+                                    <input type="tel" name="telphone_2" id="telphone_2" class="form-control form-control-sm"
+                                        value="{{ old('telphone_2', $supplier->telphone_2) }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="bank_id" class="form-label">Bank ID:</label>
+                                    <select name="bank_id" id="bank_id" class="form-select form-select-sm">
+                                        <option value="">Select</option>
+                                        <option value="MBBS" {{ old('bank_id', $supplier->bank_id) == 'MBBS' ? 'selected' : '' }}>MBBS</option>
+                                        <option value="RHB" {{ old('bank_id', $supplier->bank_id) == 'RHB' ? 'selected' : '' }}>RHB</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="bank_acc_no" class="form-label">Bank A/C No.:</label>
+                                    <input type="text" name="bank_acc_no" id="bank_acc_no"
+                                        class="form-control form-control-sm"
+                                        value="{{ old('bank_acc_no', $supplier->bank_acc_no) }}">
+                                </div>
+                            </div>
+
+                            @if (Auth::user()->role == 'branch-user')
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="remark" class="form-label">Remark:</label>
+                                        <input type="text" name="remark" id="remark" class="form-control form-control-sm"
+                                            value="{{ old('remark', $supplier->remark) }}">
+                                    </div>
+                                </div>
+                            @endif
+
+                            <div class="row mb-3">
+                                <div class="col-md-12 text-end">
+                                    <button type="submit" class="btn btn-success btn-sm">OK</button>
+                                    <button type="reset" class="btn btn-outline-secondary btn-sm me-2">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
-
                 </div>
             </div>
         </div>
         <!--end col-->
     </div>
 
+@endsection
+
+
+@section('scripts')
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            function updateType() {
+                if ($("#creditType").is(":checked")) {
+                    $("#supplierTypeLetter").val("A");
+                } else if ($("#cashType").is(":checked")) {
+                    $("#supplierTypeLetter").val("B");
+                }
+            }
+            updateType();
+
+            $("input[name='supplier_type']").on("change", function () {
+                updateType();
+            });
+
+        });
+    </script>
 @endsection

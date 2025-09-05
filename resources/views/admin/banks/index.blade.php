@@ -28,7 +28,7 @@
                 <div class="card-header align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Bank Listing</h4>
                     <div class="card-toolbar">
-                       
+
                         <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
                             data-bs-target="#bankModal">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Create Bank
@@ -42,52 +42,61 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-
-                                        <div class="row gy-4">
-                                            <form action="javascript:void(0);" class="row g-3">
-                                                <div class="col-md-6">
-                                                    <label for="bankIdInput" class="form-label">Bank ID<span
+                                    <form id="AddForm" action="{{ route('admin.banks.store') }}" method="post" class="form"
+                                        autocomplete="off" role="form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row gy-4">
+                                                <div class="col-md-6 form-group">
+                                                    <label for="bankId" class="form-label">Bank ID<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="bankIdInput">
+                                                    <input type="text" class="form-control" id="bankId" name="bank_id"
+                                                        required data-error="Please enter bank Id">
+                                                    <span class="help-block with-errors err_bank_id"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label for="bankNameInput" class="form-label">Bank Name<span
+                                                <div class="col-md-6 form-group">
+                                                    <label for="bankName" class="form-label">Bank Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="bankNameInput">
+                                                    <input type="text" class="form-control" id="bankName" name="name"
+                                                        required data-error="Please enter bank name">
+                                                    <span class="help-block with-errors err_name" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label for="bicCodeInput" class="form-label">BIC Code</label>
-                                                    <input type="text" class="form-control" id="bicCodeInput">
+                                                <div class="col-md-6 form-group">
+                                                    <label for="bicCode" class="form-label">BIC Code</label>
+                                                    <input type="text" class="form-control" id="bicCode" name="bic_code"
+                                                        required data-error="Please enter BIC code">
+                                                    <span class="help-block with-errors err_bic_code"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-6 form-group">
                                                     <label for="payType" class="form-label d-block">Pay Type</label>
                                                     <div class="d-flex gap-3">
                                                         <div class="form-check form-check-inline form-radio-info">
-                                                            <input class="form-check-input" type="radio" name="pay_type"
-                                                                id="PBBType" value="PBB" checked>
+                                                            <input class="form-check-input" type="radio" name="pay_type" value="pbb" checked required
+                                                                data-error="Please select a pay type.">
                                                             <label class="form-check-label" for="PBBType">PBB</label>
                                                         </div>
                                                         <div class="form-check form-check-inline form-radio-info">
-                                                            <input class="form-check-input" type="radio" name="pay_type"
-                                                                id="IBGType" value="IBG">
+                                                            <input class="form-check-input" type="radio" name="pay_type" value="ibg">
                                                             <label class="form-check-label" for="IBGType">IBG</label>
                                                         </div>
                                                         <div class="form-check form-check-inline form-radio-info">
-                                                            <input class="form-check-input" type="radio" name="pay_type"
-                                                                id="RENType" value="REN">
+                                                            <input class="form-check-input" type="radio" name="pay_type" value="ren">
                                                             <label class="form-check-label" for="RENType">REN</label>
                                                         </div>
                                                     </div>
+                                                    <span class="help-block with-errors err_pay_type"
+                                                        style="color:red;"></span>
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success ">Save Changes</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
                                     </form>
-
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
@@ -97,7 +106,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <table id="BranchListing" class="table nowrap dt-responsive align-middle" style="width:100%">
+                            <table class="table nowrap dt-responsive align-middle CommonListing" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 10px;">
@@ -114,530 +123,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>1</td>
-                                        <td>AFF</td>
-                                        <td>AFFIN BANK BERHAD</td>
-                                        <td>PHBMMYKL</td>
-                                        <td><span class="badge bg-info">IBG</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>2</td>
-                                        <td>MBB</td>
-                                        <td>MALAYAN BANKING BERHAD</td>
-                                        <td>MBBEMYKL</td>
-                                        <td><span class="badge bg-success">PBB</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>3</td>
-                                        <td>CIMB</td>
-                                        <td>CIMB BANK BERHAD</td>
-                                        <td>CIBBMYKL</td>
-                                        <td><span class="badge bg-warning">REN</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>4</td>
-                                        <td>RHB</td>
-                                        <td>RHB BANK BERHAD</td>
-                                        <td>RHBBMYKL</td>
-                                        <td><span class="badge bg-info">IBG</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>5</td>
-                                        <td>AMB</td>
-                                        <td>AMBANK BERHAD</td>
-                                        <td>ARBMAYKL</td>
-                                        <td><span class="badge bg-success">PBB</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>6</td>
-                                        <td>BIMB</td>
-                                        <td>BANK ISLAM MALAYSIA BERHAD</td>
-                                        <td>BIMBMYKL</td>
-                                        <td><span class="badge bg-warning">REN</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>7</td>
-                                        <td>HLB</td>
-                                        <td>HONG LEONG BANK BERHAD</td>
-                                        <td>HLBBMYKL</td>
-                                        <td><span class="badge bg-info">IBG</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>8</td>
-                                        <td>PB</td>
-                                        <td>PUBLIC BANK BERHAD</td>
-                                        <td>PBBEMYKL</td>
-                                        <td><span class="badge bg-success">PBB</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>9</td>
-                                        <td>OCBC</td>
-                                        <td>OCBC BANK (MALAYSIA) BERHAD</td>
-                                        <td>OCBCMYKL</td>
-                                        <td><span class="badge bg-warning">REN</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>10</td>
-                                        <td>UOB</td>
-                                        <td>UNITED OVERSEAS BANK (MALAYSIA) BERHAD</td>
-                                        <td>UOVBMYKL</td>
-                                        <td><span class="badge bg-info">IBG</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>11</td>
-                                        <td>SCB</td>
-                                        <td>STANDARD CHARTERED BANK MALAYSIA BERHAD</td>
-                                        <td>SCBLMYKX</td>
-                                        <td><span class="badge bg-success">PBB</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>12</td>
-                                        <td>HSBC</td>
-                                        <td>HSBC BANK MALAYSIA BERHAD</td>
-                                        <td>HBMBMYKL</td>
-                                        <td><span class="badge bg-warning">REN</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>13</td>
-                                        <td>BNM</td>
-                                        <td>BANK NEGARA MALAYSIA</td>
-                                        <td>BNMMYKL</td>
-                                        <td><span class="badge bg-info">IBG</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>14</td>
-                                        <td>AGRO</td>
-                                        <td>AGROBANK</td>
-                                        <td>AGOBMYKL</td>
-                                        <td><span class="badge bg-success">PBB</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>15</td>
-                                        <td>EXIM</td>
-                                        <td>EXPORT-IMPORT BANK OF MALAYSIA BERHAD</td>
-                                        <td>EXIMMYKL</td>
-                                        <td><span class="badge bg-warning">REN</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#bankEditModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @foreach ($banks as $index => $bank)
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
+                                                        name="checkAll"></div>
+                                            </th>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $bank->bank_id }}</td>
+                                            <td>{{ $bank->name }}</td>
+                                            <td>{{ $bank->bic_code }}</td>
+                                            <td><span class="badge bg-info">IBG</span></td>
+                                            <td>
+                                                <div class="dropdown d-inline-block">
+                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                        data-bs-toggle="dropdown"><i
+                                                            class="ri-more-fill align-middle"></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                                data-id="{{base64_encode(base64_encode($bank->id))}}"
+                                                                id="edit-bank-btn">
+                                                                <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li><a href="javascript:void(0)" onclick="return deleteCollection(this)"
+                                                                data-href="{{route('admin.banks.destroy', [base64_encode(base64_encode($bank->id))])}}"
+                                                                class="dropdown-item remove-item-btn"><i
+                                                                    class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
 
                             </table>
@@ -653,52 +172,62 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-
-                                        <div class="row gy-4">
-                                            <form action="javascript:void(0);" class="row g-3">
-                                                <div class="col-md-6">
+                                    <form id="updateForm" action="{{ route('admin.banks.update') }}" method="post" class="form"
+                                        autocomplete="off" role="form">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body">
+                                            <div class="row gy-4">
+                                                <div class="col-md-6 form-group">
+                                                    <input type="hidden" id="hidden_id" name="id">
                                                     <label for="bankIdInput" class="form-label">Bank ID<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="bankIdInput" value="AFF">
+                                                    <input type="text" class="form-control" id="bankIdInput" name="bank_id">
+                                                    <span class="help-block with-errors err_bank_id"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="bankNameInput" class="form-label">Bank Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="bankNameInput"
-                                                        value="AFFIN BANK BERHAD">
+                                                    <input type="text" class="form-control" id="bankNameInput" name="name">
+                                                    <span class="help-block with-errors err_name" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="bicCodeInput" class="form-label">BIC Code</label>
-                                                    <input type="text" class="form-control" id="bicCodeInput"
-                                                        value="PHBMMYKL">
+                                                    <input type="text" class="form-control" id="bicCodeInput" name="bic_code"
+                                                        required data-error="Please enter BIC code">
+                                                    <span class="help-block with-errors err_bic_code"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-6">
-                                                    <label for="payType" class="form-label d-block">Pay Type</label>
+                                                <div class="col-6 form-group">
+                                                    <label for="payTypeInput" class="form-label d-block">Pay Type</label>
                                                     <div class="d-flex gap-3">
                                                         <div class="form-check form-check-inline form-radio-info">
                                                             <input class="form-check-input" type="radio" name="pay_type"
-                                                                id="PBBType" value="PBB">
+                                                                id="PBBType" value="pbb">
                                                             <label class="form-check-label" for="PBBType">PBB</label>
                                                         </div>
                                                         <div class="form-check form-check-inline form-radio-info">
                                                             <input class="form-check-input" type="radio" name="pay_type"
-                                                                id="IBGType" value="IBG" checked>
+                                                                id="IBGType" value="ibg">
                                                             <label class="form-check-label" for="IBGType">IBG</label>
                                                         </div>
                                                         <div class="form-check form-check-inline form-radio-info">
                                                             <input class="form-check-input" type="radio" name="pay_type"
-                                                                id="RENType" value="REN">
+                                                                id="RENType" value="ren">
                                                             <label class="form-check-label" for="RENType">REN</label>
                                                         </div>
                                                     </div>
+                                                    <span class="help-block with-errors err_pay_type"
+                                                        style="color:red;"></span>
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success ">Save Changes</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
                                     </form>
 
                                 </div><!-- /.modal-content -->
@@ -719,17 +248,7 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#BranchListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
-            });
-        });
-    </script>
-
 
 @endsection

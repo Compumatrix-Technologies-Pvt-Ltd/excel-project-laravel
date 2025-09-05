@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
+use App\Http\Controllers\Admin\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\AuthCheck;
@@ -69,9 +72,27 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::resource('users', AdminUserController::class)->names('users');
     Route::get('branches', [AdminUserController::class, 'branchIndex'])->name('branches.index');
 
-    Route::get('suppliers', [AdminUserController::class, 'suppliersIndex'])->name('suppliers.index');
-    Route::get('suppliers/create', [AdminUserController::class, 'suppliersCreate'])->name('suppliers.create');
-    Route::get('suppliers/edit', [AdminUserController::class, 'suppliersedit'])->name('suppliers.edit');
+    // Mill Routes
+    Route::get('mill-management', [MillController::class, 'index'])->name('mill.management');
+    Route::post('mill/store', [MillController::class, 'store'])->name('mill.store');
+    Route::get('mill/edit/{id}', [MillController::class, 'edit'])->name('mill.edit');
+    Route::put('mill/update', [MillController::class, 'update'])->name('mill.update');
+    Route::delete('mill/destroy/{id}', [MillController::class, 'destroy'])->name('mill.destroy');
+
+    // Bank Routes
+    Route::get('banks', [BankController::class, 'index'])->name('banks.index');
+    Route::post('banks/store', [BankController::class, 'store'])->name('banks.store');
+    Route::get('banks/edit/{id}', [BankController::class, 'edit'])->name('banks.edit');
+    Route::put('banks/update', [BankController::class, 'update'])->name('banks.update');
+    Route::delete('banks/destroy/{id}', [BankController::class, 'destroy'])->name('banks.destroy');
+
+
+    // Suppliers Route
+    Route::get('suppliers/getRecords', [SupplierController::class, 'getRecords'])->name('suppliers.getRecords');
+
+    Route::resource('suppliers', SupplierController::class)->names('suppliers');
+    Route::post('suppliers/import', [SupplierController::class,'importSuppliers'])->name('suppliers.import');
+
     Route::get('suppliers-gps-list', [AdminUserController::class, 'suppliersGpsList'])->name('suppliersGps.index');
 
     // HQ- Suppliers
@@ -85,7 +106,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     Route::get('transactions', [AdminUserController::class, 'transactionIndex'])->name('transactions.index');
-    Route::get('banks', [AdminUserController::class, 'bankIndex'])->name('banks.index');
     Route::get('deductions', [AdminUserController::class, 'deductionIndex'])->name('deductions.index');
     Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
     Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
@@ -97,7 +117,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash-purchase-list', [CommonController::class, 'cashPurchaseList'])->name('cash.purchase.list');
     Route::get('cash-purchase-summary', [CommonController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
     Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
-    Route::get('mill-management', [CommonController::class, 'millManagement'])->name('mill.management');
     Route::get('transaction-management', [CommonController::class, 'hqTransactionIndex'])->name('transaction.management');
     Route::get('sales-invoice', [CommonController::class, 'salesInvoice'])->name('sales.invoice');
     Route::get('supplier-cash-bill', [CommonController::class, 'supplierCashBill'])->name('supplier.cash.bill');

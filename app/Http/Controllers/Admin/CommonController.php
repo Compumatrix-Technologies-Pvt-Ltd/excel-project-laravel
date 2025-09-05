@@ -66,11 +66,11 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "Daily Cash Purchase Summary";
         return view('admin.cash-purchase.daily-cash-purchase-summary', $this->ViewData);
     }
-    public function millManagement(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Mill Management";
-        return view('admin.mill.index', $this->ViewData);
-    }
+    // public function millManagement(Request $request)
+    // {
+    //     $this->ViewData['moduleAction'] = "Mill Management";
+    //     return view('admin.mill.index', $this->ViewData);
+    // }
     public function hqTransactionIndex(Request $request)
     {
         $this->ViewData['moduleAction'] = "HQ Transactions";
