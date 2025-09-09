@@ -72,10 +72,9 @@
                             <div class="col-12 col-lg-3">
                                 <button class="btn btn-outline-secondary btn-sm mt-4" type="button">FFB Master</button>
                             </div>
-                           <div class="col-12 col-lg-3 text-lg-end">
-                                <input type="text" class="form-control form-control-sm text-center fw-bold" value="{{session('yearMonth') ? session('yearMonth') : date('Ym')}}" data-url="{{ route('set.year.month') }}" id="periodInput" />
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <div class="badge bg-light text-dark mt-4 fs-6" id="periodBadge">202505</div>
                             </div>
-
                         </div>
 
                         <!-- Main two-column Excel-like layout -->
@@ -107,7 +106,8 @@
 
                                             <div class="col-12">
                                                 <label class="form-label small">Address</label>
-                                                <textarea class="form-control form-control-sm" rows="2" id="address">W.D.T 23  PEKAN KOTA KINABATANGAN 90200 KINABATANGAN  SABAH.</textarea>
+                                                <textarea class="form-control form-control-sm" rows="2" id="address">W.D.T 23  PEKAN KOTA KINABATANGAN
+90200 KINABATANGAN  SABAH.</textarea>
                                             </div>
 
                                             <div class="col-6">
@@ -286,203 +286,26 @@
 
                                 <!-- Button strip aligned like Excel -->
                                 <div class="d-flex flex-wrap gap-2 justify-content-between mt-2">
-                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#transactionModal">
-                                        Add Trx
-                                    </button>
-                                    <a href="{{ route('admin.transactions.index') }}"
-                                        class="btn btn-secondary btn-sm">Edit Trx</a>
-                                    <a href="{{ route('admin.transactions.index') }}" class="btn btn-secondary btn-sm">Trx
-                                        Details</a>
-                                    <a href="{{ route('admin.deductions.index') }}" class="btn btn-secondary btn-sm">Add
-                                        Deduction</a>
-                                </div>
-                                <div class="btn-group">
-                                    <a href="" class="btn btn-secondary btn-sm">Reports</a>
-                                    <a href="" class="btn btn-secondary btn-sm">Pembelian</a>
-                                    <a href="" class="btn btn-secondary btn-sm" disabled>Merge</a>
+                                    <div class="btn-group">
+                                        <a href="{{route('admin.transactions.index')}}" class="btn btn-secondary btn-sm">Add Trx</a>
+                                        <a href="{{route('admin.transactions.index')}}" class="btn btn-secondary btn-sm">Edit Trx</a>
+                                        <a href="{{route('admin.transactions.index')}}" class="btn btn-secondary btn-sm">Trx Details</a>
+                                        <a href="{{route('admin.deductions.index')}}" class="btn btn-secondary btn-sm">Add Deduction</a>
+                                    </div>
+                                    <div class="btn-group">
+                                        <a href="" class="btn btn-secondary btn-sm">Reports</a>
+                                        <a href="" class="btn btn-secondary btn-sm">Pembelian</a>
+                                        <a href="" class="btn btn-secondary btn-sm" disabled>Merge</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div id="transactionModal" class="modal fade" tabindex="-1" aria-labelledby="transactionModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header pb-1">
-                            <h5 class="modal-title" id="transactionModalLabel">Transaction Data Entry Form</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <form>
-                            <div class="modal-body pt-0 pb-2">
-                                <div class="row mb-2 align-items-center">
-                                    <!-- Purchase Option -->
-                                    <div class="col-md-3 col-lg-3">
-                                        <fieldset class="border rounded p-2 mb-0" style="min-width:170px;">
-                                            <legend class="float-none w-auto fs-6 px-2 mb-0">Purchase Option</legend>
-                                            <div class="form-check mb-1">
-                                                <input class="form-check-input" type="radio" name="purchaseType"
-                                                    id="creditPurchase" checked>
-                                                <label class="form-check-label" for="creditPurchase">Credit
-                                                    Purchase</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="purchaseType"
-                                                    id="cashPurchase">
-                                                <label class="form-check-label" for="cashPurchase">Cash Purchase</label>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <!-- Inv. No, Supplier, Period -->
-                                    <div class="col-md-3 col-lg-3">
-                                        <label class="form-label mb-0">Inv. No. / Cash Bill:</label>
-                                        <input type="text" class="form-control form-control-sm" style="width:125px;"
-                                            value="VCSI2505005">
-                                    </div>
-                                    <div class="col-md-3 col-lg-3">
-                                        <label class="form-label mb-0">Supplier ID:</label>
-                                        <select class="form-select form-select-sm">
-                                            <option value="">Select</option>
-                                            <option>VC-A-F013</option>
-                                            <option>VC-A-M106</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 col-lg-3">
-                                        <label class="form-label mb-0">Period:</label>
-                                        <span class="fw-bold fs-5 align-middle">202504</span>
-                                    </div>
-                                    <!-- Action Buttons -->
-                                  
-                                </div>
 
-                                <div class="row">
-                                    <!-- Left fields (main form fields) -->
-                                    <div class="col-lg-4">
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Particulars:</label>
-                                            <div class="input-group mb-1">
-                                                <input type="text" class="form-control form-control-sm"
-                                                    value="FFB Supply For">
-                                                <input type="text" class="form-control form-control-sm"
-                                                    value="The Month Of 04/2025">
-                                            </div>
-                                        </div>
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Weight (MT):</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Price (RM):</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Incentive Rate:</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Subsidy Amt.:</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Amt. Before Ded.:</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label class="form-label mb-0">Total Deductions:</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm">
-                                        </div>
-                                    </div>
 
-                                    <!-- Deductions (vertical stack) -->
-                                    <div class="col-lg-8">
-                                        <fieldset class="border rounded p-2 mb-3 h-100">
-                                            <legend class="float-none w-auto fs-6 mb-0 px-2">Deductions</legend>
-                                            <div class="mb-2">
-                                                <label class="form-label mb-1">Debit Bal. B/F:</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
-                                            </div>
-                                            <div class="mb-2">
-                                                <label class="form-label mb-1">Transport:</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
-                                            </div>
-                                            <div class="mb-2">
-                                                <label class="form-label mb-1">Advance:</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
-                                            </div>
-                                            <div class="mb-2 row g-2 align-items-end">
-                                                <div class="col-md-6">
-                                                    <label class="form-label mb-1">Others:</label>
-                                                    <input type="number" step="0.01"
-                                                        class="form-control form-control-sm">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="form-label mb-1">Others Desc.:</label>
-                                                    <input type="text" class="form-control form-control-sm">
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                </div>
-
-                                <!-- Payment -->
-                                <fieldset class="border rounded p-2 mb-3">
-                                    <legend class="float-none w-auto fs-6 mb-0 px-2">Payment</legend>
-                                    <div class="row align-items-end">
-                                        <div class="col-md-4 col-lg-3 mb-2">
-                                            <label class="form-label mb-0">Invoice / Cash Bill Date:</label>
-                                            <input type="date" class="form-control form-control-sm">
-                                        </div>
-                                        <div class="col-md-2 mb-2">
-                                            <button class="btn btn-outline-secondary w-100" type="button">Net
-                                                Pay</button>
-                                        </div>
-                                        <div class="col-md-3 mb-2">
-                                            <input type="number" step="0.01" class="form-control form-control-sm"
-                                                placeholder="Net Pay Amount">
-                                        </div>
-                                        <div class="col-md-3 col-lg-2 mb-2 ms-auto">
-                                            <fieldset class="border rounded p-2 h-100">
-                                                <legend class="small w-auto m-0 px-2">Pay By</legend>
-                                                <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payCash" checked><label
-                                                        class="form-check-label" for="payCash">Cash</label></div>
-                                                <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payCheque"><label class="form-check-label"
-                                                        for="payCheque">Cheque</label></div>
-                                                <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payBank"><label class="form-check-label"
-                                                        for="payBank">Bank</label></div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <!-- Remark -->
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label class="form-label mb-0">Remark:</label>
-                                        <input type="text" class="form-control form-control">
-                                    </div>
-                                </div>
-                            </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success ">Save Changes</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
+        <!--end col-->
     </div>
-    </div>
-@endsection
-@section('scripts')
-    <script type="text/javascript" src="{{asset('/assets/admin/js/common-create-edit.js') }}"></script>
 @endsection
