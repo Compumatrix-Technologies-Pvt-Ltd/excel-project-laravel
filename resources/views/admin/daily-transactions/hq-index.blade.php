@@ -125,7 +125,7 @@
                                             <button type="submit" class="btn btn-success ">Save Changes</button>
                                         </div>
                                     </form>
-                                </div><!-- /.modal-content -->
+                                </div><!-- /.modal-content ------>
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
                     </div>
