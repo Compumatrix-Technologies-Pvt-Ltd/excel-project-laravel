@@ -255,6 +255,12 @@
                             <i class="mdi mdi-factory"></i> <span data-key="t-widgets">Mill Management</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
+                            href="{{ route('admin.vehicles.index') }}">
+                            <i class="mdi mdi-car"></i> <span data-key="t-widgets">Vehicle Management</span>
+                        </a>
+                    </li>
 
                     <!-- Transaction Management -->
                     <li class="nav-item">

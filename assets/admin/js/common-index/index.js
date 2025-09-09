@@ -116,5 +116,64 @@
     });
 });
 
+            
+   var action = ADMINURL + '/deductions/getRecords';
+    $('#DeductionListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+        },
+        columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+            { data: 'date', name: 'date' },
+            { data: 'period', name: 'period' },
+            { data: 'supplier_id', name: 'supplier_id' },           
+            { data: 'type', name: 'type' },
+            { data: 'amount', name: 'amount' },
+            { data: 'remark', name: 'remark' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false },
+        ],
+
+        columnDefs: [
+            { "orderable": false, "targets": [1, 2, 3, 4] },
+        ],
+        aaSorting: [
+            [0, 'DESC']
+        ],
+    });
+
+    $(document).on('click','#edit-vehicle-btn',function(){
+
+       $('#editVehicleModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+        var action = ADMINURL+'/vehicles/'+ encrypted_id + '/edit/';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $('#Vehicle_Name').val(response.data.name);
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn ').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+    
 
 });

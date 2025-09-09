@@ -27,27 +27,36 @@
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Supplier Listing</h4>
-                    <div class="card-toolbar">
+                    <div class="card-toolbar d-flex align-items-center gap-2">
 
                         @if (Auth::user()->role == 'hq')
                             <a download href="{{ asset('storage/app/public/sample-excel/hq-suppliers-sample.xlsx') }}"
                                 class="btn btn-sm btn-primary btn-label waves-effect waves-light">
-                                <i class="mdi mdi-file-download label-icon align-middle fs-16 me-2"></i> Sample Excel</a>
+                                <i class="mdi mdi-file-download label-icon align-middle fs-16 me-2"></i> Sample Excel
+                            </a>
                         @else
                             <a download href="{{ asset('storage/app/public/sample-excel/branch-suppliers-sample-excel.xlsx') }}"
                                 class="btn btn-sm btn-primary btn-label waves-effect waves-light">
-                                <i class="mdi mdi-file-download label-icon align-middle fs-16 me-2"></i> Sample Excel</a>
+                                <i class="mdi mdi-file-download label-icon align-middle fs-16 me-2"></i> Sample Excel
+                            </a>
                         @endif
+
                         <button type="button" class="btn btn-sm btn-warning btn-label waves-effect waves-light"
                             data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-                            <i class="mdi mdi-file-excel label-icon align-middle fs-16 me-2"></i>
-                            Import Excel
+                            <i class="mdi mdi-file-excel label-icon align-middle fs-16 me-2"></i> Import Excel
                         </button>
 
-                        <button type="button" class="btn btn-sm btn-info btn-label waves-effect waves-light">
-                            <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
-                        </button>
+                        <form class="form" action="{{ route('admin.suppliers.export') }}" data-toggle="validator"
+                            role="form" method="POST" id="" autocomplete="off">
+                            @csrf
+                            @method('POST')
+                            <button type="submit" class="btn btn-sm btn-info btn-label waves-effect waves-light">
+                                <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
+                            </button>
+                        </form>
+
                     </div>
+
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="container-fluid">
@@ -159,8 +168,9 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="form" action="{{ route('admin.suppliers.import') }}" data-toggle="validator" role="form" method="POST"
-                                            id="AddForm" autocomplete="off" enctype="multipart/form-data">
+                                        <form class="form" action="{{ route('admin.suppliers.import') }}"
+                                            data-toggle="validator" role="form" method="POST" id="AddForm"
+                                            autocomplete="off" enctype="multipart/form-data">
                                             @csrf
                                             @method('POST')
                                             <div class="form-group row">
@@ -205,5 +215,6 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
 @endsection

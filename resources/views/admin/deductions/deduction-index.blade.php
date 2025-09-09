@@ -26,7 +26,7 @@
                 <div class="card-header align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Deduction Listing</h4>
                     <div class="card-toolbar">
-                       <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
                             data-bs-target="#deductionModal">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add Deduction
                         </button>
@@ -39,56 +39,72 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-
-                                        <div class="row gy-4">
-                                            <form action="javascript:void(0);" class="row g-3">
-                                                <div class="col-md-6">
+                                    <form id="AddForm" action="{{ route('admin.deductions.store') }}" method="post"
+                                        class="form row g-3" autocomplete="off" role="form">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row gy-4">
+                                                <div class="col-md-6 form-group">
                                                     <label for="deductionDate" class="form-label">Date<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="date" class="form-control" id="deductionDate">
+                                                    <input type="date" class="form-control" name="date" id="deductionDate"
+                                                        required data-error="Please select date">
+                                                    <span class="help-block with-errors err_date" style="color:red;"></span>
                                                 </div>
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="periodInput" class="form-label">Period<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="periodInput">
+                                                    <input type="text" class="form-control" name="period" id="periodInput"
+                                                        required readonly>
+                                                    <span class="help-block with-errors err_period"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+
+                                                <div class="col-md-6 form-group">
                                                     <label for="inputSupplier" class="form-label">Suppliers<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="inputSupplier" class="form-select">
-                                                        <option selected>Select Supplier code</option>
-                                                        <option>VC-A-F013</option>
-                                                        <option>VC-A-M106</option>
-                                                        <option>VC-A-R027</option>
-                                                        <option>VC-A-S070</option>
+                                                    <select id="inputSupplier" name="supplier_id" class="form-select"
+                                                        required data-error="Please select supplier">
+                                                        <option selected>Select Supplier Id</option>
+                                                        @foreach ($Suppliers as $supplier )
+                                                        <option value="{{ $supplier->id }}">
+                                                        {{ $supplier->supplier_id }}</option>
+                                                        @endforeach                                      
                                                     </select>
+
+                                                    <span class="help-block with-errors err_supplier_id"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="typeInput" class="form-label">Type<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="typeInput" class="form-select">
+                                                    <select id="typeInput" name="type" class="form-select">
                                                         <option selected>Select Type</option>
-                                                        <option>Transpost</option>
-                                                        <option>Advance</option>
-                                                        <option>Others</option>
+                                                        <option value="transport">Transpost</option>
+                                                        <option value="advance">Advance</option>
+                                                        <option value="others">Others</option>
                                                     </select>
+                                                    <span class="help-block with-errors err_type" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="amountInput" class="form-label">Amount</label>
-                                                    <input type="text" class="form-control" id="amountInput">
+                                                    <input type="text" class="form-control" name="amount" id="amountInput"
+                                                        required data-error="Please enter amount">
+                                                    <span class="help-block with-errors err_amount"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="remarkInput" class="form-label">Remark</label>
-                                                    <input type="text" class="form-control" id="remarkInput">
+                                                    <input type="text" name="remark" class="form-control" id="remarkInput">
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success ">Save Changes</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success ">Save Changes</button>
+                                        </div>
                                     </form>
 
                                 </div><!-- /.modal-content -->
@@ -102,15 +118,10 @@
                         <div class="row">
                             <table id="DeductionListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead class="table-light">
-                                    <tr>
-                                        <th scope="col" style="width: 10px;">
-                                            <div class="form-check">
-                                                <input class="form-check-input fs-15" type="checkbox" id="checkAll">
-                                            </div>
-                                        </th>
+                                    <tr>                                        
                                         <th>SR No.</th>
-                                        <th>Period</th>
                                         <th>Date</th>
+                                        <th>Period</th>
                                         <th>Supplier ID</th>
                                         <th>Type</th>
                                         <th>Amount</th>
@@ -119,267 +130,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>1</td>
-                                        <td>2025-Q1</td>
-                                        <td>2025-01-12</td>
-                                        <td>VC-A-F013</td>
-                                        <td>Advance</td>
-                                        <td>1,000.00</td>
-                                        <td>S.ADV 026</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>2</td>
-                                        <td>2025-Q1</td>
-                                        <td>2025-01-20</td>
-                                        <td>VC-A-M106</td>
-                                        <td>Transport</td>
-                                        <td>2,500.00</td>
-                                        <td>S.TRN 045</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>3</td>
-                                        <td>2025-Q1</td>
-                                        <td>2025-01-28</td>
-                                        <td>VC-A-R027</td>
-                                        <td>Others</td>
-                                        <td>3,200.00</td>
-                                        <td>S.OTH 011</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>4</td>
-                                        <td>2025-Q2</td>
-                                        <td>2025-02-05</td>
-                                        <td>VC-A-S070</td>
-                                        <td>Advance</td>
-                                        <td>1,800.00</td>
-                                        <td>S.ADV 030</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>5</td>
-                                        <td>2025-Q2</td>
-                                        <td>2025-02-12</td>
-                                        <td>VC-A-F013</td>
-                                        <td>Transport</td>
-                                        <td>4,100.00</td>
-                                        <td>S.TRN 052</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>6</td>
-                                        <td>2025-Q2</td>
-                                        <td>2025-02-19</td>
-                                        <td>VC-A-M106</td>
-                                        <td>Others</td>
-                                        <td>950.00</td>
-                                        <td>S.OTH 018</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>7</td>
-                                        <td>2025-Q3</td>
-                                        <td>2025-03-03</td>
-                                        <td>VC-A-R027</td>
-                                        <td>Advance</td>
-                                        <td>2,750.00</td>
-                                        <td>S.ADV 037</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>8</td>
-                                        <td>2025-Q3</td>
-                                        <td>2025-03-15</td>
-                                        <td>VC-A-S070</td>
-                                        <td>Transport</td>
-                                        <td>5,600.00</td>
-                                        <td>S.TRN 060</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>9</td>
-                                        <td>2025-Q3</td>
-                                        <td>2025-03-22</td>
-                                        <td>VC-A-F013</td>
-                                        <td>Others</td>
-                                        <td>1,450.00</td>
-                                        <td>S.OTH 025</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="form-check-input" type="checkbox"></td>
-                                        <td>10</td>
-                                        <td>2025-Q4</td>
-                                        <td>2025-04-02</td>
-                                        <td>VC-A-M106</td>
-                                        <td>Advance</td>
-                                        <td>3,900.00</td>
-                                        <td>S.ADV 042</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Clear Deduction
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    
                                 </tbody>
                             </table>
 
@@ -399,16 +150,25 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
 
     <script>
         $(document).ready(function () {
-            $('#DeductionListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
-            });
+               
+        $('#deductionDate').on('change', function () {
+            var selectedDate = new Date($(this).val());
+
+            var year = selectedDate.getFullYear();
+            var month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');  // Ensure two digits for month
+
+            // Combine the year and month 
+            var period = year + month;
+
+            $('#periodInput').val(period);
         });
+    });
+
     </script>
 
 

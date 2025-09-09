@@ -9,6 +9,7 @@ class Suppliers extends Model
     protected $table = 'suppliers';
 
     protected $fillable = [
+        'user_id',
         'supplier_id',
         'supplier_type',
         'supplier_name',
@@ -34,5 +35,37 @@ class Suppliers extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public static function generateSupplierId($prefix, $type)
+    {
+        $lastSupplier = Suppliers::where('supplier_id', 'LIKE', $prefix . '-' . $type . '-%')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($lastSupplier) {
+            $parts = explode('-', $lastSupplier->supplier_id);
+            $lastSequence = $parts[2] ?? $type . '000';
+            $lastNumber = (int) substr($lastSequence, 1);
+        } else {
+            $lastNumber = 0;
+        }
+
+        $newNumber = $lastNumber + 1;
+
+        $letter = $type;
+        if ($newNumber > 99) {
+            $letter = chr(ord($type) + 1);
+            $newNumber = 1;
+
+            if ($letter > 'Z') {
+                $letter = 'Z';
+                $newNumber = 99;
+            }
+        }
+
+        $formatted = $letter . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
+        return $prefix . '-' . $letter . '-' . $formatted;
     }
 }

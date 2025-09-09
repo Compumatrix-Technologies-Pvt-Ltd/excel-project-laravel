@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\DeductionController;
 use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\AuthCheck;
@@ -96,9 +99,29 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('suppliers/getRecords', [SupplierController::class, 'getRecords'])->name('suppliers.getRecords');
 
     Route::resource('suppliers', SupplierController::class)->names('suppliers');
-    Route::post('suppliers/import', [SupplierController::class,'importSuppliers'])->name('suppliers.import');
+    Route::post('suppliers/import', [SupplierController::class, 'importSuppliers'])->name('suppliers.import');
+    Route::post('suppliers/export', [SupplierController::class, 'exportSuppliers'])->name('suppliers.export');
 
     Route::get('suppliers-gps-list', [AdminUserController::class, 'suppliersGpsList'])->name('suppliersGps.index');
+
+    // Deduction Routes
+    Route::get('deductions/getRecords', [DeductionController::class, 'getRecords'])->name('deductions.getRecords');
+    Route::resource('deductions', DeductionController::class)->names('deductions');
+
+    Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
+
+    // Vehicle Management
+    Route::resource('vehicles', VehicleController::class)->names('vehicles');
+    Route::put('vehicles/update', [VehicleController::class, 'update'])->name('vehicles.update');
+
+    // Transaction Management
+    Route::get('transaction-management', [TransactionController::class, 'hqTransactionIndex'])->name('transaction.management');
+    Route::resource('transactions', TransactionController::class)->names('transactions');
+    Route::get('transactions/getRecords/hq', [TransactionController::class, 'getRecordsHq'])->name('transactions.getRecordsHq');
+    Route::get('transactions/getRecords', [TransactionController::class, 'getRecords'])->name('transactions.getRecords');
+
+
+
 
     // HQ- Suppliers
     Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
@@ -110,9 +133,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('supplies-analysis', [AdminUserController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
 
 
-    Route::get('transactions', [AdminUserController::class, 'transactionIndex'])->name('transactions.index');
-    Route::get('deductions', [AdminUserController::class, 'deductionIndex'])->name('deductions.index');
-    Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
     Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
     Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
     Route::get('purchase-analysis', [AdminUserController::class, 'purchaseAnalysisIndex'])->name('purchaseAnalysis.index');
@@ -122,7 +142,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash-purchase-list', [CommonController::class, 'cashPurchaseList'])->name('cash.purchase.list');
     Route::get('cash-purchase-summary', [CommonController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
     Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
-    Route::get('transaction-management', [CommonController::class, 'hqTransactionIndex'])->name('transaction.management');
     Route::get('sales-invoice', [CommonController::class, 'salesInvoice'])->name('sales.invoice');
     Route::get('supplier-cash-bill', [CommonController::class, 'supplierCashBill'])->name('supplier.cash.bill');
 
