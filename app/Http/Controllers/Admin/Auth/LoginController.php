@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Admin\Auth\LoginRequest;
+use Session;
 
 use Hash;
 
@@ -69,12 +70,15 @@ class LoginController extends Controller
           if($user){
                 if (auth()->attempt($userCredentials)) {
                 if(Hash::check($request->password, $user->password)) {
-                    $this->JsonData['url'] = route('admin.dashboard');
-                    $this->JsonData['status'] = 'success';
-                    $this->JsonData['msg'] = "You have successfully logged in...Please wait";
+
+                        Session::put('yearMonth', date('Ym'));
+
+                        $this->JsonData['url'] = route('admin.dashboard');
+                        $this->JsonData['status'] = 'success';
+                        $this->JsonData['msg'] = "You have successfully logged in...Please wait";
                     }else{
-                    $this->JsonData['status'] = 'error';
-                    $this->JsonData['msg'] = "These credentials do not match our records.";
+                        $this->JsonData['status'] = 'error';
+                        $this->JsonData['msg'] = "These credentials do not match our records.";
                     }
                 }else{
                     $this->JsonData['status'] = 'error';
@@ -94,4 +98,20 @@ class LoginController extends Controller
         return view($this->ModuleView . 'logout', $this->ViewData);
 
     }
+
+    // YearMonthController.php
+    public function store(Request $request)
+    {
+        $request->validate([
+            'yearMonth' => 'required|date_format:Ym',
+        ]);
+
+        session(['yearMonth' => $request->yearMonth]);
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'Year-Month updated successfully',
+        ]);
+    }
+
 }
