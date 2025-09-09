@@ -300,7 +300,8 @@ $("#AddForm")
                     !1
                 );
             }
-        }),
+        })
+        ,
         $("#AddProductForm").on("submit", function (e) {
             e.preventDefault();
             let isValid = true;
@@ -457,4 +458,42 @@ $("#AddForm")
             }
         });
     });
-    
+    $("#periodInput").on("blur", function () {
+    let value = $(this).val();
+    let url = $(this).data("url");
+
+            // Show loader
+            $.LoadingOverlay("show", { 
+                background: "rgba(75, 73, 172, 0)", 
+                maxSize: 40, 
+                imageColor: "#5236ff" 
+            });
+
+            axios.post(url, { yearMonth: value })
+                .then(function (res) {
+                    $.LoadingOverlay("hide");
+                    let data = res.data;
+
+                    if (data.status === "success") {
+                        showToast(true, data.msg);
+
+                        // reload or redirect if needed
+                        if (data.url) {
+                            setTimeout(() => window.location.href = data.url, 1500);
+                        }
+                    } else {
+                        showToast(false, data.msg);
+                    }
+                })
+                .catch(function (err) {
+                    $.LoadingOverlay("hide");
+                    if (err.response && err.response.data.errors) {
+                        $.each(err.response.data.errors, function (key, msg) {
+                            showToast(false, msg[0]);
+                        });
+                    } else {
+                        showToast(false, "Something went wrong");
+                    }
+                });
+        });
+

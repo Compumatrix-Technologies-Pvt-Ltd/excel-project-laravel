@@ -109,7 +109,7 @@
                                                 class="text-danger">*</span></label>
                                         <input type="date" name="mpob_exp_date" id="mpob_exp_date"
                                             class="form-control form-control-sm" required data-error="Please enter Expiry Date">
-                                        <span class="help-block with-errors err_mpob_lic_no" style="color:red;"></span>
+                                        <span class="help-block with-errors err_mpob_exp_date" style="color:red;"></span>
                                     </div>
                                 @endif
                                 <div class="col-md-6 form-group">

@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CommonController;
+use App\Http\Controllers\Admin\MasterController;
 
 
 
@@ -51,6 +52,7 @@ Route::get('/register', [LoginController::class, 'register'])->name('register')-
 Route::get('/register2', [LoginController::class, 'register2'])->name('register2')->middleware('guest');
 Route::get('/email-verification', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
 Route::get('/verification-success', [LoginController::class, 'verificationSuccess'])->name('verification.success')->middleware('guest');
+Route::post('/set-year-month', [LoginController::class, 'store'])->name('set.year.month');
 
 
 Route::post('admin/checkLogin', [LoginController::class, 'checkLogin'])->name('admin.checkLogin');
@@ -85,6 +87,9 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('banks/edit/{id}', [BankController::class, 'edit'])->name('banks.edit');
     Route::put('banks/update', [BankController::class, 'update'])->name('banks.update');
     Route::delete('banks/destroy/{id}', [BankController::class, 'destroy'])->name('banks.destroy');
+
+
+    Route::post('transaction-data-entry-form', [MasterController::class, 'index'])->name('transaction.data.entry.form');
 
 
     // Suppliers Route
