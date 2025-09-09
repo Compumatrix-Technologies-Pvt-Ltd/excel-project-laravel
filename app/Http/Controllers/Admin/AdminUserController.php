@@ -111,22 +111,22 @@ class AdminUserController extends Controller
         return view('admin.suppliers.suppliers-hq', $this->ViewData);
     }
     
-    public function transactionIndex(){
-         $this->ModuleTitle = __('Transactions');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.daily-transactions.index', $this->ViewData);
-    }
+    // public function transactionIndex(){
+    //      $this->ModuleTitle = __('Transactions');
+    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
+    //     return view('admin.daily-transactions.index', $this->ViewData);
+    // }
 
     // public function bankIndex(){
     //      $this->ModuleTitle = __('Bank Listing');
     //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
     //     return view('admin.banks.index', $this->ViewData);
     // }
-    public function deductionIndex(){
-         $this->ModuleTitle = __('Deduction Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.deductions.deduction-index', $this->ViewData);
-    }
+    // public function deductionIndex(){
+    //      $this->ModuleTitle = __('Deduction Listing');
+    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
+    //     return view('admin.deductions.deduction-index', $this->ViewData);
+    // }
     public function deductionReportIndex(){
          $this->ModuleTitle = __('Deduction Reports');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;

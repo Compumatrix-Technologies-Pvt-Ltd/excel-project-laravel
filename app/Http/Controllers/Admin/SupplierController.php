@@ -65,7 +65,7 @@ class SupplierController extends Controller
         $prefix = $request->prefix;
         $type = $request->type;
 
-        $supplierId = $this->generateSupplierId($prefix, $type);
+        $supplierId = $this->BaseModel->generateSupplierId($prefix, $type);
 
         $SuppliersData->supplier_id = $supplierId;
         $userId = auth()->user()->id;
@@ -86,7 +86,7 @@ class SupplierController extends Controller
         $SuppliersData->longitude = $request->longitude;
         $SuppliersData->email = $request->email;
         $SuppliersData->telphone_1 = $request->telphone_1;
-        $SuppliersData->telphone_2 = $request->telphone_1;
+        $SuppliersData->telphone_2 = $request->telphone_2;
         $SuppliersData->bank_id = $request->bank_id;
         $SuppliersData->bank_acc_no = $request->bank_acc_no;
         $SuppliersData->remark = $request->remark;

@@ -44,13 +44,13 @@
 
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="supplier_type" id="creditType"
-                                                value="credit" {{ old('supplier_type', $supplier->supplier_type) == 'credit' ? 'checked' : '' }}>
+                                                value="credit" {{ old('supplier_type', $supplier->supplier_type) == 'credit' ? 'checked' : '' }} readonly>
                                             <label class="form-check-label" for="creditType">Credit</label>
                                         </div>
 
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="supplier_type" id="cashType"
-                                                value="cash" {{ old('supplier_type', $supplier->supplier_type) == 'cash' ? 'checked' : '' }}>
+                                                value="cash" {{ old('supplier_type', $supplier->supplier_type) == 'cash' ? 'checked' : '' }} readonly>
                                             <label class="form-check-label" for="cashType">Cash</label>
                                         </div>
                                     </div>
@@ -58,11 +58,11 @@
                                     <div class="col-md-6 d-flex align-items-center">
                                         <label class="me-2">Supplier ID:</label>
                                         <input type="text" name="prefix" class="form-control form-control-sm me-1"
-                                            style="width: 60px;" value="{{ old('prefix', $supplier->prefix) }}" required>
+                                            style="width: 60px;" value="{{ old('prefix', $supplier->prefix) }}" required readonly>
 
                                         <input type="text" name="type" id="supplierTypeLetter"
                                             class="form-control form-control-sm me-1" style="width: 60px;"
-                                            value="{{ old('type', $supplier->type) }}" required>
+                                            value="{{ old('type', $supplier->type) }}" required readonly>
 
                                         <input type="text" name="sequence" class="form-control form-control-sm"
                                             style="width: 100px;" value="{{ old('sequence', $supplier->sequence) }}" readonly>
@@ -74,6 +74,7 @@
                                         <input type="text" name="supplier_id" id="supplier_id"
                                             class="form-control form-control-sm"
                                             value="{{ old('supplier_id', $supplier->supplier_id) }}" required>
+                                            <span class="help-block with-errors err_supplier_id" style="color:red;"></span>
                                     </div>
                                 @endif
                             </div>
@@ -84,11 +85,13 @@
                                     <input type="text" name="supplier_name" id="supplier_name"
                                         class="form-control form-control-sm"
                                         value="{{ old('supplier_name', $supplier->supplier_name) }}" required>
+                                         <span class="help-block with-errors err_supplier_name" style="color:red;"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="address1" class="form-label">Address 1</label>
                                     <input type="text" name="address1" id="address1" class="form-control form-control-sm"
                                         value="{{ old('address1', $supplier->address1) }}">
+                                        <span class="help-block with-errors err_address1" style="color:red;"></span>
                                 </div>
                             </div>
 
@@ -99,12 +102,14 @@
                                         <input type="text" name="mpob_lic_no" id="mpob_lic_no"
                                             class="form-control form-control-sm"
                                             value="{{ old('mpob_lic_no', $supplier->mpob_lic_no) }}">
+                                            <span class="help-block with-errors err_mpob_lic_no" style="color:red;"></span>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="mpob_exp_date" class="form-label">Expiry Date:</label>
                                         <input type="date" name="mpob_exp_date" id="mpob_exp_date"
                                             class="form-control form-control-sm"
                                             value="{{ old('mpob_exp_date', $supplier->mpob_exp_date) }}">
+                                            <span class="help-block with-errors err_mpob_exp_date" style="color:red;"></span>
                                     </div>
                                 @endif
                                 <div class="col-md-6">
@@ -121,12 +126,14 @@
                                         <input type="text" name="mspo_cert_no" id="mspo_cert_no"
                                             class="form-control form-control-sm"
                                             value="{{ old('mspo_cert_no', $supplier->mspo_cert_no) }}">
+                                            <span class="help-block with-errors err_mspo_cert_no" style="color:red;"></span>
                                     </div>
                                     <div class="col-md-3">
                                         <label for="mspo_exp_date" class="form-label">Expiry Date:</label>
                                         <input type="date" name="mspo_exp_date" id="mspo_exp_date"
                                             class="form-control form-control-sm"
                                             value="{{ old('mspo_exp_date', $supplier->mspo_exp_date) }}">
+                                            <span class="help-block with-errors err_mspo_exp_date" style="color:red;"></span>
                                     </div>
                                 </div>
 
@@ -137,9 +144,9 @@
                                             value="{{ old('tin', $supplier->tin) }}">
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="subsidy" class="form-label">Subsidy (%):</label>
-                                        <input type="number" name="subsidy" id="subsidy" class="form-control form-control-sm"
-                                            value="{{ old('subsidy', $supplier->subsidy_rate) }}">
+                                        <label for="subsidy_rate" class="form-label">Subsidy (%):</label>
+                                        <input type="number" name="subsidy_rate" id="subsidy_rate" class="form-control form-control-sm"
+                                            value="{{ old('subsidy_rate', $supplier->subsidy_rate) }}">
                                     </div>
                                     <div class="col-md-2">
                                         <label for="land_size" class="form-label">Land Size (Ha):</label>
@@ -164,11 +171,13 @@
                                     <label for="email" class="form-label">Email:</label>
                                     <input type="email" name="email" id="email" class="form-control form-control-sm"
                                         value="{{ old('email', $supplier->email) }}">
+                                        <span class="help-block with-errors err_email" style="color:red;"></span>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="telphone_1" class="form-label">Tel. 1:</label>
                                     <input type="tel" name="telphone_1" id="telphone_1" class="form-control form-control-sm"
                                         value="{{ old('telphone_1', $supplier->telphone_1) }}">
+                                        <span class="help-block with-errors err_telphone_1" style="color:red;"></span>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="telphone_2" class="form-label">Tel. 2:</label>
@@ -182,12 +191,14 @@
                                         <option value="MBBS" {{ old('bank_id', $supplier->bank_id) == 'MBBS' ? 'selected' : '' }}>MBBS</option>
                                         <option value="RHB" {{ old('bank_id', $supplier->bank_id) == 'RHB' ? 'selected' : '' }}>RHB</option>
                                     </select>
+                                     <span class="help-block with-errors err_bank_id" style="color:red;"></span>
                                 </div>
                                 <div class="col-md-2">
                                     <label for="bank_acc_no" class="form-label">Bank A/C No.:</label>
                                     <input type="text" name="bank_acc_no" id="bank_acc_no"
                                         class="form-control form-control-sm"
                                         value="{{ old('bank_acc_no', $supplier->bank_acc_no) }}">
+                                        <span class="help-block with-errors err_bank_acc_no" style="color:red;"></span>
                                 </div>
                             </div>
 
