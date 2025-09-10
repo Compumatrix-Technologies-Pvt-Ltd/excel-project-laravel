@@ -143,7 +143,6 @@
             { data: 'remark', name: 'remark' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false },
         ],
-
         columnDefs: [
             { "orderable": false, "targets": [1, 2, 3, 4] },
         ],
@@ -153,12 +152,9 @@
     });
 
     $(document).on('click','#edit-vehicle-btn',function(){
-
        $('#editVehicleModal').modal('show');
         var encrypted_id = $(this).attr("data-id");
-        // alert(encrypted_id);
         var action = ADMINURL+'/vehicles/'+ encrypted_id + '/edit/';
-
         $.ajax({
             type: "GET",
             url: action,
