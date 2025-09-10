@@ -171,5 +171,133 @@
         });
     });
     
+      $(document).on('click','#edit-user-btn',function(){
+
+       $('#editUserModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/users/'+ encrypted_id +'/edit';
+
+        // $.ajax({
+        //     type: "GET",
+        //     url: action,
+        //     dataType:"json",
+        //     success:function(response){
+        //         if(response.status == 'success'){
+        //             $("#fullnameInput").val(response.data.name);
+        //             $('#inputEmail4').val(response.data.email);
+        //             $('#phoneNumberInput').val(response.data.mobile_number);       
+        //             $('#user_role').val(response.data.role);       
+        //             $('#inputBranch').val(response.data.bic_code);       
+        //             $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
+        //             $('#hidden_id').val(encrypted_id);
+        //             $('#submitBtn').removeClass('disabled');
+        //         }else{
+        //             alert('Something went wrong');
+        //         } 
+        //     }
+        // });
+    });
+
+
+  
+    var action = ADMINURL + '/transactions/getRecords/hq';
+        $('#TransactionListingHq').DataTable({
+            scroller: true,
+            serverSide: true,
+            responsive: false,
+            ajax: {
+                url: action,
+                type: "GET",
+            },
+            columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+                { data: 'ticket_no', name: 'ticket_no' },
+                { data: 'trx_date', name: 'trx_date' },
+                { data: 'supplier_id', name: 'supplier_id' },
+                { data: 'vehicle_id', name: 'vehicle_id' },
+                { data: 'mill_id', name: 'mill_id' },
+                { data: 'weight', name: 'weight' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+            ],
+
+            columnDefs: [
+                { "orderable": false, "targets": [1, 2, 3, 4] },
+            ],
+            aaSorting: [
+                [0, 'DESC']
+            ],
+        });
+  
+
+
+    var action = ADMINURL + '/transactions/getRecords';
+        $('#TransactionListing').DataTable({
+            scroller: true,
+            serverSide: true,
+            responsive: false,
+            ajax: {
+                url: action,
+                type: "GET",
+            },
+            columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+                { data: 'trx_no', name: 'trx_no' },
+                { data: 'trx_date', name: 'trx_date' },
+                { data: 'supplier_id', name: 'supplier_id' },
+                { data: 'ticket_no', name: 'ticket_no' },
+                { data: 'weight', name: 'weight' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+            ],
+
+            columnDefs: [
+                { "orderable": false, "targets": [1, 2, 3, 4] },
+            ],
+            aaSorting: [
+                [0, 'DESC']
+            ],
+        });
+
+          $(document).on('click','#edit-transaction-btn',function(){
+
+       $('#transactionEditModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+
+        // $.ajax({
+        //     type: "GET",
+        //     url: action,
+        //     dataType:"json",
+        //     success:function(response){
+        //         if(response.status == 'success'){
+        //             $("#fullnameInput").val(response.data.name);
+        //             $('#inputEmail4').val(response.data.email);
+        //             $('#phoneNumberInput').val(response.data.mobile_number);       
+        //             $('#user_role').val(response.data.role);       
+        //             $('#inputBranch').val(response.data.bic_code);       
+        //             $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
+        //             $('#hidden_id').val(encrypted_id);
+        //             $('#submitBtn').removeClass('disabled');
+        //         }else{
+        //             alert('Something went wrong');
+        //         } 
+        //     }
+        // });
+    });
 
 });

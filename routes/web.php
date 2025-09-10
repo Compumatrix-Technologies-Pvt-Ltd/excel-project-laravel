@@ -133,10 +133,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Transaction Management
     Route::get('transaction-management', [TransactionController::class, 'hqTransactionIndex'])->name('transaction.management');
-    Route::resource('transactions', TransactionController::class)->names('transactions');
     Route::get('transactions/getRecords/hq', [TransactionController::class, 'getRecordsHq'])->name('transactions.getRecordsHq');
     Route::get('transactions/getRecords', [TransactionController::class, 'getRecords'])->name('transactions.getRecords');
 
+    Route::resource('transactions', TransactionController::class)->names('transactions');
+    
 
 
 
