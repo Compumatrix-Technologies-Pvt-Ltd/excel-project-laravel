@@ -132,13 +132,7 @@ class AdminUserController extends Controller
         //
     }
 
-    public function branchIndex()
-    {
-        $this->ModuleTitle = __('Branch Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view($this->ModuleView . 'branch-index', $this->ViewData);
-    }
-
+   
     // public function suppliersIndex(){
     //     $this->ModuleTitle = __('Suppliers Listing');
     //     $this->ViewData['moduleAction'] = $this->ModuleTitle;

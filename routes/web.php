@@ -26,6 +26,8 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\MasterController;
+use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\RolesController;
 
 
 
@@ -78,7 +80,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
 
     Route::resource('users', AdminUserController::class)->names('users');
-    Route::get('branches', [AdminUserController::class, 'branchIndex'])->name('branches.index');
+
+
+    # Manage Roles
+    Route::get('roles/getRecords', [RolesController::class, 'getRecords']);
+    Route::put('roles-update', [RolesController::class, 'updateRole'])->name('roles.updateRole');
+    Route::resource('roles', RolesController::class);
+
 
     // Mill Routes
     Route::get('mill-management', [MillController::class, 'index'])->name('mill.management');
@@ -86,6 +94,12 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('mill/edit/{id}', [MillController::class, 'edit'])->name('mill.edit');
     Route::put('mill/update', [MillController::class, 'update'])->name('mill.update');
     Route::delete('mill/destroy/{id}', [MillController::class, 'destroy'])->name('mill.destroy');
+
+
+    // Branch Routes
+    Route::put('update-branch', [BranchController::class, 'update'])->name('update-branch');
+    Route::resource('branch', BranchController::class);
+
 
     // Bank Routes
     Route::get('banks', [BankController::class, 'index'])->name('banks.index');
@@ -154,7 +168,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('emails-sms-edit/{id}', [CommonController::class, 'emailsAndSmsEdit'])->name('emails.and.sms.edit');
     Route::get('cms-pages', [CommonController::class, 'cmsPages'])->name('cms.pages');
     Route::get('cms-pages-edit/{id}', [CommonController::class, 'cmsPagesEdit'])->name('cms.pages.edit');
-    Route::get('roles', [CommonController::class, 'roles'])->name('roles.index');
     Route::get('audit-logs', [CommonController::class, 'auditLogs'])->name('audit.logs.index');
     Route::get('impersonation-console', [CommonController::class, 'impersonationConsole'])->name('impersonation.console.index');
     Route::get('security-settings', [CommonController::class, 'securitySettings'])->name('security.settings.index');

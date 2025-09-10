@@ -116,11 +116,7 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "CMS Pages Edit";
         return view('admin.cms.cms-edit', $this->ViewData);
     }
-    public function roles(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Roles";
-        return view('admin.audit.index', $this->ViewData);
-    }
+    
     public function auditLogs(Request $request)
     {
         $this->ViewData['moduleAction'] = "Audit Logs";
