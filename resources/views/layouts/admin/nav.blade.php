@@ -70,6 +70,25 @@
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/roles') ? ' collapsed active' : '' }}"
+                            href="#RolesPermissions" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="RolesPermissions">
+                            <i class="mdi mdi-account-group"></i> <span data-key="t-base-ui">Roles & Permissions</span>
+
+                        </a>
+                        <div class="collapse menu-dropdown {{ request()->is('admin/roles') ? 'show' : '' }}"
+                            id="RolesPermissions">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.roles.index') }}"
+                                        class="nav-link {{ request()->is('admin/roles', 'admin/roles/create') ? 'active' : '' }}"
+                                        data-key="t-horizontal">Roles</a>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/plans/users') ? 'active' : '' }}"
                             href="{{ route('admin.plans.users') }}">
@@ -118,20 +137,17 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->is('admin/roles', 'admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? ' collapsed active' : ''  }}"
+                        <a class="nav-link menu-link {{ (request()->is('admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? ' collapsed active' : ''  }}"
                             href="#SecurityAudit" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="SecurityAudit">
                             <i class="mdi mdi-security" aria-hidden="true"></i>
                             <span data-key="t-widgets">Security & Audit</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ (request()->is('admin/roles', 'admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? 'show' : ''  }}"
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? 'show' : ''  }}"
                             id="SecurityAudit">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.roles.index') }}"
-                                        class="nav-link {{ (request()->is('admin/roles')) ? 'active' : ''  }}"
-                                        data-key="t-horizontal">Admin Users & Roles</a>
-                                </li>
+                              
+                                
                                 <li class="nav-item">
                                     <a href="{{ route('admin.audit.logs.index') }}"
                                         class="nav-link {{ (request()->is('admin/audit-logs')) ? 'active' : ''  }}"
@@ -208,8 +224,8 @@
 
                     <!-- Branch Management -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
-                            href="{{ route('admin.branches.index') }}">
+                        <a class="nav-link menu-link {{ request()->is('admin/branch') ? 'active' : '' }}"
+                            href="{{ route('admin.branch.index') }}">
                             <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Branch Management</span>
                         </a>
                     </li>
