@@ -143,6 +143,8 @@ class LoginController extends Controller
         $user->otp = $otp;
         $user->otp_expires_at = $expiresAt;
         $user->email_verified_at = null;
+    
+        $user->assignRole('hq');
         $user->save();
 
         try {

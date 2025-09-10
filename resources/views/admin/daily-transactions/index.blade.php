@@ -114,14 +114,9 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <table id="BranchListing" class="table nowrap dt-responsive align-middle" style="width:100%">
+                            <table id="TransactionListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 10px;">
-                                            <div class="form-check">
-                                                <input class="form-check-input fs-15" type="checkbox" id="checkAll">
-                                            </div>
-                                        </th>
                                         <th>SR No.</th>
                                         <th>TRX No</th>
                                         <th>TRX Date</th>
@@ -224,16 +219,4 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#BranchListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
-            });
-        });
-    </script>
-
-
 @endsection

@@ -70,7 +70,7 @@
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li>
-                     <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/roles') ? ' collapsed active' : '' }}"
                             href="#RolesPermissions" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="RolesPermissions">
@@ -85,7 +85,7 @@
                                         class="nav-link {{ request()->is('admin/roles', 'admin/roles/create') ? 'active' : '' }}"
                                         data-key="t-horizontal">Roles</a>
                                 </li>
-                               
+
                             </ul>
                         </div>
                     </li>
@@ -146,8 +146,8 @@
                         <div class="collapse menu-dropdown {{ (request()->is('admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? 'show' : ''  }}"
                             id="SecurityAudit">
                             <ul class="nav nav-sm flex-column">
-                              
-                                
+
+
                                 <li class="nav-item">
                                     <a href="{{ route('admin.audit.logs.index') }}"
                                         class="nav-link {{ (request()->is('admin/audit-logs')) ? 'active' : ''  }}"
@@ -173,7 +173,7 @@
 
                 @endif
 
-                @if (Auth::user()->role == 'hq')
+                @if (Auth::user()->hasRole('hq'))
                     <li class="menu-title"><span data-key="t-menu" class="text-light">HQ Modules</span></li>
                     <li class="text-light">
                         <hr>
@@ -260,11 +260,11 @@
                     </li>
 
                     <!-- <li class="nav-item">
-                            <a class="nav-link menu-link {{ request()->is('admin/suppliers-hq') ? 'active' : '' }}"
-                                href="{{ route('admin.suppliersHq.index') }}">
-                                <i class="mdi mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
-                            </a>
-                        </li> -->
+                                    <a class="nav-link menu-link {{ request()->is('admin/suppliers-hq') ? 'active' : '' }}"
+                                        href="{{ route('admin.suppliersHq.index') }}">
+                                        <i class="mdi mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
+                                    </a>
+                                </li> -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
                             href="{{ route('admin.mill.management') }}">
@@ -354,12 +354,13 @@
                         </a>
                     </li>
 
-                     <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
                     <li class="text-light">
                         <hr>
                     </li>
                     {{-- <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                        <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
+                            href="{{ route('admin.dashboard') }}">
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li> --}}
@@ -372,8 +373,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? ' collapsed active' : '' }}"
-                            href="#SupplierManagement" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="SupplierManagement">
+                            href="#SupplierManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="SupplierManagement">
                             <i class="mdi mdi-store"></i>
                             <span data-key="t-base-ui">Suppliers</span>
                         </a>
@@ -468,8 +469,8 @@
                     <!-- Cash Purchases -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary', 'admin/daily-cash-purchase-summary') ? ' collapsed active' : '' }}"
-                            href="#CashPurchasesManagement" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="CashPurchasesManagement">
+                            href="#CashPurchasesManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="CashPurchasesManagement">
                             <i class="mdi mdi mdi-bank-plus"></i>
                             <span data-key="t-base-ui">Cash Purchases</span>
 
@@ -516,24 +517,24 @@
                         <div class="collapse menu-dropdown {{ request()->is('admin/purchase-analysis', 'admin/credit-purchase-analysis', 'admin/supplies-analysis') ? 'show' : '' }}"
                             id="AnalysisManagement">
                             <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.purchaseAnalysis.index') }}"
-                                            class="nav-link {{ request()->is('admin/purchase-analysis') ? 'active' : '' }}"
-                                            data-key="t-horizontal">Purchase Analysis</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.creditPurchaseAnalysis.index') }}"
-                                            class="nav-link {{ request()->is('admin/ccredit-purchase-analysis') ? 'active' : '' }}"
-                                            data-key="t-horizontal">Credit Purchase Analysis</a>
-                                    </li>
-                              
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.purchaseAnalysis.index') }}"
+                                        class="nav-link {{ request()->is('admin/purchase-analysis') ? 'active' : '' }}"
+                                        data-key="t-horizontal">Purchase Analysis</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.creditPurchaseAnalysis.index') }}"
+                                        class="nav-link {{ request()->is('admin/ccredit-purchase-analysis') ? 'active' : '' }}"
+                                        data-key="t-horizontal">Credit Purchase Analysis</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>
 
                 @endif
+                @if (Auth::user()->hasRole('branch'))
 
-                @if (Auth::user()->role == 'branch-user')
                     <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
                     <li class="text-light">
                         <hr>
