@@ -9,6 +9,8 @@ use Exception;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Suppliers;
+use Log;
 
 class MasterController extends Controller
 {
@@ -23,9 +25,31 @@ class MasterController extends Controller
         $this->ModuleView = 'admin.master.';
     }
 
-    public function index()
+    public function mainForm(Request $request)
     {
-        $this->ViewData['moduleAction'] = "Master Management";
+        $purchaseType = $request->input('purchaseType', 'credit'); // default to credit purchase
+
+        $this->ModuleTitle = __('Main');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+
+        // Filter suppliers by supplier_type matching purchaseType value
+        $this->ViewData['suppliers'] = Suppliers::where([
+            'supplier_type' => $purchaseType, 
+            'user_id' => auth()->id()
+        ])->get();
+
+        $this->ViewData['suppliers_credit'] = Suppliers::where('supplier_type', 'credit')->get();
+        $this->ViewData['suppliers_cash'] = Suppliers::where('supplier_type', 'cash')->get();
+
+
+        return view('admin.masters.masterForm', $this->ViewData);
+    }
+
+    public function HQmainForm()
+    {
+        $this->ModuleTitle = __('Main');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view('admin.masters.hq-masterForm', $this->ViewData);
     }
 
 }

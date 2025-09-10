@@ -344,11 +344,7 @@
                                     </div>
                                     <div class="col-md-3 col-lg-3">
                                         <label class="form-label mb-0">Supplier ID:</label>
-                                        <select class="form-select form-select-sm">
-                                            <option value="">Select</option>
-                                            <option>VC-A-F013</option>
-                                            <option>VC-A-M106</option>
-                                        </select>
+                                       <select id="supplierSelect" class="form-select form-select-sm"></select>
                                     </div>
                                     <div class="col-md-3 col-lg-3">
                                         <label class="form-label mb-0">Period:</label>
@@ -485,4 +481,36 @@
 @endsection
 @section('scripts')
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-create-edit.js') }}"></script>
+
+<script>
+  // Store suppliers grouped by type, injected from backend (Blade or API)
+  const suppliers = {
+    credit: @json($suppliers_credit),
+    cash: @json($suppliers_cash)
+  };
+
+  const supplierSelect = document.getElementById('supplierSelect');
+  const purchaseTypeRadios = document.querySelectorAll('input[name="purchaseType"]');
+
+  function populateSuppliers(type) {
+    supplierSelect.innerHTML = '<option value="">Select</option>';
+    suppliers[type].forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.id;
+      opt.textContent = s.supplier_name;
+      supplierSelect.appendChild(opt);
+    });
+  }
+
+  purchaseTypeRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      populateSuppliers(radio.id === 'creditPurchase' ? 'credit' : 'cash');
+    });
+  });
+
+  // Initialize supplier list on page load
+  const initialType = document.querySelector('input[name="purchaseType"]:checked').id === 'creditPurchase' ? 'credit' : 'cash';
+  populateSuppliers(initialType);
+</script>
+
 @endsection

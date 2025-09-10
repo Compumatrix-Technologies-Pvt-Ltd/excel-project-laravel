@@ -181,8 +181,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Master Module route
 
-    Route::get('main', [AdminUserController::class, 'mainForm'])->name('mainForm.index');
-    Route::get('hq-main', [AdminUserController::class, 'HQmainForm'])->name('hqMainForm.index');
+    Route::get('main', [MasterController::class, 'mainForm'])->name('mainForm.index');
+    Route::get('hq-main', [MasterController::class, 'HQmainForm'])->name('hqMainForm.index');
 
 
 
