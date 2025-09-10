@@ -49,216 +49,42 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>1</td>
-                                        <td>Rajesh Kumar</td>
-                                        <td>rajesh.kumar@example.com</td>
-                                        <td>+91 9876543210</td>
-                                        <td>Branch 1</td>
-                                        <td><span class="badge bg-success">Active</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
+                                    @foreach ($BranchUsers as $index => $user)
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
+                                                </div>
+                                            </th>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->mobile_number }}</td>
+                                            <td>{{$user->branch->name}}</td>
+                                            <td><span class="badge bg-success">{{$user->status}}</span></td>
+                                            <td>
+                                                <div class="dropdown d-inline-block">
+                                                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
+                                                        data-bs-toggle="dropdown"><i
+                                                            class="ri-more-fill align-middle"></i></button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                                                data-id="{{base64_encode(base64_encode($user->id))}}"
+                                                                id="edit-user-btn">
+                                                                <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li><a href="javascript:void(0)" onclick="return deleteCollection(this)"
+                                                                data-href="{{route('admin.mill.destroy', [base64_encode(base64_encode($user->id))])}}"
+                                                                class="dropdown-item remove-item-btn"><i
+                                                                    class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
-                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>2</td>
-                                        <td>Anita Sharma</td>
-                                        <td>anita.sharma@example.com</td>
-                                        <td>+91 9123456780</td>
-                                        <td>Branch 2</td>
-                                        <td><span class="badge bg-warning">Inactive</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>3</td>
-                                        <td>Sunil Patil</td>
-                                        <td>sunil.patil@example.com</td>
-                                        <td>+91 9988776655</td>
-                                        <td>Branch 3</td>
-                                        <td><span class="badge bg-success">Active</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>4</td>
-                                        <td>Pooja Mehta</td>
-                                        <td>pooja.mehta@example.com</td>
-                                        <td>+91 9876001122</td>
-                                        <td>Branch 2</td>
-                                        <td><span class="badge bg-danger">Locked</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>5</td>
-                                        <td>Imran Khan</td>
-                                        <td>imran.khan@example.com</td>
-                                        <td>+91 9765432100</td>
-                                        <td>Branch 1</td>
-                                        <td><span class="badge bg-success">Active</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>6</td>
-                                        <td>Kavita Desai</td>
-                                        <td>kavita.desai@example.com</td>
-                                        <td>+91 9350011223</td>
-                                        <td>Branch 3</td>
-                                        <td><span class="badge bg-warning">Inactive</span></td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="ri-more-fill align-middle"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-
-                                                     <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editUserModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item remove-item-btn">
-                                                            <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
 
@@ -273,51 +99,70 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-
-                                        <div class="row gy-4">
-                                            <form action="javascript:void(0);" class="row g-3">
-                                                <div class="col-md-12">
+                                    <form id="updateForm" action="{{ route('admin.users.store') }}" role="form"
+                                        class="row g-3" method="post">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" id="hidden_id">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3 form-group">
                                                     <label for="fullnameInput" class="form-label">Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="fullnameInput" value="Rajesh Kumar">
+                                                    <input name="name" type="text" class="form-control" id="fullnameInput">
+                                                    <span class="help-block with-errors err_name" style="color:red;"></span>
+
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 mb-3 form-group">
                                                     <label for="inputEmail4" class="form-label">Email<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="inputEmail4" value="rajesh.kumar@example.com">
+                                                    <input type="email" name="email" class="form-control" id="inputEmail4">
+                                                    <span class="help-block with-errors err_email"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 mb-3 form-group">
                                                     <label for="phoneNumberInput" class="form-label">Phone Number</label>
-                                                    <input type="tel" class="form-control" id="phoneNumberInput" value="+91 9876543210">
+                                                    <input type="tel" name="mobile_number" class="form-control"
+                                                        id="phoneNumberInput">
+                                                    <span class="help-block with-errors err_mobile_number"
+                                                        style="color:red;"></span>
                                                 </div>
-                                                {{-- <div class="col-md-6">
-                                                    <label for="inputRole" class="form-label">Roles<span
+                                                <div class="col-md-6 mb-3 form-group">
+                                                    <label for="inputRole" class="form-label">Assign Role<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="inputRole" class="form-select">
-                                                        <option selected>HQ</option>
-                                                        <option>HQ</option>
-                                                        <option>Branch User</option>
-                                                        <option>Auditor </option>
+                                                    <select class="form-control role" tabindex="1" name="role"
+                                                        id="user_role">
+                                                        <option value="" name="">Select Role</option>
+                                                        @if(!empty($rolesCollection) && count($rolesCollection) > 0)
+                                                            @foreach($rolesCollection as $key => $role)
+                                                                <option value="{{ base64_encode(base64_encode($role->id)) }}"
+                                                                    name="{{$role->name}}">
+                                                                    {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
                                                     </select>
-                                                </div> --}}
-                                                <div class="col-md-6">
+                                                    <span class="help-block with-errors err_role" style="color:red;"></span>
+
+                                                </div>
+                                                <div class="col-md-6 mb-3 form-group">
                                                     <label for="inputBranch" class="form-label">Assign Branch<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="inputBranch" class="form-select">
-                                                        <option selected>Branch 1</option>
-                                                        <option>Branch 1</option>
-                                                        <option>Branch 2</option>
-                                                        <option>Branch 3</option>
+                                                    <select name="branch_id" id="inputBranch" class="form-select">
+                                                        <option selected>Select Branch</option>
+                                                        @foreach ($Branches as $branch)
+                                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                        @endforeach
                                                     </select>
+                                                    <span class="help-block with-errors err_branch_id"
+                                                        style="color:red;"></span>
                                                 </div>
 
-                                                <div class="col-6">
+                                                <div class="col-6 mb-3 form-group">
                                                     <label for="status" class="form-label d-block">Status</label>
                                                     <div class="d-flex gap-3">
                                                         <div class="form-check form-check-inline form-radio-success">
                                                             <input class="form-check-input" type="radio" name="status"
-                                                                id="statusActive" value="active" checked>
+                                                                id="statusActive" value="active">
                                                             <label class="form-check-label"
                                                                 for="statusActive">Active</label>
                                                         </div>
@@ -335,14 +180,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-success ">Save Changes</button>
-                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
                                     </form>
-
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
@@ -360,6 +205,7 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
 

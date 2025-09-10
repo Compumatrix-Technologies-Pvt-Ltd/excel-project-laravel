@@ -115,7 +115,7 @@ class RolesController extends Controller
         if (count($alreadyExist) == 0) {
             $data = [
                 'name' => $request->name,
-                'guard_name' => 'admin'
+                'guard_name' => 'web'
             ];
             
             if ($this->BaseModel->create($data)) {

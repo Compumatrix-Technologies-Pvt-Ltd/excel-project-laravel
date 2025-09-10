@@ -139,18 +139,14 @@ class TransactionController extends Controller
 
             $loggedInUser = auth()->user();
 
-            $baseQuery = $this->BaseModel::with('supplier.user');
-
-            if ($loggedInUser->role === 'hq') {
-                $baseQuery->whereHas('supplier.user', function ($q) {
-                    $q->where('role', 'hq');
-                });
-            } elseif ($loggedInUser->role === 'branch-user') {
-                $baseQuery->whereHas('supplier.user', function ($q) {
-                    $q->where('role', 'branch-user');
-                });
+            if (!$loggedInUser->hasRole('branch')) {
+                return response()->json([
+                    'error' => 'Unauthorized: User does not have the required role.',
+                ], 403);
             }
 
+            $baseQuery = $this->BaseModel::with(['supplier'])
+                ->where('user_id', $loggedInUser->id);
 
             $intTotalData = $baseQuery->count();
 
@@ -160,37 +156,52 @@ class TransactionController extends Controller
                 $strSearch = $request->search['value'];
 
                 $modelQuery->where(function ($query) use ($strSearch) {
-                    $query->where('date', 'LIKE', "%{$strSearch}%")
+                    $query->where('trx_no', 'LIKE', "%{$strSearch}%")
                         ->orWhere('supplier_id', 'LIKE', "%{$strSearch}%")
-                        ->orWhere('type', 'LIKE', "%{$strSearch}%")
-                        ->orWhere('amount', 'LIKE', "%{$strSearch}%");
+                        ->orWhere('ticket_no', 'LIKE', "%{$strSearch}%")
+                        ->orWhere('weight', 'LIKE', "%{$strSearch}%");
                 });
             }
 
             $intTotalFiltered = $modelQuery->count();
 
+            // Retrieve the actual records with pagination
             $objects = $modelQuery->orderBy($sortColumn, $dir)
                 ->skip($start)
                 ->take($length)
                 ->get();
 
+            // Prepare the data for the response
             $data = [];
             $count = $start + 1;
 
-            foreach ($objects as $deduction) {
-
+            foreach ($objects as $transaction) {
                 $data[] = [
                     'sr.no' => $count,
-                    'date' => $deduction->date ?? 'N/A',
-                    'period' => $deduction->period ?? 'N/A',
-                    'supplier_id' => $deduction->supplier->supplier_id ?? 'N/A',
-                    'type' => ucfirst($deduction->type) ?? 'N/A',
-                    'amount' => $deduction->amount ?? 'N/A',
-                    'remark' => ucfirst($deduction->remark) ?? 'N/A',
-                    'actions' => '<a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route('admin.deductions.destroy', [base64_encode(base64_encode($deduction->id))]) . '" class="dropdown-item remove-item-btn">
-                                    <i class="ri-delete-bin-fill align-bottom me-2 text-danger" title="Clear Deduction"></i>
-                                </a>'
-
+                    'trx_no' => $transaction->trx_no ?? 'N/A',
+                    'trx_date' => $transaction->trx_date ?? 'N/A',
+                    'supplier_id' => $transaction->supplier->supplier_name ?? 'N/A',
+                    'ticket_no' => $transaction->ticket_no ?? 'N/A',
+                    'weight' => $transaction->weight ?? 'N/A',
+                    'actions' => '
+                    <div class="dropdown d-inline-block">
+                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown">
+                            <i class="ri-more-fill align-middle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="javascript:void(0)" id="edit-transaction-btn">
+                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route('admin.transactions.destroy', [base64_encode(base64_encode($transaction->id))]) . '" class="dropdown-item remove-item-btn">
+                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                ',
                 ];
             }
 
@@ -208,5 +219,114 @@ class TransactionController extends Controller
             ], 500);
         }
     }
+
+    public function getRecordshq(Request $request)
+    {
+        try {
+            $start = $request->start ?? 0;
+            $length = $request->length ?? 10;
+
+            $column = 0;
+            $dir = 'asc';
+
+            if ($request->has('order') && isset($request->order[0])) {
+                $column = $request->order[0]['column'];
+                $dir = $request->order[0]['dir'];
+            }
+
+            $filter = [
+                0 => 'trx_date',
+                1 => 'trx_no',
+                2 => 'ticket_no',
+                3 => 'supplier_id',
+                4 => 'weight',
+            ];
+
+            $sortColumn = $filter[$column] ?? 'trx_no';
+
+            $loggedInUser = auth()->user();
+
+            if (!$loggedInUser->hasRole('hq')) {
+                return response()->json([
+                    'error' => 'Unauthorized: User does not have the required role.',
+                ], 403);
+            }
+
+            $baseQuery = $this->BaseModel::with(['supplier', 'vehicle', 'mill'])
+                ->where('user_id', $loggedInUser->id);
+
+            $intTotalData = $baseQuery->count();
+
+            $modelQuery = clone $baseQuery;
+
+            if (!empty($request->search['value'])) {
+                $strSearch = $request->search['value'];
+
+                $modelQuery->where(function ($query) use ($strSearch) {
+                    $query->where('ticket_no', 'LIKE', "%{$strSearch}%")
+                        ->orWhere('supplier_id', 'LIKE', "%{$strSearch}%")
+                        ->orWhere('vehicle', 'LIKE', "%{$strSearch}%")
+                        ->orWhere('weight', 'LIKE', "%{$strSearch}%");
+                });
+            }
+
+            $intTotalFiltered = $modelQuery->count();
+
+            // Retrieve the actual records with pagination
+            $objects = $modelQuery->orderBy($sortColumn, $dir)
+                ->skip($start)
+                ->take($length)
+                ->get();
+
+            // Prepare the data for the response
+            $data = [];
+            $count = $start + 1;
+
+            foreach ($objects as $transaction) {
+                $data[] = [
+                    'sr.no' => $count,
+                    'ticket_no' => $transaction->ticket_no ?? 'N/A',
+                    'trx_date' => $transaction->trx_date ?? 'N/A',
+                    'supplier_id' => $transaction->supplier->supplier_name ?? 'N/A',
+                    'vehicle_id' => $transaction->vehicle->name ?? 'N/A',
+                    'mill_id' => $transaction->mill->name ?? 'N/A',
+                    'weight' => $transaction->weight ?? 'N/A',
+                    'actions' => '
+                    <div class="dropdown d-inline-block">
+                        <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown">
+                            <i class="ri-more-fill align-middle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="' . route('admin.suppliers.edit', base64_encode(base64_encode($transaction->id))) . '" id="edit-supplier-btn">
+                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route('admin.suppliers.destroy', [base64_encode(base64_encode($transaction->id))]) . '" class="dropdown-item remove-item-btn">
+                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                ',
+                ];
+            }
+
+            return response()->json([
+                'draw' => intval($request->draw),
+                'recordsTotal' => $intTotalData,
+                'recordsFiltered' => $intTotalFiltered,
+                'data' => $data,
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'An error occurred while fetching records.',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
 
 }

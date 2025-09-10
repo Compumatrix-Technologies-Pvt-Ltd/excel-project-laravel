@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Auth\RegistrationRequest;
 use App\Mail\EmailVerificationMail;
 use App\Models\Branch;
+use App\Models\BranchModel;
 use App\Models\User;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
 use Log;
 use Mail;
+use Spatie\Permission\Models\Role;
 use Str;
 
 class AdminUserController extends Controller
@@ -21,17 +23,23 @@ class AdminUserController extends Controller
      * Display a listing of the resource.
      */
 
-    public function __construct(User $UserModel)
-    {
+    public function __construct(
+        User $UserModel,
+        Role $RoleModel
+    ) {
         $this->BaseModel = $UserModel;
+        $this->RoleModel = $RoleModel;
         $this->ViewData = [];
         $this->ModuleView = 'admin.users.';
     }
     public function index()
     {
-
         $this->ModuleTitle = __('User Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $this->ViewData['BranchUsers'] = $this->BaseModel->with('branch')->whereHas('roles', function ($query) {
+            $query->where('name', 'branch');
+        })->get();
+        $this->ViewData['Branches'] = BranchModel::all();
         return view($this->ModuleView . 'index', $this->ViewData);
     }
 
@@ -43,7 +51,11 @@ class AdminUserController extends Controller
 
         $this->ModuleTitle = __('Create Users');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['Branches'] = Branch::all();
+        $this->ViewData['rolesCollection'] = $this->RoleModel
+            ->whereNotIn('name', ['super-admin', 'hq'])
+            ->orderBy('name', 'ASC')
+            ->get();
+        $this->ViewData['Branches'] = BranchModel::all();
         return view($this->ModuleView . 'create', $this->ViewData);
 
     }
@@ -71,9 +83,12 @@ class AdminUserController extends Controller
     {
         $user = auth()->user();
         $plainPassword = Str::random(6);
-
+        $strRole = $this->RoleModel->where('id', base64_decode(base64_decode($request->role)))
+            ->pluck('name')
+            ->first();
+        // dd($strRole);
+        $UserData->assignRole(strtolower($strRole));
         $UserData->name = $request->name;
-        $UserData->role = 'branch-user';
         $UserData->email = $request->email;
         $UserData->mobile_number = $request->mobile_number;
         $UserData->status = 'inactive';
@@ -83,14 +98,14 @@ class AdminUserController extends Controller
         $UserData->branch_id = $request->branch_id;
         $UserData->save();
 
-         try {
+        try {
 
             $data = [
-                'user'=> $UserData,
+                'user' => $UserData,
                 'plain_password' => $plainPassword,
             ];
 
-            Mail::to($user->email)->send(new EmailVerificationMail('login_credentials',  $data));
+            Mail::to($user->email)->send(new EmailVerificationMail('login_credentials', $data));
 
         } catch (Exception $e) {
             Log::error("Failed to send OTP email: " . $e->getMessage());
@@ -111,9 +126,14 @@ class AdminUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $encID)
     {
-        //
+        $intID = base64_decode(base64_decode($encID));
+        $data = $this->BaseModel->find($intID);
+        $this->JsonData['status'] = __('success');
+        $this->JsonData['data'] = $data;
+        return response()->json($this->JsonData);
+
     }
 
     /**
@@ -132,7 +152,7 @@ class AdminUserController extends Controller
         //
     }
 
-   
+
     // public function suppliersIndex(){
     //     $this->ModuleTitle = __('Suppliers Listing');
     //     $this->ViewData['moduleAction'] = $this->ModuleTitle;

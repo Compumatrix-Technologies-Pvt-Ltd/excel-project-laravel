@@ -54,16 +54,24 @@
                                         required data-error="Please enter mobile number">
                                     <span class="help-block with-errors err_mobile_number" style="color:red;"></span>
                                 </div>
-                                {{-- <div class="col-md-6">
-                                    <label for="inputRole" class="form-label">Roles<span
+                                <div class="col-md-6">
+                                    <label for="inputRole" class="form-label">Assign Role<span
                                             class="text-danger">*</span></label>
-                                    <select id="inputRole" class="form-select">
-                                        <option selected>Select Role</option>
-                                        <option>HQ</option>
-                                        <option>Branch User</option>
-                                        <option>Auditor </option>
+                                    <select required class="form-control role" tabindex="1" name="role"
+                                        data-error="Please select role" id="user_role">
+                                        <option value="" name="">Select Role</option>
+                                        @if(!empty($rolesCollection) && count($rolesCollection) > 0)
+                                            @foreach($rolesCollection as $key => $role)
+                                                <option value="{{ base64_encode(base64_encode($role->id)) }}"
+                                                    name="{{$role->name}}">
+                                                    {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                                                </option>
+                                            @endforeach
+                                        @endif
                                     </select>
-                                </div> --}}
+                                    <span class="help-block with-errors err_role" style="color:red;"></span>
+
+                                </div>
                                 <div class="col-md-6 form-group">
                                     <label for="inputBranch" class="form-label">Assign Branch<span
                                             class="text-danger">*</span></label>
