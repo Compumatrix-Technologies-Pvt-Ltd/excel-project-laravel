@@ -55,9 +55,12 @@ Route::get('terms-conditions', [HomeController::class, 'termsConditions'])->name
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
 Route::get('/register', [LoginController::class, 'register'])->name('register')->middleware('guest');
 Route::get('/register2', [LoginController::class, 'register2'])->name('register2')->middleware('guest');
-Route::get('/email-verification', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
+Route::get('/email-verification/{id}', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
 Route::get('/verification-success', [LoginController::class, 'verificationSuccess'])->name('verification.success')->middleware('guest');
 Route::post('/set-year-month', [LoginController::class, 'store'])->name('set.year.month');
+Route::post('/verify-email', [LoginController::class, 'registerSubmit'])->name('verify.email');
+Route::post('/verify-otp/{id}', [LoginController::class, 'verifyOtp'])->name('verify.otp');
+Route::post('/resend-otp/{id}', [LoginController::class, 'resendOtp'])->name('resend.otp');
 
 
 Route::post('admin/checkLogin', [LoginController::class, 'checkLogin'])->name('admin.checkLogin');

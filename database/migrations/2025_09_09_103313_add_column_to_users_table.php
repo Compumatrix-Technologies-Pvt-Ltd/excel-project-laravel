@@ -11,7 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['super-admin', 'hq', 'branch-user'])->after('name')->nullable();
+            $table->string('otp')->nullable()->after('password');
+            $table->timestamp('otp_expires_at')->nullable()->after('otp');
         });
     }
 

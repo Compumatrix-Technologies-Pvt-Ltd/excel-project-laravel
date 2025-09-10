@@ -3,7 +3,7 @@
     {{ $moduleAction }}
 @endsection
 @section('toolbar')
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
@@ -11,7 +11,8 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item active"><a href="">BranchUser Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.create') }}">Create Branch User</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.create') }}">Create Branch
+                                User</a></li>
                     </ol>
                 </div>
 
@@ -29,21 +30,33 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row gy-4">
-                            <form action="javascript:void(0);" class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="fullnameInput" class="form-label">Name<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="fullnameInput">
+                            <form id="AddForm" action="{{ route('admin.users.store') }}" role="form" class="row g-3"
+                                method="post">
+                                @csrf
+                                <div class="col-md-6 form-group">
+                                    <label for="fullnameInput" class="form-label">Name<span
+                                            class="text-danger">*</span></label>
+                                    <input name="name" type="text" class="form-control" id="fullnameInput" required
+                                        data-error="Please enter name">
+                                    <span class="help-block with-errors err_name" style="color:red;"></span>
+
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="inputEmail4" class="form-label">Email<span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="inputEmail4">
+                                <div class="col-md-6 form-group">
+                                    <label for="inputEmail4" class="form-label">Email<span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" name="email" class="form-control" id="inputEmail4" required
+                                        data-error="Please enter email">
+                                    <span class="help-block with-errors err_email" style="color:red;"></span>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 form-group">
                                     <label for="phoneNumberInput" class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phoneNumberInput">
+                                    <input type="tel" name="mobile_number" class="form-control" id="phoneNumberInput"
+                                        required data-error="Please enter mobile number">
+                                    <span class="help-block with-errors err_mobile_number" style="color:red;"></span>
                                 </div>
                                 {{-- <div class="col-md-6">
-                                    <label for="inputRole" class="form-label">Roles<span class="text-danger">*</span></label>
+                                    <label for="inputRole" class="form-label">Roles<span
+                                            class="text-danger">*</span></label>
                                     <select id="inputRole" class="form-select">
                                         <option selected>Select Role</option>
                                         <option>HQ</option>
@@ -51,17 +64,20 @@
                                         <option>Auditor </option>
                                     </select>
                                 </div> --}}
-                                <div class="col-md-6">
-                                    <label for="inputBranch" class="form-label">Assign Branch<span class="text-danger">*</span></label>
-                                    <select id="inputBranch" class="form-select">
+                                <div class="col-md-6 form-group">
+                                    <label for="inputBranch" class="form-label">Assign Branch<span
+                                            class="text-danger">*</span></label>
+                                    <select name="branch_id" id="inputBranch" class="form-select" required
+                                        data-error="Please enter name">
                                         <option selected>Select Branch</option>
-                                        <option>Branch 1</option>
-                                        <option>Branch 2</option>
-                                        <option>Branch 3</option>
+                                        @foreach ($Branches as $branch)
+                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                        @endforeach
                                     </select>
+                                    <span class="help-block with-errors err_branch_id" style="color:red;"></span>
                                 </div>
 
-                                <div class="col-6">
+                                {{--<div class="col-6 form-group">
                                     <label for="status" class="form-label d-block">Status</label>
                                     <div class="d-flex gap-3">
                                         <div class="form-check form-check-inline form-radio-success">
@@ -80,14 +96,13 @@
                                             <label class="form-check-label" for="statusLocked">Locked</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
+                                </div> --}}
+                                <div class="col-12 form-group">
                                     <div class="text-end">
                                         <button type="submit" class="btn btn-success">Submit</button>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                         <!--end row-->
                     </div>
@@ -97,5 +112,11 @@
         </div>
         <!--end col-->
     </div>
+
+@endsection
+
+@section('scripts')
+
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
 
 @endsection
