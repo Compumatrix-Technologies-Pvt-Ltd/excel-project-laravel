@@ -36,8 +36,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="deductionModalLabel">Add Deduction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form id="AddForm" action="{{ route('admin.deductions.store') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
@@ -66,10 +65,10 @@
                                                             class="text-danger">*</span></label>
                                                     <select id="inputSupplier" name="supplier_id" class="form-select"
                                                         required data-error="Please select supplier">
-                                                        <option selected>Select Supplier Id</option>
+                                                        <option selected>Select Supplier</option>
                                                         @foreach ($Suppliers as $supplier )
                                                         <option value="{{ $supplier->id }}">
-                                                        {{ $supplier->supplier_id }}</option>
+                                                        {{ $supplier->supplier_id . ' ' . $supplier->supplier_name }}</option>
                                                         @endforeach                                      
                                                     </select>
 
@@ -122,7 +121,7 @@
                                         <th>SR No.</th>
                                         <th>Date</th>
                                         <th>Period</th>
-                                        <th>Supplier ID</th>
+                                        <th>Supplier</th>
                                         <th>Type</th>
                                         <th>Amount</th>
                                         <th>Remark</th>

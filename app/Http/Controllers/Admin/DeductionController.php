@@ -163,7 +163,7 @@ class DeductionController extends Controller
                     'sr.no' => $count,
                     'date' => $deduction->date ?? 'N/A',
                     'period' => $deduction->period ?? 'N/A',
-                    'supplier_id' => $deduction->supplier->supplier_id ?? 'N/A',
+                    'supplier_id' => $deduction->supplier->supplier_id . ' ' . $deduction->supplier->supplier_name ?? 'N/A',
                     'type' => ucfirst($deduction->type) ?? 'N/A',
                     'amount' => $deduction->amount ?? 'N/A',
                     'remark' => ucfirst($deduction->remark) ?? 'N/A',

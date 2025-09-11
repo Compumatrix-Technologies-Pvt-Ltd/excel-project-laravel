@@ -80,7 +80,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
 
     Route::resource('users', AdminUserController::class)->names('users');
-    Route::put('users/update', [AdminUserController::class,'update'])->name('user.update');
+    Route::put('users/update', [AdminUserController::class, 'update'])->name('user.update');
 
 
     # Manage Roles
@@ -136,6 +136,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('transaction-management', [TransactionController::class, 'hqTransactionIndex'])->name('transaction.management');
     Route::get('transactions/getRecords/hq', [TransactionController::class, 'getRecordsHq'])->name('transactions.getRecordsHq');
     Route::get('transactions/getRecords', [TransactionController::class, 'getRecords'])->name('transactions.getRecords');
+
+    // Generate TRX and Ticket number
+    Route::get('generate-trx-number', [TransactionController::class, 'generateTrxNumber'])->name('generate.trx.number');
+    Route::get('generate-ticket-number', [TransactionController::class, 'generateTicketNumber'])->name('generate.ticket.number');
+
 
     Route::resource('transactions', TransactionController::class)->names('transactions');
     Route::put('transactions/update', [TransactionController::class, 'update'])->name('transaction.update');

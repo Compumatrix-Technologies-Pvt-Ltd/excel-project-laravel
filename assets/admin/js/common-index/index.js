@@ -326,4 +326,48 @@
         });
     });
 
+    // For generatig TRX number
+    $('#transactionModal').on('shown.bs.modal', function () {
+            var modal = $(this);
+            var generateTrxUrl = modal.data('generate-trx-url');
+
+            function fetchTrxNumber() {
+                $.ajax({
+                    url: generateTrxUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#trxNo').val(response.trx_no);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error generating TRX No:', error);
+                    }
+                });
+            }
+
+            fetchTrxNumber();
+
+            $('#TRXDate').off('change').on('change', function () {
+                fetchTrxNumber();
+            });
+        });
+
+        // For generating ticket number
+        $(document).on('shown.bs.modal', '#transactionModal, #transaction1Modal', function () {
+                var modal = $(this);
+                var generateTicketUrl = modal.data('generate-ticket-url');
+
+                $.ajax({
+                    url: generateTicketUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        modal.find('.auto-ticket-number').val(response.ticket_no);
+                    },
+                    error: function () {
+                        console.warn('Failed to generate Ticket Number');
+                    }
+                });
+        });
+
 });

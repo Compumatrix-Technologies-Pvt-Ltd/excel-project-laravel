@@ -9,6 +9,7 @@ use App\Models\Mill;
 use App\Models\Suppliers;
 use App\Models\Transaction;
 use App\Models\Vehicle;
+use DB;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -56,8 +57,14 @@ class TransactionController extends Controller
     {
         // dd($request->all());
         try {
-            $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transactions.index');
-            return response()->json($response);
+            $user = auth()->user();
+            if ($user->hasRole('branch')) {
+                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transactions.index');
+                return response()->json($response);
+            } elseif ($user->hasRole('hq')) {
+                 $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transaction.management');
+                return response()->json($response);
+            }
 
         } catch (Exception $e) {
             return response()->json([
@@ -102,7 +109,7 @@ class TransactionController extends Controller
 
     public function update(Transactionrequest $request)
     {
-        $user=auth()->user();
+        $user = auth()->user();
         if ($user->hasRole('branch')) {
             $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
             return response()->json($response);
@@ -187,7 +194,7 @@ class TransactionController extends Controller
                     'sr.no' => $count,
                     'trx_no' => $transaction->trx_no ?? 'N/A',
                     'trx_date' => $transaction->trx_date ?? 'N/A',
-                    'supplier_id' => $transaction->supplier->supplier_id ?? 'N/A',
+                    'supplier_id' => $transaction->supplier->supplier_id . ' ' . $transaction->supplier->supplier_name ?? 'N/A',
                     'ticket_no' => $transaction->ticket_no ?? 'N/A',
                     'weight' => $transaction->weight ?? 'N/A',
                     'actions' => '
@@ -297,7 +304,7 @@ class TransactionController extends Controller
                     'sr.no' => $count,
                     'ticket_no' => $transaction->ticket_no ?? 'N/A',
                     'trx_date' => $transaction->trx_date ?? 'N/A',
-                    'supplier_id' => $transaction->supplier->supplier_id ?? 'N/A',
+                    'supplier_id' => $transaction->supplier->supplier_id . ' ' . $transaction->supplier->supplier_name ?? 'N/A',
                     'vehicle_id' => $transaction->vehicle->name ?? 'N/A',
                     'mill_id' => $transaction->mill->name ?? 'N/A',
                     'weight' => $transaction->weight ?? 'N/A',
@@ -342,5 +349,69 @@ class TransactionController extends Controller
         }
     }
 
+    public function generateTrxNumber(Request $request)
+    {
+        $yearMonth = session('yearMonth') ?? date('Ym');
+        $prefix = 'T' . substr($yearMonth, 2);
 
+        $lastTrx = DB::table('transactions')
+            ->where('trx_no', 'like', $prefix . '%')
+            ->orderBy('trx_no', 'desc')
+            ->value('trx_no');
+
+        if ($lastTrx) {
+            $lastSeq = (int) substr($lastTrx, -4);
+            $nextSeq = str_pad($lastSeq + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $nextSeq = '0001';
+        }
+
+        $nextTrx = $prefix . $nextSeq;
+
+        return response()->json(['trx_no' => $nextTrx]);
+    }
+    public function generateTicketNumber()
+    {
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        if ($user->hasRole('hq')) {
+
+            $prefix = 'T';
+
+            // dd($prefix);
+
+            $lastTicketNo = DB::table('transactions')
+                ->where('ticket_no', 'like', $prefix . '%')
+                ->orderBy('id', 'desc')
+                ->value('ticket_no');
+
+            if ($lastTicketNo) {
+                $lastSeq = (int) substr($lastTicketNo, 1);
+                $nextSeq = str_pad($lastSeq + 1, 5, '0', STR_PAD_LEFT);
+            } else {
+                $nextSeq = '00001';
+            }
+
+            $nextTicketNo = $prefix . $nextSeq;
+
+        } else {
+            $lastTicketNo = DB::table('transactions')
+                ->where('user_id', $user->id)
+                ->orderBy('id', 'desc')
+                ->value('ticket_no');
+
+            if ($lastTicketNo) {
+                $nextSeq = str_pad((int) $lastTicketNo + 1, 6, '0', STR_PAD_LEFT);
+            } else {
+                $nextSeq = '000001';
+            }
+
+            $nextTicketNo = $nextSeq;
+        }
+        return response()->json(['ticket_no' => $nextTicketNo]);
+    }
 }

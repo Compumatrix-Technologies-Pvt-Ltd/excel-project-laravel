@@ -28,20 +28,20 @@
                     <h4 class="card-title mb-0 flex-grow-1">Transaction Listing</h4>
                     <div class="card-toolbar">
                         <!-- <a href="javascript:void(0)" class="btn btn-primary fw-bold me-2">
-                                                                                                                                                                                    <i class="flaticon2-plus"></i> Create Branch
-                                                                                                                                                                                </a> -->
+                                                                                                                                                                                            <i class="flaticon2-plus"></i> Create Branch
+                                                                                                                                                                                        </a> -->
                         <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
-                            data-bs-target="#transactionModal">
+                            data-bs-target="#transaction1Modal">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Create Transaction
                         </button>
-                        <div id="transactionModal" class="modal fade" tabindex="-1" aria-labelledby="transactionModalLabel"
-                            aria-hidden="true" style="display: none;">
+                        <div id="transaction1Modal" class="modal fade" tabindex="-1"
+                            aria-labelledby="transaction1ModalLabel" aria-hidden="true"
+                            data-generate-ticket-url="{{ route('admin.generate.ticket.number') }}" style="display: none;">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="transactionModalLabel">Add Transaction</h5>
-                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                        <h5 class="modal-title" id="transaction1ModalLabel">Add Transaction</h5>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form id="AddForm" action="{{ route('admin.transactions.store') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
@@ -50,14 +50,13 @@
                                             <div class="row gy-4">
 
                                                 <div class="col-md-6 form-group">
-                                                    <label for="ticketInput" class="form-label">Ticket Number<span
+                                                    <label for="ticketNo" class="form-label">Ticket Number<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="ticketInput"
+                                                    <input type="text" class="form-control auto-ticket-number" id="ticketNo"
                                                         name="ticket_no" required
                                                         data-error="Please enter the ticket number">
                                                     <span class="help-block with-errors err_ticket_no"
                                                         style="color:red;"></span>
-
                                                 </div>
 
                                                 <div class="col-md-6 form-group">
@@ -70,9 +69,9 @@
                                                 </div>
 
                                                 <div class="col-md-6 form-group">
-                                                    <label for="inputSupplier" class="form-label">Vehicles<span
+                                                    <label for="inputVehicle" class="form-label">Vehicles<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="inputSupplier" class="form-select" name="vehicle_id"
+                                                    <select id="inputVehicle" class="form-select" name="vehicle_id"
                                                         required data-error="Please select the Vehicle">
                                                         <span class="help-block with-errors err_vehicle_id"
                                                             style="color:red;"></span>
@@ -83,15 +82,16 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group">
-                                                    <label for="inputVehicle" class="form-label">Supplier Id<span
+                                                    <label for="inputSupplier" class="form-label">Suppliers<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="inputVehicle" class="form-select" name="supplier_id"
+                                                    <select id="inputSupplier" class="form-select" name="supplier_id"
                                                         required data-error="Please select supplier">
                                                         <span class="help-block with-errors err_supplier_id"
                                                             style="color:red;"></span>
-                                                        <option selected>Select Supplier</option>
+                                                            <option>Select Supplier</option>
                                                         @foreach ($Suppliers as $supplier)
-                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            <option value="{{ $supplier->id }}">
+                                                                {{ $supplier->supplier_id . ' ' . $supplier->supplier_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -182,15 +182,15 @@
                                     <tr>
                                         <th>Sr.No</th>
                                         <th>Ticket_No</th>
-                                        <th>Trx_Date</th>
-                                        <th>Supplier_Id</th>
+                                        <th>TRX Date</th>
+                                        <th>Supplier</th>
                                         <th>Vehicle</th>
-                                        <th>Mill_Id</th>
+                                        <th>Mill</th>
                                         <th>Weight</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>                                    
+                                <tbody>
                                 </tbody>
                             </table>
                         </div><!--end row-->
@@ -201,8 +201,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="transactionEditModalHQLabel">Edit Transaction</h5>
-                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form id="updateForm" action="{{ route('admin.transactionshq.update') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
@@ -223,7 +222,8 @@
 
                                                 <div class="col-md-6 form-group">
                                                     <label for="TRXDateInput" class="form-label">TRX Date</label>
-                                                    <input type="date" class="form-control" id="TRXDateInput" name="trx_date">
+                                                    <input type="date" class="form-control" id="TRXDateInput"
+                                                        name="trx_date">
                                                     <span class="help-block with-errors err_trx_date"
                                                         style="color:red;"></span>
 
@@ -242,14 +242,14 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group">
-                                                    <label for="SupplierInput" class="form-label">Supplier Id<span
+                                                    <label for="SupplierInput" class="form-label">Supplier<span
                                                             class="text-danger">*</span></label>
                                                     <select id="SupplierInput" class="form-select" name="supplier_id">
                                                         <span class="help-block with-errors err_supplier_id"
                                                             style="color:red;"></span>
-                                                        <option>Select Supplier</option>
                                                         @foreach ($Suppliers as $supplier)
-                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            <option value="{{ $supplier->id }}">
+                                                                {{ $supplier->supplier_id . ' ' . $supplier->supplier_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -303,5 +303,5 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common.js') }}"></script>
 
-   
+
 @endsection
