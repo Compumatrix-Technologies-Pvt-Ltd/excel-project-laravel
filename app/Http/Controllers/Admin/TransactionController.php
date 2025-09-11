@@ -100,11 +100,18 @@ class TransactionController extends Controller
     }
 
 
-    public function update(Transactionrequest $request, string $id)
+    public function update(Transactionrequest $request)
     {
-        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $id);
-        return response()->json($response);
+        $user=auth()->user();
+        if ($user->hasRole('branch')) {
+            $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
+            return response()->json($response);
+        } elseif ($user->hasRole('hq')) {
+            $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transaction.management', $request->id);
+            return response()->json($response);
+        }
     }
+
 
 
     public function destroy(string $encID)
@@ -180,7 +187,7 @@ class TransactionController extends Controller
                     'sr.no' => $count,
                     'trx_no' => $transaction->trx_no ?? 'N/A',
                     'trx_date' => $transaction->trx_date ?? 'N/A',
-                    'supplier_id' => $transaction->supplier->supplier_name ?? 'N/A',
+                    'supplier_id' => $transaction->supplier->supplier_id ?? 'N/A',
                     'ticket_no' => $transaction->ticket_no ?? 'N/A',
                     'weight' => $transaction->weight ?? 'N/A',
                     'actions' => '
@@ -188,12 +195,15 @@ class TransactionController extends Controller
                         <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown">
                             <i class="ri-more-fill align-middle"></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a class="dropdown-item" href="javascript:void(0)" id="edit-transaction-btn">
-                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
-                                </a>
-                            </li>
+                        <ul class="dropdown-menu dropdown-menu-end">                                                   
+                        <li>
+                        <a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                            data-id="' . base64_encode(base64_encode($transaction->id)) . '"
+                                            id="edit-transaction-btn">
+                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                            Edit
+                                        </a>
+                                    </li>
                             <li>
                                 <a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route('admin.transactions.destroy', [base64_encode(base64_encode($transaction->id))]) . '" class="dropdown-item remove-item-btn">
                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
@@ -287,7 +297,7 @@ class TransactionController extends Controller
                     'sr.no' => $count,
                     'ticket_no' => $transaction->ticket_no ?? 'N/A',
                     'trx_date' => $transaction->trx_date ?? 'N/A',
-                    'supplier_id' => $transaction->supplier->supplier_name ?? 'N/A',
+                    'supplier_id' => $transaction->supplier->supplier_id ?? 'N/A',
                     'vehicle_id' => $transaction->vehicle->name ?? 'N/A',
                     'mill_id' => $transaction->mill->name ?? 'N/A',
                     'weight' => $transaction->weight ?? 'N/A',
@@ -297,11 +307,15 @@ class TransactionController extends Controller
                             <i class="ri-more-fill align-middle"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
+                           <li>
+                        <a class="dropdown-item edit-item-btn" href="javascript:void(0);"
+                                            data-id="' . base64_encode(base64_encode($transaction->id)) . '"
+                                            id="edit-transactionhq-btn">
+                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                            Edit
+                                        </a>
+                                    </li>
                             <li>
-                                <a class="dropdown-item" href="' . route('admin.suppliers.edit', base64_encode(base64_encode($transaction->id))) . '" id="edit-supplier-btn">
-                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
-                                </a>
-                            </li>
                             <li>
                                 <a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route('admin.suppliers.destroy', [base64_encode(base64_encode($transaction->id))]) . '" class="dropdown-item remove-item-btn">
                                     <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete

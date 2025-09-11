@@ -46,7 +46,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <form id="AddForm" action="{{ route('admin.transactions.store') }}" method="post"
+                                    <form id="AddForm" action="{{ route('admin.transaction.update') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
                                         @csrf
                                         <div class="modal-body">
@@ -142,10 +142,11 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <form id="updateForm" action="{{ route('admin.transactions.store') }}" method="post"
+                                    <form id="updateForm" action="{{ route('admin.transaction.update') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
                                         @csrf
                                         @method('PUT')
+                                        <input type="hidden" id="hidden_id" name="id">
                                         <div class="modal-body">
                                             <div class="row gy-4">
                                                 <div class="col-md-6 form-group">

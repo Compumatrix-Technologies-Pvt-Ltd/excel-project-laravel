@@ -40,7 +40,7 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="transactionModalLabel">Add Transaction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
                                     <form id="AddForm" action="{{ route('admin.transactions.store') }}" method="post"
@@ -201,13 +201,14 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="transactionEditModalHQLabel">Edit Transaction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <form id="updateForm" action="{{ route('admin.transactions.store') }}" method="post"
+                                    <form id="updateForm" action="{{ route('admin.transactionshq.update') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
                                         @csrf
                                         @method('PUT')
+                                        <input type="hidden" id="hidden_id" name="id">
                                         <div class="modal-body">
                                             <div class="row gy-4">
 
@@ -229,24 +230,24 @@
                                                 </div>
 
                                                 <div class="col-md-6 form-group">
-                                                    <label for="SupplierInput" class="form-label">Vehicles<span
+                                                    <label for="VehicleInput" class="form-label">Vehicles<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="SupplierInput" class="form-select" name="vehicle_id">
+                                                    <select id="VehicleInput" class="form-select" name="vehicle_id">
                                                         <span class="help-block with-errors err_vehicle_id"
-                                                            style="color:red;"></span>
-                                                        <option selected>Select Vehicles</option>
+                                                            style="color:red;"></span>VehicleInput
+                                                        <option>Select Vehicles</option>
                                                         @foreach ($Vehicles as $vehicle)
                                                             <option value="{{ $vehicle->id }}">{{ $vehicle->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 form-group">
-                                                    <label for="VehicleInput" class="form-label">Supplier Id<span
+                                                    <label for="SupplierInput" class="form-label">Supplier Id<span
                                                             class="text-danger">*</span></label>
-                                                    <select id="VehicleInput" class="form-select" name="supplier_id">
+                                                    <select id="SupplierInput" class="form-select" name="supplier_id">
                                                         <span class="help-block with-errors err_supplier_id"
                                                             style="color:red;"></span>
-                                                        <option selected>Select Supplier</option>
+                                                        <option>Select Supplier</option>
                                                         @foreach ($Suppliers as $supplier)
                                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
                                                             </option>
@@ -259,7 +260,7 @@
                                                     <select id="MillInput" class="form-select" name="mill_id">
                                                         <span class="help-block with-errors err_mill_id"
                                                             style="color:red;"></span>
-                                                        <option selected>Select Mill </option>
+                                                        <option>Select Mill </option>
                                                         @foreach ($Mills as $mill)
                                                             <option value="{{ $mill->id }}">{{ $mill->mill_id }}</option>
                                                         @endforeach

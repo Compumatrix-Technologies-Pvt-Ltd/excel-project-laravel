@@ -131,7 +131,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                     </button>
                                 </div>
-                                <form id="updateForm" action="{{ route('admin.vehicles.update') }}" method="post"
+                                <form id="updateForm" action="{{ route('admin.vehicle.update') }}" method="post"
                                     class="form" autocomplete="off" role="form">
                                     @csrf
                                     @method('PUT')

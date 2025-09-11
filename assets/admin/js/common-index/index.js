@@ -178,25 +178,24 @@
         // alert(encrypted_id);
                 var action = ADMINURL+'/users/'+ encrypted_id +'/edit';
 
-        // $.ajax({
-        //     type: "GET",
-        //     url: action,
-        //     dataType:"json",
-        //     success:function(response){
-        //         if(response.status == 'success'){
-        //             $("#fullnameInput").val(response.data.name);
-        //             $('#inputEmail4').val(response.data.email);
-        //             $('#phoneNumberInput').val(response.data.mobile_number);       
-        //             $('#user_role').val(response.data.role);       
-        //             $('#inputBranch').val(response.data.bic_code);       
-        //             $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
-        //             $('#hidden_id').val(encrypted_id);
-        //             $('#submitBtn').removeClass('disabled');
-        //         }else{
-        //             alert('Something went wrong');
-        //         } 
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#fullnameInput").val(response.data.name);
+                    $('#inputEmail4').val(response.data.email);
+                    $('#phoneNumberInput').val(response.data.mobile_number);                                             
+                    $('#inputBranch').val(response.data.branch_id);       
+                    $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
     });
 
 
@@ -236,6 +235,34 @@
             ],
         });
   
+        $(document).on('click','#edit-transactionhq-btn',function(){
+
+       $('#transactionEditModalHQ').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#SupplierInput').val(response.data.supplier_id);
+                    $('#VehicleInput').val(response.data.vehicle_id);
+                    $('#MillInput').val(response.data.mill_id);                           
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+
 
 
     var action = ADMINURL + '/transactions/getRecords';
@@ -279,25 +306,24 @@
         // alert(encrypted_id);
                 var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
 
-        // $.ajax({
-        //     type: "GET",
-        //     url: action,
-        //     dataType:"json",
-        //     success:function(response){
-        //         if(response.status == 'success'){
-        //             $("#fullnameInput").val(response.data.name);
-        //             $('#inputEmail4').val(response.data.email);
-        //             $('#phoneNumberInput').val(response.data.mobile_number);       
-        //             $('#user_role').val(response.data.role);       
-        //             $('#inputBranch').val(response.data.bic_code);       
-        //             $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
-        //             $('#hidden_id').val(encrypted_id);
-        //             $('#submitBtn').removeClass('disabled');
-        //         }else{
-        //             alert('Something went wrong');
-        //         } 
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#trxNoInput').val(response.data.trx_no);
+                    $('#SupplierInput').val(response.data.supplier_id);       
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
     });
 
 });

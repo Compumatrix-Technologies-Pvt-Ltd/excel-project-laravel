@@ -80,6 +80,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
 
     Route::resource('users', AdminUserController::class)->names('users');
+    Route::put('users/update', [AdminUserController::class,'update'])->name('user.update');
 
 
     # Manage Roles
@@ -129,7 +130,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Vehicle Management
     Route::resource('vehicles', VehicleController::class)->names('vehicles');
-    Route::put('vehicles/update', [VehicleController::class, 'update'])->name('vehicles.update');
+    Route::put('vehicles/update', [VehicleController::class, 'update'])->name('vehicle.update');
 
     // Transaction Management
     Route::get('transaction-management', [TransactionController::class, 'hqTransactionIndex'])->name('transaction.management');
@@ -137,7 +138,10 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('transactions/getRecords', [TransactionController::class, 'getRecords'])->name('transactions.getRecords');
 
     Route::resource('transactions', TransactionController::class)->names('transactions');
-    
+    Route::put('transactions/update', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::put('transactions/hq/update', [TransactionController::class, 'update'])->name('transactionshq.update');
+
+
 
 
 
