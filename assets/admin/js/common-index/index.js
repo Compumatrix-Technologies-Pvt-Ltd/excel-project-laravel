@@ -151,6 +151,10 @@
         ],
     });
 
+
+    
+
+
     $(document).on('click','#edit-vehicle-btn',function(){
        $('#editVehicleModal').modal('show');
         var encrypted_id = $(this).attr("data-id");
@@ -369,5 +373,39 @@
                     }
                 });
         });
+
+
+        
+        // ************** Deduction Repors ********************
+
+        var action = ADMINURL + '/deduction-reports/getRcords';
+
+        $('#DeductionReportsListing').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: action,
+                    type: "GET",
+                    dataSrc: function (json) {
+                        $('#grandTransport').html('<strong>' + json.grandTotals.transport + '</strong>');
+                        $('#grandAdvance').html('<strong>' + json.grandTotals.advance + '</strong>');
+                        $('#grandOthers').html('<strong>' + json.grandTotals.others + '</strong>');
+
+                        return json.data;
+                    }
+                },
+                columns: [
+                    { data: 'date' },
+                    { data: 'supplier_id' },
+                    { data: 'supplier_name' },
+                    { data: 'transport' },
+                    { data: 'advance' },
+                    { data: 'others' },
+                    { data: 'remark' },
+                ],
+                order: [[1, 'asc'], [0, 'asc']],
+            });
+
+     // ************** End Deduction Repors ********************
 
 });

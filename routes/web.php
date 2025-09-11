@@ -124,9 +124,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Deduction Routes
     Route::get('deductions/getRecords', [DeductionController::class, 'getRecords'])->name('deductions.getRecords');
-    Route::resource('deductions', DeductionController::class)->names('deductions');
+    Route::get('deduction-reports/getRcords', [DeductionController::class, 'deductionReporGetRecords'])->name('deductions.report.getRecords');
+   
+    Route::get('deduction-reports', [DeductionController::class, 'deductionReportIndex'])->name('deductions.report.index');
 
-    Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
+    Route::resource('deductions', DeductionController::class)->names('deductions');
 
     // Vehicle Management
     Route::resource('vehicles', VehicleController::class)->names('vehicles');
