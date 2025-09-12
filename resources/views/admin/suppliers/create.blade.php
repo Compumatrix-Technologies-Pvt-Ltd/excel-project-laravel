@@ -37,7 +37,7 @@
                             @csrf
 
                             <div class="row align-items-center mb-3">
-                                @if (Auth::user()->role == 'branch-user')
+                                @if (Auth::check() && Auth::user()->hasRole('branch'))
                                     <div class="col-md-6 d-flex align-items-center form-group">
                                         <label class="me-3">Supplier Type: <span class="text-danger">*</span></label>
 
@@ -95,7 +95,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                @if (Auth::user()->role == 'branch-user')
+                                @if (Auth::check() && Auth::user()->hasRole('branch'))
                                     <div class="col-md-3 form-group">
                                         <label for="mpob_lic_no" class="form-label">MPOB Licence No.: <span
                                                 class="text-danger">*</span></label>
@@ -117,7 +117,7 @@
                                     <input type="text" name="address2" id="address2" class="form-control form-control-sm">
                                 </div>
                             </div>
-                            @if (Auth::user()->role == 'branch-user')
+                            @if (Auth::check() && Auth::user()->hasRole('branch'))
                                 <div class="row mb-3">
                                     <div class="col-md-3 form-group">
                                         <label for="mspo_cert_no" class="form-label">MSPO Cert. No.: <span
@@ -201,7 +201,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role == 'branch-user')
+                            @if (Auth::check() && Auth::user()->hasRole('branch'))
                                 <div class="row mb-3">
                                     <div class="col form-group">
                                         <label for="remark" class="form-label">Remark:</label>

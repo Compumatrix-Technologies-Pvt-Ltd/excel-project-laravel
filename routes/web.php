@@ -139,8 +139,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::resource('transactions', TransactionController::class)->names('transactions');
     
 
-
-
     // HQ- Suppliers
     Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
 
@@ -190,7 +188,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');
     Route::put('/profile/{encid}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/company/{encid}', [ProfileController::class, 'companyUpdate'])->name('company.update');
     Route::get('/update-password', [ProfileController::class, 'updatePassword'])->name('updatePassword');
     Route::put('user-update-password/{encid}', [ProfileController::class, 'storeUpdatedPassword'])->name('storeUpdatePassword');
 
+
+    Route::post('ffb_transaction', [MasterController::class, 'storeFFBTransaction'])->name('ffb.transaction.store');
+    Route::get('get-supplier-details/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetails'])->name('ffb.transaction.getSupplierDetails');
 });

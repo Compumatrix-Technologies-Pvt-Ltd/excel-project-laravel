@@ -421,5 +421,107 @@ function deactivateCollection(encrypted_id, parameter) {
         $(this).val(numericValue);
     });
 
-    
-    
+    $(document).on('click', '.netPayButton', function() {
+        let weight_mt = $('input[name="weight_mt"]').val();
+        let price = $('input[name="price"]').val();
+        let incentive_rate = $('input[name="incentive_rate"]').val();
+
+        let transport = $('input[name="transport"]').val();
+        let advance = $('input[name="advance"]').val();
+        let others = $('input[name="others"]').val();
+
+        let subsidy_amt = $('.subsidy_amt').text();
+        if (subsidy_amt) {
+            let new_subsidy_amt = subsidy_amt / 100;
+            update_subsidy_amt = parseFloat(weight_mt) * parseFloat(new_subsidy_amt);
+            final_subsidy_amt = parseFloat(price) * parseFloat(new_subsidy_amt);
+            $('.subsidy_amt').text(final_subsidy_amt.toFixed(2)).css('display', 'inline-block');
+            $('input[name="subsidy_amt"]').val(final_subsidy_amt.toFixed(2));
+        }
+
+
+        let total = (parseFloat(weight_mt) * parseFloat(price)) || 0;
+        let total_deductions = (parseFloat(transport) + parseFloat(advance) + parseFloat(others)) || 0;
+
+        // Update the amount before deductions input field
+        $('.amt_before_ded').text(total.toFixed(2));
+        $('input[name="amt_before_ded"]').val(total.toFixed(2));
+
+        // Update the total deductions input field
+        $('.total_deductions').text(total_deductions.toFixed(2));
+        $('input[name="total_deductions"]').val(total_deductions.toFixed(2));
+
+        // Add incentive if applicable
+        if (incentive_rate && parseFloat(incentive_rate) > 0) {
+            let incentive = (parseFloat(weight_mt) * parseFloat(incentive_rate)) || 0;
+            total += incentive;
+            $('.incentive_amt').text(incentive.toFixed(2)).css('display', 'inline-block');
+            $('input[name="incentive_amt"]').val(incentive.toFixed(2));
+        } else {
+            $('.incentive_amt').text('0.00').css('display', 'inline-block');
+            $('input[name="incentive_amt"]').val('0.00');
+        }
+        total -= parseFloat(transport) || 0;
+        total -= parseFloat(advance) || 0;
+        total -= parseFloat(others) || 0;
+
+        // Update the net pay input field
+        $('.net_pay').val(total.toFixed(2));
+    });
+
+    $(document).on('change','#supplierSelect',function(){
+        var supplier_id = $(this).val();
+        var purchase_type = $('input[name="purchase_type"]').val();
+        alert(purchase_type);
+        var action = ADMINURL+'/get-supplier-details/'+supplier_id + '/' + purchase_type;
+        if(supplier_id){
+            $.ajax({
+                type: "GET",
+                url: action,
+                dataType:"json",
+                beforeSend: function () {
+                    $.LoadingOverlay("show", { background: "rgba(75, 73, 172, 0)", maxSize: 40, imageColor: "#5236ff" });
+                },
+                success:function(response){
+                    $.LoadingOverlay("hide");
+                    if(response.status == 'success'){
+                        $('.supplier_name').text(response.data.supplier_name);
+                        $('.subsidy_amt').text(response.data.subsidy_rate);
+                        if(response.data.subsidy_rate) {
+                            alert('Subsidy Rate Found for this Supplier');
+                            $('.subsidy_amt').text(response.data.subsidy_rate.toFixed(2));
+                            $('input[name="subsidy_amt"]').val(response.data.subsidy_rate.toFixed(2));
+                        } else {
+                            alert('No Subsidy Rate Found for this Supplier');
+                            $('.subsidy_amt').text('0.00');
+                            $('input[name="subsidy_amt"]').val('0.00');
+                        }
+                        if(response.deductions) {
+                            let transport = response.deductions.transport || 0;
+                            let advance = response.deductions.advance || 0;
+                            let others = response.deductions.others || 0;
+                            $('input[name="transport"]').val(transport.toFixed(2));
+                            $('input[name="advance"]').val(advance.toFixed(2));
+                            $('input[name="others"]').val(others.toFixed(2));
+                        } else {
+                            $('input[name="transport"]').val('0.00');
+                            $('input[name="advance"]').val('0.00');
+                            $('input[name="others"]').val('0.00');
+                        }
+                      
+                      
+                    }else{
+                        alert('Something went wrong');
+                    } 
+                },
+                error: function (xhr, status, error) {
+                    $.LoadingOverlay("hide");
+                    alert('Server Error: Something went wrong. Please try again.');
+                }
+            });
+        }else{
+            $('input[name="supplier_name"]').val('');
+            $('input[name="supplier_address"]').val('');
+            $('input[name="supplier_gst"]').val('');
+        }
+    });
