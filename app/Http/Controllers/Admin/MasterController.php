@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Models\Mill;
+use App\Models\User;
+use App\Models\Vehicle;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Suppliers;
@@ -37,7 +41,7 @@ class MasterController extends Controller
 
         // Filter suppliers by supplier_type matching purchaseType value
         $this->ViewData['suppliers'] = Suppliers::where([
-            'supplier_type' => $purchaseType, 
+            'supplier_type' => $purchaseType,
             'user_id' => auth()->id()
         ])->get();
 
@@ -56,8 +60,14 @@ class MasterController extends Controller
 
     public function HQmainForm()
     {
+        $userId = auth()->user()->id;
         $this->ModuleTitle = __('Main');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $this->ViewData['Vehicles'] = Vehicle::all();
+        $this->ViewData['Mills'] = Mill::all();
+        $this->ViewData['Suppliers'] = Suppliers::with('user')
+            ->where('user_id', $userId)
+            ->get();
         return view('admin.masters.hq-masterForm', $this->ViewData);
     }
 
@@ -65,10 +75,10 @@ class MasterController extends Controller
     {
 
         try {
-           // dd($request->all());
+            // dd($request->all());
 
             $this->BaseModel = new FFBTransactionsModel();
-            $this->BaseModel->company_id = $request->input('company_id'); 
+            $this->BaseModel->company_id = $request->input('company_id');
             $this->BaseModel->branch_id = $request->input('branch_id');
             $this->BaseModel->supplier_id = $request->input('supplier_id');
             $this->BaseModel->purchase_type = $request->input('purchase_type', 'credit');
@@ -90,17 +100,17 @@ class MasterController extends Controller
             $this->BaseModel->net_pay = $request->input('net_pay', 0) ?? 0;
             $this->BaseModel->pay_by = $request->input('pay_by', 'cash');
             $this->BaseModel->debit_bal_cf = $request->input('debit_bal_cf', 0) ?? 0;
-            $this->BaseModel->remark = $request->input('remark');           
+            $this->BaseModel->remark = $request->input('remark');
             $this->BaseModel->save();
 
-                $this->JsonData['status'] = 'success';
-                $this->JsonData['url']    =  "";
-                $this->JsonData['msg']    = 'FFB Transaction recorded successfully.';
+            $this->JsonData['status'] = 'success';
+            $this->JsonData['url'] = "";
+            $this->JsonData['msg'] = 'FFB Transaction recorded successfully.';
 
-            }catch(\Exception $e){
-                $this->JsonData['msg'] = 'Something went wrong on server.Please contact to Server.';
-                $this->JsonData['error_msg'] = $e->getMessage();
-            }
+        } catch (\Exception $e) {
+            $this->JsonData['msg'] = 'Something went wrong on server.Please contact to Server.';
+            $this->JsonData['error_msg'] = $e->getMessage();
+        }
         return response()->json($this->JsonData);
     }
 
@@ -140,7 +150,7 @@ class MasterController extends Controller
         if ($supplier) {
             $yearMonth = Session::has('yearMonth') ? Session::get('yearMonth') : now()->format('Ym');
             $startOfMonth = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->startOfMonth();
-            $endOfMonth   = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->endOfMonth();
+            $endOfMonth = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->endOfMonth();
             //dd($startOfMonth, $endOfMonth , $id);
             $deductions = Deduction::where('supplier_id', $id)
                 ->whereBetween('date', [$startOfMonth, $endOfMonth])
@@ -160,5 +170,109 @@ class MasterController extends Controller
                 'message' => 'Supplier not found'
             ], 404);
         }
+    }
+
+    public function getDropDownValues(Request $request)
+    {
+
+        $type = $request->input('type');
+
+        $enumValues = [];
+
+        $hqUserIds = User::role('hq')->pluck('id')->toArray();
+
+        if ($type === 'byTicket') {
+            $enumValues = DB::table('transactions')
+                ->whereIn('user_id', $hqUserIds)
+                ->pluck('ticket_no')
+                ->unique()
+                ->toArray();
+
+        } elseif ($type === 'bySupName' || $type === 'bysupId') {
+            $query = DB::table('suppliers')
+                ->whereIn('user_id', $hqUserIds)
+                ->orderBy($type === 'bySupName' ? 'supplier_name' : 'supplier_id');
+
+            $column = $type === 'bySupName' ? 'supplier_name' : 'supplier_id';
+
+            $enumValues = $query->pluck($column)->unique()->toArray();
+        }
+
+        return response()->json($enumValues);
+    }
+
+    public function getAllDetails(Request $request)
+    {
+        $type = $request->input('type');
+        $value = $request->input('value');
+        $hqUserIds = User::role('hq')->pluck('id')->toArray();
+
+        $supplier = null;
+        $transaction = null;
+
+        $companyName = auth()->user()->company->name ?? '-';
+
+        if ($type === 'byTicket') {
+            //  transaction by ticket
+            $transaction = Transaction::with(['supplier', 'vehicle', 'mill'])
+                ->where('ticket_no', $value)
+                ->whereIn('user_id', $hqUserIds)
+                ->first();
+
+            $supplier = $transaction->supplier ?? null;
+
+        } else {
+            $column = $type === 'bySupName' ? 'supplier_name' : 'supplier_id';
+
+            $supplier = Suppliers::where($column, $value)
+                ->whereIn('user_id', $hqUserIds)
+                ->first();
+
+            // dd($supplier);
+
+            if ($supplier) {
+                $transaction = Transaction::with(['supplier', 'vehicle', 'mill'])
+                    ->where('supplier_id', $supplier->id)
+                    ->whereIn('user_id', $hqUserIds)
+                    ->orderByDesc('trx_date')
+                    ->first();
+
+            }
+        }
+
+        $data = [
+            'trx_hidden_id' => $transaction->id ?? '-',
+            'ticket_no' => $transaction->ticket_no ?? '-',
+            'trx_date' => $transaction->trx_date ?? '-',
+            'vehicle_id' => $transaction->vehicle->name ?? '-',
+            'mill_id' => $transaction->mill->mill_id ?? '-',
+            'mill_name' => $transaction->mill->name ?? '-',
+            'weight' => $transaction->weight ?? '-',
+            'ticket_photo' => $transaction->ticket_photo ?? asset('assets/admin/images/palm-oil.jpg'),
+
+            'company_name' => $companyName,
+
+            'supplier_hidden_id' => $supplier->id ?? '-',
+            'supplier_id' => $supplier->supplier_id ?? '-',
+            'supplier_name' => $supplier->supplier_name ?? '-',
+            'address' => $supplier->address1 ?? '-',
+            'email' => $supplier->email ?? '-',
+            'telphone_1' => $supplier->telphone_1 ?? '-',
+            'telphone_2' => $supplier->telphone_2 ?? '-',
+            'bank_id' => $supplier->bank_id ?? '-',
+            'bank_no' => $supplier->bank_no ?? '-',
+        ];
+
+        return response()->json($data);
+    }
+
+    public function editSupplier(string $encID)
+    {
+        $intID = base64_decode(base64_decode($encID));
+        // dd($intID);
+        $data = Suppliers::find($intID);
+        $this->JsonData['status'] = __('success');
+        $this->JsonData['data'] = $data;
+        return response()->json($this->JsonData);
     }
 }

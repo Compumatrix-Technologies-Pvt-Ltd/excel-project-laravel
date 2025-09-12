@@ -152,6 +152,13 @@ class SupplierController extends Controller
         return response()->json($response);
     }
 
+     public function update1(Suppliersrequest $request)
+    {
+        // dd($request->all());
+        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.suppliers.index', $request->id);
+        return response()->json($response);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

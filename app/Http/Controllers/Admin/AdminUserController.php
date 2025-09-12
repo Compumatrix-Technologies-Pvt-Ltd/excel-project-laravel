@@ -8,7 +8,11 @@ use App\Http\Requests\Admin\Auth\RegistrationRequest;
 use App\Mail\EmailVerificationMail;
 use App\Models\Branch;
 use App\Models\BranchModel;
+use App\Models\CompanyModel;
+use App\Models\Suppliers;
+use App\Models\Transaction;
 use App\Models\User;
+use DB;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
@@ -39,7 +43,7 @@ class AdminUserController extends Controller
         $this->ViewData['BranchUsers'] = $this->BaseModel->with('branch')->whereHas('roles', function ($query) {
             $query->where('name', 'branch');
         })->get();
-         $this->ViewData['rolesCollection'] = $this->RoleModel
+        $this->ViewData['rolesCollection'] = $this->RoleModel
             ->whereNotIn('name', ['super-admin', 'hq'])
             ->orderBy('name', 'ASC')
             ->get();
@@ -206,7 +210,7 @@ class AdminUserController extends Controller
     //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
     //     return view('admin.deductions.deduction-index', $this->ViewData);
     // }
-    
+
     public function creditPurchaseIndex()
     {
         $this->ModuleTitle = __('Credit Purches Listing');
@@ -283,5 +287,9 @@ class AdminUserController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         return view('admin.consolidated-ffb.purchase-salse', $this->ViewData);
     }
-    
+
+   
 }
+
+
+

@@ -189,10 +189,17 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
     Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
 
-    // Master Module route
+    // Master Module route branch
 
     Route::get('main', [MasterController::class, 'mainForm'])->name('mainForm.index');
+
+
+    // Master Module Route HQ
     Route::get('hq-main', [MasterController::class, 'HQmainForm'])->name('hqMainForm.index');
+    Route::post('hq-main/getValues', [MasterController::class, 'getDropDownValues'])->name('hqMainForm.getValues');
+    Route::post('hq-main/getAllDetails', [MasterController::class, 'getAllDetails'])->name('hqMainForm.getAllDetails');
+    Route::post('supplier/edit/{id}', [MasterController::class, 'editSupplier'])->name('supplier.editSupplier');
+    Route::put('suppliers/update/main', [SupplierController::class, 'update1'])->name('supplier.update');
 
 
 

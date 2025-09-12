@@ -357,22 +357,24 @@
         });
 
         // For generating ticket number
-        $(document).on('shown.bs.modal', '#transactionModal, #transaction1Modal', function () {
-                var modal = $(this);
-                var generateTicketUrl = modal.data('generate-ticket-url');
+       $(document).on('shown.bs.modal', '[data-generate-ticket-url]', function () {
+    var modal = $(this);
+    var generateTicketUrl = modal.data('generate-ticket-url');
 
-                $.ajax({
-                    url: generateTicketUrl,
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        modal.find('.auto-ticket-number').val(response.ticket_no);
-                    },
-                    error: function () {
-                        console.warn('Failed to generate Ticket Number');
-                    }
-                });
-        });
+    $.ajax({
+        url: generateTicketUrl,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response); // check in DevTools console
+            modal.find('.auto-ticket-number').val(response.ticket_no);
+        },
+        error: function () {
+            console.warn('Failed to generate Ticket Number');
+        }
+    });
+});
+
 
 
         
