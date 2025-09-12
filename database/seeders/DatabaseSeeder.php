@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,43 +20,28 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // DB::table('users')->insert([
-        //     [
-        //         'name' => 'Super Admin',
-        //         'email' => 'admin@gmail.com',
-        //         'password' => Hash::make('Test@1234'),
-        //         'status' => 'active',
-        //         'role' => 'super-admin',
-        //         'email_verified_at'=>Carbon::now(),
-        //         'created_at'=>Carbon::now(),
-        //         'updated_at'=>Carbon::now(),
-        //     ],
-        // ]);
-
         DB::table('users')->insert([
             [
-                'name' => 'HQ User',
-                'email' => 'hq@gmail.com',
+                'name' => 'Super Admin',
+                'email' => 'admin@gmail.com',
                 'password' => Hash::make('Test@1234'),
                 'status' => 'active',
-                'role' => 'hq',
+                'role' => 'super-admin',
                 'email_verified_at'=>Carbon::now(),
                 'created_at'=>Carbon::now(),
                 'updated_at'=>Carbon::now(),
             ],
         ]);
 
-          DB::table('users')->insert([
-            [
-                'name' => 'Branch User',
-                'email' => 'branch-user@gmail.com',
-                'password' => Hash::make('Test@1234'),
-                'status' => 'active',
-                'role' => 'branch-user',
-                'email_verified_at'=>Carbon::now(),
-                'created_at'=>Carbon::now(),
-                'updated_at'=>Carbon::now(),
-            ],
-        ]);
+
+
+        $role = Role::create(['name' => 'super-admin','guard_name'=>'web']);
+        $HqRole = Role::create(['name' => 'hq','guard_name'=>'web']);
+        $branchRole = Role::create(['name' => 'branch','guard_name'=>'web']);
+
+        $user = User::find(1);
+        $strRole = Role::where('id', 1)->pluck('name')->first();  
+        $user->assignRole(strtolower($strRole));
+
     }
 }

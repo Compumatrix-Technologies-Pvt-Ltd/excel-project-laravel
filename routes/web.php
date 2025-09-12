@@ -150,8 +150,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
 
-
-
     // HQ- Suppliers
     Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
 
@@ -193,11 +191,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Master Module route branch
 
-    Route::get('main', [AdminUserController::class, 'mainForm'])->name('mainForm.index');
+    Route::get('main', [MasterController::class, 'mainForm'])->name('mainForm.index');
 
 
     // Master Module Route HQ
-    Route::get('hq-main', [AdminUserController::class, 'HQmainForm'])->name('hqMainForm.index');
+    Route::get('hq-main', [MasterController::class, 'HQmainForm'])->name('hqMainForm.index');
     Route::post('hq-main/getValues', [AdminUserController::class, 'getDropDownValues'])->name('hqMainForm.getValues');
     Route::post('hq-main/getAllDetails', [AdminUserController::class, 'getAllDetails'])->name('hqMainForm.getAllDetails');
 
@@ -206,7 +204,11 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');
     Route::put('/profile/{encid}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/company/{encid}', [ProfileController::class, 'companyUpdate'])->name('company.update');
     Route::get('/update-password', [ProfileController::class, 'updatePassword'])->name('updatePassword');
     Route::put('user-update-password/{encid}', [ProfileController::class, 'storeUpdatedPassword'])->name('storeUpdatePassword');
 
+
+    Route::post('ffb_transaction', [MasterController::class, 'storeFFBTransaction'])->name('ffb.transaction.store');
+    Route::get('get-supplier-details/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetails'])->name('ffb.transaction.getSupplierDetails');
 });
