@@ -26,7 +26,6 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => Hash::make('Test@1234'),
                 'status' => 'active',
-                'role' => 'super-admin',
                 'email_verified_at'=>Carbon::now(),
                 'created_at'=>Carbon::now(),
                 'updated_at'=>Carbon::now(),
