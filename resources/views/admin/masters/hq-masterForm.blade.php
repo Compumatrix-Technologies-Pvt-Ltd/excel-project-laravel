@@ -31,30 +31,38 @@
                         <div class="row align-items-center gy-2">
                             <div class="col-lg-6 d-flex flex-wrap align-items-center gap-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="supplierDetails" id="byTicket"
-                                        checked>
+                                    <input class="form-check-input supplierDetails" type="radio" name="supplierDetails"
+                                        id="byTicket" value="byTicket" checked>
                                     <label class="form-check-label" for="byTicket">By Ticket No.</label>
                                 </div>
+
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="supplierDetails" id="bySupName">
+                                    <input class="form-check-input supplierDetails" type="radio" name="supplierDetails"
+                                        id="bySupName" value="bySupName">
                                     <label class="form-check-label" for="bySupName">By Supplier Name</label>
                                 </div>
+
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="supplierDetails" id="bySupId">
-                                    <label class="form-check-label" for="bySupId">By Supplier Id</label>
+                                    <input class="form-check-input supplierDetails" type="radio" name="supplierDetails"
+                                        id="bysupId" value="bysupId">
+                                    <label class="form-check-label" for="bysupId">By Supplier Id</label>
                                 </div>
 
                                 <div class="input-group input-group-sm ms-2" style="max-width: 320px;">
-                                    <input class="form-control" id="searchInput" placeholder="T02014127" />
+                                    <select class="form-control" id="SuppliersInput">
+                                        <option value="">Select Value</option>
+                                    </select>
                                     <button class="btn btn-outline-secondary"><i class="ri-arrow-down-s-line"></i></button>
                                 </div>
 
                                 <div class="btn-group btn-group-sm ms-2">
-                                    <button class="btn btn-outline-secondary">&laquo;</button>
-                                    <button class="btn btn-outline-secondary">&lt; Previous</button>
-                                    <button class="btn btn-outline-secondary">Next &gt;</button>
-                                    <button class="btn btn-outline-secondary">&raquo;</button>
+                                    <button type="button" id="firstBtn" class="btn btn-outline-secondary">&laquo;</button>
+                                    <button type="button" id="prevBtn" class="btn btn-outline-secondary">&lt;
+                                        Previous</button>
+                                    <button type="button" id="nextBtn" class="btn btn-outline-secondary">Next &gt;</button>
+                                    <button type="button" id="lastBtn" class="btn btn-outline-secondary">&raquo;</button>
                                 </div>
+
                             </div>
 
                             <div class="col-lg-6 d-flex align-items-center justify-content-lg-end gap-3">
@@ -74,22 +82,22 @@
                                     <div class="card-body">
                                         <div class="row g-2 align-items-center">
                                             <div class="col-4 text-muted">Ticket No.</div>
-                                            <div class="col-8"><strong id="tktNo">T02014127</strong></div>
+                                            <div class="col-8"><strong id="ticketNo"></strong></div>
 
                                             <div class="col-4 text-muted">Trx. Date</div>
-                                            <div class="col-8" id="tktDate">10‑Oct‑2024</div>
+                                            <div class="col-8" id="ticketDate"></div>
 
                                             <div class="col-4 text-muted">Vehicle</div>
-                                            <div class="col-8" id="vehicle">QAB8330G</div>
+                                            <div class="col-8" id="vehicle_id"></div>
 
                                             <div class="col-4 text-muted">Mill Id.</div>
                                             <div class="col-8 d-flex gap-3">
-                                                <span id="millId">KSBA</span>
-                                                <span id="millName" class="text-muted">FGV Trading Sdn Bhd</span>
+                                                <span id="millId"></span>
+                                                <span id="millName" class="text-muted"></span>
                                             </div>
 
                                             <div class="col-4 text-muted">Weight (MT)</div>
-                                            <div class="col-8" id="weight">17.43</div>
+                                            <div class="col-8" id="weight"></div>
 
                                             <div class="col-12 mt-2">
                                                 <!-- placeholder image area to mimic Excel truck photo -->
@@ -120,37 +128,35 @@
                             <div class="col-xl-6 mt-3 mt-xl-0">
                                 <div class="card h-100">
                                     <div class="card-header py-2">
-                                        <strong id="tenantName">LKS COMMODITIES SDN BHD</strong>
+                                        <strong id="company_name"></strong>
                                     </div>
                                     <div class="card-body">
                                         <div class="row g-2">
                                             <div class="col-4 text-muted">Supplier Id.</div>
-                                            <div class="col-8" id="supId">Segama Maju</div>
+                                            <div class="col-8" id="supplierId"></div>
 
                                             <div class="col-4 text-muted">Supplier Name</div>
-                                            <div class="col-8" id="supName">Segama Maju Sawit Sdn Bhd 202101009811
-                                                (1410110‑V)</div>
+                                            <div class="col-8" id="supplierName"></div>
 
                                             <div class="col-4 text-muted">Address</div>
-                                            <div class="col-8" id="supAddr">
-                                                Room 448, 4th Floor, West Wing, Wisma Sabah, Jalan Tun Razak, 88000 Kota
-                                                Kinabalu, Sabah.
+                                            <div class="col-8" id="supplierAddress">
+
                                             </div>
 
                                             <div class="col-4 text-muted">eMail</div>
-                                            <div class="col-8" id="supEmail">segamasawitsdnbhd@gmail.com</div>
+                                            <div class="col-8" id="supplierEmail"></div>
 
                                             <div class="col-4 text-muted">Tel. No. 1</div>
-                                            <div class="col-8" id="tel1">0128370803</div>
+                                            <div class="col-8" id="tel1"></div>
 
                                             <div class="col-4 text-muted">Tel. No. 2</div>
-                                            <div class="col-8" id="tel2">01110151992</div>
+                                            <div class="col-8" id="tel2"></div>
 
                                             <div class="col-4 text-muted">Bank Id.</div>
-                                            <div class="col-8" id="bankId">BPT</div>
+                                            <div class="col-8" id="bankId"></div>
 
                                             <div class="col-4 text-muted">Bank A/C No.</div>
-                                            <div class="col-8" id="bankNo">1007601000012737</div>
+                                            <div class="col-8" id="bankAccNo"></div>
                                         </div>
 
                                         <!-- Right side action bar -->
@@ -175,9 +181,117 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            $('input[name=="supplierDetails"]').on('change', function () {
+            let options = [];
+            let currentIndex = 0;
+
+            function loadCurrentOption() {
+                const selectedType = $('.supplierDetails:checked').val();
+                const selectedValue = options[currentIndex];
+
+                $('#SuppliersInput').val(selectedValue);
+                fetchDetails(selectedType, selectedValue);
+            }
+
+            $('.supplierDetails').change(function () {
+                const selectedType = $(this).val();
+
+                $.ajax({
+                    url: '{{ route("admin.hqMainForm.getValues") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        type: selectedType
+                    },
+                    success: function (response) {
+                        options = response;
+                        $('#SuppliersInput').empty();
+
+                        options.forEach(function (item, index) {
+                            const selected = index === 0 ? 'selected' : '';
+                            $('#SuppliersInput').append(`<option ${selected}>${item}</option>`);
+                        });
+
+                        currentIndex = 0;
+
+                        if (options.length > 0) {
+                            loadCurrentOption();
+                        } else {
+                            $('#SuppliersInput').append('<option selected>No options found</option>');
+                        }
+                    }
+                });
+            });
+
+            $('#SuppliersInput').change(function () {
+                currentIndex = $('#SuppliersInput').prop('selectedIndex');
+                const selectedType = $('.supplierDetails:checked').val();
+                const selectedValue = $(this).val();
+                fetchDetails(selectedType, selectedValue);
+            });
+
+            $('#prevBtn').click(function () {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    loadCurrentOption();
+
+                }
+            });
+
+            $('#nextBtn').click(function () {
+                if (currentIndex < options.length - 1) {
+                    currentIndex++;
+                    loadCurrentOption();
+
+                }
+            });
+
+            $('#firstBtn').click(function () {
+                currentIndex = 0;
+                loadCurrentOption();
 
             });
+
+            $('#lastBtn').click(function () {
+                currentIndex = options.length - 1;
+                loadCurrentOption();
+
+            });
+
+            // Trigger initial load
+            $('.supplierDetails:checked').trigger('change');
+
+            function fetchDetails(type, value) {
+                $.ajax({
+                    url: '{{ route("admin.hqMainForm.getAllDetails") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        type: type,
+                        value: value
+                    },
+                    success: function (data) {
+                        $('#ticketNo').text(data.ticket_no || '-');
+                        $('#ticketDate').text(data.trx_date || '-');
+                        $('#vehicle_id').text(data.vehicle_id || '-');
+                        $('#millId').text(data.mill_id || '-');
+                        $('#millName').text(data.mill_name || '-');
+                        $('#weight').text(data.weight || '-');
+                        $('#ticketPhoto').attr('src', data.ticket_photo || '{{ asset("/assets/admin/images/palm-oil.jpg") }}');
+
+                        $('#company_name').text(data.company_name || '-');
+                        $('#supplierId').text(data.supplier_id || '-');
+                        $('#supplierName').text(data.supplier_name || '-');
+                        $('#supplierAddress').text(data.address || '-');
+                        $('#supplierEmail').text(data.email || '-');
+                        $('#tel1').text(data.telphone_1 || '-');
+                        $('#tel2').text(data.telphone_2 || '-');
+                        $('#bankId').text(data.bank_id || '-');
+                        $('#bankAccNo').text(data.bank_no || '-');
+                    }
+                });
+            }
+
         });
     </script>
+
 @endsection

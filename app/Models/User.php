@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles; 
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -48,7 +48,13 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function branch(){
-        return $this->belongsTo(BranchModel::class,'branch_id');
+    public function branch()
+    {
+        return $this->belongsTo(BranchModel::class, 'branch_id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(CompanyModel::class, 'company_id');
     }
 }

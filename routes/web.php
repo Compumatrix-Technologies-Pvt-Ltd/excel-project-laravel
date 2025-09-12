@@ -191,10 +191,15 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
     Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
 
-    // Master Module route
+    // Master Module route branch
 
     Route::get('main', [AdminUserController::class, 'mainForm'])->name('mainForm.index');
+
+
+    // Master Module Route HQ
     Route::get('hq-main', [AdminUserController::class, 'HQmainForm'])->name('hqMainForm.index');
+    Route::post('hq-main/getValues', [AdminUserController::class, 'getDropDownValues'])->name('hqMainForm.getValues');
+    Route::post('hq-main/getAllDetails', [AdminUserController::class, 'getAllDetails'])->name('hqMainForm.getAllDetails');
 
 
 
