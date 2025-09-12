@@ -80,6 +80,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
 
     Route::resource('users', AdminUserController::class)->names('users');
+    Route::put('users/update', [AdminUserController::class, 'update'])->name('user.update');
 
 
     # Manage Roles
@@ -123,21 +124,31 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Deduction Routes
     Route::get('deductions/getRecords', [DeductionController::class, 'getRecords'])->name('deductions.getRecords');
-    Route::resource('deductions', DeductionController::class)->names('deductions');
+    Route::get('deduction-reports/getRcords', [DeductionController::class, 'deductionReporGetRecords'])->name('deductions.report.getRecords');
+   
+    Route::get('deduction-reports', [DeductionController::class, 'deductionReportIndex'])->name('deductions.report.index');
 
-    Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
+    Route::resource('deductions', DeductionController::class)->names('deductions');
 
     // Vehicle Management
     Route::resource('vehicles', VehicleController::class)->names('vehicles');
-    Route::put('vehicles/update', [VehicleController::class, 'update'])->name('vehicles.update');
+    Route::put('vehicles/update', [VehicleController::class, 'update'])->name('vehicle.update');
 
     // Transaction Management
     Route::get('transaction-management', [TransactionController::class, 'hqTransactionIndex'])->name('transaction.management');
     Route::get('transactions/getRecords/hq', [TransactionController::class, 'getRecordsHq'])->name('transactions.getRecordsHq');
     Route::get('transactions/getRecords', [TransactionController::class, 'getRecords'])->name('transactions.getRecords');
 
+    // Generate TRX and Ticket number
+    Route::get('generate-trx-number', [TransactionController::class, 'generateTrxNumber'])->name('generate.trx.number');
+    Route::get('generate-ticket-number', [TransactionController::class, 'generateTicketNumber'])->name('generate.ticket.number');
+
+
     Route::resource('transactions', TransactionController::class)->names('transactions');
-    
+    Route::put('transactions/update', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::put('transactions/hq/update', [TransactionController::class, 'update'])->name('transactionshq.update');
+
+
 
     // HQ- Suppliers
     Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');

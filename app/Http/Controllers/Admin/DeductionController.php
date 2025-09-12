@@ -121,15 +121,15 @@ class DeductionController extends Controller
 
             $baseQuery = $this->BaseModel::with('supplier.user');
 
-            if ($loggedInUser->role === 'hq') {
-                $baseQuery->whereHas('supplier.user', function ($q) {
-                    $q->where('role', 'hq');
-                });
-            } elseif ($loggedInUser->role === 'branch-user') {
-                $baseQuery->whereHas('supplier.user', function ($q) {
-                    $q->where('role', 'branch-user');
-                });
-            }
+            // if ($loggedInUser->role === 'hq') {
+            //     $baseQuery->whereHas('supplier.user', function ($q) {
+            //         $q->where('role', 'hq');
+            //     });
+            // } elseif ($loggedInUser->role === 'branch-user') {
+            //     $baseQuery->whereHas('supplier.user', function ($q) {
+            //         $q->where('role', 'branch-user');
+            //     });
+            // }
 
 
             $intTotalData = $baseQuery->count();
@@ -163,7 +163,7 @@ class DeductionController extends Controller
                     'sr.no' => $count,
                     'date' => $deduction->date ?? 'N/A',
                     'period' => $deduction->period ?? 'N/A',
-                    'supplier_id' => $deduction->supplier->supplier_id ?? 'N/A',
+                    'supplier_id' => $deduction->supplier->supplier_id . ' ' . $deduction->supplier->supplier_name ?? 'N/A',
                     'type' => ucfirst($deduction->type) ?? 'N/A',
                     'amount' => $deduction->amount ?? 'N/A',
                     'remark' => ucfirst($deduction->remark) ?? 'N/A',
@@ -188,5 +188,124 @@ class DeductionController extends Controller
             ], 500);
         }
     }
+
+
+    public function deductionReportIndex()
+    {
+        $this->ModuleTitle = __('Deduction Reports');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view($this->ModuleView . 'deduction-reports', $this->ViewData);
+    }
+
+    public function deductionReporGetRecords(Request $request)
+    {
+        try {
+            $start = $request->start ?? 0;
+            $length = $request->length ?? 10;
+
+            $baseQuery = $this->BaseModel::with('supplier');
+
+            // Apply search filter
+            if (!empty($request->search['value'])) {
+                $search = $request->search['value'];
+                $baseQuery->where(function ($q) use ($search) {
+                    $q->where('date', 'LIKE', "%{$search}%")
+                        ->orWhere('supplier_id', 'LIKE', "%{$search}%")
+                        ->orWhereHas('supplier', function ($q2) use ($search) {
+                            $q2->where('supplier_name', 'LIKE', "%{$search}%");
+                        });
+                });
+            }
+
+            // total suppliers (for pagination)
+            $allSupplierIds = $baseQuery->distinct('supplier_id')->pluck('supplier_id');
+            $totalFiltered = $allSupplierIds->count();
+
+            // Paginate supplier IDs
+            $supplierIdsPage = $allSupplierIds->slice($start, $length);
+
+            // Fetch all rows for one suppliers
+            $records = $baseQuery
+                ->whereIn('supplier_id', $supplierIdsPage)
+                ->orderBy('supplier_id', 'asc')
+                ->orderBy('date', 'asc')
+                ->get();
+
+            // Group by supplier
+            $grouped = $records->groupBy('supplier_id');
+
+            $data = [];
+            $srNo = $start + 1;
+
+            $grandTransport = 0;
+            $grandAdvance = 0;
+            $grandOthers = 0;
+
+            foreach ($grouped as $supplierId => $items) {
+
+                $totalTransport = 0;
+                $totalAdvance = 0;
+                $totalOthers = 0;
+
+                foreach ($items as $item) {
+                    $transport = $item->type === 'transport' ? $item->amount : 0;
+                    $advance = $item->type === 'advance' ? $item->amount : 0;
+                    $others = $item->type === 'others' ? $item->amount : 0;
+
+                    $totalTransport += $transport;
+                    $totalAdvance += $advance;
+                    $totalOthers += $others;
+
+                    $data[] = [
+                        'sr_no' => $srNo++,
+                        'date' => $item->date ?? 'N/A',
+                        'supplier_id' => $item->supplier->supplier_id ?? 'N/A',
+                        'supplier_name' => $item->supplier->supplier_name ?? 'N/A',
+                        'transport' => number_format($transport, 2),
+                        'advance' => number_format($advance, 2),
+                        'others' => number_format($others, 2),
+                        'remark' => $item->remark ?? 'N/A',
+                    ];
+                }
+
+                // Supplier total row
+                $data[] = [
+                    'sr_no' => '',
+                    'date' => '',
+                    'supplier_id' => '',
+                    'supplier_name' => '<strong>- Total -</strong>',
+                    'transport' => '<strong>' . number_format($totalTransport, 2) . '</strong>',
+                    'advance' => '<strong>' . number_format($totalAdvance, 2) . '</strong>',
+                    'others' => '<strong>' . number_format($totalOthers, 2) . '</strong>',
+                    'remark' => '-',
+                ];
+
+                $grandTransport += $totalTransport;
+                $grandAdvance += $totalAdvance;
+                $grandOthers += $totalOthers;
+            }
+
+            return response()->json([
+                'draw' => intval($request->draw),
+                'recordsTotal' => $allSupplierIds->count(),
+                'recordsFiltered' => $totalFiltered,
+                'data' => $data,
+                'grandTotals' => [
+                    'transport' => number_format($grandTransport, 2),
+                    'advance' => number_format($grandAdvance, 2),
+                    'others' => number_format($grandOthers, 2),
+                ],
+            ]);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'An error occurred while fetching records.',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+
 
 }

@@ -37,7 +37,11 @@
                             @csrf
 
                             <div class="row align-items-center mb-3">
+<<<<<<< HEAD
                                 @if (Auth::check() && Auth::user()->hasRole('branch'))
+=======
+                                @if (Auth::user()->hasRole('branch'))
+>>>>>>> c87f0469df0768cf67ffc0d98fceff5bba86972a
                                     <div class="col-md-6 d-flex align-items-center form-group">
                                         <label class="me-3">Supplier Type: <span class="text-danger">*</span></label>
 
@@ -66,7 +70,7 @@
                                     </div>
 
 
-                                @else
+                                @elseif (Auth::user()->hasRole('hq'))
                                     <div class="col-md-6 form-group">
                                         <label for="supplier_id" class="form-label">Supplier Id: <span
                                                 class="text-danger">*</span></label>
@@ -95,7 +99,11 @@
                             </div>
 
                             <div class="row mb-3">
+<<<<<<< HEAD
                                 @if (Auth::check() && Auth::user()->hasRole('branch'))
+=======
+                                @if (Auth::user()->hasRole('branch'))
+>>>>>>> c87f0469df0768cf67ffc0d98fceff5bba86972a
                                     <div class="col-md-3 form-group">
                                         <label for="mpob_lic_no" class="form-label">MPOB Licence No.: <span
                                                 class="text-danger">*</span></label>
@@ -117,7 +125,11 @@
                                     <input type="text" name="address2" id="address2" class="form-control form-control-sm">
                                 </div>
                             </div>
+<<<<<<< HEAD
                             @if (Auth::check() && Auth::user()->hasRole('branch'))
+=======
+                            @if (Auth::user()->hasRole('branch'))
+>>>>>>> c87f0469df0768cf67ffc0d98fceff5bba86972a
                                 <div class="row mb-3">
                                     <div class="col-md-3 form-group">
                                         <label for="mspo_cert_no" class="form-label">MSPO Cert. No.: <span
@@ -201,7 +213,11 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
                             @if (Auth::check() && Auth::user()->hasRole('branch'))
+=======
+                            @if (Auth::user()->hasRole('branch'))
+>>>>>>> c87f0469df0768cf67ffc0d98fceff5bba86972a
                                 <div class="row mb-3">
                                     <div class="col form-group">
                                         <label for="remark" class="form-label">Remark:</label>

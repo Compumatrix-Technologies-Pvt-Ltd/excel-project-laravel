@@ -151,6 +151,10 @@
         ],
     });
 
+
+    
+
+
     $(document).on('click','#edit-vehicle-btn',function(){
        $('#editVehicleModal').modal('show');
         var encrypted_id = $(this).attr("data-id");
@@ -178,25 +182,24 @@
         // alert(encrypted_id);
                 var action = ADMINURL+'/users/'+ encrypted_id +'/edit';
 
-        // $.ajax({
-        //     type: "GET",
-        //     url: action,
-        //     dataType:"json",
-        //     success:function(response){
-        //         if(response.status == 'success'){
-        //             $("#fullnameInput").val(response.data.name);
-        //             $('#inputEmail4').val(response.data.email);
-        //             $('#phoneNumberInput').val(response.data.mobile_number);       
-        //             $('#user_role').val(response.data.role);       
-        //             $('#inputBranch').val(response.data.bic_code);       
-        //             $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
-        //             $('#hidden_id').val(encrypted_id);
-        //             $('#submitBtn').removeClass('disabled');
-        //         }else{
-        //             alert('Something went wrong');
-        //         } 
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#fullnameInput").val(response.data.name);
+                    $('#inputEmail4').val(response.data.email);
+                    $('#phoneNumberInput').val(response.data.mobile_number);                                             
+                    $('#inputBranch').val(response.data.branch_id);       
+                    $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
     });
 
 
@@ -236,6 +239,34 @@
             ],
         });
   
+        $(document).on('click','#edit-transactionhq-btn',function(){
+
+       $('#transactionEditModalHQ').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#SupplierInput').val(response.data.supplier_id);
+                    $('#VehicleInput').val(response.data.vehicle_id);
+                    $('#MillInput').val(response.data.mill_id);                           
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+
 
 
     var action = ADMINURL + '/transactions/getRecords';
@@ -279,25 +310,102 @@
         // alert(encrypted_id);
                 var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
 
-        // $.ajax({
-        //     type: "GET",
-        //     url: action,
-        //     dataType:"json",
-        //     success:function(response){
-        //         if(response.status == 'success'){
-        //             $("#fullnameInput").val(response.data.name);
-        //             $('#inputEmail4').val(response.data.email);
-        //             $('#phoneNumberInput').val(response.data.mobile_number);       
-        //             $('#user_role').val(response.data.role);       
-        //             $('#inputBranch').val(response.data.bic_code);       
-        //             $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
-        //             $('#hidden_id').val(encrypted_id);
-        //             $('#submitBtn').removeClass('disabled');
-        //         }else{
-        //             alert('Something went wrong');
-        //         } 
-        //     }
-        // });
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#trxNoInput').val(response.data.trx_no);
+                    $('#SupplierInput').val(response.data.supplier_id);       
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
     });
+
+    // For generatig TRX number
+    $('#transactionModal').on('shown.bs.modal', function () {
+            var modal = $(this);
+            var generateTrxUrl = modal.data('generate-trx-url');
+
+            function fetchTrxNumber() {
+                $.ajax({
+                    url: generateTrxUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#trxNo').val(response.trx_no);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error generating TRX No:', error);
+                    }
+                });
+            }
+
+            fetchTrxNumber();
+
+            $('#TRXDate').off('change').on('change', function () {
+                fetchTrxNumber();
+            });
+        });
+
+        // For generating ticket number
+        $(document).on('shown.bs.modal', '#transactionModal, #transaction1Modal', function () {
+                var modal = $(this);
+                var generateTicketUrl = modal.data('generate-ticket-url');
+
+                $.ajax({
+                    url: generateTicketUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        modal.find('.auto-ticket-number').val(response.ticket_no);
+                    },
+                    error: function () {
+                        console.warn('Failed to generate Ticket Number');
+                    }
+                });
+        });
+
+
+        
+        // ************** Deduction Repors ********************
+
+        var action = ADMINURL + '/deduction-reports/getRcords';
+
+        $('#DeductionReportsListing').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: action,
+                    type: "GET",
+                    dataSrc: function (json) {
+                        $('#grandTransport').html('<strong>' + json.grandTotals.transport + '</strong>');
+                        $('#grandAdvance').html('<strong>' + json.grandTotals.advance + '</strong>');
+                        $('#grandOthers').html('<strong>' + json.grandTotals.others + '</strong>');
+
+                        return json.data;
+                    }
+                },
+                columns: [
+                    { data: 'date' },
+                    { data: 'supplier_id' },
+                    { data: 'supplier_name' },
+                    { data: 'transport' },
+                    { data: 'advance' },
+                    { data: 'others' },
+                    { data: 'remark' },
+                ],
+                order: [[1, 'asc'], [0, 'asc']],
+            });
+
+     // ************** End Deduction Repors ********************
 
 });

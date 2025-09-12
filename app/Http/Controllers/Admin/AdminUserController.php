@@ -39,6 +39,10 @@ class AdminUserController extends Controller
         $this->ViewData['BranchUsers'] = $this->BaseModel->with('branch')->whereHas('roles', function ($query) {
             $query->where('name', 'branch');
         })->get();
+         $this->ViewData['rolesCollection'] = $this->RoleModel
+            ->whereNotIn('name', ['super-admin', 'hq'])
+            ->orderBy('name', 'ASC')
+            ->get();
         $this->ViewData['Branches'] = BranchModel::all();
         return view($this->ModuleView . 'index', $this->ViewData);
     }
@@ -91,7 +95,7 @@ class AdminUserController extends Controller
         $UserData->name = $request->name;
         $UserData->email = $request->email;
         $UserData->mobile_number = $request->mobile_number;
-        $UserData->status = 'inactive';
+        $UserData->status = $request->status ?? 'inactive';
         $UserData->password = Hash::make($plainPassword);
         $UserData->company_id = $user->company_id;
         $UserData->parent_id = $user->id;
@@ -139,9 +143,10 @@ class AdminUserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.users.index', $request->id);
+        return response()->json($response);
     }
 
     /**
@@ -201,12 +206,7 @@ class AdminUserController extends Controller
     //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
     //     return view('admin.deductions.deduction-index', $this->ViewData);
     // }
-    public function deductionReportIndex()
-    {
-        $this->ModuleTitle = __('Deduction Reports');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.deductions.deduction-reports', $this->ViewData);
-    }
+    
     public function creditPurchaseIndex()
     {
         $this->ModuleTitle = __('Credit Purches Listing');

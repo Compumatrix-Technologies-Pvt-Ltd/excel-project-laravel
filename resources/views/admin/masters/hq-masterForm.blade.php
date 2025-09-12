@@ -13,7 +13,6 @@
                         <li class="breadcrumb-item active"><a href="{{ route('admin.users.create') }}">Main Form</a></li>
                     </ol>
                 </div>
-
             </div>
         </div>
     </div>
@@ -32,21 +31,22 @@
                         <div class="row align-items-center gy-2">
                             <div class="col-lg-6 d-flex flex-wrap align-items-center gap-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="searchMode" id="byTicket" checked>
+                                    <input class="form-check-input" type="radio" name="supplierDetails" id="byTicket"
+                                        checked>
                                     <label class="form-check-label" for="byTicket">By Ticket No.</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="searchMode" id="bySupName">
+                                    <input class="form-check-input" type="radio" name="supplierDetails" id="bySupName">
                                     <label class="form-check-label" for="bySupName">By Supplier Name</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="searchMode" id="bySupId">
+                                    <input class="form-check-input" type="radio" name="supplierDetails" id="bySupId">
                                     <label class="form-check-label" for="bySupId">By Supplier Id</label>
                                 </div>
 
                                 <div class="input-group input-group-sm ms-2" style="max-width: 320px;">
                                     <input class="form-control" id="searchInput" placeholder="T02014127" />
-                                    <button class="btn btn-outline-secondary"><i class="ri-arrow-up-s-line"></i></button>
+                                    <button class="btn btn-outline-secondary"><i class="ri-arrow-down-s-line"></i></button>
                                 </div>
 
                                 <div class="btn-group btn-group-sm ms-2">
@@ -94,18 +94,23 @@
                                             <div class="col-12 mt-2">
                                                 <!-- placeholder image area to mimic Excel truck photo -->
                                                 <div class="ratio ratio-16x9 border bg-light-subtle">
-                                                    <img id="ticketPhoto" src="{{ asset('/assets/admin/images/palm-oil.jpg') }}" alt="" class="img-fluid"
-                                                        onerror="this.style.display='none'">
+                                                    <img id="ticketPhoto"
+                                                        src="{{ asset('/assets/admin/images/palm-oil.jpg') }}" alt=""
+                                                        class="img-fluid" onerror="this.style.display='none'">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Action bar (left side group) -->
                                         <div class="d-flex flex-wrap gap-2 mt-3">
-                                            <a href="{{route('admin.suppliersHq.index')}}" class="btn btn-secondary btn-sm">Add Supplier</a>
-                                            <a href="{{route('admin.suppliersHq.index')}}" class="btn btn-secondary btn-sm">Edit Supplier</a>
-                                            <a href="{{ route('admin.transaction.management') }}" class="btn btn-secondary btn-sm">Add Trx</a>
-                                            <a href="{{ route('admin.transaction.management') }}" class="btn btn-secondary btn-sm">Edit Trx</a>
+                                            <a href="{{route('admin.suppliersHq.index')}}"
+                                                class="btn btn-secondary btn-sm">Add Supplier</a>
+                                            <a href="{{route('admin.suppliersHq.index')}}"
+                                                class="btn btn-secondary btn-sm">Edit Supplier</a>
+                                            <a href="{{ route('admin.transaction.management') }}"
+                                                class="btn btn-secondary btn-sm">Add Trx</a>
+                                            <a href="{{ route('admin.transaction.management') }}"
+                                                class="btn btn-secondary btn-sm">Edit Trx</a>
                                         </div>
                                     </div>
                                 </div>
@@ -158,14 +163,21 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>
         <!--end col-->
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            $('input[name=="supplierDetails"]').on('change', function () {
+
+            });
+        });
+    </script>
 @endsection

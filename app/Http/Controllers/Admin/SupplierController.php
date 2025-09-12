@@ -62,15 +62,22 @@ class SupplierController extends Controller
 
     public function _storeOrUpdate($SuppliersData, $request)
     {
-        $prefix = $request->prefix;
-        $type = $request->type;
 
-        $supplierId = $this->BaseModel->generateSupplierId($prefix, $type);
+        $user = auth()->user();
 
-        $SuppliersData->supplier_id = $supplierId;
-        $userId = auth()->user()->id;
+        if ($user->hasRole('branch')) {
+            $prefix = $request->prefix;
+            $type = $request->type;
+
+            $supplierId = $this->BaseModel->generateSupplierId($prefix, $type);
+            $SuppliersData->supplier_id = $supplierId;
+
+        } elseif ($user->hasRole('hq')) {
+            $SuppliersData->supplier_id = $request->supplier_id;
+
+        }
+        $userId = $user->id;
         $SuppliersData->user_id = $userId;
-        $SuppliersData->supplier_id = $supplierId;
         $SuppliersData->supplier_type = $request->supplier_type;
         $SuppliersData->supplier_name = $request->supplier_name;
         $SuppliersData->address1 = $request->address1;
@@ -180,15 +187,13 @@ class SupplierController extends Controller
 
         $baseQuery = $this->BaseModel::with('user');
 
-        if ($loggedInUser->role === 'hq') {
-            $baseQuery->whereHas('user', function ($q) {
-                $q->where('role', 'hq');
-            });
-        } elseif ($loggedInUser->role === 'branch-user') {
-            $baseQuery->whereHas('user', function ($q) {
-                $q->where('role', 'branch-user');
-            });
+        if ($loggedInUser->hasRole('hq')) {
+            $baseQuery->where('user_id', $loggedInUser->id);
+        } elseif ($loggedInUser->hasRole('branch')) {
+            // Branch-user can only see their own suppliers
+            $baseQuery->where('user_id', $loggedInUser->id);
         }
+
 
         $intTotalData = $baseQuery->count();
 
