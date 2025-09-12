@@ -72,8 +72,10 @@
                             <div class="col-12 col-lg-3">
                                 <button class="btn btn-outline-secondary btn-sm mt-4" type="button">FFB Master</button>
                             </div>
-                           <div class="col-12 col-lg-3 text-lg-end">
-                                <input type="text" class="form-control form-control-sm text-center fw-bold" value="{{session('yearMonth') ? session('yearMonth') : date('Ym')}}" data-url="{{ route('set.year.month') }}" id="periodInput" />
+                            <div class="col-12 col-lg-3 text-lg-end">
+                                <input type="text" class="form-control form-control-sm text-center fw-bold"
+                                    value="{{session('yearMonth') ? session('yearMonth') : date('Ym')}}"
+                                    data-url="{{ route('set.year.month') }}" id="periodInput" />
                             </div>
 
                         </div>
@@ -107,7 +109,8 @@
 
                                             <div class="col-12">
                                                 <label class="form-label small">Address</label>
-                                                <textarea class="form-control form-control-sm" rows="2" id="address">W.D.T 23  PEKAN KOTA KINABATANGAN 90200 KINABATANGAN  SABAH.</textarea>
+                                                <textarea class="form-control form-control-sm" rows="2"
+                                                    id="address">W.D.T 23  PEKAN KOTA KINABATANGAN 90200 KINABATANGAN  SABAH.</textarea>
                                             </div>
 
                                             <div class="col-6">
@@ -117,8 +120,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Expiry Date</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    value="2025-07-31">
+                                                <input type="date" class="form-control form-control-sm" value="2025-07-31">
                                             </div>
 
                                             <div class="col-6">
@@ -128,8 +130,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Expiry Date</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    value="2022-01-04">
+                                                <input type="date" class="form-control form-control-sm" value="2022-01-04">
                                             </div>
 
                                             <div class="col-4">
@@ -186,8 +187,7 @@
                                         <div class="row g-2">
                                             <div class="col-7">
                                                 <label class="form-label small">Invoice Date</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    value="2025-05-02">
+                                                <input type="date" class="form-control form-control-sm" value="2025-05-02">
                                             </div>
                                             <div class="col-5">
                                                 <label class="form-label small">Weight (M/Ton)</label>
@@ -258,8 +258,7 @@
                                             </div>
                                             <div class="col-5">
                                                 <label class="form-label small">Date Paid</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    value="2025-05-02">
+                                                <input type="date" class="form-control form-control-sm" value="2025-05-02">
                                             </div>
 
                                             <div class="col-6">
@@ -290,8 +289,8 @@
                                         data-bs-target="#transactionModal">
                                         Add Trx
                                     </button>
-                                    <a href="{{ route('admin.transactions.index') }}"
-                                        class="btn btn-secondary btn-sm">Edit Trx</a>
+                                    <a href="{{ route('admin.transactions.index') }}" class="btn btn-secondary btn-sm">Edit
+                                        Trx</a>
                                     <a href="{{ route('admin.transactions.index') }}" class="btn btn-secondary btn-sm">Trx
                                         Details</a>
                                     <a href="{{ route('admin.deductions.index') }}" class="btn btn-secondary btn-sm">Add
@@ -308,13 +307,12 @@
                 </div>
             </div>
             <div id="transactionModal" class="modal fade" tabindex="-1" aria-labelledby="transactionModalLabel"
-                aria-hidden="true">
+                aria-hidden="true" data-generate-ticket-url="{{ route('admin.generate.ticket.number') }}">
                 <div class="modal-dialog modal-xl">
                     <div class="modal-content">
                         <div class="modal-header pb-1">
                             <h5 class="modal-title" id="transactionModalLabel">Transaction Data Entry Form</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form>
                             <div class="modal-body pt-0 pb-2">
@@ -355,7 +353,7 @@
                                         <span class="fw-bold fs-5 align-middle">202504</span>
                                     </div>
                                     <!-- Action Buttons -->
-                                  
+
                                 </div>
 
                                 <div class="row">
@@ -402,24 +400,20 @@
                                             <legend class="float-none w-auto fs-6 mb-0 px-2">Deductions</legend>
                                             <div class="mb-2">
                                                 <label class="form-label mb-1">Debit Bal. B/F:</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
+                                                <input type="number" step="0.01" class="form-control form-control-sm">
                                             </div>
                                             <div class="mb-2">
                                                 <label class="form-label mb-1">Transport:</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
+                                                <input type="number" step="0.01" class="form-control form-control-sm">
                                             </div>
                                             <div class="mb-2">
                                                 <label class="form-label mb-1">Advance:</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
+                                                <input type="number" step="0.01" class="form-control form-control-sm">
                                             </div>
                                             <div class="mb-2 row g-2 align-items-end">
                                                 <div class="col-md-6">
                                                     <label class="form-label mb-1">Others:</label>
-                                                    <input type="number" step="0.01"
-                                                        class="form-control form-control-sm">
+                                                    <input type="number" step="0.01" class="form-control form-control-sm">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label mb-1">Others Desc.:</label>
@@ -450,8 +444,8 @@
                                             <fieldset class="border rounded p-2 h-100">
                                                 <legend class="small w-auto m-0 px-2">Pay By</legend>
                                                 <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payCash" checked><label
-                                                        class="form-check-label" for="payCash">Cash</label></div>
+                                                        name="payBy" id="payCash" checked><label class="form-check-label"
+                                                        for="payCash">Cash</label></div>
                                                 <div class="form-check"><input class="form-check-input" type="radio"
                                                         name="payBy" id="payCheque"><label class="form-check-label"
                                                         for="payCheque">Cheque</label></div>
@@ -471,7 +465,7 @@
                                     </div>
                                 </div>
                             </div>
-                              <div class="modal-footer">
+                            <div class="modal-footer">
                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-success ">Save Changes</button>
                             </div>
@@ -485,4 +479,6 @@
 @endsection
 @section('scripts')
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-create-edit.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-index/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common.js') }}"></script>
 @endsection

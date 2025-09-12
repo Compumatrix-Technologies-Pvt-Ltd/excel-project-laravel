@@ -17,10 +17,12 @@
     <link href="{{asset('/assets/admin/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/admin/libs/select2/css/select2.min.css')}}" rel="stylesheet" />
     <link href="{{ asset('/assets/admin/libs/jsvectormap/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowgroup/1.3.1/css/rowGroup.dataTables.min.css">
     <link href="{{asset('/assets/admin/plugins/custom/datatables/css/dataTables.bootstrap5.min.css')}}" rel="stylesheet"
         type="text/css" />
     <link href="{{asset('/assets/admin/plugins/custom/datatables/responsive/css/responsive.bootstrap.min.css')}}"
         rel="stylesheet" type="text/css" />
+
     <script src="{{ asset('/assets/admin/js/layout.js')}}"></script>
     <link href="{{ asset('/assets/admin/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />

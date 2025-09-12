@@ -99,9 +99,10 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                         </button>
                                     </div>
-                                    <form id="updateForm" action="{{ route('admin.users.store') }}" role="form"
+                                    <form id="updateForm" action="{{ route('admin.user.update') }}" role="form"
                                         class="row g-3" method="post">
                                         @csrf
+                                        @method('PUT')
                                         <div class="modal-body">
                                             <input type="hidden" name="id" id="hidden_id">
                                             <div class="row">
@@ -126,23 +127,28 @@
                                                     <span class="help-block with-errors err_mobile_number"
                                                         style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6 mb-3 form-group">
+                                                <div class="col-md-6">
                                                     <label for="inputRole" class="form-label">Assign Role<span
                                                             class="text-danger">*</span></label>
-                                                    <select class="form-control role" tabindex="1" name="role"
-                                                        id="user_role">
-                                                        <option value="" name="">Select Role</option>
-                                                        @if(!empty($rolesCollection) && count($rolesCollection) > 0)
+                                                    <select class="form-control role" tabindex="1" name="role" id="user_role">
+                                                        <option selected value="" name="role">Select Role</option>
+                                                        @php
+                                                            $user_role = '';
+                                                            if (count($user->getRoleNames()) > 0) {
+                                                                $user_role = $user->getRoleNames()[0];
+                                                            }
+                                                        @endphp
+                                                        @if(!empty($rolesCollection) && sizeof($rolesCollection) > 0)
                                                             @foreach($rolesCollection as $key => $role)
                                                                 <option value="{{ base64_encode(base64_encode($role->id)) }}"
-                                                                    name="{{$role->name}}">
-                                                                    {{ ucwords(str_replace('-', ' ', $role->name)) }}
+                                                                    name="{{$role->name}}" @if($role->name == $user_role) selected
+                                                                    @endif>
+                                                                    {{ ucfirst(str_replace('-', ' ', $role->name)) }}
                                                                 </option>
                                                             @endforeach
                                                         @endif
                                                     </select>
                                                     <span class="help-block with-errors err_role" style="color:red;"></span>
-
                                                 </div>
                                                 <div class="col-md-6 mb-3 form-group">
                                                     <label for="inputBranch" class="form-label">Assign Branch<span

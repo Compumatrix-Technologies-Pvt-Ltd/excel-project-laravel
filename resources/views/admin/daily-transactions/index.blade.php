@@ -31,20 +31,20 @@
                     <h4 class="card-title mb-0 flex-grow-1">Transaction Listing</h4>
                     <div class="card-toolbar">
                         <!-- <a href="javascript:void(0)" class="btn btn-primary fw-bold me-2">
-                                                                                                                                                    <i class="flaticon2-plus"></i> Create Branch
-                                                                                                                                                </a> -->
+                                                                                                                                                                    <i class="flaticon2-plus"></i> Create Branch
+                                                                                                                                                                </a> -->
                         <button type="button" class="btn btn-info fw-bold" data-bs-toggle="modal"
                             data-bs-target="#transactionModal">
                             <i class="flaticon2-plus"></i> Create Transaction
                         </button>
                         <div id="transactionModal" class="modal fade" tabindex="-1" aria-labelledby="transactionModalLabel"
-                            aria-hidden="true" style="display: none;">
+                            aria-hidden="true" data-generate-trx-url="{{ route('admin.generate.trx.number') }}"
+                            data-generate-ticket-url="{{ route('admin.generate.ticket.number') }}" style="display: none;">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="transactionModalLabel">Add Transaction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form id="AddForm" action="{{ route('admin.transactions.store') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
@@ -62,12 +62,12 @@
                                                     <label for="trxNo" class="form-label">TRX No.<span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="trxNo" name="trx_no"
-                                                        required data-error="Please enter TRX number">
+                                                        required data-error="Please enter TRX number" readonly>
                                                     <span class="help-block with-errors err_trx_no"
                                                         style="color:red;"></span>
                                                 </div>
                                                 <div class="col-md-6 form-group">
-                                                    <label for="inputSupplier" class="form-label">Supplier Id<span
+                                                    <label for="inputSupplier" class="form-label">Supplier<span
                                                             class="text-danger">*</span></label>
                                                     <select id="inputSupplier" class="form-select" name="supplier_id"
                                                         required data-error="Please select supplier">
@@ -75,7 +75,8 @@
                                                             style="color:red;"></span>
                                                         <option selected>Select Supplier</option>
                                                         @foreach ($Suppliers as $supplier)
-                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            <option value="{{ $supplier->id }}">
+                                                                {{ $supplier->supplier_id . ' ' . $supplier->supplier_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -83,8 +84,9 @@
                                                 <div class="col-md-6 form-group">
                                                     <label for="ticketNo" class="form-label">Ticket Number<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="ticketNo" name="ticket_no"
-                                                        required data-error="Please enter the ticket number">
+                                                    <input type="text" class="form-control auto-ticket-number" id="ticketNo"
+                                                        name="ticket_no" required
+                                                        data-error="Please enter the ticket number">
                                                     <span class="help-block with-errors err_ticket_no"
                                                         style="color:red;"></span>
                                                 </div>
@@ -114,15 +116,16 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <table id="TransactionListing" class="table nowrap dt-responsive align-middle" style="width:100%">
+                            <table id="TransactionListing" class="table nowrap dt-responsive align-middle"
+                                style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>SR No.</th>
                                         <th>TRX No</th>
                                         <th>TRX Date</th>
-                                        <th>Supplier Code</th>
-                                        <th>Weight</th>
+                                        <th>Supplier</th>
                                         <th>Ticket No</th>
+                                        <th>Weight</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -139,13 +142,13 @@
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="transactionEditModalLabel">Edit Transaction</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form id="updateForm" action="{{ route('admin.transactions.store') }}" method="post"
+                                    <form id="updateForm" action="{{ route('admin.transaction.update') }}" method="post"
                                         class="form row g-3" autocomplete="off" role="form">
                                         @csrf
                                         @method('PUT')
+                                        <input type="hidden" id="hidden_id" name="id">
                                         <div class="modal-body">
                                             <div class="row gy-4">
                                                 <div class="col-md-6 form-group">
@@ -163,14 +166,14 @@
                                                         style="color:red;"></span>
                                                 </div>
                                                 <div class="col-md-6 form-group">
-                                                    <label for="SupplierInput" class="form-label">Supplier Id<span
+                                                    <label for="SupplierInput" class="form-label">Supplier<span
                                                             class="text-danger">*</span></label>
                                                     <select id="SupplierInput" class="form-select" name="supplier_id">
                                                         <span class="help-block with-errors err_supplier_id"
                                                             style="color:red;"></span>
-                                                        <option selected>Select Supplier</option>
                                                         @foreach ($Suppliers as $supplier)
-                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            <option value="{{ $supplier->id }}">
+                                                                {{ $supplier->supplier_id . ' ' . $supplier->supplier_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -216,7 +219,7 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
-    <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
 @endsection
