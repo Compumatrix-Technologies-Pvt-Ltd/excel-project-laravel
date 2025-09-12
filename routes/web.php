@@ -196,8 +196,10 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Master Module Route HQ
     Route::get('hq-main', [MasterController::class, 'HQmainForm'])->name('hqMainForm.index');
-    Route::post('hq-main/getValues', [AdminUserController::class, 'getDropDownValues'])->name('hqMainForm.getValues');
-    Route::post('hq-main/getAllDetails', [AdminUserController::class, 'getAllDetails'])->name('hqMainForm.getAllDetails');
+    Route::post('hq-main/getValues', [MasterController::class, 'getDropDownValues'])->name('hqMainForm.getValues');
+    Route::post('hq-main/getAllDetails', [MasterController::class, 'getAllDetails'])->name('hqMainForm.getAllDetails');
+    Route::post('supplier/edit/{id}', [MasterController::class, 'editSupplier'])->name('supplier.editSupplier');
+    Route::put('suppliers/update/main', [SupplierController::class, 'update1'])->name('supplier.update');
 
 
 

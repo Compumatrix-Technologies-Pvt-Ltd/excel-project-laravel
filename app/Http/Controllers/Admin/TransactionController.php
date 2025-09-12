@@ -100,6 +100,7 @@ class TransactionController extends Controller
     public function edit(string $encID)
     {
         $intID = base64_decode(base64_decode($encID));
+        // dd($intID);
         $data = $this->BaseModel->find($intID);
         $this->JsonData['status'] = __('success');
         $this->JsonData['data'] = $data;
@@ -107,13 +108,15 @@ class TransactionController extends Controller
     }
 
 
-    public function update(Transactionrequest $request)
+    public function update(Request $request)
     {
         $user = auth()->user();
         if ($user->hasRole('branch')) {
             $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
             return response()->json($response);
         } elseif ($user->hasRole('hq')) {
+
+            // dd($request->all());
             $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transaction.management', $request->id);
             return response()->json($response);
         }
