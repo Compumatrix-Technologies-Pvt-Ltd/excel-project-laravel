@@ -171,6 +171,33 @@ class MasterController extends Controller
             ], 404);
         }
     }
+    public function getSupplierDetailsMain(Request $request, $id)
+    {
+        $supplier = Suppliers::find($id);
+        if ($supplier) {
+            $yearMonth = Session::has('yearMonth') ? Session::get('yearMonth') : now()->format('Ym');
+            $startOfMonth = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->startOfMonth();
+            $endOfMonth = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->endOfMonth();
+            //dd($startOfMonth, $endOfMonth , $id);
+            $deductions = Deduction::where('supplier_id', $id)
+                ->whereBetween('date', [$startOfMonth, $endOfMonth])
+                ->select('type', \DB::raw('SUM(amount) as total'))
+                ->groupBy('type')
+                ->pluck('total', 'type');
+
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $supplier,
+                'deductions' => $deductions
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Supplier not found'
+            ], 404);
+        }
+    }
 
     public function getDropDownValues(Request $request)
     {

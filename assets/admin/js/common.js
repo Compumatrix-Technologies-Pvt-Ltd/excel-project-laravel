@@ -469,10 +469,9 @@ function deactivateCollection(encrypted_id, parameter) {
         $('.net_pay').val(total.toFixed(2));
     });
 
-    $(document).on('change','#supplierSelect',function(){
+    $(document).on('change','.supplierSelect2',function(){
         var supplier_id = $(this).val();
         var purchase_type = $('input[name="purchase_type"]').val();
-        alert(purchase_type);
         var action = ADMINURL+'/get-supplier-details/'+supplier_id + '/' + purchase_type;
         if(supplier_id){
             $.ajax({
@@ -486,16 +485,88 @@ function deactivateCollection(encrypted_id, parameter) {
                     $.LoadingOverlay("hide");
                     if(response.status == 'success'){
                         $('.supplier_name').text(response.data.supplier_name);
-                        $('.subsidy_amt').text(response.data.subsidy_rate);
                         if(response.data.subsidy_rate) {
-                            alert('Subsidy Rate Found for this Supplier');
-                            $('.subsidy_amt').text(response.data.subsidy_rate.toFixed(2));
-                            $('input[name="subsidy_amt"]').val(response.data.subsidy_rate.toFixed(2));
+                            let subsidyRate = Number(response.data.subsidy_rate); // convert string to number
+                            $('.subsidy_amt').text(subsidyRate.toFixed(2));
+                            $('input[name="subsidy_amt"]').val(subsidyRate.toFixed(2));
                         } else {
-                            alert('No Subsidy Rate Found for this Supplier');
                             $('.subsidy_amt').text('0.00');
                             $('input[name="subsidy_amt"]').val('0.00');
                         }
+
+                        if(response.deductions) {
+                            let transport = response.deductions.transport || 0;
+                            let advance = response.deductions.advance || 0;
+                            let others = response.deductions.others || 0;
+                            $('input[name="transport"]').val(transport.toFixed(2));
+                            $('input[name="advance"]').val(advance.toFixed(2));
+                            $('input[name="others"]').val(others.toFixed(2));
+                        } else {
+                            $('input[name="transport"]').val('0.00');
+                            $('input[name="advance"]').val('0.00');
+                            $('input[name="others"]').val('0.00');
+                        }
+                      
+                      
+                    }else{
+                        alert('Something went wrong');
+                    } 
+                },
+                error: function (xhr, status, error) {
+                    $.LoadingOverlay("hide");
+                    alert('Server Error: Something went wrong. Please try again.');
+                }
+            });
+        }else{
+            $('input[name="supplier_name"]').val('');
+            $('input[name="supplier_address"]').val('');
+            $('input[name="supplier_gst"]').val('');
+        }
+    });
+
+
+    $(document).on('change','.supplierSelect',function(){
+        var supplier_id = $(this).val();
+        var purchase_type = $('input[name="purchase_type"]').val();
+        var action = ADMINURL+'/get-supplier-details-main/'+supplier_id + '/' + purchase_type;
+        if(supplier_id){
+            $.ajax({
+                type: "GET",
+                url: action,
+                dataType:"json",
+                beforeSend: function () {
+                    $.LoadingOverlay("show", { background: "rgba(75, 73, 172, 0)", maxSize: 40, imageColor: "#5236ff" });
+                },
+                success:function(response){
+                    $.LoadingOverlay("hide");
+                    if(response.status == 'success'){
+                        $('#docNo').val(response.data.supplier_name);
+                        $('#supName').val(response.data.supplier_name);
+                        $('textarea#address').val(response.data.address1);
+                        $('textarea#address2').val(response.data.address2);
+                        $('#mpobLicenceNo').val(response.data.mpob_lic_no);
+                        $('#mpobExpiryDate').val(response.data.mpob_exp_date);
+                        $('#mspoCertNo').val(response.data.mspo_cert_no);
+                        $('#mspoExpiryDate').val(response.data.mspo_exp_date);
+                        $('#landSize').val(response.data.land_size);
+                        $('#latitude').val(response.data.latitude);
+                        $('#longitude').val(response.data.longitude);
+                        $('#email').val(response.data.email);
+                        $('#telNo1').val(response.data.telphone_1);
+                        $('#telNo2').val(response.data.telphone_2);
+                        $('#bankId').val(response.data.bank_id);
+                        $('#bankAccountNo').val(response.data.bank_acc_no);
+                        $('textarea#supplierRemark').val(response.data.remark);
+                        $('#supId').val(response.data.supplier_id);
+                        if(response.data.subsidy_rate) {
+                            let subsidyRate = Number(response.data.subsidy_rate); // convert string to number
+                            $('.subsidy_amt').text(subsidyRate.toFixed(2));
+                            $('input[name="subsidy_amt"]').val(subsidyRate.toFixed(2));
+                        } else {
+                            $('.subsidy_amt').text('0.00');
+                            $('input[name="subsidy_amt"]').val('0.00');
+                        }
+
                         if(response.deductions) {
                             let transport = response.deductions.transport || 0;
                             let advance = response.deductions.advance || 0;

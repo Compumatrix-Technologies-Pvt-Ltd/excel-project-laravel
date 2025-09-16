@@ -81,6 +81,12 @@ class LoginController extends Controller
         if ($user) {
             if (auth()->attempt($userCredentials)) {
                 if (Hash::check($request->password, $user->password)) {
+                    if($user->status != 'active'){
+                        Auth::logout();
+                        $this->JsonData['status'] = 'error';
+                        $this->JsonData['msg'] = "Your account is not active. Please contact to administrator.";
+                        return response()->json($this->JsonData);
+                    }
 
                     Session::put('yearMonth', date('Ym'));
 
@@ -137,7 +143,6 @@ class LoginController extends Controller
         $user->name = trim($request->name);
         $user->email = strtolower(trim($request->email));
         $user->mobile_number = $request->mobile_number ?? null;
-        $user->role = null;
         $user->status = 'inactive';
         $user->password = Hash::make($request->password);
         $user->otp = $otp;
@@ -205,6 +210,7 @@ class LoginController extends Controller
 
         $user->email_verified_at = now();
         $user->otp = null;
+        $user->status = 'active';
         $user->otp_expires_at = null;
         $user->save();
 
