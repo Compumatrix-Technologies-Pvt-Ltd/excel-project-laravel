@@ -59,7 +59,7 @@
             <ul class="navbar-nav" id="navbar-nav">
 
 
-                @if (Auth::user()->role == 'super-admin')
+                @if (Auth::user()->hasRole('super-admin'))
                     <li class="menu-title"><span data-key="t-menu" class="text-light">Super Admin Modules</span></li>
                     <li class="text-light">
                         <hr>
@@ -167,10 +167,6 @@
                             </ul>
                         </div>
                     </li>
-
-
-
-
                 @endif
 
                 @if (Auth::user()->hasRole('hq'))
@@ -260,11 +256,11 @@
                     </li>
 
                     <!-- <li class="nav-item">
-                                    <a class="nav-link menu-link {{ request()->is('admin/suppliers-hq') ? 'active' : '' }}"
-                                        href="{{ route('admin.suppliersHq.index') }}">
-                                        <i class="mdi mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
-                                    </a>
-                                </li> -->
+                                        <a class="nav-link menu-link {{ request()->is('admin/suppliers-hq') ? 'active' : '' }}"
+                                            href="{{ route('admin.suppliersHq.index') }}">
+                                            <i class="mdi mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
+                                        </a>
+                                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
                             href="{{ route('admin.mill.management') }}">
