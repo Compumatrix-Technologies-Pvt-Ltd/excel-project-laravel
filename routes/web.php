@@ -213,4 +213,5 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     Route::post('ffb_transaction', [MasterController::class, 'storeFFBTransaction'])->name('ffb.transaction.store');
     Route::get('get-supplier-details/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetails'])->name('ffb.transaction.getSupplierDetails');
+    Route::get('get-supplier-details-main/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetailsMain'])->name('ffb.transaction.getSupplierDetailsMain');
 });
