@@ -410,4 +410,106 @@
 
      // ************** End Deduction Repors ********************
 
+ 
+      
+       // ************** Supplies Details Listing ********************
+
+        var actionUrl = ADMINURL + '/supplies-details/getRecords';
+
+       window.table1 = $('#SuppliesDetails').DataTable({
+            processing: true,
+            serverSide: true,
+            searching: false, 
+            info: false,
+            ajax: {
+                url: actionUrl,
+                type: 'GET',
+                data: function (d) {
+                    d.start_date = $('#startDate').val();
+                    d.end_date = $('#endDate').val();
+                    d.supplier_id = $('#selectSupplier').val();
+                }
+            },
+            columns: [
+                { data: 'supplier_id' },
+                { data: 'vehicle' },
+                { data: 'date' },
+                { data: 'ticket_no' },
+                ...allMills.map(mill => ({
+                    data: 'mill_' + mill.id,
+                    orderable: false,
+                    searchable: false
+                })),
+                { data: 'total_weight' }
+            ],
+            drawCallback: function (settings) {
+                const grandTotals = settings.json.grandTotals;
+
+                const startDate = $('#startDate').val();
+                const endDate = $('#endDate').val();
+                const supplierId = $('#selectSupplier').val();
+
+                if ((startDate || endDate || supplierId) && grandTotals) {
+                    let footerHtml = `
+                        <tr>
+                            <th colspan="4" style="text-align:right">Grand Total:</th>
+                            ${allMills.map(mill => `<th>${grandTotals['mill_' + mill.id]}</th>`).join('')}
+                            <th>${grandTotals.total_weight}</th>
+                        </tr>`;
+                    $('#SuppliesDetails tfoot').html(footerHtml);
+                } else {
+                    $('#SuppliesDetails tfoot').html('');
+                }
+                if (!startDate && !endDate && !supplierId) {
+                $('#SuppliesDetails tbody').html('');
+            }
+            }
+        });
+
+     // ************** End Supplies Details Listing ********************
+
+
+       // ************** Supplies Summary Listing ********************
+
+        var actionUrl1 = ADMINURL + '/supplies-summary/getRecords';
+
+
+        window.table = $('#SuppliesSummary').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: actionUrl1,
+                type: 'GET',
+                data: function (d) {
+                    d.start_date = $('#startDate').val();
+                    d.end_date = $('#endDate').val();
+                    d.supplier_id = $('#selectSupplier').val();
+                }
+            },
+            columns: [
+                { data: 'supplier_id' },
+                ...allMills.map(mill => ({
+                    data: 'mill_' + mill.id,
+                    orderable: false,
+                    searchable: false
+                })),
+                { data: 'total_weight' }
+            ],
+            drawCallback: function (settings) {
+                const grandTotals = settings.json.grandTotals;
+                if (grandTotals) {
+                    let footerHtml = `
+                        <tr>
+                            <th>Totals</th>
+                            ${allMills.map(mill => `<th>${grandTotals['mill_' + mill.id]}</th>`).join('')}
+                            <th>${grandTotals.total_weight}</th>
+                        </tr>`;
+                    $('#SuppliesSummary tfoot').html(footerHtml);
+                }
+            }
+        });
+
+     // ************** End Supplies Summary Listing ********************
+
+
 });

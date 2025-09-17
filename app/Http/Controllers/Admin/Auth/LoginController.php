@@ -137,7 +137,7 @@ class LoginController extends Controller
         $user->name = trim($request->name);
         $user->email = strtolower(trim($request->email));
         $user->mobile_number = $request->mobile_number ?? null;
-        $user->role = null;
+        // $user->role = null;
         $user->status = 'inactive';
         $user->password = Hash::make($request->password);
         $user->otp = $otp;

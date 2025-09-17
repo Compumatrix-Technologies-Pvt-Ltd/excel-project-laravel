@@ -62,7 +62,7 @@ class TransactionController extends Controller
                 $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transactions.index');
                 return response()->json($response);
             } elseif ($user->hasRole('hq')) {
-                 $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transaction.management');
+                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transaction.management');
                 return response()->json($response);
             }
 
@@ -110,7 +110,9 @@ class TransactionController extends Controller
 
     public function update(Request $request)
     {
+        // dd("here");
         $user = auth()->user();
+        // $id = base64_decode(base64_decode($request->id));
         if ($user->hasRole('branch')) {
             $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
             return response()->json($response);
@@ -417,4 +419,6 @@ class TransactionController extends Controller
         }
         return response()->json(['ticket_no' => $nextTicketNo]);
     }
+
+   
 }

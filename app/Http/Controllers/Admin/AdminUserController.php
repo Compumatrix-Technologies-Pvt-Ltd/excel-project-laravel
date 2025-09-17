@@ -232,25 +232,9 @@ class AdminUserController extends Controller
         return view('admin.analysis.purchase-analysis', $this->ViewData);
     }
 
-    public function suppliesDetails()
-    {
-        $this->ModuleTitle = __('Supplies Details');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.supplies.supplies-details', $this->ViewData);
-    }
-    public function suppliesSummary()
-    {
-        $this->ModuleTitle = __('Supplies Summary');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.supplies.supplies-summary', $this->ViewData);
-    }
-    public function suppliesAnalysis()
-    {
-        $this->ModuleTitle = __('Supplies Analysis');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.analysis.supplies-analysis', $this->ViewData);
-    }
-    public function plansIndex()
+
+   
+       public function plansIndex()
     {
         $this->ModuleTitle = __('Plans');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AnalysisController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\DeductionController;
 use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\SuppliesController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -155,10 +157,18 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     // Supplies
-    Route::get('supplies-details', [AdminUserController::class, 'suppliesDetails'])->name('supplies.details.index');
-    Route::get('supplies-summary', [AdminUserController::class, 'suppliesSummary'])->name('supplies.summary.index');
-    Route::get('supplies-analysis', [AdminUserController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+    Route::get('supplies-details', [SuppliesController::class, 'suppliesDetails'])->name('supplies.details.index');
+    Route::get('supplies-details/getRecords', [SuppliesController::class, 'getSuppliesRecords'])->name('supplies.details.getSuppliesRecords');
+    Route::get('supplies-details/pdf', [SuppliesController::class, 'generateSuppliesPdf'])->name('supplies.details.generatePDF');
+    Route::get('supplies-summary', [SuppliesController::class, 'suppliesSummary'])->name('supplies.summary.index');
+    Route::get('supplies-summary/getRecords', [SuppliesController::class, 'suppliesSummaryGetRecords'])->name('supplies.summary.getRecords');
+    Route::get('supplies-summary/pdf', [SuppliesController::class, 'generateSuppliesSummaryPdf'])->name('supplies.summary.generatePDF');
 
+    // Ananlysis Module Routes
+
+    Route::get('supplies-analysis', [AnalysisController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+    Route::get('supplies-analysis/getRecords', [AnalysisController::class, 'suppliesAnalysisGetRecords'])->name('supplies.analysis.getRecords');
+    Route::get('supplies-analysis/pdf', [AnalysisController::class, 'generateSuppliesAnalysisPDF'])->name('supplies.analysis.generatePDF');
 
     Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
     Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');

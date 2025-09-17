@@ -22,8 +22,6 @@
 @endsection
 @section('content')
 
-
-
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -33,10 +31,6 @@
                         <button type="button" id="PreviewPdf" data-bs-toggle="modal" data-bs-target="#suppliesSummary"
                             class="btn btn-warning btn-label waves-effect waves-light">
                             <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
-                        </button>
-                        <button type="button" id="CreatePdf" data-bs-toggle="modal" data-bs-target="#suppliesSummary"
-                            class="btn btn-primary btn-label waves-effect waves-light">
-                            <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create PDF
                         </button>
                         <div id="suppliesSummary" class="modal fade" tabindex="-1" aria-labelledby="suppliesSummaryLabel"
                             aria-hidden="true" style="display: none;">
@@ -53,13 +47,13 @@
                                             <div class="row">
 
                                                 <div class="col-md-12">
-                                                    <label for="selectMonth" class="form-label">Supplier</label>
-                                                    <select id="selectMonth" class="form-select">
+                                                    <label for="selectSupplier" class="form-label">Supplier</label>
+                                                    <select id="selectSupplier" class="form-select">
                                                         <option value="">Select Supplier</option>
-                                                        <option>WJ</option>
-                                                        <option>ACH</option>
-                                                        <option>Aplas</option>
-                                                        <option>Arunamari</option>
+                                                        @foreach ($Suppliers as $supplier)
+                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -73,15 +67,18 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
 
-                                        <button type="button" id="showPdfBtn" class="btn btn-success">Show PDF</button>
+                                        <button type="button" class="btn btn-danger waves-effect waves-light"
+                                            data-bs-dismiss="modal">Close</button>
 
-                                        <a id="createPdfBtn"
-                                            href="{{ asset('storage/app/public/supplies-summary-pdf/FFB_Supplies_Summary.pdf') }}"
-                                            download="FFB_Supplies_Summary.pdf" class="btn btn-success">
-                                            Create PDF
-                                        </a>
+                                        <button type="button" id="showPdfBtn"
+                                            class="btn btn-warning btn-label waves-effect waves-light">
+                                            <i class="ri-eye-fill label-icon align-middle fs-16 me-2"></i>Preview
+                                            PDF</button>
+                                        <button type="button" id="createPdfBtn"
+                                            class="btn btn-primary btn-label waves-effect waves-light">
+                                            <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create
+                                            PDF</button>
                                     </div>
                                     </form>
                                 </div>
@@ -93,259 +90,25 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                            <table id="SuppliesDetails" class="table table-bordered nowrap dt-responsive align-middle"
+                            <table id="SuppliesSummary" class="table table-bordered nowrap dt-responsive align-middle"
                                 style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th rowspan="2">Supplier</th>
-                                        <th colspan="8" style="text-align:center;">Palm Oil Mills</th>
-                                        <th rowspan="2">Total Weight(MT)</th>
+                                        <th rowspan="2">Suppliers</th>
+
+                                        <th colspan="{{ $allMills->count() }}" style="text-align:center">Palm Oil Mills</th>
+
+                                        <th rowspan="2">Total Weight (MT)</th>
                                     </tr>
                                     <tr>
-                                        <th>Atlantica</th>
-                                        <th>HCahaya</th>
-                                        <th>HCahaya (Bangkud)</th>
-                                        <th>KLK Agri </th>
-                                        <th>LCH</th>
-                                        <th>TEOPP</th>
-                                        <th>THP</th>
-                                        <th>Mill 8</th>
+                                        @foreach ($allMills as $mill)
+                                            <th>{{ $mill->name }}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Aplas</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>763.70</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>763.70</td>
-                                    </tr>
-                                    <tr>
-                                        <td>B&F Coll.</td>
-                                        <td>38.64</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>78.04</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>116.68</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Emasawit</td>
-                                        <td>0.00</td>
-                                        <td>259.38</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>259.38</td>
-                                    </tr>
-                                    <tr>
-                                        <td>HSKE</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>39.64</td>
-                                        <td>0.00</td>
-                                        <td>131.78</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>171.42</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Koh</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>57.92</td>
-                                        <td>0.00</td>
-                                        <td>408.66</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>466.58</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Natural Vista</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>52.04</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>52.04</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Patinas</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>44.62</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>44.62</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pertama Land</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>44.32</td>
-                                        <td>0.00</td>
-                                        <td>79.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>123.32</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ranpek</td>
-                                        <td>390.94</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>390.94</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Raymond</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>8.60</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>8.60</td>
-                                    </tr>
-                                    <tr>
-                                        <td>SM</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>400.58</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>400.58</td>
-                                    </tr>
-                                    <tr>
-                                        <td>SP</td>
-                                        <td>58.70</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>231.76</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>290.46</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sahabat PR</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>155.10</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>155.10</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Segama Maju</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>317.74</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>317.74</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sri Paja</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>34.38</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>34.38</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VC</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>140.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>140.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>WJ</td>
-                                        <td>64.34</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>123.04</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>187.38</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Workon</td>
-                                        <td>38.64</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>38.64</td>
-                                    </tr>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
 
-                                </tbody>
-
-                                <tfoot class="table-light">
-                                    <tr class="fw-bold">
-                                        <td>18</td>
-                                        <td>591.26</td>
-                                        <td>259.38</td>
-                                        <td>52.04</td>
-                                        <td>176.26</td>
-                                        <td>1,737.12</td>
-                                        <td>672.66</td>
-                                        <td>472.84</td>
-                                        <td>0.00</td>
-                                        <td>3,961.56</td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div><!--end row-->
                     </div>
@@ -359,6 +122,7 @@
 @endsection
 
 @section('scripts')
+
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -366,25 +130,45 @@
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
 
     <script>
+        const allMills = @json($allMills);
+    </script>
+    <script>
         $(document).ready(function () {
-            $('#SuppliesDetails').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
+
+            $('#startDate, #endDate, #selectSupplier').change(function () {
+                window.table.ajax.reload();
+                let supplierText = $('#selectSupplier option:selected').text() || 'All Suppliers';
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+
+                $('#dynamicHeading').html(
+                    `FFB Supplies Details For Supplier = [ ${supplierText} ] From [ ${startDate} ] To [ ${endDate} ]`
+                );
             });
+
+
             $('#showPdfBtn').on("click", function () {
-                let url = "{{ asset('storage/app/public/supplies-summary-pdf/FFB_Supplies_Summary.pdf') }}";
+                let supplierId = $('#selectSupplier').val();
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+
+                let url = "{{ route('admin.supplies.summary.generatePDF') }}" +
+                    `?supplier_id=${supplierId}&start_date=${startDate}&end_date=${endDate}&preview=1`;
+
                 window.open(url, '_blank');
             });
 
-            $('#PreviewPdf').on("click", function () {
-                $('#showPdfBtn').show();
-                $('#createPdfBtn').hide();
-            });
-            $('#CreatePdf').on("click", function () {
-                $('#createPdfBtn').show();
-                $('#showPdfBtn').hide();
-            });
+            $('#createPdfBtn').on('click', function () {
+                let supplierId = $('#selectSupplier').val();
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+
+                let url = "{{ route('admin.supplies.summary.generatePDF') }}" +
+                    `?supplier_id=${supplierId}&start_date=${startDate}&end_date=${endDate}`;
+
+                window.open(url, '_blank');
+            })
+
         });
     </script>
 
