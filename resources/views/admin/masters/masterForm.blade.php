@@ -31,29 +31,29 @@
                         <div class="row align-items-center gy-2">
                             <div class="col-md-8 d-flex flex-wrap align-items-center gap-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="searchType" id="byInv" checked>
+                                    <input class="form-check-input supplierDetails" type="radio" name="searchType" id="byInv" checked value="byInv">
                                     <label class="form-check-label" for="byInv">By Supp. Inv / Cash Bill</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="searchType" id="byId">
-                                    <label class="form-check-label" for="byId">By Supplier Id</label>
+                                    <input class="form-check-input supplierDetails" type="radio" name="searchType" id="bysupId" value="bysupId">
+                                    <label class="form-check-label" for="bysupId">By Supplier Id</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="searchType" id="byName">
-                                    <label class="form-check-label" for="byName">By Supplier Name</label>
+                                    <input class="form-check-input supplierDetails" type="radio" name="searchType" id="bySupName" value="bySupName">
+                                    <label class="form-check-label" for="bySupName">By Supplier Name</label>
                                 </div>
 
                                 <!-- Nav arrows mimic Excel Previous/Next -->
                                 <div class="btn-group ms-2">
-                                    <button class="btn btn-outline-secondary btn-sm">&laquo;</button>
-                                    <button class="btn btn-outline-secondary btn-sm">&lt; Previous</button>
-                                    <button class="btn btn-outline-secondary btn-sm">Next &gt;</button>
-                                    <button class="btn btn-outline-secondary btn-sm">&raquo;</button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="firstBtn">&laquo;</button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="prevBtn">&lt; Previous</button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="nextBtn">Next &gt;</button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="lastBtn">&raquo;</button>
                                 </div>
                             </div>
                             <div class="col-md-4 d-flex gap-2">
-                                 <select id="supplierSelect"  required data-error="Please select a supplier"
-                                            name="supplier_id" class="form-select form-select-sm supplierSelect"></select>
+                                 <select id="SuppliersInput"  required data-error="Please select a supplier"
+                                            name="supplier_id" class="form-select form-select-sm"></select>
                                         <span class="text-danger err_supplier_id"></span>
                                 <button class="btn btn-outline-secondary btn-sm"><i class="ri-refresh-line"></i></button>
                             </div>
@@ -67,7 +67,15 @@
                             </div>
                             <div class="col-6 col-lg-3">
                                 <label class="form-label mb-0 small">Period</label>
-                                <input type="month" class="form-control form-control-sm" id="period">
+                                @php
+                                    $yearMonth = session('yearMonth');
+                                    if ($yearMonth && strlen($yearMonth) === 6) {
+                                        $yearMonth = substr($yearMonth, 0, 4) . '-' . substr($yearMonth, 4, 2);
+                                    } else {
+                                        $yearMonth = date('Y-m');
+                                    }
+                                @endphp
+                                <input type="month" readonly value="{{ $yearMonth }}" class="form-control form-control-sm" id="period">
                             </div>
                             <div class="col-12 col-lg-3">
                                 <button class="btn btn-outline-secondary btn-sm mt-4" type="button">FFB Master</button>
@@ -185,104 +193,83 @@
                                         <strong>Invoice / Cash Bill</strong>
                                     </div>
                                     <div class="card-body">
-                                        <div class="row g-2">
+                                                                                <div class="row g-2">
                                             <div class="col-7">
                                                 <label class="form-label small">Invoice Date</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    value="2025-05-02">
+                                                <input type="date" id="fbb_bill_date" class="form-control form-control-sm" readonly>
                                             </div>
                                             <div class="col-5">
                                                 <label class="form-label small">Weight (M/Ton)</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.20">
+                                                <input type="number" id="fbb_weight_mt" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
-
                                             <div class="col-6">
                                                 <label class="form-label small">Price</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="700.00">
+                                                <input type="number" id="fbb_price" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Incentive Rate</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_incentive_rate" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
-
                                             <div class="col-6">
                                                 <label class="form-label small">Subsidy</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_subsidy_amt" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Amt. Before Ded.</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="140.00">
+                                                <input type="number" id="fbb_amt_before_ded" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
-
                                             <div class="col-6">
                                                 <label class="form-label small">Debit Bal B/F</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_debit_bal_bf" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
-
-                                            <!-- Deduction lines aligned like Excel -->
                                             <div class="col-12">
                                                 <hr class="my-1">
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Transport</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_transport" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Advance</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_advance" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Others</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_others" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Total Deduction</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_total_deductions" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
-
                                             <div class="col-12">
                                                 <hr class="my-1">
                                             </div>
                                             <div class="col-7">
                                                 <label class="form-label small">Net Pay (RM)</label>
-                                                <input type="number" step="0.01"
-                                                    class="form-control form-control-sm fw-bold" value="140.00">
+                                                <input type="number" id="fbb_net_pay" step="0.01" class="form-control form-control-sm fw-bold" readonly>
                                             </div>
                                             <div class="col-5">
                                                 <label class="form-label small">Date Paid</label>
-                                                <input type="date" class="form-control form-control-sm"
-                                                    value="2025-05-02">
+                                                <input type="date" id="fbb_date_paid" class="form-control form-control-sm"  readonly>
                                             </div>
-
                                             <div class="col-6">
                                                 <label class="form-label small">Paid By</label>
-                                                <select class="form-select form-select-sm">
-                                                    <option>Cash</option>
-                                                    <option>Bank</option>
-                                                    <option>Cheque</option>
+                                                <select id="fbb_pay_by" class="form-select form-select-sm" disabled>
+                                                    <option value="cash">Cash</option>
+                                                    <option value="bank">Bank</option>
+                                                    <option value="cheque">Cheque</option>
                                                 </select>
                                             </div>
                                             <div class="col-6">
                                                 <label class="form-label small">Debit Bal C/F</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm"
-                                                    value="0.00">
+                                                <input type="number" id="fbb_debit_bal_cf" step="0.01" class="form-control form-control-sm" readonly>
                                             </div>
-
                                             <div class="col-12">
                                                 <label class="form-label small">Invoice Remark</label>
-                                                <textarea class="form-control form-control-sm" rows="2"></textarea>
+                                                <textarea id="fbb_invoice_remark" class="form-control form-control-sm" rows="2" readonly></textarea>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
 
@@ -538,6 +525,7 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/branch-hq-main.js') }}"></script>
 
     <script>
         // Suppliers passed from backend grouped by type
@@ -626,5 +614,7 @@
         // Initialize on page load
         updateFormForPurchaseType();
     </script>
+
+   
 
 @endsection
