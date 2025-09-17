@@ -469,10 +469,9 @@ function deactivateCollection(encrypted_id, parameter) {
         $('.net_pay').val(total.toFixed(2));
     });
 
-    $(document).on('change','#supplierSelect',function(){
+    $(document).on('change','.supplierSelect2',function(){
         var supplier_id = $(this).val();
         var purchase_type = $('input[name="purchase_type"]').val();
-        alert(purchase_type);
         var action = ADMINURL+'/get-supplier-details/'+supplier_id + '/' + purchase_type;
         if(supplier_id){
             $.ajax({
@@ -486,16 +485,15 @@ function deactivateCollection(encrypted_id, parameter) {
                     $.LoadingOverlay("hide");
                     if(response.status == 'success'){
                         $('.supplier_name').text(response.data.supplier_name);
-                        $('.subsidy_amt').text(response.data.subsidy_rate);
                         if(response.data.subsidy_rate) {
-                            alert('Subsidy Rate Found for this Supplier');
-                            $('.subsidy_amt').text(response.data.subsidy_rate.toFixed(2));
-                            $('input[name="subsidy_amt"]').val(response.data.subsidy_rate.toFixed(2));
+                            let subsidyRate = Number(response.data.subsidy_rate); // convert string to number
+                            $('.subsidy_amt').text(subsidyRate.toFixed(2));
+                            $('input[name="subsidy_amt"]').val(subsidyRate.toFixed(2));
                         } else {
-                            alert('No Subsidy Rate Found for this Supplier');
                             $('.subsidy_amt').text('0.00');
                             $('input[name="subsidy_amt"]').val('0.00');
                         }
+
                         if(response.deductions) {
                             let transport = response.deductions.transport || 0;
                             let advance = response.deductions.advance || 0;
@@ -525,3 +523,8 @@ function deactivateCollection(encrypted_id, parameter) {
             $('input[name="supplier_gst"]').val('');
         }
     });
+
+
+    // $(document).on('change','.supplierSelect',function(){
+        
+    // });

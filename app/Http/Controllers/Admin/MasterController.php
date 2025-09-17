@@ -18,6 +18,7 @@ use App\Models\Deduction;
 use Log;
 use Exception;
 use Session;
+use Auth;
 
 class MasterController extends Controller
 {
@@ -171,6 +172,28 @@ class MasterController extends Controller
             ], 404);
         }
     }
+    public function getSupplierDetailsMain(Request $request, $id, $type)
+    {
+        $yearMonth = session()->has('yearMonth') ? session()->get('yearMonth') : now()->format('Ym');
+
+        if ($type == 'bysupId' || $type == 'bySupName') {
+            $supplier = Suppliers::find($id);
+            $FFBTransaction = FFBTransactionsModel::where([
+                'supplier_id' => $id,
+                'period' => $yearMonth,
+            ])->first();
+        } else {
+            $FFBTransaction = FFBTransactionsModel::find($id);
+            $supplier = $FFBTransaction ? Suppliers::find($FFBTransaction->supplier_id) : null;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $supplier,
+            'FFBTransaction' => $FFBTransaction,
+        ]);
+    }
+
 
     public function getDropDownValues(Request $request)
     {
@@ -200,6 +223,42 @@ class MasterController extends Controller
 
         return response()->json($enumValues);
     }
+
+    public function getBranchSupplierDropDownValues(Request $request)
+    {
+        $type = $request->input('type');
+        $enumValues = [];
+
+        // Get all user IDs with the 'hq' role
+        $hqUserIds = User::role('hq')->pluck('id')->toArray();
+
+        if ($type === 'byInv') {
+            // Fetch unique invoice_no keyed by id for current user's branch
+            $enumValues = FFBTransactionsModel::where('branch_id', Auth::user()->branch_id)
+                ->pluck('invoice_no', 'id') // pluck(key, value) returns array[id => invoice_no]
+                ->unique()
+                ->toArray();
+
+            // Convert to array of objects with 'id' and 'label' for frontend consistency
+            $enumValues = collect($enumValues)->map(function ($label, $id) {
+                return ['id' => $id, 'label' => $label];
+            })->values()->all();
+
+        } elseif ($type === 'bySupName' || $type === 'bysupId') {
+            $column = $type === 'bySupName' ? 'supplier_name' : 'supplier_id';
+
+            $query = DB::table('suppliers')
+                ->whereIn('user_id', $hqUserIds)
+                ->orderBy($column);
+
+            // Select id and the label column
+            $enumValues = $query->select('id', $column . ' as label')->get()->unique('label')->values()->all();
+        }
+
+        return response()->json($enumValues);
+    }
+
+
 
     public function getAllDetails(Request $request)
     {
