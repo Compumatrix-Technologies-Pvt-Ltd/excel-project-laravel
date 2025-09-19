@@ -1,4 +1,11 @@
 $(document).ready(function () {
+
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     let options = [];
     let currentIndex = 0;
 
@@ -13,13 +20,13 @@ $(document).ready(function () {
     }
 
     $(".supplierDetails").change(function () {
+
         const selectedType = $(this).val();
 
         $.ajax({
-            url: '{{ route("admin.branch.main.getValues") }}',
+            url: ADMINURL +'/branch-main/getValues',
             type: "POST",
             data: {
-                _token: "{{ csrf_token() }}",
                 type: selectedType,
             },
             success: function (response) {
