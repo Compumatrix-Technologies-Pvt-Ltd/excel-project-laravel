@@ -11,4 +11,10 @@ class BranchModel extends Model
 
     protected $fillable = ['company_id', 'name', 'code', 'phone', 'address'];
 
+
+    public function company()
+    {
+        return $this->belongsTo(CompanyInfoModel::class, 'company_id');
+    }
+
 }

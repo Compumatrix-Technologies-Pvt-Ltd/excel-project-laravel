@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AnalysisController;
 use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\ConsolidatedFFBController;
 use App\Http\Controllers\Admin\DeductionController;
 use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
@@ -194,10 +195,16 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     // Consolidated FFB Routes(HQ)
-    Route::get('yearly-cash-credit', [AdminUserController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
-    Route::get('credit/purchase', [AdminUserController::class, 'creditPurchase'])->name('credit.purchase.index');
-    Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
-    Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+    Route::get('yearly-cash-credit', [ConsolidatedFFBController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
+    Route::get('yearly-cash-credit/getRecords', [ConsolidatedFFBController::class, 'getYearlyCashCreditRecords'])->name('YearlyCashCredit.getRecords');
+
+    Route::get('credit/purchase', [ConsolidatedFFBController::class, 'creditPurchase'])->name('credit.purchase.index');
+    Route::get('credit/purchase/getRecords', [ConsolidatedFFBController::class, 'creditPurchaseRecords'])->name('credit.purchase.getRecords');
+
+    Route::get('cash/purchase', [ConsolidatedFFBController::class, 'cashPurchase'])->name('cash.purchase.index');
+    Route::get('purchase-salse', [ConsolidatedFFBController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+
+
 
     // Master Module route branch
 

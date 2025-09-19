@@ -233,8 +233,8 @@ class AdminUserController extends Controller
     }
 
 
-   
-       public function plansIndex()
+
+    public function plansIndex()
     {
         $this->ModuleTitle = __('Plans');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
@@ -247,32 +247,7 @@ class AdminUserController extends Controller
         return view('admin.subscriptions.users', $this->ViewData);
     }
 
-    public function YearlyCashCredit()
-    {
-        $this->ModuleTitle = __('Yearly Cash Vs Credit');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.yearly-cash-credit', $this->ViewData);
-    }
-    public function creditPurchase()
-    {
-        $this->ModuleTitle = __('Credit Purchase');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.credit-purchase', $this->ViewData);
-    }
-    public function cashPurchase()
-    {
-        $this->ModuleTitle = __('Cash Purchase');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.cash-purchase', $this->ViewData);
-    }
-    public function purchaseSalse()
-    {
-        $this->ModuleTitle = __('Purchase & Salse');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.purchase-salse', $this->ViewData);
-    }
-
-   
+    
 }
 
 
