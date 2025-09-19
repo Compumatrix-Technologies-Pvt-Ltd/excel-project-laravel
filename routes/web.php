@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AnalysisController;
 use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\ConsolidatedFFBController;
 use App\Http\Controllers\Admin\DeductionController;
 use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\SuppliesController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\VehicleController;
 use Illuminate\Support\Facades\Route;
@@ -155,10 +158,18 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     // Supplies
-    Route::get('supplies-details', [AdminUserController::class, 'suppliesDetails'])->name('supplies.details.index');
-    Route::get('supplies-summary', [AdminUserController::class, 'suppliesSummary'])->name('supplies.summary.index');
-    Route::get('supplies-analysis', [AdminUserController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+    Route::get('supplies-details', [SuppliesController::class, 'suppliesDetails'])->name('supplies.details.index');
+    Route::get('supplies-details/getRecords', [SuppliesController::class, 'getSuppliesRecords'])->name('supplies.details.getSuppliesRecords');
+    Route::get('supplies-details/pdf', [SuppliesController::class, 'generateSuppliesPdf'])->name('supplies.details.generatePDF');
+    Route::get('supplies-summary', [SuppliesController::class, 'suppliesSummary'])->name('supplies.summary.index');
+    Route::get('supplies-summary/getRecords', [SuppliesController::class, 'suppliesSummaryGetRecords'])->name('supplies.summary.getRecords');
+    Route::get('supplies-summary/pdf', [SuppliesController::class, 'generateSuppliesSummaryPdf'])->name('supplies.summary.generatePDF');
 
+    // Ananlysis Module Routes
+
+    Route::get('supplies-analysis', [AnalysisController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+    Route::get('supplies-analysis/getRecords', [AnalysisController::class, 'suppliesAnalysisGetRecords'])->name('supplies.analysis.getRecords');
+    Route::get('supplies-analysis/pdf', [AnalysisController::class, 'generateSuppliesAnalysisPDF'])->name('supplies.analysis.generatePDF');
 
     Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
     Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
@@ -184,10 +195,16 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     // Consolidated FFB Routes(HQ)
-    Route::get('yearly-cash-credit', [AdminUserController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
-    Route::get('credit/purchase', [AdminUserController::class, 'creditPurchase'])->name('credit.purchase.index');
-    Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
-    Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+    Route::get('yearly-cash-credit', [ConsolidatedFFBController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
+    Route::get('yearly-cash-credit/getRecords', [ConsolidatedFFBController::class, 'getYearlyCashCreditRecords'])->name('YearlyCashCredit.getRecords');
+
+    Route::get('credit/purchase', [ConsolidatedFFBController::class, 'creditPurchase'])->name('credit.purchase.index');
+    Route::get('credit/purchase/getRecords', [ConsolidatedFFBController::class, 'creditPurchaseRecords'])->name('credit.purchase.getRecords');
+
+    Route::get('cash/purchase', [ConsolidatedFFBController::class, 'cashPurchase'])->name('cash.purchase.index');
+    Route::get('purchase-salse', [ConsolidatedFFBController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+
+
 
     // Master Module route branch
 

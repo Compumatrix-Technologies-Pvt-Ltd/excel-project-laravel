@@ -232,24 +232,8 @@ class AdminUserController extends Controller
         return view('admin.analysis.purchase-analysis', $this->ViewData);
     }
 
-    public function suppliesDetails()
-    {
-        $this->ModuleTitle = __('Supplies Details');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.supplies.supplies-details', $this->ViewData);
-    }
-    public function suppliesSummary()
-    {
-        $this->ModuleTitle = __('Supplies Summary');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.supplies.supplies-summary', $this->ViewData);
-    }
-    public function suppliesAnalysis()
-    {
-        $this->ModuleTitle = __('Supplies Analysis');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.analysis.supplies-analysis', $this->ViewData);
-    }
+
+
     public function plansIndex()
     {
         $this->ModuleTitle = __('Plans');
@@ -263,32 +247,7 @@ class AdminUserController extends Controller
         return view('admin.subscriptions.users', $this->ViewData);
     }
 
-    public function YearlyCashCredit()
-    {
-        $this->ModuleTitle = __('Yearly Cash Vs Credit');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.yearly-cash-credit', $this->ViewData);
-    }
-    public function creditPurchase()
-    {
-        $this->ModuleTitle = __('Credit Purchase');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.credit-purchase', $this->ViewData);
-    }
-    public function cashPurchase()
-    {
-        $this->ModuleTitle = __('Cash Purchase');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.cash-purchase', $this->ViewData);
-    }
-    public function purchaseSalse()
-    {
-        $this->ModuleTitle = __('Purchase & Salse');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.consolidated-ffb.purchase-salse', $this->ViewData);
-    }
-
-   
+    
 }
 
 

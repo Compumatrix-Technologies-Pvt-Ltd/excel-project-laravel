@@ -29,12 +29,12 @@
                     <h4 class="card-title mb-0 flex-grow-1">Supplier Listing</h4>
                     <div class="card-toolbar d-flex align-items-center gap-2">
 
-                        @if (Auth::user()->role == 'hq')
+                        @if (auth()->user()->hasRole('hq'))
                             <a download href="{{ asset('storage/app/public/sample-excel/hq-suppliers-sample.xlsx') }}"
                                 class="btn btn-sm btn-primary btn-label waves-effect waves-light">
                                 <i class="mdi mdi-file-download label-icon align-middle fs-16 me-2"></i> Sample Excel
                             </a>
-                        @else
+                        @elseif(auth()->user()->hasRole('branch'))
                             <a download href="{{ asset('storage/app/public/sample-excel/branch-suppliers-sample-excel.xlsx') }}"
                                 class="btn btn-sm btn-primary btn-label waves-effect waves-light">
                                 <i class="mdi mdi-file-download label-icon align-middle fs-16 me-2"></i> Sample Excel

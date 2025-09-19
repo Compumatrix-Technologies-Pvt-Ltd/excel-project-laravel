@@ -53,7 +53,7 @@
                                                     <label for="ticketNo" class="form-label">Ticket Number<span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" class="form-control auto-ticket-number" id="ticketNo"
-                                                        name="ticket_no" required
+                                                        name="ticket_no" required readonly
                                                         data-error="Please enter the ticket number">
                                                     <span class="help-block with-errors err_ticket_no"
                                                         style="color:red;"></span>

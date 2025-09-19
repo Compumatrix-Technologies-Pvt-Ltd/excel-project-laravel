@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class Transactionrequest extends FormRequest
 {
@@ -23,8 +24,8 @@ class Transactionrequest extends FormRequest
     {
         return [
             'trx_date' => 'required|date',
-            'trx_no' => 'unique:transactions',
-            'ticket_no' => 'required|unique:transactions',
+            'trx_no' => [Rule::unique('transactions')->ignore($this->id)],
+            'ticket_no' => [Rule::unique('transactions')->ignore($this->id)],
             'supplier_id' => 'required',
             'weight' => 'required'
         ];

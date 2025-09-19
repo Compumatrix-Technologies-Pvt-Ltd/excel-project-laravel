@@ -281,9 +281,7 @@
                                                         </div>
 
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#trxEditsecondModal">Ok</button>
+                                                            <button type="button" class="btn btn-primary">Ok</button>
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Close</button>
                                                         </div>
@@ -293,8 +291,127 @@
                                         </div>
 
 
-                                        <!-- Second edit transaction modal -->
-                                        <div class="modal fade" id="trxEditsecondModal" tabindex="-1">
+                                        <!-- Edit ticket number transaction modal -->
+                                        <div class="modal fade" id="ticketNoeditModal" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Edit Ticket Number</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <form id="" action="{{ route('admin.transactionshq.update') }}"
+                                                        method="post" class="form row g-3 commonForm" autocomplete="off"
+                                                        role="form">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" id="hidden_trx_id_2" name="id">
+
+                                                        <div class="modal-body">
+                                                            <div class="row gy-4">
+                                                                <div class="col-md-6 form-group">
+                                                                    <label for="ticketNoInput" class="form-label">Ticket
+                                                                        Number<span class="text-danger">*</span></label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="NewTicketNoInput" name="ticket_no">
+                                                                    <span class="help-block with-errors err_ticket_no"
+                                                                        style="color:red;"></span>
+                                                                </div>
+
+                                                                <div class="col-md-6 form-group">
+                                                                    <label for="NewTicketNoInput" class="form-label">New
+                                                                        Ticket Number
+                                                                        <span class="text-danger">*</span></label>
+                                                                    <input type="text" class="form-control" id=""
+                                                                        name="ticket_no" pattern="^T\d{5}$" required
+                                                                        placeholder="Example: T00001"
+                                                                        title="Ticket Number must start with 'T' followed by exactly 5 digits (e.g., T12345)">
+                                                                    <span class="help-block with-errors err_ticket_no"
+                                                                        style="color:red;"></span>
+                                                                </div>
+                                                                <div class="col-md-6 form-group" style="display:none;">
+                                                                    <label for="TRXDateInput1" class="form-label">TRX
+                                                                        Date</label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="TRXDateInput1" name="trx_date">
+                                                                    <span class="help-block with-errors err_trx_date"
+                                                                        style="color:red;"></span>
+
+                                                                </div>
+
+                                                                <div class="col-md-6 form-group" style="display:none;">
+                                                                    <label for="VehicleInput1"
+                                                                        class="form-label">Vehicles<span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select id="VehicleInput1" class="form-select"
+                                                                        name="vehicle_id">
+                                                                        <span class="help-block with-errors err_vehicle_id"
+                                                                            style="color:red;"></span>VehicleInput
+                                                                        <option>Select Vehicles</option>
+                                                                        @foreach ($Vehicles as $vehicle)
+                                                                            <option value="{{ $vehicle->id }}">
+                                                                                {{ $vehicle->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6 form-group" style="display:none;">
+                                                                    <label for="SupplierInput1"
+                                                                        class="form-label">Supplier<span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select id="SupplierInput1" class="form-select"
+                                                                        name="supplier_id">
+                                                                        <span class="help-block with-errors err_supplier_id"
+                                                                            style="color:red;"></span>
+                                                                        @foreach ($Suppliers as $supplier)
+                                                                            <option value="{{ $supplier->id }}">
+                                                                                {{ $supplier->supplier_id . ' ' . $supplier->supplier_name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6 form-group" style="display:none;">
+                                                                    <label for="MillInput1" class="form-label">Mill Id<span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select id="MillInput1" class="form-select"
+                                                                        name="mill_id">
+                                                                        <span class="help-block with-errors err_mill_id"
+                                                                            style="color:red;"></span>
+                                                                        <option>Select Mill </option>
+                                                                        @foreach ($Mills as $mill)
+                                                                            <option value="{{ $mill->id }}">{{ $mill->mill_id }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-md-6 form-group" style="display:none;">
+                                                                    <label for="wieghtMtInput1" class="form-label">Weight
+                                                                        (MT)<span class="text-danger">*</span></label>
+                                                                    <input type="tel" class="form-control"
+                                                                        id="wieghtMtInput1" name="weight">
+                                                                    <span class="help-block with-errors err_weight"
+                                                                        style="color:red;"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-success">Save
+                                                                Changes</button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Normal edit transaction modal -->
+                                        <div class="modal fade" id="trxNormaleditModal" tabindex="-1">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -303,12 +420,13 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
 
-                                                    <form id="updateForm"
-                                                        action="{{ route('admin.transactionshq.update') }}" method="post"
-                                                        class="form row g-3" autocomplete="off" role="form">
+                                                    <form id="" action="{{ route('admin.transactionshq.update') }}"
+                                                        method="post" class="form row g-3 commonForm" autocomplete="off"
+                                                        role="form">
                                                         @csrf
                                                         @method('PUT')
                                                         <input type="hidden" id="hidden_trx_id" name="id">
+
                                                         <div class="modal-body">
                                                             <div class="row gy-4">
 
@@ -520,7 +638,7 @@
                                             </div><!-- /.modal-dialog -->
                                         </div>
 
-                                        <!-- First edit supplier modal -->
+                                        <!-- Edit supplier modal -->
                                         <div class="modal fade" id="editsupfirstModal" tabindex="-1">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -559,9 +677,8 @@
                                                         </div>
 
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-primary"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#suppEditsecondModal">Ok</button>
+                                                            <button type="button" class="btn btn-primary">Ok</button>
+
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Close</button>
                                                         </div>
@@ -570,9 +687,131 @@
                                             </div>
                                         </div>
 
+                                        <!-- First edit suplier modal -->
+                                        <div class="modal fade" id="editSupplierIdModal" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Edit Supplier ID</h5>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <form id="" action="{{ route('admin.supplier.update') }}" method="post"
+                                                        class="form row g-3 commonForm" autocomplete="off" role="form">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="modal-body">
+                                                            <div class="row mb-3">
+                                                                <input type="hidden" id="s_id_2" name="id">
+                                                                <div class="col-md-6 form-group">
+                                                                    <label for="supplier_id" class="form-label">Supplier
+                                                                        Id:
+                                                                        <span class="text-danger">*</span></label>
+                                                                    <input type="text" name="supplier_id" id="s_id_edit"
+                                                                        class="form-control form-control-sm">
+                                                                    <span class="help-block with-errors err_supplier_id"
+                                                                        style="color:red;"></span>
+                                                                </div>
+                                                                <div class="col-md-6 form-group">
+                                                                    <label for="supplier_id" class="form-label">New Supplier
+                                                                        ID:
+                                                                        <span class="text-danger">*</span></label>
+                                                                    <input type="text" name="supplier_id" id=""
+                                                                        class="form-control form-control-sm">
+                                                                    <span class="help-block with-errors err_supplier_id"
+                                                                        style="color:red;"></span>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="hideDiv" style="display:none">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-md-4 form-group">
+                                                                        <label for="name1" class="form-label">Supplier Name:
+                                                                            <span class="text-danger">*</span></label>
+                                                                        <input type="text" name="supplier_name" id="s_name1"
+                                                                            class="form-control form-control-sm">
+                                                                        <span
+                                                                            class="help-block with-errors err_supplier_name"
+                                                                            style="color:red;"></span>
+                                                                    </div>
+                                                                    <div class="col-md-4 form-group">
+                                                                        <label for="address1" class="form-label">Address 1
+                                                                            <span class="text-danger">*</span></label>
+                                                                        <input type="text" name="address1" id="s_add1"
+                                                                            class="form-control form-control-sm">
+                                                                        <span class="help-block with-errors err_address1"
+                                                                            style="color:red;"></span>
+                                                                    </div>
+                                                                    <div class="col-md-4 form-group">
+                                                                        <label for="email1" class="form-label">Email: <span
+                                                                                class="text-danger">*</span></label>
+                                                                        <input type="email" name="email" id="s_email1"
+                                                                            class="form-control form-control-sm">
+                                                                        <span class="help-block with-errors err_email"
+                                                                            style="color:red;"></span>
+                                                                    </div>f
+                                                                </div>
+
+                                                                <div class="row mb-3">
+
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="telphone_1" class="form-label">Tel. 1:
+                                                                            <span class="text-danger">*</span></label>
+                                                                        <input type="tel" name="telphone_1" id="s_tel_11"
+                                                                            class="form-control form-control-sm">
+                                                                        <span class="help-block with-errors err_telphone_1"
+                                                                            style="color:red;"></span>
+                                                                    </div>
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="telphone_2" class="form-label">Tel.
+                                                                            2:</label>
+                                                                        <input type="tel" name="telphone_2" id="s_tel_22"
+                                                                            class="form-control form-control-sm">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-3">
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="bank_id" class="form-label">Bank ID:
+                                                                            <span class="text-danger">*</span></label>
+                                                                        <select name="bank_id" id="s_bank_id1"
+                                                                            class="form-select form-select-sm">
+                                                                            <option value="">Select</option>
+                                                                            <option value="MBBS">MBBS</option>
+                                                                            <option value="RHB">RHB</option>
+                                                                        </select>
+                                                                        <span class="help-block with-errors err_bank_id"
+                                                                            style="color:red;"></span>
+                                                                    </div>
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="bank_acc_no" class="form-label">Bank A/C
+                                                                            No.:
+                                                                            <span class="text-danger">*</span></label>
+                                                                        <input type="text" name="bank_acc_no"
+                                                                            id="s_bank_acc_no1"
+                                                                            class="form-control form-control-sm">
+                                                                        <span class="help-block with-errors err_bank_acc_no"
+                                                                            style="color:red;"></span>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-light"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-success ">Save
+                                                                Changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
 
                                         <!-- Second edit suplier modal -->
-                                        <div class="modal fade" id="suppEditsecondModal" tabindex="-1">
+                                        <div class="modal fade" id="normalSupEditModal" tabindex="-1">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -581,8 +820,8 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
 
-                                                    <form id="updateForm" action="{{ route('admin.supplier.update') }}"
-                                                        method="post" class="form row g-3" autocomplete="off" role="form">
+                                                    <form id="" action="{{ route('admin.supplier.update') }}" method="post"
+                                                        class="form row g-3 commonForm" autocomplete="off" role="form">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="modal-body">
@@ -681,11 +920,8 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
-
 
                             </div>
 
@@ -843,6 +1079,7 @@
                     },
                     success: function (data) {
                         $('#trx_hidden_id').text(data.trx_hidden_id || '-');
+                        $('#hidden_ticket_no_1').text(data.ticket_no || '-');
                         $('#ticketNo').text(data.ticket_no || '-');
                         $('#ticketDate').text(data.trx_date || '-');
                         $('#vehicle_id').text(data.vehicle_id || '-');
@@ -870,78 +1107,123 @@
                 setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'), 0);
             });
 
+            $('#editsupfirstModal button.btn-primary').on('click', function () {
+                var selectedOption = $('input[name="edit_option"]:checked').val();
+                var selectedSupplierId = $('#supplier_hidden_id').text().trim();
+                var encodedSupplierId = btoa(btoa(selectedSupplierId));
 
-            $('#editsupfirstModal button.btn-primary').click(function () {
-                const selectedSupplierId = $('#supplier_hidden_id').text();
-                const encodedSupplierId = btoa(btoa(selectedSupplierId));
                 if (!encodedSupplierId || encodedSupplierId === '-') {
                     alert('No supplier selected');
                     return;
                 }
 
                 $.ajax({
-                    url: ADMINURL + '/supplier/edit/' + encodedSupplierId, 
+                    url: ADMINURL + '/supplier/edit/' + encodedSupplierId,
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
                         supplier_id: encodedSupplierId
                     },
                     success: function (response) {
-                        if (response.status == 'success') {
+                        if (response.status === 'success') {
                             $('#s_id_1').val(encodedSupplierId);
+                            $('#s_id_2').val(encodedSupplierId);
                             $('#s_id').val(response.data.supplier_id);
+                            $('#s_id1').val(response.data.supplier_id);
+                            $('#s_id_edit').val(response.data.supplier_id);
                             $('#s_name').val(response.data.supplier_name);
+                            $('#s_name1').val(response.data.supplier_name);
                             $('#s_add').val(response.data.address1);
+                            $('#s_add1').val(response.data.address1);
                             $('#s_email').val(response.data.email);
-                            $('#s_tel_1').val(response.data.telphone_1);
+                            $('#s_email1').val(response.data.email);
                             $('#s_tel_2').val(response.data.telphone_2);
+                            $('#s_tel_22').val(response.data.telphone_2);
+                            $('#s_tel_1').val(response.data.telphone_1);
+                            $('#s_tel_11').val(response.data.telphone_1);
                             $('#s_bank_id').val(response.data.bank_id);
+                            $('#s_bank_id1').val(response.data.bank_id);
                             $('#s_bank_acc_no').val(response.data.bank_acc_no);
+                            $('#s_bank_acc_no1').val(response.data.bank_acc_no);
 
-                            $('#secondModal').modal('show');
-                        }
-                        else {
+                            if (selectedOption === 'normal_edit') {
+                                $('#s_id').prop('readonly', true);
+                                $('#normalSupEditModal').modal('show');
+                            } else if (selectedOption === 'edit_id') {
+                                $('#s_id').prop('readonly', false);
+                                $('#editSupplierIdModal').modal('show');
+                            }
+
+                            $('#editsupfirstModal').modal('hide');
+                        } else {
                             alert('Failed to fetch supplier details.');
                         }
+                    },
+                    error: function () {
+                        alert('Error fetching supplier details.');
                     }
                 });
             });
 
+
             $('#edittrxfirstModal button.btn-primary').click(function () {
+                var selectedOption = $('input[name="edit_trx_option"]:checked').val();
                 const selectedTrxId = $('#trx_hidden_id').text();
                 const encodedTrxId = btoa(btoa(selectedTrxId));
                 if (!encodedTrxId || encodedTrxId === '-') {
-                    alert('No supplier selected');
+                    alert('No Transaction selected');
                     return;
                 }
 
                 $.ajax({
-                    url: ADMINURL + '/transactions/' + encodedTrxId + '/edit', 
+                    url: ADMINURL + '/transactions/' + encodedTrxId + '/edit',
                     type: 'GET',
                     dataType: "json",
-                     data: {
+                    data: {
                         _token: '{{ csrf_token() }}',
                         id: encodedTrxId
                     },
                     success: function (response) {
                         if (response.status == 'success') {
                             $('#ticketNoInput').val(response.data.ticket_no);
+                            $('#NewTicketNoInput').val(response.data.ticket_no);
                             $("#TRXDateInput").val(response.data.trx_date);
+                            $("#TRXDateInput1").val(response.data.trx_date);
                             $('#SupplierInput').val(response.data.supplier_id);
+                            $('#SupplierInpu1t').val(response.data.supplier_id);
                             $('#VehicleInput').val(response.data.vehicle_id);
+                            $('#VehicleInput1').val(response.data.vehicle_id);
                             $('#MillInput').val(response.data.mill_id);
+                            $('#MillInput1').val(response.data.mill_id);
                             $('#wieghtMtInput').val(response.data.weight);
+                            $('#wieghtMtInput1').val(response.data.weight);
                             $('#hidden_trx_id').val(encodedTrxId);
+                            $('#hidden_trx_id_2').val(encodedTrxId);
                             $('#submitBtn').removeClass('disabled');
+
+                            if (selectedOption === 'normal_trx_edit') {
+                                $('#ticketNoInput').prop('readonly', true);
+                                $('#trxNormaleditModal').modal('show');
+                            } else if (selectedOption === 'edit_trx_id') {
+                                $('#NewTicketNoInput').prop('readonly', false);
+                                $('#ticketNoeditModal').modal('show');
+                            }
+
+                            $('#edittrxfirstModal').modal('hide');
                         } else {
-                            alert('Something went wrong');
+                            alert('Failed to fetch supplier details.');
                         }
+                    },
+                    error: function () {
+                        alert('Error fetching supplier details.');
                     }
                 });
             });
 
 
+
         });
+
     </script>
 
 @endsection

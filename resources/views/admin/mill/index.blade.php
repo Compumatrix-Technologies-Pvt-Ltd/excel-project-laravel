@@ -26,7 +26,7 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Mill Listing</h4>
                     <div class="card-toolbar">
-                        <a href="{{ asset('storage/app/public/cash-purchase-pdf/VC_202505 _Cash_Purchase_Summary.pdf') }}"
+                       {{-- <a href="{{ asset('storage/app/public/cash-purchase-pdf/VC_202505 _Cash_Purchase_Summary.pdf') }}"
                             class="btn btn-primary btn-label waves-effect waves-light"
                             download="VC_202505 _Cash_Purchase_Summary.pdf">
                             <i class="mdi mdi-microsoft-excel label-icon align-middle fs-17 me-2"></i>Sample Excel
@@ -34,7 +34,8 @@
                         <button type="button" data-bs-toggle="modal" data-bs-target="#branchModal"
                             class="btn btn-warning btn-label waves-effect waves-ligh">
                             <i class="mdi mdi-cloud-download-outline label-icon align-middle fs-16 me-2"></i> Import Excel
-                        </button>
+                        </button>  --}}
+                       
                         <button type="button" class="btn btn-info btn-label waves-effect waves-light" data-bs-toggle="modal"
                             data-bs-target="#MillModal">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add Mill
