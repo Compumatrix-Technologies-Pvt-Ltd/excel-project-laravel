@@ -10,7 +10,7 @@
                 <h4 class="mb-sm-0">Branch User Management </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">BranchUser Management</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">BranchUser Management</a></li>
                         <li class="breadcrumb-item active"><a href="{{ route('admin.users.create') }}">Create Branch
                                 User</a></li>
                     </ol>

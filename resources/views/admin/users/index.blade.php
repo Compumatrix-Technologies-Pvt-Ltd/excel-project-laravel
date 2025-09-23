@@ -27,6 +27,11 @@
             <div class="card">
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Branch User Listing</h4>
+                    <div class="card-toolbar">
+                        <a href="{{route('admin.users.create')}}" class="btn btn-info btn-label waves-effect waves-light">
+                            <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add User
+                    </a>
+                    </div>
                 </div><!-- end card header -->
                 <div class="card-body">
                     <div class="container-fluid">
