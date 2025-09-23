@@ -139,9 +139,8 @@
                                                         <option selected value="" name="role">Select Role</option>
                                                         @php
                                                             $user_role = '';
-                                                            if (count($user->getRoleNames()) > 0) {
-                                                                $user_role = $user->getRoleNames()[0];
-                                                            }
+                                                                $user_role = auth()->user()->getRoleNames()->first();
+                                                            
                                                         @endphp
                                                         @if(!empty($rolesCollection) && sizeof($rolesCollection) > 0)
                                                             @foreach($rolesCollection as $key => $role)

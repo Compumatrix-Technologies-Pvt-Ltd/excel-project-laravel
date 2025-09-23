@@ -28,7 +28,7 @@ class BranchController extends Controller
     public function index()
     {
         $this->ViewData['moduleAction'] = "Branch Management";
-        $this->ViewData['branches'] = $this->BaseModel->all();
+        $this->ViewData['branches'] = $this->BaseModel->where('company_id',auth()->user()->company_id)->get();
         return view('admin.branch.index', $this->ViewData);
     }
 

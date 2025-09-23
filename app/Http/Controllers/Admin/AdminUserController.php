@@ -40,7 +40,7 @@ class AdminUserController extends Controller
     {
         $this->ModuleTitle = __('User Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['BranchUsers'] = $this->BaseModel->with('branch')->whereHas('roles', function ($query) {
+        $this->ViewData['BranchUsers'] = $this->BaseModel->where('company_id',auth()->user()->company_id)->with('branch')->whereHas('roles', function ($query) {
             $query->where('name', 'branch');
         })->get();
         $this->ViewData['rolesCollection'] = $this->RoleModel
@@ -63,7 +63,7 @@ class AdminUserController extends Controller
             ->whereNotIn('name', ['super-admin', 'hq'])
             ->orderBy('name', 'ASC')
             ->get();
-        $this->ViewData['Branches'] = BranchModel::all();
+        $this->ViewData['Branches'] = BranchModel::where('company_id',auth()->user()->company_id)->get();
         return view($this->ModuleView . 'create', $this->ViewData);
 
     }

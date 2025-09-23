@@ -96,6 +96,7 @@ class VehicleController extends Controller
     public function _storeOrUpdate($vehicleData, $request)
     {
         $vehicleData->name = $request->name;
+        $vehicleData->company_id = auth()->user()->company_id;
         $vehicleData->save();
         return $vehicleData;
     }
