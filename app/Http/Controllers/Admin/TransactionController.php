@@ -38,8 +38,8 @@ class TransactionController extends Controller
     {
         $userId = auth()->user()->id;
         $this->ViewData['moduleAction'] = "HQ Transactions";
-        $this->ViewData['Vehicles'] = Vehicle::all();
-        $this->ViewData['Mills'] = Mill::all();
+        $this->ViewData['Vehicles'] = Vehicle::where('company_id',auth()->user()->company_id)->get();
+        $this->ViewData['Mills'] = Mill::where('company_id',auth()->user()->company_id)->get();
         $this->ViewData['Suppliers'] = Suppliers::with('user')
             ->where('user_id', $userId)
             ->get();
