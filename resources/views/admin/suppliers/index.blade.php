@@ -54,7 +54,9 @@
                                 <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
                             </button>
                         </form>
-
+                        <a href="{{route('admin.suppliers.create')}}" class="btn btn-info btn-label waves-effect waves-light">
+                            <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add New
+                        </a>
                     </div>
 
                 </div><!-- end card header -->

@@ -29,6 +29,13 @@ class BankController extends Controller
         $this->ViewData['banks'] = $this->BaseModel->all();
         return view('admin.banks.index', $this->ViewData);
     }
+    public function ViaBank()
+    {
+        $this->ModuleTitle = __('Via Bank Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $this->ViewData['banks'] = $this->BaseModel->all();
+        return view('admin.via_bank.index', $this->ViewData);
+    }
 
     public function store(Request $request)
     {

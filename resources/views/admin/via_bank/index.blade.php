@@ -6,12 +6,10 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Deductions</h4>
+                <h4 class="mb-sm-0">Via Bank</h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">Deductions</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.deductions.index') }}">Deduction
-                                Listing</a>
+                        <li class="breadcrumb-item active"><a href="">Via Bank</a></li>
                         </li>
                     </ol>
                 </div>
@@ -24,7 +22,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex justify-content-between">
-                    <h4 class="card-title mb-0 flex-grow-1">Deduction Listing</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Via Bank Listing</h4>
                     <div class="card-toolbar">
             
                     </div>
@@ -33,7 +31,7 @@
                 <div class="card-body">
                    <div class="container-fluid">
                         <div class="row">
-                            <table id="UsersTable" class="table nowrap dt-responsive align-middle" style="width:100%">
+                            <table id="viaBankDeductionListing"  class="table dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>
@@ -119,7 +117,7 @@
 
     <script>
         $(document).ready(function () {
-            $('#DeductionListing').DataTable({
+            $('#viaBankDeductionListing').DataTable({
                 paging: true,
                 searching: true,
                 ordering: true
