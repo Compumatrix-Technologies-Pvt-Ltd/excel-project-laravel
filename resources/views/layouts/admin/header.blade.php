@@ -1,8 +1,12 @@
 <!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="gradient-4" data-sidebar-size="lg"
-    data-sidebar-image="none" data-preloader="disable" data-theme="corporate" data-theme-colors="default"
-    data-sidebar-visibility="show" data-layout-style="default" data-bs-theme="light" data-layout-width="fluid"
-    data-layout-position="fixed" data-body-image="none">
+<html
+    @if(auth()->check() && auth()->user()->hasRole('branch'))
+        data-layout="vertical" data-topbar="light" data-sidebar="gradient-4" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default" data-sidebar-visibility="show" data-layout-style="default" data-bs-theme="light" data-layout-width="fluid" data-layout-position="fixed" data-body-image="none"
+    @else
+        lang="en" data-layout="vertical" data-topbar="light" data-sidebar="gradient-4" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable" data-theme="corporate" data-theme-colors="default" data-sidebar-visibility="show" data-layout-style="default" data-bs-theme="light" data-layout-width="fluid" data-layout-position="fixed" data-body-image="none"
+    @endif
+>
+
 
 <head>
     <meta charset="utf-8" />
