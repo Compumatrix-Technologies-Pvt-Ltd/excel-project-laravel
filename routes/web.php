@@ -102,6 +102,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Branch Routes
     Route::put('update-branch', [BranchController::class, 'update'])->name('update-branch');
+    Route::get('branch-users/{id}', [BranchController::class, 'branchUsers'])->name('branch-users');
+    Route::get('branch-users-module/{id}', [BranchController::class, 'usersModule'])->name('branch-users.modules');
     Route::resource('branch', BranchController::class);
 
 

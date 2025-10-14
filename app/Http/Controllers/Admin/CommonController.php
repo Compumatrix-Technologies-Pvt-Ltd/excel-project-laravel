@@ -132,6 +132,8 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "Security Settings";
         return view('admin.audit.security-settings', $this->ViewData);
     }
+
+   
    
     
     
