@@ -24,7 +24,7 @@ class VehicleController extends Controller
 
         $this->ModuleTitle = __('Vehicles Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['Vehicles'] = $this->BaseModel->all();
+        $this->ViewData['Vehicles'] = $this->BaseModel::where('company_id',auth()->user()->company_id)->get();
         return view($this->ModuleView . 'index', $this->ViewData);
     }
 

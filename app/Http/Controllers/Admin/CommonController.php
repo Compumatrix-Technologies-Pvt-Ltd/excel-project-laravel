@@ -46,26 +46,10 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "Suppliers";
         return view('admin.suppliers', $this->ViewData);
     }
-    public function paymentIndex(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Payments";
-        return view('admin.payments.index', $this->ViewData);
-    }
-    public function cashPurchaseList(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Cash Purchases";
-        return view('admin.cash-purchase.cash-purchase-index', $this->ViewData);
-    }
-    public function cashPurchaseSummary(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Cash Summary";
-        return view('admin.cash-purchase.cash-purchase-summary', $this->ViewData);
-    }
-    public function dailyCashPurchaseSummary(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Daily Cash Purchase Summary";
-        return view('admin.cash-purchase.daily-cash-purchase-summary', $this->ViewData);
-    }
+  
+    
+    
+    
     // public function millManagement(Request $request)
     // {
     //     $this->ViewData['moduleAction'] = "Mill Management";
@@ -76,11 +60,7 @@ class CommonController extends Controller
     //     $this->ViewData['moduleAction'] = "HQ Transactions";
     //     return view('admin.daily-transactions.hq-index', $this->ViewData);
     // }
-    public function salesInvoice(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Sales Invoice";
-        return view('admin.sales-invoice.sales-invoice', $this->ViewData);
-    }
+    
     public function supplierCashBill(Request $request)
     {
         $this->ViewData['moduleAction'] = "Supplier Cash Bill";
@@ -132,6 +112,8 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "Security Settings";
         return view('admin.audit.security-settings', $this->ViewData);
     }
+
+   
    
     
     

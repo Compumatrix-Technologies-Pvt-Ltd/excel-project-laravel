@@ -16,5 +16,9 @@ class BranchModel extends Model
     {
         return $this->belongsTo(CompanyInfoModel::class, 'company_id');
     }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'branch_id');
+    }
 
 }

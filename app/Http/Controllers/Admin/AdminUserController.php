@@ -187,13 +187,6 @@ class AdminUserController extends Controller
         return view('admin.suppliers.suppliers-gps-list', $this->ViewData);
     }
 
-    public function suppliersHqIndex()
-    {
-        $this->ModuleTitle = __('Supplier Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.suppliers.suppliers-hq', $this->ViewData);
-    }
-
     // public function transactionIndex(){
     //      $this->ModuleTitle = __('Transactions');
     //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
@@ -211,12 +204,7 @@ class AdminUserController extends Controller
     //     return view('admin.deductions.deduction-index', $this->ViewData);
     // }
 
-    public function creditPurchaseIndex()
-    {
-        $this->ModuleTitle = __('Credit Purches Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.credit-purchases.credit-purchase', $this->ViewData);
-    }
+    
 
     public function creditPurchaseAnalysisIndex()
     {

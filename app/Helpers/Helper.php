@@ -166,6 +166,24 @@ class Helper{
         }
         return $response;
     }
+    public static function getPeriod(){
+        $yearMonth = session('yearMonth');
+        if ($yearMonth && strlen($yearMonth) === 6) {
+            $yearMonth = substr($yearMonth, 0, 4) . substr($yearMonth, 4, 2);
+        } else {
+            $yearMonth = date('Ym');
+        }
+        return $yearMonth;
+    }
+    public static function getPeriodInFormat(){
+        $yearMonth = session('yearMonth');
+        if ($yearMonth && strlen($yearMonth) === 6) {
+            $yearMonth = substr($yearMonth, 0, 4) .'/'.substr($yearMonth, 4, 2);
+        } else {
+            $yearMonth = date('m/Y');
+        }
+        return $yearMonth;
+    }
     
 
 

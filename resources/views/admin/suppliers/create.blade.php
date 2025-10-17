@@ -37,8 +37,6 @@
                             @csrf
 
                             <div class="row align-items-center mb-3">
-                                @if (Auth::check() && Auth::user()->hasRole('branch'))
-
                                     <div class="col-md-6 d-flex align-items-center form-group">
                                         <label class="me-3">Supplier Type: <span class="text-danger">*</span></label>
 
@@ -66,16 +64,6 @@
                                             style="width: 100px;" value="Auto" readonly>
                                     </div>
 
-
-                                @elseif (Auth::user()->hasRole('hq'))
-                                    <div class="col-md-6 form-group">
-                                        <label for="supplier_id" class="form-label">Supplier Id: <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="supplier_id" id="supplier_id"
-                                            class="form-control form-control-sm" required data-error="Please enter Supplier Id">
-                                        <span class="help-block with-errors err_supplier_id" style="color:red;"></span>
-                                    </div>
-                                @endif
                             </div>
 
                             <div class="row mb-3">
@@ -96,74 +84,66 @@
                             </div>
 
                             <div class="row mb-3">
-                                @if (Auth::check() && Auth::user()->hasRole('branch'))
-
-                                    <div class="col-md-3 form-group">
-                                        <label for="mpob_lic_no" class="form-label">MPOB Licence No.: <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="mpob_lic_no" id="mpob_lic_no"
-                                            class="form-control form-control-sm" required
-                                            data-error="Please enter licence number">
-                                        <span class="help-block with-errors err_mpob_lic_no" style="color:red;"></span>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="mpob_exp_date" class="form-label">Expiry Date: <span
-                                                class="text-danger">*</span></label>
-                                        <input type="date" name="mpob_exp_date" id="mpob_exp_date"
-                                            class="form-control form-control-sm" required data-error="Please enter Expiry Date">
-                                        <span class="help-block with-errors err_mpob_exp_date" style="color:red;"></span>
-                                    </div>
-                                @endif
+                                <div class="col-md-3 form-group">
+                                    <label for="mpob_lic_no" class="form-label">MPOB Licence No.: <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="mpob_lic_no" id="mpob_lic_no"
+                                        class="form-control form-control-sm" required
+                                        data-error="Please enter licence number">
+                                    <span class="help-block with-errors err_mpob_lic_no" style="color:red;"></span>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="mpob_exp_date" class="form-label">Expiry Date: <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" name="mpob_exp_date" id="mpob_exp_date"
+                                        class="form-control form-control-sm" required data-error="Please enter Expiry Date">
+                                    <span class="help-block with-errors err_mpob_exp_date" style="color:red;"></span>
+                                </div>
                                 <div class="col-md-6 form-group">
                                     <label for="address2" class="form-label">Address 2</label>
                                     <input type="text" name="address2" id="address2" class="form-control form-control-sm">
                                 </div>
                             </div>
-                            @if (Auth::check() && Auth::user()->hasRole('branch'))
-
-                                <div class="row mb-3">
-                                    <div class="col-md-3 form-group">
-                                        <label for="mspo_cert_no" class="form-label">MSPO Cert. No.: <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" name="mspo_cert_no" id="mspo_cert_no"
-                                            class="form-control form-control-sm" required
-                                            data-error="Please enter Certificate Number">
-                                        <span class="help-block with-errors err_mspo_cert_no" style="color:red;"></span>
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="mspo_exp_date" class="form-label">Expiry Date: <span
-                                                class="text-danger">*</span></label>
-                                        <input type="date" name="mspo_exp_date" id="mspo_exp_date"
-                                            class="form-control form-control-sm" required data-error="Please enter expiry Date">
-                                        <span class="help-block with-errors err_mspo_exp_date" style="color:red;"></span>
-                                    </div>
+                            <div class="row mb-3">
+                                <div class="col-md-3 form-group">
+                                    <label for="mspo_cert_no" class="form-label">MSPO Cert. No.: <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" name="mspo_cert_no" id="mspo_cert_no"
+                                        class="form-control form-control-sm" required
+                                        data-error="Please enter Certificate Number">
+                                    <span class="help-block with-errors err_mspo_cert_no" style="color:red;"></span>
                                 </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-3 form-group">
-                                        <label for="tin" class="form-label">TIN:</label>
-                                        <input type="text" name="tin" id="tin" class="form-control form-control-sm">
-                                    </div>
-                                    <div class="col-md-3 form-group">
-                                        <label for="subsidy_rate" class="form-label">Subsidy (%):</label>
-                                        <input type="number" name="subsidy_rate" id="subsidy_rate"
-                                            class="form-control form-control-sm">
-                                    </div>
-                                    <div class="col-md-2 form-group">
-                                        <label for="land_size" class="form-label">Land Size (Ha):</label>
-                                        <input type="text" name="land_size" id="land_size" class="form-control form-control-sm">
-                                    </div>
-                                    <div class="col-md-2 form-group">
-                                        <label for="latitude" class="form-label">Lat:</label>
-                                        <input type="text" name="latitude" id="latitude" class="form-control form-control-sm">
-                                    </div>
-                                    <div class="col-md-2 form-group">
-                                        <label for="longitude" class="form-label">Long:</label>
-                                        <input type="text" name="longitude" id="longitude" class="form-control form-control-sm">
-                                    </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="mspo_exp_date" class="form-label">Expiry Date: <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" name="mspo_exp_date" id="mspo_exp_date"
+                                        class="form-control form-control-sm" required data-error="Please enter expiry Date">
+                                    <span class="help-block with-errors err_mspo_exp_date" style="color:red;"></span>
                                 </div>
-                            @endif
-
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-3 form-group">
+                                    <label for="tin" class="form-label">TIN:</label>
+                                    <input type="text" name="tin" id="tin" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label for="subsidy_rate" class="form-label">Subsidy (%):</label>
+                                    <input type="number" name="subsidy_rate" id="subsidy_rate"
+                                        class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="land_size" class="form-label">Land Size (Ha):</label>
+                                    <input type="text" name="land_size" id="land_size" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="latitude" class="form-label">Lat:</label>
+                                    <input type="text" name="latitude" id="latitude" class="form-control form-control-sm">
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="longitude" class="form-label">Long:</label>
+                                    <input type="text" name="longitude" id="longitude" class="form-control form-control-sm">
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-md-4 form-group">
                                     <label for="email" class="form-label">Email: <span class="text-danger">*</span></label>
@@ -203,16 +183,12 @@
                                     <span class="help-block with-errors err_bank_acc_no" style="color:red;"></span>
                                 </div>
                             </div>
-
-                            @if (Auth::check() && Auth::user()->hasRole('branch'))
-
-                                <div class="row mb-3">
-                                    <div class="col form-group">
-                                        <label for="remark" class="form-label">Remark:</label>
-                                        <input type="text" name="remark" id="remark" class="form-control form-control-sm">
-                                    </div>
+                            <div class="row mb-3">
+                                <div class="col form-group">
+                                    <label for="remark" class="form-label">Remark:</label>
+                                    <input type="text" name="remark" id="remark" class="form-control form-control-sm">
                                 </div>
-                            @endif
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-md-12 text-end">
                                     <button type="submit" class="btn btn-success btn-sm">OK</button>
@@ -221,8 +197,6 @@
                             </div>
                         </form>
                     </div>
-
-
                 </div>
             </div>
         </div>

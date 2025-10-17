@@ -76,7 +76,7 @@
                     </form>
                     <div class="container-fluid mt-4">
                         <div class="row">
-                            <table id="BranchListing" class="table nowrap dt-responsive align-middle" style="width:100%">
+                            <table id="PaymentListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 10px;">
@@ -92,116 +92,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250401</td>
-                                        <td>VC-A-A017</td>
-                                        <td>Aisa Binti Sidayar (K/P: 580513-12-5444)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>2,802.24</td>
-                                    </tr>
-                                    <tr>
-                                     <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250402</td>
-                                        <td>VC-A-A050</td>
-                                        <td>Asrim @ Asrim Bin Omar Maya (K/P: 630720-12-5837)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>1,217.64</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250403</td>
-                                        <td>VC-A-A072</td>
-                                        <td>Chong Wai Fong (K/P: 700101-14-2234)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>950.00</td>
-                                    </tr>
-                                    <tr>
-                                         <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250404</td>
-                                        <td>VC-A-A089</td>
-                                        <td>Lim Siew Lan (K/P: 651230-10-7788)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>3,400.75</td>
-                                    </tr>
-                                    <tr>
-                                         <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250405</td>
-                                        <td>VC-A-A092</td>
-                                        <td>Ravi Kumar (K/P: 640215-08-9922)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>2,125.10</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250406</td>
-                                        <td>VC-A-A101</td>
-                                        <td>Nurul Huda (K/P: 730418-05-3311)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>1,560.50</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250407</td>
-                                        <td>VC-A-A115</td>
-                                        <td>Siti Aminah (K/P: 620911-02-4444)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>820.30</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250408</td>
-                                        <td>VC-A-A134</td>
-                                        <td>Ganesh Kumar (K/P: 690602-06-9988)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>4,200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250409</td>
-                                        <td>VC-A-A145</td>
-                                        <td>Tan Ah Kow (K/P: 600705-14-5566)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>2,950.90</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>VCSI250410</td>
-                                        <td>VC-A-A166</td>
-                                        <td>Lee Mei Ling (K/P: 750324-09-1122)</td>
-                                        <td>30-Apr-2025</td>
-                                        <td>1,475.60</td>
-                                    </tr>
+
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -253,16 +145,5 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#BranchListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
-            });
-        });
-    </script>
-
 
 @endsection

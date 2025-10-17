@@ -59,15 +59,23 @@
     });
 
    var action = ADMINURL + '/suppliers/getRecords';
-    $('#SuppliersListing').DataTable({
+   $('#SuppliersListing').DataTable({
         scroller: true,
         serverSide: true,
         responsive: false,
         ajax: {
             url: action,
             type: "GET",
+            dataSrc: function(json) {
+                return json.data; 
+            },
+            error: function(xhr, error, code) {
+                showToast(false, 'Error loading data. Please try again just refresh the page');
+            }
         },
         columns: [
+            { data: 'checkbox', name: 'checkbox' },
+            { data: 'id', name: 'id' },
             { data: 'supplier_id', name: 'supplier_id' },
             { data: 'supplier_name', name: 'supplier_name' },
             { data: 'email', name: 'email' },
@@ -75,14 +83,42 @@
             { data: 'view_info', name: 'view_info' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false },
         ],
+        columnDefs: [
+            { "orderable": false, "targets": [1, 2, 3, 4,5,6] },
+        ],
+        order: [[0, 'DESC']], 
+    });
 
+    var action = ADMINURL + '/hq-suppliers/getRecords';
+    $('#HqSupplierListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+            dataSrc: function(json) {
+                return json.data; 
+            },
+            error: function(xhr, error, code) {
+                showToast(false, 'Error loading data. Please try again just refresh the page');
+            }
+        },
+        columns: [
+            { data: 'checkbox', name: 'checkbox' },
+            { data: 'id', name: 'id' },
+            { data: 'supplier_id', name: 'supplier_id' },
+            { data: 'supplier_name', name: 'supplier_name' },
+            { data: 'email', name: 'email' },
+            { data: 'telphone_1', name: 'telphone_1' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false },
+        ],
         columnDefs: [
             { "orderable": false, "targets": [1, 2, 3, 4] },
         ],
-        aaSorting: [
-            [0, 'DESC']
-        ],
+        order: [[0, 'DESC']], 
     });
+
 
     $(document).on('click', '.view-supplier-btn', function () {
     let supplierId = $(this).data('id');
@@ -204,68 +240,182 @@
 
 
   
-    var action = ADMINURL + '/transactions/getRecords/hq';
-        $('#TransactionListingHq').DataTable({
-            scroller: true,
-            serverSide: true,
-            responsive: false,
+    var action = ADMINURL + '/cash-purchase/getRecords';
+
+    var CashPurchaseListingtable = $('#CashPurchaseListing').DataTable({
+    scroller: true,
+    serverSide: true,
+    responsive: true,
+    processing: true,
+    ajax: {
+        url: action,
+        type: "GET",
+        dataSrc: function (json) {
+            // ✅ If backend sends totals, you can still use them here (optional)
+            if (json.footerTotals) {
+                $('#total-weight').html(json.footerTotals.weight_kg);
+                $('#total-subsidy').html(json.footerTotals.subsidy_amt);
+                $('#total-netpay').html(json.footerTotals.net_pay);
+            }
+            return json.data;
+        },
+       
+    },
+    columns: [
+        { data: 'checkbox', orderable: false, searchable: false }, // 0
+        { data: 'date' },                                          // 1
+        { data: 'invoice_no' },                                    // 2
+        { data: 'supplier_id' },                                   // 3
+        { data: 'supplier_name' },                                 // 4
+        { data: 'ticket_no' },                                     // 5
+        { data: 'weight_kg' },                                     // 6
+        { data: 'price' },                                         // 7
+        { data: 'subsidy_amt' },                                   // 8
+        { data: 'net_pay' },                                       // 9
+    ],
+    order: [[1, 'desc']],
+
+    footerCallback: function (row, data, start, end, display) {
+        var api = this.api();
+        // Helper function to parse numeric values
+        var intVal = function (i) {
+            if (typeof i === 'string') {
+                    i = i.replace(/,/g, ''); // remove commas
+                    return parseFloat(i) || 0;
+                }
+                return typeof i === 'number' ? i : 0;
+            };
+
+            // ✅ Calculate totals (use your actual column indexes)
+            var totalWeight = api
+                .column(6, { page: 'current' })
+                .data()
+                .reduce((a, b) => a + intVal(b), 0);
+
+            var totalSubsidy = api
+                .column(8, { page: 'current' })
+                .data()
+                .reduce((a, b) => a + intVal(b), 0);
+
+            var totalNetPay = api
+                .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => a + intVal(b), 0);
+
+            // ✅ Update footer cells
+            $(api.column(6).footer()).html(totalWeight.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+            $(api.column(8).footer()).html(totalSubsidy.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+            $(api.column(9).footer()).html(totalNetPay.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        }
+    });
+    
+
+
+    var CashPurchaseSummaryTable = $('#CashPurchaseSummaryTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: ADMINURL + '/cash-purchase-summary/getRecords', // 👈 your backend route (Laravel)
+        type: 'GET',
+        dataSrc: function (json) {
+            // Optional: if backend already sends footerTotals
+            if (json.footerTotals) {
+                updateFooter(json.footerTotals);
+            }
+            return json.data;
+        }
+    },
+        columns: [
+            { data: 'supplier_id', title: 'Supp. Id' },
+            { data: 'supplier_name', title: 'Supplier Name' },
+            { data: 'weight_mt', title: 'Wt. (M/Ton)', className: 'text-end' },
+            { data: 'subsidy', title: 'Subsidy', className: 'text-end' },
+            { data: 'net_pay', title: 'Net Pay', className: 'text-end' }
+        ],
+        order: [[1, 'asc']],
+        columnDefs: [
+            { "orderable": false, "targets": [1, 2, 3, 4] },
+        ],
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+
+            // helper to parse numbers
+            var parseVal = function (i) {
+                if (typeof i === 'string') return parseFloat(i.replace(/,/g, '')) || 0;
+                return typeof i === 'number' ? i : 0;
+            };
+
+            // total for weight
+            var totalWeight = api.column(2, { page: 'current' }).data()
+                .reduce((a, b) => a + parseVal(b), 0);
+            var totalSubsidy = api.column(3, { page: 'current' }).data()
+                .reduce((a, b) => a + parseVal(b), 0);
+            var totalNetPay = api.column(4, { page: 'current' }).data()
+                .reduce((a, b) => a + parseVal(b), 0);
+
+            // update footer
+            $(api.column(2).footer()).html(totalWeight.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+            $(api.column(3).footer()).html(totalSubsidy.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+            $(api.column(4).footer()).html(totalNetPay.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        }
+    });
+
+    // helper to update footer directly if backend sends totals
+    function updateFooter(totals) {
+        $('#CashPurchaseSummaryTable tfoot th:nth-child(3)').text(parseFloat(totals.weight_mt).toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        $('#CashPurchaseSummaryTable tfoot th:nth-child(4)').text(parseFloat(totals.subsidy).toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        $('#CashPurchaseSummaryTable tfoot th:nth-child(5)').text(parseFloat(totals.net_pay).toLocaleString(undefined, { minimumFractionDigits: 2 }));
+    }
+
+
+
+
+        var action = ADMINURL + '/daily-cash-purchase-summary/getRecords';
+
+        var DailyPurchaseListingTable = $('#DailyPurchaseListingTable').DataTable({
+            serverSide: false,
+            processing: true,
+            responsive: true,
             ajax: {
                 url: action,
                 type: "GET",
+                dataSrc: function (json) {
+                    if (json.footerTotals) {
+                        $('#daily-total-weight').html(json.footerTotals.total_weight);
+                        $('#daily-total-dailytotal').html(json.footerTotals.daily_total);
+                    }
+                    return json.data;
+                }
             },
             columns: [
-              { 
-                data: null, 
-                render: function(data, type, row, meta) {
-                    return meta.row + 1; 
-                },
-                searchable: false,
-                orderable: false 
-            },
-                { data: 'ticket_no', name: 'ticket_no' },
-                { data: 'trx_date', name: 'trx_date' },
-                { data: 'supplier_id', name: 'supplier_id' },
-                { data: 'vehicle_id', name: 'vehicle_id' },
-                { data: 'mill_id', name: 'mill_id' },
-                { data: 'weight', name: 'weight' },
-                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+                { data: 'date' },
+                { data: 'invoice_range' },
+                { data: 'total_weight' },
+                { data: 'avg_price' },
+                { data: 'total' },
+                { data: 'daily_weight' },
+                { data: 'daily_total' },
             ],
+            order: [[0, 'asc']],
+            footerCallback: function (row, data, start, end, display) {
+                var api = this.api();
 
-            columnDefs: [
-                { "orderable": false, "targets": [1, 2, 3, 4] },
-            ],
-            aaSorting: [
-                [0, 'DESC']
-            ],
-        });
-  
-        $(document).on('click','#edit-transactionhq-btn',function(){
+                var intVal = function (i) {
+                    return typeof i === 'string'
+                        ? parseFloat(i.replace(/,/g, '')) || 0
+                        : (typeof i === 'number' ? i : 0);
+                };
 
-       $('#transactionEditModalHQ').modal('show');
-        var encrypted_id = $(this).attr("data-id");
-        // alert(encrypted_id);
-                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+                var totalWeight = api.column(2, { page: 'current' }).data()
+                    .reduce((a, b) => a + intVal(b), 0);
 
-        $.ajax({
-            type: "GET",
-            url: action,
-            dataType:"json",
-            success:function(response){
-                if(response.status == 'success'){
-                    $('#ticketNoInput').val(response.data.ticket_no);       
-                    $("#TRXDateInput").val(response.data.trx_date);
-                    $('#SupplierInput').val(response.data.supplier_id);
-                    $('#VehicleInput').val(response.data.vehicle_id);
-                    $('#MillInput').val(response.data.mill_id);                           
-                    $('#wieghtMtInput').val(response.data.weight);       
-                    $('#hidden_id').val(encrypted_id);
-                    $('#submitBtn').removeClass('disabled');
-                }else{
-                    alert('Something went wrong');
-                } 
+                var dailyTotal = api.column(6, { page: 'current' }).data()
+                    .reduce((a, b) => a + intVal(b), 0);
+
+                $('#daily-total-weight').html(totalWeight.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+                $('#daily-total-dailytotal').html(dailyTotal.toLocaleString(undefined, { minimumFractionDigits: 2 }));
             }
         });
-    });
 
 
 
@@ -510,6 +660,11 @@
         });
 
      // ************** End Supplies Summary Listing ********************
+
+
+   
+
+
 
 
 });

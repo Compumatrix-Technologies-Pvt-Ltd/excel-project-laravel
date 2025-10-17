@@ -66,6 +66,12 @@
                             <table id="SuppliersListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th scope="col" style="width: 10px;">
+                                        <div class="form-check">
+                                            <input class="form-check-input fs-15" type="checkbox" id="checkAll">
+                                        </div>
+                                        </th>
+                                        <th>SR No.</th>
                                         <th>Supplier Id</th>
                                         <th>Supplier Name</th>
                                         <th>Email</th>

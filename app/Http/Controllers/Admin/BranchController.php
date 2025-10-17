@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\BranchModel;
+use App\Models\User;
+
 use Exception;
 use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
@@ -28,8 +30,22 @@ class BranchController extends Controller
     public function index()
     {
         $this->ViewData['moduleAction'] = "Branch Management";
-        $this->ViewData['branches'] = $this->BaseModel->where('company_id',auth()->user()->company_id)->get();
+        $this->ViewData['branches'] = $this->BaseModel->where('company_id',auth()->user()->company_id)->withCount('users')->get();
         return view('admin.branch.index', $this->ViewData);
+    }
+    public function branchUsers($encBranchID)
+    {
+        $intBranchID = base64_decode(base64_decode($encBranchID));
+        $this->ViewData['moduleAction'] = "Branch Users";
+        $this->ViewData['BranchUsers'] = User::where('branch_id',$intBranchID)->get();
+        return view('admin.branch.users-index', $this->ViewData);
+    }
+    public function usersModule($encUserID)
+    {
+        $intUserID = base64_decode(base64_decode($encUserID));
+        $this->ViewData['UserModules'] = User::with('branch')->find($intUserID);
+        $this->ViewData['moduleAction'] = "Branch Users Modules";
+        return view('admin.branch.modules', $this->ViewData);
     }
 
     public function store(Request $request)
