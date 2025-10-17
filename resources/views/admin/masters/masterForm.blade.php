@@ -74,6 +74,7 @@
                                     } else {
                                         $yearMonth = date('Y-m');
                                     }
+                                    
                                 @endphp
                                 <input type="month" readonly value="{{ $yearMonth }}" class="form-control form-control-sm" id="period">
                             </div>
@@ -333,7 +334,7 @@
                                     <div class="col-md-2 col-lg-2">
                                         <label class="form-label mb-0">Inv. No. / Cash Bill:</label>
                                         <input type="text" class="form-control form-control-sm" name="invoice_no"
-                                            id="invoiceInput" style="width:125px;" readonly>
+                                            id="invoiceInput" readonly>
                                         <!-- When purchase type credit -->
                                         {{-- <input type="text" name="invoice_no" value="{{ $creditInvoiceNo }}" readonly>
 
@@ -593,8 +594,8 @@
                 part1.readOnly = true;
                 part2.readOnly = true;
                 // Disable Pay By section
-                payByFieldset.setAttribute('disabled', 'disabled');
-                payInputs.forEach(input => input.disabled = true);
+              payByFieldset.removeAttribute('disabled');
+                payInputs.forEach(input => input.disabled = false);
             } else if (cashRadio.checked) {
                 // Cash: Particulars
                 part1.value = "FFB Ticket No.";
@@ -603,8 +604,9 @@
                 part1.readOnly = false;
                 part2.readOnly = false;
                 // Enable Pay By section
-                payByFieldset.removeAttribute('disabled');
+                payByFieldset.setAttribute('disabled', false);
                 payInputs.forEach(input => input.disabled = false);
+                
             }
         }
 

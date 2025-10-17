@@ -56,7 +56,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/oclwxpmm.json" trigger="hover" colors="primary:#405189"
                                 target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+<a href="{{ url('main/' . base64_encode($UserModules->id)) }}" class="stretched-link">
                                 <h5 class="mt-4">Main</h5>
                             </a>
                         </div>
@@ -67,9 +67,10 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/dklbhvrt.json" trigger="hover" colors="primary:#405189"
                                 target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                                <a href="{{ url('suppliers/' . base64_encode($UserModules->id)) }}" class="stretched-link">
+
                                 <h5 class="mt-4">supplier </h5>
-                            </a>
+                            </a>    
                         </div>
                     </div>
                 </div>
@@ -78,7 +79,8 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/adwosptt.json" trigger="hover" colors="primary:#405189"
                                 target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                                <a href="{{ url('transactions/' . base64_encode($UserModules->id)) }}" class="stretched-link">
+
                                 <h5 class="mt-4">DailyCrTrx</h5>
                             </a>
                         </div>
@@ -89,7 +91,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/kkcllwsu.json" trigger="hover" colors="primary:#405189"
                                 target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="" class="stretched-link">
                                 <h5 class="mt-4">Deduction</h5>
                             </a>
                         </div>

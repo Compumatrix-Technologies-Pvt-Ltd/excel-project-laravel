@@ -30,6 +30,7 @@ class TransactionController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         $this->ViewData['Suppliers'] = Suppliers::with('user')
             ->where('user_id', $userId)
+            ->where('supplier_mode', 'branch')
             ->get();
         return view($this->ModuleView . 'index', $this->ViewData);
     }
@@ -42,6 +43,7 @@ class TransactionController extends Controller
         $this->ViewData['Mills'] = Mill::where('company_id',auth()->user()->company_id)->get();
         $this->ViewData['Suppliers'] = Suppliers::with('user')
             ->where('user_id', $userId)
+            ->where('supplier_mode', 'hq')
             ->get();
         return view($this->ModuleView . 'hq-index', $this->ViewData);
     }
@@ -158,14 +160,14 @@ class TransactionController extends Controller
 
             $loggedInUser = auth()->user();
 
-            if (!$loggedInUser->hasRole('branch')) {
-                return response()->json([
-                    'error' => 'Unauthorized: User does not have the required role.',
-                ], 403);
-            }
+            // if (!$loggedInUser->hasRole('branch') ) {
+            //     return response()->json([
+            //         'error' => 'Unauthorized: User does not have the required role.',
+            //     ], 403);
+            // }
 
             $baseQuery = $this->BaseModel::with(['supplier'])
-                ->where('user_id', $loggedInUser->id);
+                ->where('user_id', $loggedInUser->id)->where('transaction_by','branch');
 
             $intTotalData = $baseQuery->count();
 
@@ -275,7 +277,7 @@ class TransactionController extends Controller
             }
 
             $baseQuery = $this->BaseModel::with(['supplier', 'vehicle', 'mill'])
-                ->where('user_id', $loggedInUser->id);
+                ->where('user_id', $loggedInUser->id)->where('transaction_by','hq');
 
             $intTotalData = $baseQuery->count();
 

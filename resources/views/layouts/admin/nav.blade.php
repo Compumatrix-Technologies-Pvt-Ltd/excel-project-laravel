@@ -184,9 +184,9 @@
 
                    
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers-hq', 'admin/suppliers/create') ? 'active' : '' }}"
-                            href="{{ route('admin.suppliers.index') }}">
-                            <i class="mdi mdi-account-supervisor"></i> <span data-key="t-widgets">Suppliers</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/hq-suppliers') ? 'active' : '' }}"
+                            href="{{ route('admin.hq-suppliers.index') }}">
+                            <i class="mdi mdi-account-supervisor"></i> <span data-key="t-widgets">HQ Suppliers</span>
                         </a>
                     </li>
 
@@ -320,7 +320,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers','admin/suppliers/create') ? 'active' : '' }}"
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers','admin/suppliers/create','admin/suppliers/*/edit') ? 'active' : '' }}"
                             href="{{ route('admin.suppliers.index') }}">
                             <i class="mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
                         </a>

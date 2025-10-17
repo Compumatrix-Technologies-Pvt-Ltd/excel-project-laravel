@@ -19,6 +19,7 @@ use Log;
 use Exception;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class MasterController extends Controller
 {
@@ -47,7 +48,15 @@ class MasterController extends Controller
         ])->get();
 
         $user = auth()->user();
-        $branchCode = $user->branch->code; // e.g. "VC"
+        // Check if user has a branch, otherwise use company name
+        if ($user->branch) {
+            $branchCode = $user->branch->code; // e.g. "VC"
+        } else {
+            $branchCode = $user->company->code ?? 'DEFAULT'; // Use company name as fallback
+        }
+
+        
+       
 
         $this->ViewData['creditInvoiceNo'] = $this->generateInvoiceNumber($branchCode, 'credit');
         $this->ViewData['cashInvoiceNo'] = $this->generateInvoiceNumber($branchCode, 'cash');
@@ -80,6 +89,7 @@ class MasterController extends Controller
 
             $this->BaseModel = new FFBTransactionsModel();
             $this->BaseModel->company_id = $request->input('company_id');
+            $this->BaseModel->user_id = auth()->user()->id;
             $this->BaseModel->branch_id = $request->input('branch_id');
             $this->BaseModel->supplier_id = $request->input('supplier_id');
             $this->BaseModel->purchase_type = $request->input('purchase_type', 'credit');
@@ -333,5 +343,315 @@ class MasterController extends Controller
         $this->JsonData['status'] = __('success');
         $this->JsonData['data'] = $data;
         return response()->json($this->JsonData);
+    }
+
+    public function creditPurchaseIndex()
+    {
+        $this->ModuleTitle = __('Credit Purches Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $this->ViewData['ffbTransactions'] = FFBTransactionsModel::with('supplier')->where('period',Helper::getPeriod())->where('purchase_type','credit')->where('user_id',auth()->user()->id)->get();
+        //dd($creditPurchase);
+        return view('admin.credit-purchases.credit-purchase', $this->ViewData);
+    }
+    public function cashPurchaseList(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Cash Purchases";
+        return view('admin.cash-purchase.cash-purchase-index', $this->ViewData);
+    }
+    public function cashPurchaseGetRecords(Request $request)
+    {
+        try {
+            $start = $request->start ?? 0;
+            $length = $request->length ?? 10;
+            $column = 0;
+            $dir = 'asc';
+
+            if ($request->has('order') && isset($request->order[0])) {
+                $column = $request->order[0]['column'];
+                $dir = $request->order[0]['dir'];
+            }
+
+            $filter = [
+                0 => 'bill_date',
+                1 => 'invoice_no',
+                2 => 'supplier_id',
+                3 => 'ticket_no',
+                4 => 'weight_mt',
+            ];
+
+            $sortColumn = $filter[$column] ?? 'bill_date';
+
+            $baseQuery = FFBTransactionsModel::with('supplier')->where(['purchase_type'=>'cash','period'=>Helper::getPeriod()]);
+            
+            if ($request->has('start_date') && $request->start_date) {
+                $baseQuery->where('bill_date','>=',$request->start_date);
+            }
+
+            if ($request->has('end_date') && $request->end_date) {
+                $baseQuery->where('bill_date','<=',$request->end_date);
+            }
+
+            // 🔍 Apply search filter
+            if (!empty($request->search['value'])) {
+                $search = $request->search['value'];
+                $baseQuery->where(function ($q) use ($search) {
+                    $q->where('invoice_no', 'LIKE', "%{$search}%")
+                        ->orWhere('bill_date', 'LIKE', "%{$search}%")
+                        ->orWhere('ticket_no', 'LIKE', "%{$search}%")
+                        ->orWhereHas('supplier', function ($sq) use ($search) {
+                            $sq->where('supplier_name', 'LIKE', "%{$search}%")
+                                ->orWhere('supplier_id', 'LIKE', "%{$search}%");
+                        });
+                });
+            }
+
+            $intTotalData = FFBTransactionsModel::count();
+            $intTotalFiltered = $baseQuery->count();
+
+            // ✅ Totals for all filtered records (not just paginated)
+            $totals = $baseQuery->clone()
+                ->selectRaw('SUM(weight_mt) as total_weight, SUM(subsidy_amt) as total_subsidy, SUM(net_pay) as total_netpay')
+                ->first();
+
+            $records = $baseQuery->orderBy($sortColumn, $dir)
+                ->skip($start)
+                ->take($length)
+                ->get();
+
+            $data = [];
+            foreach ($records as $record) {
+                $data[] = [
+                    'checkbox' => '<div class="form-check">
+                                    <input class="form-check-input fs-15" type="checkbox" name="checkAll">
+                                </div>',
+                    'date' => date('d-M-Y', strtotime($record->bill_date)),
+                    'invoice_no' => $record->invoice_no ?? 'N/A',
+                    'supplier_id' => $record->supplier->supplier_id ?? 'N/A',
+                    'supplier_name' => $record->supplier->supplier_name ?? 'N/A',
+                    'ticket_no' => $record->ticket_no ?? '-',
+                    'weight_kg' => number_format($record->weight_mt, 2),
+                    'price' => number_format($record->price, 2),
+                    'subsidy_amt' => number_format($record->subsidy_amt, 2),
+                    'net_pay' => number_format($record->net_pay, 2),
+                ];
+            }
+
+            return response()->json([
+                'draw' => intval($request->draw),
+                'recordsTotal' => $intTotalData,
+                'recordsFiltered' => $intTotalFiltered,
+                'data' => $data,
+                'footerTotals' => [
+                    'weight_kg' => number_format($totals->total_weight * 1000, 2),
+                    'subsidy_amt' => number_format($totals->total_subsidy, 2),
+                    'net_pay' => number_format($totals->total_netpay, 2),
+                ],
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error while fetching records',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function cashPurchaseSummary(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Cash Summary";
+        return view('admin.cash-purchase.cash-purchase-summary', $this->ViewData);
+    }
+    public function cashPurchaseSummaryGetRecords(Request $request)
+    {
+        try {
+            $start = $request->start ?? 0;
+            $length = $request->length ?? 10;
+            $column = 0;
+            $dir = 'asc';
+
+            if ($request->has('order') && isset($request->order[0])) {
+                $column = $request->order[0]['column'];
+                $dir = $request->order[0]['dir'];
+            }
+
+            // Define sortable columns
+            $filter = [
+                0 => 'ffb_transactions.supplier_id',
+                1 => 'suppliers.supplier_name',
+                2 => 'total_weight',
+                3 => 'total_subsidy',
+                4 => 'total_netpay',
+            ];
+
+            $sortColumn = $filter[$column] ?? 'suppliers.supplier_name';
+
+            // 🔹 Base Query
+            $baseQuery = FFBTransactionsModel::query()
+                ->join('suppliers', 'suppliers.id', '=', 'ffb_transactions.supplier_id')
+                ->where(['purchase_type' => 'cash', 'period' => Helper::getPeriod()]);
+
+            // 🔹 Date Filters
+            if ($request->has('start_date') && $request->start_date) {
+                $baseQuery->where('bill_date', '>=', $request->start_date);
+            }
+            if ($request->has('end_date') && $request->end_date) {
+                $baseQuery->where('bill_date', '<=', $request->end_date);
+            }
+
+            // 🔹 Search Filter
+            if (!empty($request->search['value'])) {
+                $search = $request->search['value'];
+                $baseQuery->where(function($q) use ($search) {
+                    $q->where('suppliers.supplier_name', 'LIKE', "%{$search}%")
+                    ->orWhere('ffb_transactions.supplier_id', 'LIKE', "%{$search}%");
+                });
+            }
+
+            // 🔹 Group by supplier for summary
+            $summaryQuery = $baseQuery->select(
+                    'ffb_transactions.supplier_id',
+                    'suppliers.supplier_name',
+                    'suppliers.supplier_id',
+                    DB::raw('SUM(ffb_transactions.weight_mt) as total_weight'),
+                    DB::raw('SUM(ffb_transactions.subsidy_amt) as total_subsidy'),
+                    DB::raw('SUM(ffb_transactions.net_pay) as total_netpay')
+                )
+                ->groupBy(
+                    'ffb_transactions.supplier_id',
+                    'suppliers.supplier_name',
+                    'suppliers.supplier_id'
+                );
+
+            // 🔹 Total filtered records
+            $intTotalFiltered = $summaryQuery->count();
+
+            // 🔹 Fetch paginated records
+            $records = $summaryQuery
+                ->orderBy($sortColumn, $dir)
+                ->skip($start)
+                ->take($length)
+                ->get();
+
+            // 🔹 Calculate footer totals (ignore pagination)
+            $footerTotals = $baseQuery->selectRaw('
+                    SUM(ffb_transactions.weight_mt) as total_weight,
+                    SUM(ffb_transactions.subsidy_amt) as total_subsidy,
+                    SUM(ffb_transactions.net_pay) as total_netpay
+                ')
+                ->first();
+
+            // 🔹 Format response
+            $data = [];
+            foreach ($records as $record) {
+                $data[] = [
+                    'supplier_id' => $record->supplier_id,
+                    'supplier_name' => $record->supplier_name ?? 'N/A',
+                    'weight_mt' => number_format($record->total_weight, 2),
+                    'subsidy' => number_format($record->total_subsidy, 2),
+                    'net_pay' => number_format($record->total_netpay, 2),
+                ];
+            }
+
+            return response()->json([
+                'draw' => intval($request->draw),
+                'recordsTotal' => $intTotalFiltered,
+                'recordsFiltered' => $intTotalFiltered,
+                'data' => $data,
+                'footerTotals' => [
+                    'weight_mt' => number_format($footerTotals->total_weight ?? 0, 2),
+                    'subsidy' => number_format($footerTotals->total_subsidy ?? 0, 2),
+                    'net_pay' => number_format($footerTotals->total_netpay ?? 0, 2),
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error while fetching summary records',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function dailyCashPurchaseSummary(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Daily Cash Purchase Summary";
+        return view('admin.cash-purchase.daily-cash-purchase-summary', $this->ViewData);
+    }
+   public function dailyCashPurchaseSummaryGetRecords(Request $request)
+    {
+        try {
+            $query = FFBTransactionsModel::where([
+                'purchase_type' => 'cash',
+                'period' => Helper::getPeriod()
+            ]);
+
+            // Optional date filters
+            if ($request->start_date) {
+                $query->where('bill_date', '>=', $request->start_date);
+            }
+            if ($request->end_date) {
+                $query->where('bill_date', '<=', $request->end_date);
+            }
+
+            // Grouped query
+            $records = $query->selectRaw('
+                    bill_date,
+                    MIN(invoice_no) as min_invoice,
+                    MAX(invoice_no) as max_invoice,
+                    SUM(weight_mt) as total_weight,
+                    AVG(price) as avg_price,
+                    SUM(net_pay) as total_net_pay
+                ')
+                ->groupBy('bill_date')
+                ->orderBy('bill_date', 'asc')
+                ->get();
+
+            // Format rows
+            $data = $records->map(function ($item) {
+                $invoiceRange = $item->min_invoice === $item->max_invoice
+                    ? $item->min_invoice
+                    : "{$item->min_invoice} - {$item->max_invoice}";
+
+                return [
+                    'date'          => Carbon::parse($item->bill_date)->format('d-M-Y'),
+                    'invoice_range' => $invoiceRange,
+                    'total_weight'  => number_format($item->total_weight, 2),
+                    'avg_price'     => number_format($item->avg_price, 2),
+                    'total'         => number_format($item->total_net_pay, 2),
+                    'daily_weight'  => number_format($item->total_weight, 2),
+                    'daily_total'   => number_format($item->total_net_pay, 2),
+                ];
+            });
+
+            // Footer totals
+            $footerTotals = [
+                'total_weight' => number_format($records->sum('total_weight'), 2),
+                'daily_total'  => number_format($records->sum('total_net_pay'), 2),
+            ];
+
+            return response()->json([
+                'data' => $data,
+                'footerTotals' => $footerTotals,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function paymentIndex(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Payments";
+        return view('admin.payments.index', $this->ViewData);
+    }
+
+    public function paymentgetRecords(){
+        
+    }
+
+    public function salesInvoice(Request $request)
+    {
+        $this->ViewData['moduleAction'] = "Sales Invoice";
+        return view('admin.sales-invoice.sales-invoice', $this->ViewData);
     }
 }
