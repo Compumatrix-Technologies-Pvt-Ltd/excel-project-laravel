@@ -480,6 +480,70 @@
         });
     });
 
+
+
+
+    var action = ADMINURL + '/transactions/getRecords/hq';
+        $('#TransactionListingHq').DataTable({
+            scroller: true,
+            serverSide: true,
+            responsive: false,
+            ajax: {
+                url: action,
+                type: "GET",
+            },
+            columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+                { data: 'trx_no', name: 'trx_no' },
+                { data: 'trx_date', name: 'trx_date' },
+                { data: 'supplier_id', name: 'supplier_id' },
+                { data: 'ticket_no', name: 'ticket_no' },
+                { data: 'weight', name: 'weight' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+            ],
+
+            columnDefs: [
+                { "orderable": false, "targets": [1, 2, 3, 4] },
+            ],
+            aaSorting: [
+                [0, 'DESC']
+            ],
+        });
+
+          $(document).on('click','#edit-transaction-btn',function(){
+
+       $('#transactionEditModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#trxNoInput').val(response.data.trx_no);
+                    $('#SupplierInput').val(response.data.supplier_id);       
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+
     // For generatig TRX number
     $('#transactionModal').on('shown.bs.modal', function () {
             var modal = $(this);
