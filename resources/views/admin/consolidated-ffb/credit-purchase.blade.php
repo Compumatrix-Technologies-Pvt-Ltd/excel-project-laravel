@@ -31,13 +31,11 @@
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label for="selectBranch" class="form-label">Branches</label>
-                            <select id="selectBranch" class="form-select">
+                            <select id="selectBranch" name="branch_id" class="form-select">
                                 <option value="">Select Branch</option>
-                                <option value="hq">LKS COMMODITIES SDN BHD (HQ)</option>
-                                <option value="sd">LKS COMMODITIES SDN BHD (SD)</option>
-                                <option value="sm">LKS COMMODITIES SDN BHD (SM)</option>
-                                <option value="sp">SYARIKAT SAWIT PERDANA</option>
-                                <option value="vc">VC MAJUMAS SDN BHD</option>
+                                @foreach ($Branches as $branch)
+                                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-2 d-flex align-items-end">

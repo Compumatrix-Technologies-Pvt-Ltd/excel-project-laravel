@@ -472,17 +472,12 @@ $("#AddForm")
             axios.post(url, { yearMonth: value })
                 .then(function (res) {
                     $.LoadingOverlay("hide");
-                    let data = res.data;
+                    if (res.data.status === "success") {
+                        showToast(true, res.data.msg);
+                        setTimeout(() => window.location.reload(), 1500);
 
-                    if (data.status === "success") {
-                        showToast(true, data.msg);
-
-                        // reload or redirect if needed
-                        if (data.url) {
-                            setTimeout(() => window.location.href = data.url, 1500);
-                        }
                     } else {
-                        showToast(false, data.msg);
+                        showToast(false, res.data.msg);
                     }
                 })
                 .catch(function (err) {

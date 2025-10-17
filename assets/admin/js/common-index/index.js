@@ -116,5 +116,400 @@
     });
 });
 
+            
+   var action = ADMINURL + '/deductions/getRecords';
+    $('#DeductionListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+        },
+        columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+            { data: 'date', name: 'date' },
+            { data: 'period', name: 'period' },
+            { data: 'supplier_id', name: 'supplier_id' },           
+            { data: 'type', name: 'type' },
+            { data: 'amount', name: 'amount' },
+            { data: 'remark', name: 'remark' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false },
+        ],
+        columnDefs: [
+            { "orderable": false, "targets": [1, 2, 3, 4] },
+        ],
+        aaSorting: [
+            [0, 'DESC']
+        ],
+    });
+
+
+    
+
+
+    $(document).on('click','#edit-vehicle-btn',function(){
+       $('#editVehicleModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        var action = ADMINURL+'/vehicles/'+ encrypted_id + '/edit/';
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $('#Vehicle_Name').val(response.data.name);
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn ').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+    
+      $(document).on('click','#edit-user-btn',function(){
+
+       $('#editUserModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/users/'+ encrypted_id +'/edit';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#fullnameInput").val(response.data.name);
+                    $('#inputEmail4').val(response.data.email);
+                    $('#phoneNumberInput').val(response.data.mobile_number);                                             
+                    $('#inputBranch').val(response.data.branch_id);       
+                    $('input[name="status"][value="' + response.data.status + '"]').prop('checked', true);           
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+
+
+  
+    var action = ADMINURL + '/transactions/getRecords/hq';
+        $('#TransactionListingHq').DataTable({
+            scroller: true,
+            serverSide: true,
+            responsive: false,
+            ajax: {
+                url: action,
+                type: "GET",
+            },
+            columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+                { data: 'ticket_no', name: 'ticket_no' },
+                { data: 'trx_date', name: 'trx_date' },
+                { data: 'supplier_id', name: 'supplier_id' },
+                { data: 'vehicle_id', name: 'vehicle_id' },
+                { data: 'mill_id', name: 'mill_id' },
+                { data: 'weight', name: 'weight' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+            ],
+
+            columnDefs: [
+                { "orderable": false, "targets": [1, 2, 3, 4] },
+            ],
+            aaSorting: [
+                [0, 'DESC']
+            ],
+        });
+  
+        $(document).on('click','#edit-transactionhq-btn',function(){
+
+       $('#transactionEditModalHQ').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#SupplierInput').val(response.data.supplier_id);
+                    $('#VehicleInput').val(response.data.vehicle_id);
+                    $('#MillInput').val(response.data.mill_id);                           
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+
+
+
+    var action = ADMINURL + '/transactions/getRecords';
+        $('#TransactionListing').DataTable({
+            scroller: true,
+            serverSide: true,
+            responsive: false,
+            ajax: {
+                url: action,
+                type: "GET",
+            },
+            columns: [
+              { 
+                data: null, 
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                },
+                searchable: false,
+                orderable: false 
+            },
+                { data: 'trx_no', name: 'trx_no' },
+                { data: 'trx_date', name: 'trx_date' },
+                { data: 'supplier_id', name: 'supplier_id' },
+                { data: 'ticket_no', name: 'ticket_no' },
+                { data: 'weight', name: 'weight' },
+                { data: 'actions', name: 'actions', orderable: false, searchable: false },
+            ],
+
+            columnDefs: [
+                { "orderable": false, "targets": [1, 2, 3, 4] },
+            ],
+            aaSorting: [
+                [0, 'DESC']
+            ],
+        });
+
+          $(document).on('click','#edit-transaction-btn',function(){
+
+       $('#transactionEditModal').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        // alert(encrypted_id);
+                var action = ADMINURL+'/transactions/'+ encrypted_id +'/edit';
+
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            success:function(response){
+                if(response.status == 'success'){
+                    $("#TRXDateInput").val(response.data.trx_date);
+                    $('#trxNoInput').val(response.data.trx_no);
+                    $('#SupplierInput').val(response.data.supplier_id);       
+                    $('#ticketNoInput').val(response.data.ticket_no);       
+                    $('#wieghtMtInput').val(response.data.weight);       
+                    $('#hidden_id').val(encrypted_id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            }
+        });
+    });
+
+    // For generatig TRX number
+    $('#transactionModal').on('shown.bs.modal', function () {
+            var modal = $(this);
+            var generateTrxUrl = modal.data('generate-trx-url');
+
+            function fetchTrxNumber() {
+                $.ajax({
+                    url: generateTrxUrl,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        $('#trxNo').val(response.trx_no);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error generating TRX No:', error);
+                    }
+                });
+            }
+
+            fetchTrxNumber();
+
+            $('#TRXDate').off('change').on('change', function () {
+                fetchTrxNumber();
+            });
+        });
+
+        // For generating ticket number
+       $(document).on('shown.bs.modal', '[data-generate-ticket-url]', function () {
+    var modal = $(this);
+    var generateTicketUrl = modal.data('generate-ticket-url');
+
+    $.ajax({
+        url: generateTicketUrl,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response); // check in DevTools console
+            modal.find('.auto-ticket-number').val(response.ticket_no);
+        },
+        error: function () {
+            console.warn('Failed to generate Ticket Number');
+        }
+    });
+});
+
+
+
+        
+        // ************** Deduction Repors ********************
+
+        var action = ADMINURL + '/deduction-reports/getRcords';
+
+        $('#DeductionReportsListing').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: action,
+                    type: "GET",
+                    dataSrc: function (json) {
+                        $('#grandTransport').html('<strong>' + json.grandTotals.transport + '</strong>');
+                        $('#grandAdvance').html('<strong>' + json.grandTotals.advance + '</strong>');
+                        $('#grandOthers').html('<strong>' + json.grandTotals.others + '</strong>');
+
+                        return json.data;
+                    }
+                },
+                columns: [
+                    { data: 'date' },
+                    { data: 'supplier_id' },
+                    { data: 'supplier_name' },
+                    { data: 'transport' },
+                    { data: 'advance' },
+                    { data: 'others' },
+                    { data: 'remark' },
+                ],
+                order: [[1, 'asc'], [0, 'asc']],
+            });
+
+     // ************** End Deduction Repors ********************
+
+ 
+      
+       // ************** Supplies Details Listing ********************
+
+        var actionUrl = ADMINURL + '/supplies-details/getRecords';
+
+       window.table1 = $('#SuppliesDetails').DataTable({
+            processing: true,
+            serverSide: true,
+            searching: false, 
+            info: false,
+            ajax: {
+                url: actionUrl,
+                type: 'GET',
+                data: function (d) {
+                    d.start_date = $('#startDate').val();
+                    d.end_date = $('#endDate').val();
+                    d.supplier_id = $('#selectSupplier').val();
+                }
+            },
+            columns: [
+                { data: 'supplier_id' },
+                { data: 'vehicle' },
+                { data: 'date' },
+                { data: 'ticket_no' },
+                ...allMills.map(mill => ({
+                    data: 'mill_' + mill.id,
+                    orderable: false,
+                    searchable: false
+                })),
+                { data: 'total_weight' }
+            ],
+            drawCallback: function (settings) {
+                const grandTotals = settings.json.grandTotals;
+
+                const startDate = $('#startDate').val();
+                const endDate = $('#endDate').val();
+                const supplierId = $('#selectSupplier').val();
+
+                if ((startDate || endDate || supplierId) && grandTotals) {
+                    let footerHtml = `
+                        <tr>
+                            <th colspan="4" style="text-align:right">Grand Total:</th>
+                            ${allMills.map(mill => `<th>${grandTotals['mill_' + mill.id]}</th>`).join('')}
+                            <th>${grandTotals.total_weight}</th>
+                        </tr>`;
+                    $('#SuppliesDetails tfoot').html(footerHtml);
+                } else {
+                    $('#SuppliesDetails tfoot').html('');
+                }
+                if (!startDate && !endDate && !supplierId) {
+                $('#SuppliesDetails tbody').html('');
+            }
+            }
+        });
+
+     // ************** End Supplies Details Listing ********************
+
+
+       // ************** Supplies Summary Listing ********************
+
+        var actionUrl1 = ADMINURL + '/supplies-summary/getRecords';
+
+
+        window.table = $('#SuppliesSummary').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: actionUrl1,
+                type: 'GET',
+                data: function (d) {
+                    d.start_date = $('#startDate').val();
+                    d.end_date = $('#endDate').val();
+                    d.supplier_id = $('#selectSupplier').val();
+                }
+            },
+            columns: [
+                { data: 'supplier_id' },
+                ...allMills.map(mill => ({
+                    data: 'mill_' + mill.id,
+                    orderable: false,
+                    searchable: false
+                })),
+                { data: 'total_weight' }
+            ],
+            drawCallback: function (settings) {
+                const grandTotals = settings.json.grandTotals;
+                if (grandTotals) {
+                    let footerHtml = `
+                        <tr>
+                            <th>Totals</th>
+                            ${allMills.map(mill => `<th>${grandTotals['mill_' + mill.id]}</th>`).join('')}
+                            <th>${grandTotals.total_weight}</th>
+                        </tr>`;
+                    $('#SuppliesSummary tfoot').html(footerHtml);
+                }
+            }
+        });
+
+     // ************** End Supplies Summary Listing ********************
+
 
 });

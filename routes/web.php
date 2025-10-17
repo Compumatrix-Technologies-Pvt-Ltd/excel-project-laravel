@@ -1,10 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AnalysisController;
 use App\Http\Controllers\Admin\BankController;
+use App\Http\Controllers\Admin\ConsolidatedFFBController;
+use App\Http\Controllers\Admin\DeductionController;
 use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\SuppliesController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\AuthCheck;
@@ -22,6 +28,9 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CommonController;
+use App\Http\Controllers\Admin\MasterController;
+use App\Http\Controllers\Admin\BranchController;
+use App\Http\Controllers\Admin\RolesController;
 
 
 
@@ -49,8 +58,12 @@ Route::get('terms-conditions', [HomeController::class, 'termsConditions'])->name
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login')->middleware('guest');
 Route::get('/register', [LoginController::class, 'register'])->name('register')->middleware('guest');
 Route::get('/register2', [LoginController::class, 'register2'])->name('register2')->middleware('guest');
-Route::get('/email-verification', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
+Route::get('/email-verification/{id}', [LoginController::class, 'emailVerification'])->name('email.verification')->middleware('guest');
 Route::get('/verification-success', [LoginController::class, 'verificationSuccess'])->name('verification.success')->middleware('guest');
+Route::post('/set-year-month', [LoginController::class, 'store'])->name('set.year.month');
+Route::post('/verify-email', [LoginController::class, 'registerSubmit'])->name('verify.email');
+Route::post('/verify-otp/{id}', [LoginController::class, 'verifyOtp'])->name('verify.otp');
+Route::post('/resend-otp/{id}', [LoginController::class, 'resendOtp'])->name('resend.otp');
 
 
 Route::post('admin/checkLogin', [LoginController::class, 'checkLogin'])->name('admin.checkLogin');
@@ -70,7 +83,14 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
 
     Route::resource('users', AdminUserController::class)->names('users');
-    Route::get('branches', [AdminUserController::class, 'branchIndex'])->name('branches.index');
+    Route::put('users/update', [AdminUserController::class, 'update'])->name('user.update');
+
+
+    # Manage Roles
+    Route::get('roles/getRecords', [RolesController::class, 'getRecords']);
+    Route::put('roles-update', [RolesController::class, 'updateRole'])->name('roles.updateRole');
+    Route::resource('roles', RolesController::class);
+
 
     // Mill Routes
     Route::get('mill-management', [MillController::class, 'index'])->name('mill.management');
@@ -78,6 +98,12 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('mill/edit/{id}', [MillController::class, 'edit'])->name('mill.edit');
     Route::put('mill/update', [MillController::class, 'update'])->name('mill.update');
     Route::delete('mill/destroy/{id}', [MillController::class, 'destroy'])->name('mill.destroy');
+
+
+    // Branch Routes
+    Route::put('update-branch', [BranchController::class, 'update'])->name('update-branch');
+    Route::resource('branch', BranchController::class);
+
 
     // Bank Routes
     Route::get('banks', [BankController::class, 'index'])->name('banks.index');
@@ -87,37 +113,75 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::delete('banks/destroy/{id}', [BankController::class, 'destroy'])->name('banks.destroy');
 
 
+    Route::post('transaction-data-entry-form', [MasterController::class, 'index'])->name('transaction.data.entry.form');
+
+
     // Suppliers Route
     Route::get('suppliers/getRecords', [SupplierController::class, 'getRecords'])->name('suppliers.getRecords');
 
     Route::resource('suppliers', SupplierController::class)->names('suppliers');
-    Route::post('suppliers/import', [SupplierController::class,'importSuppliers'])->name('suppliers.import');
+    Route::post('suppliers/import', [SupplierController::class, 'importSuppliers'])->name('suppliers.import');
+    Route::post('suppliers/export', [SupplierController::class, 'exportSuppliers'])->name('suppliers.export');
 
     Route::get('suppliers-gps-list', [AdminUserController::class, 'suppliersGpsList'])->name('suppliersGps.index');
+
+    // Deduction Routes
+    Route::get('deductions/getRecords', [DeductionController::class, 'getRecords'])->name('deductions.getRecords');
+    Route::get('deduction-reports/getRcords', [DeductionController::class, 'deductionReporGetRecords'])->name('deductions.report.getRecords');
+   
+    Route::get('deduction-reports', [DeductionController::class, 'deductionReportIndex'])->name('deductions.report.index');
+
+    Route::resource('deductions', DeductionController::class)->names('deductions');
+
+    // Vehicle Management
+    Route::resource('vehicles', VehicleController::class)->names('vehicles');
+    Route::put('vehicles/update', [VehicleController::class, 'update'])->name('vehicle.update');
+
+    // Transaction Management
+    Route::get('transaction-management', [TransactionController::class, 'hqTransactionIndex'])->name('transaction.management');
+    Route::get('transactions/getRecords/hq', [TransactionController::class, 'getRecordsHq'])->name('transactions.getRecordsHq');
+    Route::get('transactions/getRecords', [TransactionController::class, 'getRecords'])->name('transactions.getRecords');
+
+    // Generate TRX and Ticket number
+    Route::get('generate-trx-number', [TransactionController::class, 'generateTrxNumber'])->name('generate.trx.number');
+    Route::get('generate-ticket-number', [TransactionController::class, 'generateTicketNumber'])->name('generate.ticket.number');
+
+
+    Route::resource('transactions', TransactionController::class)->names('transactions');
+    Route::put('transactions/update', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::put('transactions/hq/update', [TransactionController::class, 'update'])->name('transactionshq.update');
+
+
 
     // HQ- Suppliers
     Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
 
 
     // Supplies
-    Route::get('supplies-details', [AdminUserController::class, 'suppliesDetails'])->name('supplies.details.index');
-    Route::get('supplies-summary', [AdminUserController::class, 'suppliesSummary'])->name('supplies.summary.index');
-    Route::get('supplies-analysis', [AdminUserController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+    Route::get('supplies-details', [SuppliesController::class, 'suppliesDetails'])->name('supplies.details.index');
+    Route::get('supplies-details/getRecords', [SuppliesController::class, 'getSuppliesRecords'])->name('supplies.details.getSuppliesRecords');
+    Route::get('supplies-details/pdf', [SuppliesController::class, 'generateSuppliesPdf'])->name('supplies.details.generatePDF');
+    Route::get('supplies-summary', [SuppliesController::class, 'suppliesSummary'])->name('supplies.summary.index');
+    Route::get('supplies-summary/getRecords', [SuppliesController::class, 'suppliesSummaryGetRecords'])->name('supplies.summary.getRecords');
+    Route::get('supplies-summary/pdf', [SuppliesController::class, 'generateSuppliesSummaryPdf'])->name('supplies.summary.generatePDF');
 
+    // Ananlysis Module Routes
 
-    Route::get('transactions', [AdminUserController::class, 'transactionIndex'])->name('transactions.index');
-    Route::get('deductions', [AdminUserController::class, 'deductionIndex'])->name('deductions.index');
-    Route::get('deduction-reports', [AdminUserController::class, 'deductionReportIndex'])->name('deductions.report.index');
+    Route::get('supplies-analysis', [AnalysisController::class, 'suppliesAnalysis'])->name('supplies.analysis.index');
+    Route::get('supplies-analysis/getRecords', [AnalysisController::class, 'suppliesAnalysisGetRecords'])->name('supplies.analysis.getRecords');
+    Route::get('supplies-analysis/pdf', [AnalysisController::class, 'generateSuppliesAnalysisPDF'])->name('supplies.analysis.generatePDF');
+
     Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
     Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
     Route::get('purchase-analysis', [AdminUserController::class, 'purchaseAnalysisIndex'])->name('purchaseAnalysis.index');
 
+    Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
+    
     Route::get('payments', [CommonController::class, 'paymentIndex'])->name('payments.index');
     Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
     Route::get('cash-purchase-list', [CommonController::class, 'cashPurchaseList'])->name('cash.purchase.list');
     Route::get('cash-purchase-summary', [CommonController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
     Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
-    Route::get('transaction-management', [CommonController::class, 'hqTransactionIndex'])->name('transaction.management');
     Route::get('sales-invoice', [CommonController::class, 'salesInvoice'])->name('sales.invoice');
     Route::get('supplier-cash-bill', [CommonController::class, 'supplierCashBill'])->name('supplier.cash.bill');
 
@@ -127,29 +191,49 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('emails-sms-edit/{id}', [CommonController::class, 'emailsAndSmsEdit'])->name('emails.and.sms.edit');
     Route::get('cms-pages', [CommonController::class, 'cmsPages'])->name('cms.pages');
     Route::get('cms-pages-edit/{id}', [CommonController::class, 'cmsPagesEdit'])->name('cms.pages.edit');
-    Route::get('roles', [CommonController::class, 'roles'])->name('roles.index');
     Route::get('audit-logs', [CommonController::class, 'auditLogs'])->name('audit.logs.index');
     Route::get('impersonation-console', [CommonController::class, 'impersonationConsole'])->name('impersonation.console.index');
     Route::get('security-settings', [CommonController::class, 'securitySettings'])->name('security.settings.index');
 
 
     // Consolidated FFB Routes(HQ)
-    Route::get('yearly-cash-credit', [AdminUserController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
-    Route::get('credit/purchase', [AdminUserController::class, 'creditPurchase'])->name('credit.purchase.index');
-    Route::get('cash/purchase', [AdminUserController::class, 'cashPurchase'])->name('cash.purchase.index');
-    Route::get('purchase-salse', [AdminUserController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+    Route::get('yearly-cash-credit', [ConsolidatedFFBController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
+    Route::get('yearly-cash-credit/getRecords', [ConsolidatedFFBController::class, 'getYearlyCashCreditRecords'])->name('YearlyCashCredit.getRecords');
 
-    // Master Module route
+    Route::get('credit/purchase', [ConsolidatedFFBController::class, 'creditPurchase'])->name('credit.purchase.index');
+    Route::get('credit/purchase/getRecords', [ConsolidatedFFBController::class, 'creditPurchaseRecords'])->name('credit.purchase.getRecords');
 
-    Route::get('main', [AdminUserController::class, 'mainForm'])->name('mainForm.index');
-    Route::get('hq-main', [AdminUserController::class, 'HQmainForm'])->name('hqMainForm.index');
+    Route::get('cash/purchase', [ConsolidatedFFBController::class, 'cashPurchase'])->name('cash.purchase.index');
+    Route::get('purchase-salse', [ConsolidatedFFBController::class, 'purchaseSalse'])->name('purchaseSalse.index');
+
+
+
+    // Master Module route branch
+
+    Route::get('main', [MasterController::class, 'mainForm'])->name('mainForm.index');
+
+
+    // Master Module Route HQ
+    Route::get('hq-main', [MasterController::class, 'HQmainForm'])->name('hqMainForm.index');
+    Route::post('hq-main/getValues', [MasterController::class, 'getDropDownValues'])->name('hqMainForm.getValues');
+    Route::post('hq-main/getAllDetails', [MasterController::class, 'getAllDetails'])->name('hqMainForm.getAllDetails');
+    Route::post('supplier/edit/{id}', [MasterController::class, 'editSupplier'])->name('supplier.editSupplier');
+    Route::put('suppliers/update/main', [SupplierController::class, 'update1'])->name('supplier.update');
 
 
 
     #Update Profile
     Route::get('update-profile', [ProfileController::class, 'editProfile'])->name('editProfile');
     Route::put('/profile/{encid}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/company/{encid}', [ProfileController::class, 'companyUpdate'])->name('company.update');
     Route::get('/update-password', [ProfileController::class, 'updatePassword'])->name('updatePassword');
     Route::put('user-update-password/{encid}', [ProfileController::class, 'storeUpdatedPassword'])->name('storeUpdatePassword');
+
+
+    Route::post('ffb_transaction', [MasterController::class, 'storeFFBTransaction'])->name('ffb.transaction.store');
+    Route::get('get-supplier-details/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetails'])->name('ffb.transaction.getSupplierDetails');
+    Route::get('get-supplier-details-main/{supplier_id}/{type}', [MasterController::class, 'getSupplierDetailsMain'])->name('ffb.transaction.getSupplierDetailsMain');
+    Route::post('branch-main/getValues', [MasterController::class, 'getBranchSupplierDropDownValues'])->name('branch.main.getValues');
+
 
 });

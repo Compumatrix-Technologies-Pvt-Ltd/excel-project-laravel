@@ -71,11 +71,11 @@ class CommonController extends Controller
     //     $this->ViewData['moduleAction'] = "Mill Management";
     //     return view('admin.mill.index', $this->ViewData);
     // }
-    public function hqTransactionIndex(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "HQ Transactions";
-        return view('admin.daily-transactions.hq-index', $this->ViewData);
-    }
+    // public function hqTransactionIndex(Request $request)
+    // {
+    //     $this->ViewData['moduleAction'] = "HQ Transactions";
+    //     return view('admin.daily-transactions.hq-index', $this->ViewData);
+    // }
     public function salesInvoice(Request $request)
     {
         $this->ViewData['moduleAction'] = "Sales Invoice";
@@ -116,11 +116,7 @@ class CommonController extends Controller
         $this->ViewData['moduleAction'] = "CMS Pages Edit";
         return view('admin.cms.cms-edit', $this->ViewData);
     }
-    public function roles(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Roles";
-        return view('admin.audit.index', $this->ViewData);
-    }
+    
     public function auditLogs(Request $request)
     {
         $this->ViewData['moduleAction'] = "Audit Logs";

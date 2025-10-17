@@ -2,13 +2,7 @@
 namespace App\Helpers;
 use Auth;
 use DB;
-use App\Models\OrderProductsPackagingInfo;
-use App\Models\SubCategoryModel;
-use App\Models\SubSubCategoriesModel;
-use App\Models\CompanySignboardImagesModel;
-use App\Models\CompanySnapshotImagesModel;
-use App\Models\OrderVariantValue;
-use App\Models\ProductVariationsRelationModel;
+
 use Storage;
 
 class Helper{
@@ -172,74 +166,13 @@ class Helper{
         }
         return $response;
     }
+    
 
-    public static function returnPackagingType($main_relation_id ){
-        $ObjProductPackagingType = OrderProductsPackagingInfo::with(['ProductsPackagingTypeRelatioInfo'])
-        ->where('main_relation_id', $main_relation_id)
-        ->get();
-        return  $ObjProductPackagingType;
 
-        // foreach ($ObjProductPackagingType as $key => $val) {
-        //     $html='<div class="row product-packaging mt-2">
-        //             <div class="col-md-5 offset-md-1">
-        //                 <label class="form-label">Packaging Type <span class="text-danger">*</span></label>
-        //                 <input type="text" class="form-control" value="' . $val->ProductsPackagingTypeRelatioInfo->packagingInfo->name . '" readonly>
-        //                 <input type="hidden" name="products['.$index.'}}][packaging_relation_id]['.$key.']" value="'.$val->packaging_relation_id.'">
-        //             </div>
-        //             <div class="col-md-5">
-        //                 <label class="form-label">Packaging Value Type <span class="text-danger">*</span></label>
-        //                 <input type="text" name="products['.$index.'][packaging_value]['.$key.']" class="form-control" value=".'.$val->packaging_value.'">
-        //             </div>
-        //         </div>';
-        // }
-        // return  $html;
-    }
-    public static function getSubCategory($main_category_id){
-        return SubCategoryModel::where('cat_id',$main_category_id)->get();
-    }
-    public static function getSubSubCategory($sub_category_id){
-        return SubSubCategoriesModel::where('sub_cat_id',$sub_category_id)->get();
-    }
-    static function companySignboardImageDelete($encID, $strImageName)
-    {
-        $intID = base64_decode(base64_decode($encID));
-        $strImageName = base64_decode(base64_decode($strImageName));
-        $objImage = CompanySignboardImagesModel::find($intID);
-        if ($objImage) {
-            $deleted = CompanySignboardImagesModel::where("id", $intID)->delete();
-            $path = 'company-logos/' . $strImageName;
-            if (Storage::exists($path)) {
-                Storage::delete($path);
-            }
-            if ($deleted) {
-                return ['status' => 'success', 'msg' => 'Image deleted successfully.'];
-            }
-        }
-        return ['status' => 'error', 'msg' => 'Image not found or deletion failed.'];
-    }
-    static function companySnapshotImageDelete($encID,$strImageName,$dependency)
-    {
-        $intID = base64_decode(base64_decode($encID));
-        $strImageName = base64_decode(base64_decode($strImageName));
-        $objImage = CompanySnapshotImagesModel::find($intID);
-        if (isset($objImage)) {
-            $deleted = CompanySnapshotImagesModel::where("id", $intID)->delete();
-            $path = 'snapshot-file/';
-            $strImage = $path . $strImageName;
-            if (Storage::exists($strImage)) {
-                Storage::delete($strImage);
-            }
-            if ($deleted) {
-                return ['status' => 'success', 'msg' => 'Image deleted successfully.'];
-            }
-        }
-        return ['status' => 'error', 'msg' => 'Image not found or deletion failed.'];
-    }
-    public static function getProductVariantValues($product_id,$variant_id){
-        return ProductVariationsRelationModel::with('variantValueInfo')->where('product_id',$product_id)->where('variant_id',$variant_id)->get();
-    }
-    public static function getOrderVariantValues($order_details_id){ 
-        return OrderVariantValue::where('order_details_id',$order_details_id)->with('variantValues')->pluck('variant_value_id')->toArray();
-    }
+
+ 
+
+    
+    
 }
 ?>

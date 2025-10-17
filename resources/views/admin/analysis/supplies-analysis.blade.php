@@ -24,15 +24,14 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex justify-content-between">
-                    <h4 class="card-title mb-0 flex-grow-1">FFB Supplies By [ Supplier ] For The Year [ 2025 ] </h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Supplies Analysis</h4>
                     <div class="card-toolbar">
                         <button type="button" id="PreviewPdf" data-bs-toggle="modal" data-bs-target="#suppliesAnalysis"
                             class="btn btn-warning btn-label waves-effect waves-light">
                             <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
                         </button>
-                        <button type="button" id="CreatePdf" data-bs-toggle="modal" data-bs-target="#suppliesAnalysis"
-                            class="btn btn-primary btn-label waves-effect waves-light">
-                            <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create PDF
+                        <button type="button" class="btn btn-info btn-label waves-effect waves-light">
+                            <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
                         </button>
                         <div id="suppliesAnalysis" class="modal fade" tabindex="-1" aria-labelledby="suppliesAnalysisLabel"
                             aria-hidden="true" style="display: none;">
@@ -49,41 +48,45 @@
                                             <div class="row mt-3">
                                                 <label for="selectYear" class="form-label">Year</label>
                                                 <select id="selectYear" class="form-select">
-                                                    <option value="">--Year--</option>
                                                     @for ($i = date('Y'); $i >= 2000; $i--)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                        <option value="{{ $i }}" {{ $i == date('Y') ? 'selected' : '' }}>{{ $i }}
+                                                        </option>
                                                     @endfor
                                                 </select>
                                                 <div class="col-md-12 mt-3">
                                                     <fieldset class="border rounded-3 p-3">
                                                         <legend class="float-none w-auto px-2 small fw-bold">Analysis Based
                                                             On</legend>
+
                                                         <div class="form-check form-radio-primary mb-2">
                                                             <input class="form-check-input" type="radio"
-                                                                name="licence_expiry" id="" value="" checked>
-                                                            <label class="form-check-label"
-                                                                for="mpobExpired">Supplier</label>
+                                                                name="analysis_type" value="supplier" checked>
+                                                            <label class="form-check-label">Supplier</label>
                                                         </div>
+
                                                         <div class="form-check form-radio-primary mb-2">
                                                             <input class="form-check-input" type="radio"
-                                                                name="licence_expiry" id="" value="">
-                                                            <label class="form-check-label" for="mspoExpired">Mill</label>
+                                                                name="analysis_type" value="mill">
+                                                            <label class="form-check-label">Mill</label>
                                                         </div>
                                                     </fieldset>
+
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-light"
+                                                <button type="button" class="btn btn-danger waves-effect waves-light"
                                                     data-bs-dismiss="modal">Close</button>
 
-                                                <button type="button" id="showPdfBtn" class="btn btn-success">Show
+                                                <button type="button" id="showPdfBtn"
+                                                    class="btn btn-warning btn-label waves-effect waves-light">
+                                                    <i class="ri-eye-fill label-icon align-middle fs-16 me-2"></i>Preview
+                                                    PDF</button>
+                                                <button type="button" id="createPdfBtn"
+                                                    class="btn btn-primary btn-label waves-effect waves-light">
+                                                    <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i>
+                                                    Create
                                                     PDF</button>
 
-                                                <a id="createPdfBtn"
-                                                    href="{{ asset('storage/app/public/supplies-analysis-pdf/HQ_analysis_PDF.pdf') }}"
-                                                    download="HQ_analysis_PDF.pdf" class="btn btn-success">
-                                                    Create PDF
-                                                </a>
                                             </div>
                                         </form>
                                     </div>
@@ -94,22 +97,10 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-md-3">
-                            <label for="selectYear" class="form-label">Year</label>
-                            <select id="selectYear" class="form-select">
-                                <option value="">--Year--</option>
-                                @for ($i = date('Y'); $i >= 2000; $i--)
-                                    <option value="{{ $i }}">{{ $i }}</option>
-                                @endfor
-                            </select>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="button" class="btn btn-info btn-label waves-effect waves-light">
-                                <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
-                            </button>
-                        </div>
-                    </div>
+
+                    <h6 id="dynamicHeading" style="text-align:center; font-weight:bold;">
+                        FFB Supplies By [ Supplier ] For The Year [ {{ date('Y') }} ]
+                    </h6>
                     <div class="container-fluid mt-4">
                         <div class="table-responsive">
                             <table id="SuppliesAnalysisListing" class="table nowrap dt-responsive align-middle"
@@ -132,188 +123,8 @@
                                         <th>Total(M/Ton)</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Emasawit</td>
-                                        <td>197.19</td>
-                                        <td>187.94</td>
-                                        <td>178.56</td>
-                                        <td>339.74</td>
-                                        <td>500.22</td>
-                                        <td>636.60</td>
-                                        <td>511.68</td>
-                                        <td>78.46</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>2,630.39</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Equistar</td>
-                                        <td>163.50</td>
-                                        <td>212.78</td>
-                                        <td>292.99</td>
-                                        <td>266.78</td>
-                                        <td>47.92</td>
-                                        <td>106.70</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,090.67</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fazley</td>
-                                        <td>3.29</td>
-                                        <td>0.00</td>
-                                        <td>3.81</td>
-                                        <td>1.93</td>
-                                        <td>2.38</td>
-                                        <td>3.21</td>
-                                        <td>2.39</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>17.06</td>
-                                    </tr>
-                                    <tr>
-                                        <td>HSKE</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>125.74</td>
-                                        <td>301.85</td>
-                                        <td>342.86</td>
-                                        <td>35.94</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>806.39</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Habajaya</td>
-                                        <td>15.20</td>
-                                        <td>14.18</td>
-                                        <td>14.64</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>44.02</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Harus Hijau</td>
-                                        <td>71.54</td>
-                                        <td>183.12</td>
-                                        <td>228.98</td>
-                                        <td>193.52</td>
-                                        <td>34.92</td>
-                                        <td>140.12</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>852.20</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Koh</td>
-                                        <td>746.10</td>
-                                        <td>404.62</td>
-                                        <td>747.93</td>
-                                        <td>1,127.19</td>
-                                        <td>689.10</td>
-                                        <td>445.58</td>
-                                        <td>1,077.59</td>
-                                        <td>93.06</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>5,331.17</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kump.Sawit</td>
-                                        <td>0.00</td>
-                                        <td>76.64</td>
-                                        <td>47.32</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>123.96</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Natural Vista</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>66.64</td>
-                                        <td>299.64</td>
-                                        <td>19.52</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>385.80</td>
-                                    </tr>
-                                    <tr>
-                                        <td>PL Sawit</td>
-                                        <td>109.59</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>91.84</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>201.43</td>
-                                    </tr>
-
-                                </tbody>
-
-                                <tfoot class="table-light fw-bold">
-                                    <td>31</td>
-                                    <td>6,953.86</td>
-                                    <td>6,777.03</td>
-                                    <td>0.00</td>
-                                    <td>9,136.65</td>
-                                    <td>10,729.56</td>
-                                    <td>11,534.09</td>
-                                    <td>10,796.47</td>
-                                    <td>9,948.35</td>
-                                    <td>635.72</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td>0.00</td>
-                                    <td>66,511.73</td>
-                                </tfoot>
-
-
+                                <tbody></tbody>
+                                <tfoot></tfoot>
                             </table>
                         </div>
                         <!--end row-->
@@ -327,8 +138,6 @@
 
 @endsection
 
-
-
 @section('scripts')
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
@@ -338,26 +147,87 @@
 
     <script>
         $(document).ready(function () {
-            $('#SuppliesAnalysisListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true,
+
+            var action = ADMINURL + '/supplies-analysis/getRecords';
+
+            window.table = $('#SuppliesAnalysisListing').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: action,
+                    data: function (d) {
+                        d.year = $('#selectYear').val();
+                        d.type = $('input[name="analysis_type"]:checked').val();
+                    }
+                },
+                columns: [
+                    { data: 'supplier', title: 'Supplier' },
+                    { data: 'month_1', title: 'Jan' },
+                    { data: 'month_2', title: 'Feb' },
+                    { data: 'month_3', title: 'Mar' },
+                    { data: 'month_4', title: 'Apr' },
+                    { data: 'month_5', title: 'May' },
+                    { data: 'month_6', title: 'Jun' },
+                    { data: 'month_7', title: 'Jul' },
+                    { data: 'month_8', title: 'Aug' },
+                    { data: 'month_9', title: 'Sep' },
+                    { data: 'month_10', title: 'Oct' },
+                    { data: 'month_11', title: 'Nov' },
+                    { data: 'month_12', title: 'Dec' },
+                    { data: 'total', title: 'Total (M/Ton)' }
+                ],
+                drawCallback: function (settings) {
+                    const grandTotals = settings.json.grandTotals;
+
+                    if (grandTotals) {
+                        let footerHtml = `
+                                    <tr>
+                                        <th>Total</th>
+                                        ${[...Array(12)].map((_, i) =>
+                            `<th>${grandTotals['month_' + (i + 1)] ?? '0.00'}</th>`
+                        ).join('')}
+                                        <th>${grandTotals.total ?? '0.00'}</th>
+                                    </tr>
+                                `;
+
+                        $('#SuppliesAnalysisListing tfoot').html(footerHtml);
+                    }
+                }
+
             });
 
-            $('#showPdfBtn').on("click", function () {
-                let url = "{{ asset('storage/app/public/supplies-analysis-pdf/HQ_analysis_PDF.pdf') }}";
+            $('#selectYear, input[name="analysis_type"]').change(function () {
+
+                window.table.ajax.reload();
+
+                let selectedYear = $('#selectYear').val();
+                let analysisType = $('input[name="analysis_type"]:checked').val();
+                $('#dynamicHeading').html(
+                    `FFB Supplies Details For Supplier = [ ${supplierText} ] From [ ${startDate} ] To [ ${endDate} ]`
+                );
+            });
+            $('#showPdfBtn').on('click', function () {
+                let selectedYear = $('#selectYear').val();
+                let analysisType = $('input[name="analysis_type"]:checked').val();  // supplier or mill
+
+                let url = "{{ route('admin.supplies.analysis.generatePDF') }}" +
+                    `?year=${selectedYear}&type=${analysisType}&preview=1`;
+
                 window.open(url, '_blank');
             });
 
-            $('#PreviewPdf').on("click", function () {
-                $('#showPdfBtn').show();
-                $('#createPdfBtn').hide();
+            $('#createPdfBtn').on('click', function () {
+                let selectedYear = $('#selectYear').val();
+                let analysisType = $('input[name="analysis_type"]:checked').val();
+
+                let url = "{{ route('admin.supplies.analysis.generatePDF') }}" +
+                    `?year=${selectedYear}&type=${analysisType}`;
+
+                window.open(url, '_blank');
             });
-            $('#CreatePdf').on("click", function () {
-                $('#createPdfBtn').show();
-                $('#showPdfBtn').hide();
-            });
+
         });
+
     </script>
 
 @endsection

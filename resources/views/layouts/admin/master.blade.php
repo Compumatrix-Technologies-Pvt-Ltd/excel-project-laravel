@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="d-flex align-items-center">
-                            <strong>Company Name:</strong> <h6 class="mb-sm-0 ml-5 text-primary"> LKS Commodities SDN BHD</h6>
+                            <strong>Company Name: </strong> <h6 class="mb-sm-0 ml-5 text-primary"> {{ optional(auth()->user()->company)->name }} </h6>
 
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <button type="button"

@@ -34,11 +34,7 @@
                             class="btn btn-warning btn-label waves-effect waves-light">
                             <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
                         </button>
-                        <a href="{{ asset('storage/app/public/supplies-details-pdf/FFB_Supplies_Details_List.pdf') }}"
-                            class="btn btn-primary btn-label waves-effect waves-light"
-                            download="FFB_Supplies_Details_List.pdf">
-                            <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create PDF
-                        </a>
+
                         <div id="suppliesDetails" class="modal fade" tabindex="-1" aria-labelledby="suppliesDetailsLabel"
                             aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-lg">
@@ -54,13 +50,13 @@
                                             <div class="row">
 
                                                 <div class="col-md-12">
-                                                    <label for="selectMonth" class="form-label">Supplier</label>
-                                                    <select id="selectMonth" class="form-select">
+                                                    <label for="selectSupplier" class="form-label">Supplier</label>
+                                                    <select id="selectSupplier" class="form-select">
                                                         <option value="">Select Supplier</option>
-                                                        <option>WJ</option>
-                                                        <option>ACH</option>
-                                                        <option>Aplas</option>
-                                                        <option>Arunamari</option>
+                                                        @foreach ($Suppliers as $supplier)
+                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
                                                 <small><strong>Wira Jayamas Sdn Bhd 201101027032 (955167-P)</strong></small>
@@ -75,10 +71,18 @@
                                             </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger waves-effect waves-light"
+                                            data-bs-dismiss="modal">Close</button>
 
-                                        <button type="button" id="showPdfBtn" class="btn btn-success">Show
+                                        <button type="button" id="showPdfBtn"
+                                            class="btn btn-warning btn-label waves-effect waves-light">
+                                            <i class="ri-eye-fill label-icon align-middle fs-16 me-2"></i>Preview
                                             PDF</button>
+                                        <button type="button" id="createPdfBtn"
+                                            class="btn btn-primary btn-label waves-effect waves-light">
+                                            <i class="mdi mdi-file-pdf-box label-icon align-middle fs-16 me-2"></i> Create
+                                            PDF</button>
+
                                     </div>
                                     </form>
                                 </div>
@@ -88,7 +92,26 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="container-fluid">
+                    {{-- <div class="row g-3">
+                        <div class="col-md-5">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" id="startDate" class="form-control">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" id="endDate" class="form-control">
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="button" class="btn btn-info btn-label waves-effect waves-light">
+                                <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
+                            </button>
+                        </div>
+                    </div> --}}
+                    <h6 id="dynamicHeading" style="text-align:center; font-weight:bold;">
+                        FFB Supplies Details
+                    </h6>
+                    <div class="container-fluid mt-4">
                         <div class="row">
                             <table id="SuppliesDetails" class="table table-bordered nowrap dt-responsive align-middle"
                                 style="width:100%">
@@ -98,58 +121,21 @@
                                         <th rowspan="2">Vehicle</th>
                                         <th rowspan="2">TRX Date</th>
                                         <th rowspan="2">Ticket No</th>
-                                        <th colspan="5" style="text-align:center;">Palm Oil Mills</th>
-                                        <th rowspan="2">Total Weight(MT)</th>
+
+                                        <th colspan="{{ $allMills->count() }}" style="text-align:center">Palm Oil Mills</th>
+
+                                        <th rowspan="2">Total Weight (MT)</th>
                                     </tr>
                                     <tr>
-                                        <th>LCH</th>
-                                        <th>Mill 2</th>
-                                        <th>Mill 3</th>
-                                        <th>Mill 4</th>
-                                        <th>Mill 5</th>
+                                        @foreach ($allMills as $mill)
+                                            <th>{{ $mill->name }}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>WJ</td>
-                                        <td>SAA3380K</td>
-                                        <td>14-Aug-2025</td>
-                                        <td>T047402</td>
-                                        <td>15.28</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>15.28</td>
-                                    </tr>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
 
-                                </tbody>
-                                <tfoot class="table-light">
-                                    <tr class="fw-bold">
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>- Total -</td>
-                                        <td>15.28</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>15.28</td>
-                                    </tr>
-                                    <tr class="fw-bold">
-                                        <td>1</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>- G. Total -</td>
-                                        <td>15.28</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>15.28</td>
-                                    </tr>
-                                </tfoot>
+
                             </table>
                         </div><!--end row-->
                     </div>
@@ -163,24 +149,51 @@
 @endsection
 
 @section('scripts')
+
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
+    <script>
+        const allMills = @json($allMills);
+    </script>
 
     <script>
         $(document).ready(function () {
-            $('#SuppliesDetails').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
+            $('#startDate, #endDate, #selectSupplier').change(function () {
+                window.table1.ajax.reload();
+                let supplierText = $('#selectSupplier option:selected').text() || 'All Suppliers';
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+
+                $('#dynamicHeading').html(
+                    `FFB Supplies Details For Supplier = [ ${supplierText} ] From [ ${startDate} ] To [ ${endDate} ]`
+                );
             });
 
-            $('#showPdfBtn').on("click", function () {
-                let url = "{{ asset('storage/app/public/supplies-details-pdf/FFB_Supplies_Details_List.pdf') }}";
+            $('#showPdfBtn').on('click', function () {
+                let supplierId = $('#selectSupplier').val();
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+
+                let url = "{{ route('admin.supplies.details.generatePDF') }}" +
+                    `?supplier_id=${supplierId}&start_date=${startDate}&end_date=${endDate}&preview=1`;
+
                 window.open(url, '_blank');
             });
+
+            $('#createPdfBtn').on('click', function () {
+                let supplierId = $('#selectSupplier').val();
+                let startDate = $('#startDate').val();
+                let endDate = $('#endDate').val();
+
+                let url = "{{ route('admin.supplies.details.generatePDF') }}" +
+                    `?supplier_id=${supplierId}&start_date=${startDate}&end_date=${endDate}`;
+
+                window.open(url, '_blank');
+            })
+
 
         });
     </script>

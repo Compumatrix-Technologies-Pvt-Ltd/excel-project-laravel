@@ -27,7 +27,7 @@ class MillController extends Controller
     public function index()
     {
         $this->ViewData['moduleAction'] = "Mill Management";
-        $this->ViewData['mills'] = $this->BaseModel->all();
+        $this->ViewData['mills'] = $this->BaseModel->where('user_id',auth()->user()->id)->get();
         return view('admin.mill.index', $this->ViewData);
     }
 
@@ -80,6 +80,8 @@ class MillController extends Controller
 
     public function _storeOrUpdate($millData, $request)
     {
+        $millData->company_id = auth()->user()->company_id;
+        $millData->user_id = auth()->user()->id;
         $millData->mill_id = $request->mill_id;
         $millData->name = $request->name;
         $millData->mpob_lic_no = $request->mpob_lic_no;

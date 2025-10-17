@@ -22,8 +22,7 @@ class Suppliersrequest extends FormRequest
     public function rules()
     {
         return [
-            'prefix' => 'required|string|max:5',
-            'type' => 'required|string',
+            'prefix' => 'string|max:5',
             'supplier_name' => 'required|string',
             'address1' => 'required|string',
             'mpob_lic_no' => 'numeric',
@@ -46,12 +45,9 @@ class Suppliersrequest extends FormRequest
     public function messages()
     {
         return [
-            'prefix.required' => 'The prefix field is required.',
             'prefix.string' => 'The prefix must be a string.',
             'prefix.max' => 'The prefix cannot be longer than 5 characters.',
 
-            'type.required' => 'The supplier type is required.',
-            'type.string' => 'The supplier type must be a string.',
 
             'supplier_name.required' => 'The supplier name is required.',
             'supplier_name.string' => 'The supplier name must be a string.',

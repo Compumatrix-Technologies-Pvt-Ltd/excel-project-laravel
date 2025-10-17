@@ -59,7 +59,7 @@
             <ul class="navbar-nav" id="navbar-nav">
 
 
-                @if (Auth::user()->role == 'super-admin')
+                @if (Auth::user()->hasRole('super-admin'))
                     <li class="menu-title"><span data-key="t-menu" class="text-light">Super Admin Modules</span></li>
                     <li class="text-light">
                         <hr>
@@ -69,6 +69,25 @@
                             href="{{ route('admin.dashboard') }}">
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/roles') ? ' collapsed active' : '' }}"
+                            href="#RolesPermissions" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="RolesPermissions">
+                            <i class="mdi mdi-account-group"></i> <span data-key="t-base-ui">Roles & Permissions</span>
+
+                        </a>
+                        <div class="collapse menu-dropdown {{ request()->is('admin/roles') ? 'show' : '' }}"
+                            id="RolesPermissions">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.roles.index') }}"
+                                        class="nav-link {{ request()->is('admin/roles', 'admin/roles/create') ? 'active' : '' }}"
+                                        data-key="t-horizontal">Roles</a>
+                                </li>
+
+                            </ul>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/plans/users') ? 'active' : '' }}"
@@ -118,20 +137,17 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->is('admin/roles', 'admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? ' collapsed active' : ''  }}"
+                        <a class="nav-link menu-link {{ (request()->is('admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? ' collapsed active' : ''  }}"
                             href="#SecurityAudit" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="SecurityAudit">
                             <i class="mdi mdi-security" aria-hidden="true"></i>
                             <span data-key="t-widgets">Security & Audit</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ (request()->is('admin/roles', 'admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? 'show' : ''  }}"
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/audit-logs', 'admin/impersonation-console', 'admin/security-settings')) ? 'show' : ''  }}"
                             id="SecurityAudit">
                             <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.roles.index') }}"
-                                        class="nav-link {{ (request()->is('admin/roles')) ? 'active' : ''  }}"
-                                        data-key="t-horizontal">Admin Users & Roles</a>
-                                </li>
+
+
                                 <li class="nav-item">
                                     <a href="{{ route('admin.audit.logs.index') }}"
                                         class="nav-link {{ (request()->is('admin/audit-logs')) ? 'active' : ''  }}"
@@ -151,13 +167,9 @@
                             </ul>
                         </div>
                     </li>
-
-
-
-
                 @endif
 
-                @if (Auth::user()->role == 'hq')
+                @if (Auth::user()->hasRole('hq'))
                     <li class="menu-title"><span data-key="t-menu" class="text-light">HQ Modules</span></li>
                     <li class="text-light">
                         <hr>
@@ -168,6 +180,65 @@
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li>
+                    
+
+                   
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers-hq', 'admin/suppliers/create') ? 'active' : '' }}"
+                            href="{{ route('admin.suppliers.index') }}">
+                            <i class="mdi mdi-account-supervisor"></i> <span data-key="t-widgets">Suppliers</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
+                            href="{{ route('admin.mill.management') }}">
+                            <i class="mdi mdi-factory"></i> <span data-key="t-widgets">Mill</span>
+                        </a>
+                    </li>
+                   
+                    <!-- Transaction Management -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/transaction-management') ? 'active' : '' }}"
+                            href="{{ route('admin.transaction.management') }}">
+                            <i class="mdi mdi-cash-sync"></i> <span data-key="t-widgets">Trx</span>
+                        </a>
+                    </li>
+
+                    <!-- Main -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/hq-main') ? 'active' : '' }}"
+                            href="{{ route('admin.hqMainForm.index') }}">
+                            <i class="mdi mdi-form-select"></i> <span data-key="t-widgets">Main</span>
+                        </a>
+                    </li>
+
+                    <!-- Supplies -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/supplies-details') ? 'active' : '' }}"
+                            href="{{ route('admin.supplies.details.index') }}">
+                            <i class="mdi mdi-form-select"></i> <span data-key="t-widgets">Supplies</span>
+                        </a>
+                    </li>
+
+
+                    <!-- Analysis Management -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/supplies-analysis') ? 'active' : '' }}"
+                            href="{{ route('admin.supplies.analysis.index') }}">
+                            <i class="mdi mdi-magnify me-2"></i> <span data-key="t-widgets">Analysis</span>
+                        </a>
+                    </li>
+                     
+                    <!-- Supplies Summary -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/supplies-summary') ? 'active' : '' }}"
+                            href="{{ route('admin.supplies.summary.index') }}">
+                            <i class="mdi mdi-order-bool-descending-variant"></i> <span data-key="t-widgets">Supplies Summary</span>
+                        </a>
+                    </li>
+
+
                     <!-- Consolidated FFB -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ (request()->is('admin/yearly-cash-credit', 'admin/credit/purchase', 'admin/cash/purchase', 'admin/purchase-salse')) ? ' collapsed active' : ''  }}"
@@ -204,179 +275,58 @@
                             </ul>
                         </div>
                     </li>
-
-
-                    <!-- Branch Management -->
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
-                            href="{{ route('admin.branches.index') }}">
-                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Branch Management</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? ' collapsed active' : '' }}"
-                            href="#SupplierManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="SupplierManagement">
+                       <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/vehicles','admin/branch','admin/users') ? ' collapsed active' : '' }}"
+                            href="#OtherManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                            aria-controls="OtherManagement">
                             <i class="mdi mdi-store"></i>
-                            <span data-key="t-base-ui">Suppliers</span>
+
+                            <span data-key="t-base-ui">Other</span>
+
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/suppliers', 'admin/suppliers-hq', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? 'show' : '' }}"
-                            id="SupplierManagement">
+                        <div class="collapse menu-dropdown {{ request()->is('admin/vehicles','admin/branch','admin/users') ? 'show' : '' }}"
+                            id="OtherManagement">
                             <ul class="nav nav-sm flex-column">
+                                <!-- Branch Management -->
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.suppliers.create') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers/create') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Create Suppliers</a>
+                                    <a href="{{ route('admin.branch.index') }}"
+                                        class="nav-link {{ request()->is('admin/branch') ? 'active' : '' }}"
+                                        data-key="t-horizontal">Branch Management</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.suppliers.index') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Manage Suppliers</a>
+                                    <a href="{{ route('admin.vehicles.index') }}"
+                                        class="nav-link {{ request()->is('admin/vehicles') ? 'active' : '' }}"
+                                        data-key="t-horizontal">Vehicle Management</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliersGps.index') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Suppliers GPS Listing</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
 
-                    <!-- <li class="nav-item">
-                            <a class="nav-link menu-link {{ request()->is('admin/suppliers-hq') ? 'active' : '' }}"
-                                href="{{ route('admin.suppliersHq.index') }}">
-                                <i class="mdi mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
-                            </a>
-                        </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/mill-management') ? 'active' : '' }}"
-                            href="{{ route('admin.mill.management') }}">
-                            <i class="mdi mdi-factory"></i> <span data-key="t-widgets">Mill Management</span>
-                        </a>
-                    </li>
-
-                    <!-- Transaction Management -->
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/transaction-management') ? 'active' : '' }}"
-                            href="{{ route('admin.transaction.management') }}">
-                            <i class="mdi mdi-cash-sync"></i> <span data-key="t-widgets">Transaction</span>
-                        </a>
-                    </li>
-
-                    <!-- Main -->
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/hq-main') ? 'active' : '' }}"
-                            href="{{ route('admin.hqMainForm.index') }}">
-                            <i class="mdi mdi-form-select"></i> <span data-key="t-widgets">Main</span>
-                        </a>
-                    </li>
-
-                    <!-- User Management -->
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/users', 'admin/users/*') ? ' collapsed active' : '' }}"
-                            href="#UserManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="UserManagement">
-                            <i class="mdi mdi-account-group"></i> <span data-key="t-base-ui">User
-                                Management</span>
-
-                        </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/users', 'admin/users/*') ? 'show' : '' }}"
-                            id="UserManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.users.create') }}"
-                                        class="nav-link {{ request()->is('admin/users', 'admin/users/create', 'admin/users/*') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Create Users</a>
-                                </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.users.index') }}"
                                         class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}"
                                         data-key="t-horizontal">Manage Users</a>
                                 </li>
+                               
                             </ul>
                         </div>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? ' collapsed active' : '' }}"
-                            href="#SuppliesManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="SuppliesManagement">
-                            <i class="mdi mdi-store"></i>
-
-                            <span data-key="t-base-ui">Supplies</span>
-
-                        </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/supplies-details', 'admin/supplies-summary') ? 'show' : '' }}"
-                            id="SuppliesManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.supplies.details.index') }}"
-                                        class="nav-link {{ request()->is('admin/supplies-details') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Supplies Details</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.supplies.summary.index') }}"
-                                        class="nav-link {{ request()->is('admin/supplies-summary') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Supplies Summary</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-
-                    <!-- Analysis Management -->
-                    <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/supplies-analysis') ? 'active' : '' }}"
-                            href="{{ route('admin.supplies.analysis.index') }}">
-                            <i class="mdi mdi-magnify me-2"></i> <span data-key="t-widgets">Analysis</span>
-                        </a>
-                    </li>
-
-                     <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
                     <li class="text-light">
                         <hr>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
-                        </a>
-                    </li> --}}
-
+                   
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
                             href="{{ route('admin.mainForm.index') }}">
-                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Master Module</span>
+                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Main</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? ' collapsed active' : '' }}"
-                            href="#SupplierManagement" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="SupplierManagement">
-                            <i class="mdi mdi-store"></i>
-                            <span data-key="t-base-ui">Suppliers</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers','admin/suppliers/create') ? 'active' : '' }}"
+                            href="{{ route('admin.suppliers.index') }}">
+                            <i class="mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/suppliers', 'admin/suppliers-hq', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? 'show' : '' }}"
-                            id="SupplierManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliers.create') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers/create') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Create Suppliers</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliers.index') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Manage Suppliers</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliersGps.index') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Suppliers GPS Listing</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
-
+              
                     <!-- Daily Credit Transactions -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/transactions') ? 'active' : '' }}"
@@ -388,28 +338,13 @@
 
                     <!-- Deductions -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/deductions', 'admin/deductions/*', 'admin/deduction-reports', 'admin/deduction-reports/*') ? ' collapsed active' : '' }}"
-                            href="#Deductions" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="Deductions">
-                            <i class="mdi mdi-bank-minus me-2"></i> <span data-key="t-widgets">Deductions</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/deductions', 'admin/deductions/*') ? 'active' : '' }}"
+                            href="{{ route('admin.deductions.index') }}">
+                            <i class="mdi mdi-cash-multiple"></i>
+                            <span data-key="t-base-ui">Deductions</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/deductions', 'admin/deduction-reports') ? 'show' : '' }}"
-                            id="Deductions">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.deductions.index') }}"
-                                        class="nav-link {{ request()->is('admin/deductions') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Deduction Listing</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.deductions.report.index') }}"
-                                        class="nav-link {{ request()->is('admin/deduction-reports') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Deduction Reports</a>
-                                </li>
-
-                            </ul>
-                        </div>
                     </li>
+
 
                     <!-- Sales Invoice -->
                     <li class="nav-item">
@@ -419,11 +354,20 @@
                         </a>
                     </li>
 
+                    <!-- Deductions Report -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/deduction-reports', 'admin/deduction-reports/*') ? 'active' : '' }}"
+                            href="{{ route('admin.deductions.report.index') }}">
+                            <i class="mdi mdi-cash-multiple"></i>
+                            <span data-key="t-base-ui">Deduction Report</span>
+                        </a>
+                    </li>
+
                     <!-- Credit Purchases -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/credit-purchases') ? 'active' : '' }}"
                             href="{{ route('admin.creditPurchase.index') }}">
-                            <i class="mdi mdi-credit-card-outline"></i> <span data-key="t-widgets">Credit Purchases</span>
+                            <i class="mdi mdi-credit-card-outline"></i> <span data-key="t-widgets">Credit Purchase</span>
                         </a>
                     </li>
 
@@ -432,6 +376,14 @@
                         <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
                             href="{{ route('admin.banks.index') }}">
                             <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Bank Management</span>
+                        </a>
+                    </li>
+
+                    <!-- Via Bank -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/via-bank') ? 'active' : '' }}"
+                            href="{{ route('admin.via-bank.index') }}">
+                            <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Via Bank</span>
                         </a>
                     </li>
 
@@ -445,33 +397,26 @@
 
                     <!-- Cash Purchases -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary', 'admin/daily-cash-purchase-summary') ? ' collapsed active' : '' }}"
-                            href="#CashPurchasesManagement" data-bs-toggle="collapse" role="button"
-                            aria-expanded="false" aria-controls="CashPurchasesManagement">
-                            <i class="mdi mdi mdi-bank-plus"></i>
-                            <span data-key="t-base-ui">Cash Purchases</span>
-
+                        <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-list') ? 'active' : '' }}"
+                            href="{{ route('admin.cash.purchase.list') }}">
+                            <i class=" mdi mdi-cash-register"></i> <span data-key="t-widgets">Cash Purchase</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary', 'admin/daily-cash-purchase-summary') ? 'show' : '' }}"
-                            id="CashPurchasesManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.cash.purchase.list') }}"
-                                        class="nav-link {{ request()->is('admin/cash-purchase-list') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Purchase Listing</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.cash.purchase.summary') }}"
-                                        class="nav-link {{ request()->is('admin/cash-purchase-summary') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Purchase Summary</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.daily.cash.purchase.summary') }}"
-                                        class="nav-link {{ request()->is('admin/daily-cash-purchase-summary') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Daily Purchase Summary</a>
-                                </li>
-                            </ul>
-                        </div>
+                    </li>
+
+                    <!-- Cash Purchases Summary -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-summary') ? 'active' : '' }}"
+                            href="{{ route('admin.cash.purchase.summary') }}">
+                            <i class="mdi mdi-bank-transfer"></i> <span data-key="t-widgets">Cash Pur Summary</span>
+                        </a>
+                    </li>
+
+                    <!-- Daily Cash Purchases Summary -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/daily-cash-purchase-summary') ? 'active' : '' }}"
+                            href="{{ route('admin.daily.cash.purchase.summary') }}">
+                            <i class="mdi mdi-calendar-today"></i> <span data-key="t-widgets">Daily Pur Summary</span>
+                        </a>
                     </li>
 
                     <!-- Suplier Cash Bill -->
@@ -482,36 +427,34 @@
                         </a>
                     </li>
 
-                    <!-- Analysis Management -->
+                    <!-- Analysis 1 -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/purchase-analysis', 'admin/credit-purchase-analysis', 'admin/supplies-analysis') ? ' collapsed active' : '' }}"
-                            href="#AnalysisManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="AnalysisManagement">
-                            <i class="mdi mdi-magnify me-2" aria-hidden="true"></i>
-                            <span data-key="t-widgets">Analysis</span>
-
+                        <a class="nav-link menu-link {{ request()->is('admin/purchase-analysis') ? 'active' : '' }}"
+                            href="{{ route('admin.purchaseAnalysis.index') }}">
+                            <i class="mdi mdi-magnify-scan"></i> <span data-key="t-widgets">Analysis 1</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/purchase-analysis', 'admin/credit-purchase-analysis', 'admin/supplies-analysis') ? 'show' : '' }}"
-                            id="AnalysisManagement">
-                            <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.purchaseAnalysis.index') }}"
-                                            class="nav-link {{ request()->is('admin/purchase-analysis') ? 'active' : '' }}"
-                                            data-key="t-horizontal">Purchase Analysis</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.creditPurchaseAnalysis.index') }}"
-                                            class="nav-link {{ request()->is('admin/ccredit-purchase-analysis') ? 'active' : '' }}"
-                                            data-key="t-horizontal">Credit Purchase Analysis</a>
-                                    </li>
-                              
-                            </ul>
-                        </div>
                     </li>
 
-                @endif
+                    <!-- Analysis 2 -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/credit-purchase-analysis') ? 'active' : '' }}"
+                            href="{{ route('admin.creditPurchaseAnalysis.index') }}">
+                            <i class="mdi mdi-nfc-search-variant"></i> <span data-key="t-widgets">Analysis 2</span>
+                        </a>
+                    </li>
 
-                @if (Auth::user()->role == 'branch-user')
+                    <!-- Suppliers GPS Listing  -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
+                            href="{{ route('admin.suppliersGps.index') }}">
+                            <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS Listing</span>
+                        </a>
+                    </li>
+                   
+
+                @endif
+                @if (Auth::user()->hasRole('branch'))
+
                     <li class="menu-title"><span data-key="t-menu" class="text-light">Branch Modules</span></li>
                     <li class="text-light">
                         <hr>
@@ -526,37 +469,16 @@
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
                             href="{{ route('admin.mainForm.index') }}">
-                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Master Module</span>
+                            <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Main</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? ' collapsed active' : '' }}"
-                            href="#SupplierManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="SupplierManagement">
-                            <i class="mdi mdi-store"></i>
-                            <span data-key="t-base-ui">Suppliers</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers','admin/suppliers/create') ? 'active' : '' }}"
+                            href="{{ route('admin.suppliers.index') }}">
+                            <i class="mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/suppliers', 'admin/suppliers-hq', 'admin/suppliers/create', 'admin/suppliers-gps-list') ? 'show' : '' }}"
-                            id="SupplierManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliers.create') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers/create') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Create Suppliers</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliers.index') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Manage Suppliers</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.suppliersGps.index') }}"
-                                        class="nav-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Suppliers GPS Listing</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
+              
                     <!-- Daily Credit Transactions -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/transactions') ? 'active' : '' }}"
@@ -568,28 +490,13 @@
 
                     <!-- Deductions -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/deductions', 'admin/deductions/*', 'admin/deduction-reports', 'admin/deduction-reports/*') ? ' collapsed active' : '' }}"
-                            href="#Deductions" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="Deductions">
-                            <i class="mdi mdi-bank-minus me-2"></i> <span data-key="t-widgets">Deductions</span>
+                        <a class="nav-link menu-link {{ request()->is('admin/deductions', 'admin/deductions/*') ? 'active' : '' }}"
+                            href="{{ route('admin.deductions.index') }}">
+                            <i class="mdi mdi-cash-multiple"></i>
+                            <span data-key="t-base-ui">Deductions</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/deductions', 'admin/deduction-reports') ? 'show' : '' }}"
-                            id="Deductions">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.deductions.index') }}"
-                                        class="nav-link {{ request()->is('admin/deductions') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Deduction Listing</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.deductions.report.index') }}"
-                                        class="nav-link {{ request()->is('admin/deduction-reports') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Deduction Reports</a>
-                                </li>
-
-                            </ul>
-                        </div>
                     </li>
+
 
                     <!-- Sales Invoice -->
                     <li class="nav-item">
@@ -599,11 +506,20 @@
                         </a>
                     </li>
 
+                    <!-- Deductions Report -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/deduction-reports', 'admin/deduction-reports/*') ? 'active' : '' }}"
+                            href="{{ route('admin.deductions.report.index') }}">
+                            <i class="mdi mdi-cash-multiple"></i>
+                            <span data-key="t-base-ui">Deduction Report</span>
+                        </a>
+                    </li>
+
                     <!-- Credit Purchases -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/credit-purchases') ? 'active' : '' }}"
                             href="{{ route('admin.creditPurchase.index') }}">
-                            <i class="mdi mdi-credit-card-outline"></i> <span data-key="t-widgets">Credit Purchases</span>
+                            <i class="mdi mdi-credit-card-outline"></i> <span data-key="t-widgets">Credit Purchase</span>
                         </a>
                     </li>
 
@@ -612,6 +528,14 @@
                         <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
                             href="{{ route('admin.banks.index') }}">
                             <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Bank Management</span>
+                        </a>
+                    </li>
+
+                    <!-- Via Bank -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/via-bank') ? 'active' : '' }}"
+                            href="{{ route('admin.via-bank.index') }}">
+                            <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Via Bank</span>
                         </a>
                     </li>
 
@@ -625,33 +549,26 @@
 
                     <!-- Cash Purchases -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary', 'admin/daily-cash-purchase-summary') ? ' collapsed active' : '' }}"
-                            href="#CashPurchasesManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="CashPurchasesManagement">
-                            <i class="mdi mdi mdi-bank-plus"></i>
-                            <span data-key="t-base-ui">Cash Purchases</span>
-
+                        <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-list') ? 'active' : '' }}"
+                            href="{{ route('admin.cash.purchase.list') }}">
+                            <i class=" mdi mdi-cash-register"></i> <span data-key="t-widgets">Cash Purchase</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/cash-purchase-list', 'admin/cash-purchase-summary', 'admin/daily-cash-purchase-summary') ? 'show' : '' }}"
-                            id="CashPurchasesManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.cash.purchase.list') }}"
-                                        class="nav-link {{ request()->is('admin/cash-purchase-list') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Purchase Listing</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.cash.purchase.summary') }}"
-                                        class="nav-link {{ request()->is('admin/cash-purchase-summary') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Purchase Summary</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.daily.cash.purchase.summary') }}"
-                                        class="nav-link {{ request()->is('admin/daily-cash-purchase-summary') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Daily Purchase Summary</a>
-                                </li>
-                            </ul>
-                        </div>
+                    </li>
+
+                    <!-- Cash Purchases Summary -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/cash-purchase-summary') ? 'active' : '' }}"
+                            href="{{ route('admin.cash.purchase.summary') }}">
+                            <i class="mdi mdi-bank-transfer"></i> <span data-key="t-widgets">Cash Pur Summary</span>
+                        </a>
+                    </li>
+
+                    <!-- Daily Cash Purchases Summary -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/daily-cash-purchase-summary') ? 'active' : '' }}"
+                            href="{{ route('admin.daily.cash.purchase.summary') }}">
+                            <i class="mdi mdi-calendar-today"></i> <span data-key="t-widgets">Daily Pur Summary</span>
+                        </a>
                     </li>
 
                     <!-- Suplier Cash Bill -->
@@ -662,31 +579,28 @@
                         </a>
                     </li>
 
-                    <!-- Analysis Management -->
+                    <!-- Analysis 1 -->
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/purchase-analysis', 'admin/credit-purchase-analysis', 'admin/supplies-analysis') ? ' collapsed active' : '' }}"
-                            href="#AnalysisManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="AnalysisManagement">
-                            <i class="mdi mdi-magnify me-2" aria-hidden="true"></i>
-                            <span data-key="t-widgets">Analysis</span>
-
+                        <a class="nav-link menu-link {{ request()->is('admin/purchase-analysis') ? 'active' : '' }}"
+                            href="{{ route('admin.purchaseAnalysis.index') }}">
+                            <i class="mdi mdi-magnify-scan"></i> <span data-key="t-widgets">Analysis 1</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/purchase-analysis', 'admin/credit-purchase-analysis', 'admin/supplies-analysis') ? 'show' : '' }}"
-                            id="AnalysisManagement">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.purchaseAnalysis.index') }}"
-                                        class="nav-link {{ request()->is('admin/purchase-analysis') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Purchase Analysis</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('admin.creditPurchaseAnalysis.index') }}"
-                                        class="nav-link {{ request()->is('admin/ccredit-purchase-analysis') ? 'active' : '' }}"
-                                        data-key="t-horizontal">Credit Purchase Analysis</a>
-                                </li>
+                    </li>
 
-                            </ul>
-                        </div>
+                    <!-- Analysis 2 -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/credit-purchase-analysis') ? 'active' : '' }}"
+                            href="{{ route('admin.creditPurchaseAnalysis.index') }}">
+                            <i class="mdi mdi-nfc-search-variant"></i> <span data-key="t-widgets">Analysis 2</span>
+                        </a>
+                    </li>
+
+                    <!-- Suppliers GPS Listing  -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
+                            href="{{ route('admin.suppliersGps.index') }}">
+                            <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS Listing</span>
+                        </a>
                     </li>
                 @endif
 

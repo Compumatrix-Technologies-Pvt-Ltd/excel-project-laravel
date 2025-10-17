@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\SuppliersExport;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Suppliersrequest;
-use App\Imports\SuppliersImport;
 use App\Models\Suppliers;
 use Exception;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Excel;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SuppliersImport;
 
 class SupplierController extends Controller
 {
@@ -61,15 +62,22 @@ class SupplierController extends Controller
 
     public function _storeOrUpdate($SuppliersData, $request)
     {
-        $prefix = $request->prefix;
-        $type = $request->type;
 
-        $supplierId = $this->generateSupplierId($prefix, $type);
+        $user = auth()->user();
 
-        $SuppliersData->supplier_id = $supplierId;
-        $userId = auth()->user()->id;
+        if ($user->hasRole('branch')) {
+            $prefix = $request->prefix;
+            $type = $request->type;
+
+            $supplierId = $this->BaseModel->generateSupplierId($prefix, $type);
+            $SuppliersData->supplier_id = $supplierId;
+
+        } elseif ($user->hasRole('hq')) {
+            $SuppliersData->supplier_id = $request->supplier_id;
+
+        }
+        $userId = $user->id;
         $SuppliersData->user_id = $userId;
-        $SuppliersData->supplier_id = $supplierId;
         $SuppliersData->supplier_type = $request->supplier_type;
         $SuppliersData->supplier_name = $request->supplier_name;
         $SuppliersData->address1 = $request->address1;
@@ -85,7 +93,7 @@ class SupplierController extends Controller
         $SuppliersData->longitude = $request->longitude;
         $SuppliersData->email = $request->email;
         $SuppliersData->telphone_1 = $request->telphone_1;
-        $SuppliersData->telphone_2 = $request->telphone_1;
+        $SuppliersData->telphone_2 = $request->telphone_2;
         $SuppliersData->bank_id = $request->bank_id;
         $SuppliersData->bank_acc_no = $request->bank_acc_no;
         $SuppliersData->remark = $request->remark;
@@ -144,6 +152,13 @@ class SupplierController extends Controller
         return response()->json($response);
     }
 
+     public function update1(Suppliersrequest $request)
+    {
+        // dd($request->all());
+        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.suppliers.index', $request->id);
+        return response()->json($response);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -179,15 +194,13 @@ class SupplierController extends Controller
 
         $baseQuery = $this->BaseModel::with('user');
 
-        if ($loggedInUser->role === 'hq') {
-            $baseQuery->whereHas('user', function ($q) {
-                $q->where('role', 'hq');
-            });
-        } elseif ($loggedInUser->role === 'branch-user') {
-            $baseQuery->whereHas('user', function ($q) {
-                $q->where('role', 'branch-user');
-            });
+        if ($loggedInUser->hasRole('hq')) {
+            $baseQuery->where('user_id', $loggedInUser->id);
+        } elseif ($loggedInUser->hasRole('branch')) {
+            // Branch-user can only see their own suppliers
+            $baseQuery->where('user_id', $loggedInUser->id);
         }
+
 
         $intTotalData = $baseQuery->count();
 
@@ -255,37 +268,7 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function generateSupplierId($prefix, $type)
-    {
-        $lastSupplier = Suppliers::where('supplier_id', 'LIKE', $prefix . '-' . $type . '-%')
-            ->orderBy('id', 'desc')
-            ->first();
 
-        if ($lastSupplier) {
-            $parts = explode('-', $lastSupplier->supplier_id);
-            $lastSequence = $parts[2] ?? $type . '000';
-            $lastNumber = (int) substr($lastSequence, 1);
-        } else {
-            $lastNumber = 0;
-        }
-
-        $newNumber = $lastNumber + 1;
-
-        $letter = $type;
-        if ($newNumber > 99) {
-            $letter = chr(ord($type) + 1);
-            $newNumber = 1;
-
-            if ($letter > 'Z') {
-                $letter = 'Z';
-                $newNumber = 99;
-            }
-        }
-
-        $formatted = $letter . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
-
-        return $prefix . '-' . $letter . '-' . $formatted;
-    }
 
 
     public function importSuppliers(Request $request)
@@ -300,14 +283,27 @@ class SupplierController extends Controller
             Excel::import(new SuppliersImport, $file);
 
             $this->JsonData['status'] = 'success';
-            $this->JsonData['url'] = '';
+            $this->JsonData['url'] = route('admin.suppliers.index');
             $this->JsonData['msg'] = 'Import Successfully';
         } catch (Exception $e) {
             $this->JsonData['status'] = 'error';
-            $this->JsonData['url'] = '';
+            $this->JsonData['url'] = route('admin.suppliers.index');
             $this->JsonData['msg'] = $e->getMessage();
         }
 
         return response()->json($this->JsonData);
     }
+
+    public function exportSuppliers()
+    {
+        try {
+            $fileName = 'suppliers_' . date('Y-m-d') . '.xlsx';
+            return Excel::download(new SuppliersExport(), $fileName);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error exporting patients.'], 500);
+
+        }
+    }
+
+
 }
