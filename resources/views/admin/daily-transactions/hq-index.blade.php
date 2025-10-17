@@ -71,6 +71,7 @@
                                                 <div class="col-md-6 form-group">
                                                     <label for="inputVehicle" class="form-label">Vehicles<span
                                                             class="text-danger">*</span></label>
+                                                            <span class="text-end" style="margin-left: 70%"><a href="{{route('admin.vehicles.index')}}">List</a></span>
                                                     <select id="inputVehicle" class="form-select" name="vehicle_id"
                                                         required data-error="Please select the Vehicle">
                                                         <span class="help-block with-errors err_vehicle_id"
@@ -132,7 +133,7 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row g-3">
+                    {{-- <div class="row g-3">
                         <div class="col-md-2">
                             <label for="startDate" class="form-label">Start Date</label>
                             <input type="date" id="startDate" class="form-control">
@@ -173,7 +174,7 @@
                                 <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="container-fluid mt-4">
                         <div class="row">
                             <table id="TransactionListingHq" class="table nowrap dt-responsive align-middle"

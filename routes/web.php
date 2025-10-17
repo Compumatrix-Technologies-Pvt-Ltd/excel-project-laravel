@@ -102,6 +102,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Branch Routes
     Route::put('update-branch', [BranchController::class, 'update'])->name('update-branch');
+    Route::get('branch-users/{id}', [BranchController::class, 'branchUsers'])->name('branch-users');
+    Route::get('branch-users-module/{id}', [BranchController::class, 'usersModule'])->name('branch-users.modules');
     Route::resource('branch', BranchController::class);
 
 
@@ -118,6 +120,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     // Suppliers Route
     Route::get('suppliers/getRecords', [SupplierController::class, 'getRecords'])->name('suppliers.getRecords');
+
+        // HQ- Suppliers
+    Route::get('hq-suppliers', [SupplierController::class, 'hqSuppliers'])->name('hq-suppliers.index');
+    Route::get('hq-suppliers/getRecords', [SupplierController::class, 'HQgetRecords']);
+    Route::get('edit-hq-supplier/{id}', [SupplierController::class, 'editHqSupplier']);
+    Route::put('hq-suppliers.update', [SupplierController::class, 'suppliersUpdate'])->name('hq-suppliers.update');
+    Route::post('hq-suppliers/store', [SupplierController::class, 'hqSuppliersStore'])->name('hq-suppliers.store');
 
     Route::resource('suppliers', SupplierController::class)->names('suppliers');
     Route::post('suppliers/import', [SupplierController::class, 'importSuppliers'])->name('suppliers.import');
@@ -153,8 +162,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
 
-    // HQ- Suppliers
-    Route::get('suppliers-hq', [AdminUserController::class, 'suppliersHqIndex'])->name('suppliersHq.index');
+
 
 
     // Supplies
@@ -171,18 +179,12 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('supplies-analysis/getRecords', [AnalysisController::class, 'suppliesAnalysisGetRecords'])->name('supplies.analysis.getRecords');
     Route::get('supplies-analysis/pdf', [AnalysisController::class, 'generateSuppliesAnalysisPDF'])->name('supplies.analysis.generatePDF');
 
-    Route::get('credit-purchases', [AdminUserController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
     Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
     Route::get('purchase-analysis', [AdminUserController::class, 'purchaseAnalysisIndex'])->name('purchaseAnalysis.index');
 
     Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
     
-    Route::get('payments', [CommonController::class, 'paymentIndex'])->name('payments.index');
     Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
-    Route::get('cash-purchase-list', [CommonController::class, 'cashPurchaseList'])->name('cash.purchase.list');
-    Route::get('cash-purchase-summary', [CommonController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
-    Route::get('daily-cash-purchase-summary', [CommonController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
-    Route::get('sales-invoice', [CommonController::class, 'salesInvoice'])->name('sales.invoice');
     Route::get('supplier-cash-bill', [CommonController::class, 'supplierCashBill'])->name('supplier.cash.bill');
 
     Route::get('subscription-&-billing', [CommonController::class, 'subscriptionAndBilling'])->name('subscription.and.billing');
@@ -208,9 +210,20 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
 
+
     // Master Module route branch
 
-    Route::get('main', [MasterController::class, 'mainForm'])->name('mainForm.index');
+    Route::get('main/{id?}', [MasterController::class, 'mainForm'])->name('mainForm.index');
+    Route::get('credit-purchases', [MasterController::class, 'creditPurchaseIndex'])->name('creditPurchase.index');
+    Route::get('cash-purchase-list', [MasterController::class, 'cashPurchaseList'])->name('cash.purchase.list');
+    Route::get('cash-purchase/getRecords', [MasterController::class, 'cashPurchaseGetRecords']);
+    Route::get('cash-purchase-summary', [MasterController::class, 'cashPurchaseSummary'])->name('cash.purchase.summary');
+    Route::get('cash-purchase-summary/getRecords', [MasterController::class, 'cashPurchaseSummaryGetRecords']);
+    Route::get('daily-cash-purchase-summary', [MasterController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
+    Route::get('daily-cash-purchase-summary/getRecords', [MasterController::class, 'dailyCashPurchaseSummaryGetRecords']);
+    Route::get('payments', [MasterController::class, 'paymentIndex'])->name('payments.index');
+    Route::get('payments/getRecords', [MasterController::class, 'paymentgetRecords']);
+    Route::get('sales-invoice', [MasterController::class, 'salesInvoice'])->name('sales.invoice');
 
 
     // Master Module Route HQ

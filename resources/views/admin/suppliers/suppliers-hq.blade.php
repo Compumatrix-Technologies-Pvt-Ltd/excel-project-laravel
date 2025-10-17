@@ -43,52 +43,54 @@
                                     <div class="modal-body">
 
                                         <div class="row gy-4">
-                                            <form action="javascript:void(0);" class="row g-3">
+                                               <form id="AddForm" action="{{ route('admin.hq-suppliers.store') }}" method="post" class="form row g-3"
+                            autocomplete="off" role="form">
+                            @csrf
                                                 <div class="col-md-6">
                                                     <label for="supplierCodeInput" class="form-label">
                                                         Supplier Id <span class="text-danger">*</span>
                                                     </label>
-                                                    <input type="text" class="form-control" id="supplierCodeInput">
+                                                    <input type="text" class="form-control" id="supplierCodeInput" name="supplier_id">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="supplierNameInput" class="form-label">Supplier Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="supplierNameInput">
+                                                    <input type="text" class="form-control" id="supplierNameInput" name="supplier_name">
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="supplierAddress1" class="form-label">Address 1<span
+                                                    <label for="supplierAddressEdit1" class="form-label">Address 1<span
                                                             class="text-danger">*</span></label>
-                                                    <textarea class="form-control" id="supplierAddress1"
+                                                    <textarea class="form-control" name="address1" id="supplierAddressEdit1"
                                                         rows="3"></textarea>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="supplierAddress2" class="form-label">Address 2</label>
-                                                    <textarea class="form-control" id="supplierAddress2"
-                                                        rows="3"></textarea>
+                                                    <label for="supplierAddressEdit2" class="form-label">Address 2</label>
+                                                    <textarea class="form-control" id="supplierAddressEdit2"
+                                                        rows="3" name="address2"></textarea>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="inputEmail" class="form-label">Email<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="inputEmail">
+                                                    <input type="email" class="form-control" id="inputEmail" name="email">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="inputTel1" class="form-label">Telphone 1<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="tel" class="form-control" id="inputTel1">
+                                                    <input type="tel" class="form-control" id="inputTel1" name="telphone_1">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="inputTel2" class="form-label">Telephone 2</label>
-                                                    <input type="tel" class="form-control" id="inputTel2">
+                                                    <input type="tel" class="form-control" id="inputTel2" name="telphone_2">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="inputBankId" class="form-label">Bank ID<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="tel" class="form-control" id="inputBankId">
+                                                    <input type="tel" class="form-control" id="inputBankId" name="bank_id">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="inputBankAcc" class="form-label">Bank Acc.No<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="tel" class="form-control" id="inputBankAcc">
+                                                    <input type="tel" class="form-control" id="inputBankAcc" name="bank_acc_no">
                                                 </div>
 
                                         </div>
@@ -121,349 +123,14 @@
                                         <th>Supplier Name</th>
                                         <th>Telephone Number</th>
                                         <th>Email</th>
-                                        <th>Bank Id</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>1</td>
-                                        <td>ACH</td>
-                                        <td>ACH FFB Collecting (KDT/2022/3545)</td>
-                                        <td>0196685729</td>
-                                        <td>venusleong18@yahoo.com</td>
-                                        <td>AMB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>2</td>
-                                        <td>Aplas</td>
-                                        <td>Aplas Sawit Sdn Bhd 201801007441 (1269455-K)</td>
-                                        <td>0124119791</td>
-                                        <td>-</td>
-                                        <td>PBB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>3</td>
-                                        <td>Arunamari</td>
-                                        <td>Arunamari Estates Sdn Bhd 200501006007 (683054-D)</td>
-                                        <td>0126291283</td>
-                                        <td>arunamarisandakan@gmail.com</td>
-                                        <td>CIMB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>4</td>
-                                        <td>B&F Coll.</td>
-                                        <td>B & F Collection Sdn Bhd</td>
-                                        <td>0168068982</td>
-                                        <td>zihjunfam524@gmail.com</td>
-                                        <td>-</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>5</td>
-                                        <td>B&F Collection</td>
-                                        <td>B & F Collection Centre Sdn Bhd 201001035502 (919421-P)</td>
-                                        <td>0168318581</td>
-                                        <td>-</td>
-                                        <td>PBB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>6</td>
-                                        <td>BF</td>
-                                        <td>B & F Enterprise</td>
-                                        <td>-</td>
-                                        <td>bf@gmail.com</td>
-                                        <td>-</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>7</td>
-                                        <td>Borneo Crops</td>
-                                        <td>Borneo Crops Sdn Bhd 197901008441 (52728-T)</td>
-                                        <td>089237900</td>
-                                        <td>borneocrops@yahoo.com</td>
-                                        <td>CIMB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>8</td>
-                                        <td>Bumimas</td>
-                                        <td>Bumimas Sawit 88 Sdn Bhd 200901020762 (1376992-U)</td>
-                                        <td>0185931315</td>
-                                        <td>bumimas88sdnbhd@gmail.com</td>
-                                        <td>CIMB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>9</td>
-                                        <td>Cemerleng</td>
-                                        <td>Cemerleng Enterprise</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>10</td>
-                                        <td>COC Sawit</td>
-                                        <td>COC Sawit Sdn Bhd 201401022839 (109825-P)</td>
-                                        <td>089631368</td>
-                                        <td>cocsawit.sdk@gmail.com</td>
-                                        <td>CIMB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>11</td>
-                                        <td>Emasawit</td>
-                                        <td>Emasawit Awana Sdn Bhd (116081-H)</td>
-                                        <td>0138371223</td>
-                                        <td>habibal.79@yahoo.com</td>
-                                        <td>ALB</td>
-                                        <td>
-                                            <div class="dropdown d-inline-block">
-                                                <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
-                                                    data-bs-toggle="dropdown"><i
-                                                        class="ri-more-fill align-middle"></i></button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item edit-item-btn" href="javascript:void(0);"
-                                                            data-bs-toggle="modal" data-bs-target="#editSupplierModal">
-                                                            <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
-                                                    <li><a class="dropdown-item remove-item-btn"><i
-                                                                class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
-
                             </table>
+                        </div>
 
-                           
-                        </div><!--end row-->
                          <div id="editSupplierModal" class="modal fade" tabindex="-1"
                                 aria-labelledby="editSupplierModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog modal-xl">
@@ -477,52 +144,57 @@
                                         <div class="modal-body">
 
                                             <div class="row gy-4">
-                                                <form action="javascript:void(0);" class="row g-3">
+                                                <form id="updateForm"
+                                                    action="{{ route('admin.hq-suppliers.update') }}"
+                                                    method="post" class="form row g-3" autocomplete="off" role="form">
+                                                    @csrf
+                                                    @method('PUT')
                                                     <div class="col-md-6">
-                                                        <label for="supplierCodeInput" class="form-label">
+                                                        <label for="supplierCodeInputEdit1" class="form-label">
                                                             Supplier Id <span class="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" class="form-control" id="supplierCodeInput" value="ACH">
+                                                        <input type="text" class="form-control" id="supplierCodeInputEdit1" name="supplier_id">
+                                                        <input type="hidden" class="form-control" id="hidden_id" name="hidden_id">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="supplierNameInput" class="form-label">Supplier Name<span
+                                                        <label for="supplierNameInputEdit1" class="form-label">Supplier Name<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="supplierNameInput" value="ACH FFB Collecting (KDT/2022/3545)">
+                                                        <input type="text" class="form-control" id="supplierNameInputEdit1" name="supplier_name">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="supplierAddress1" class="form-label">Address 1<span
+                                                        <label for="supplierAddressEdit2" class="form-label">Address 1<span
                                                                 class="text-danger">*</span></label>
-                                                        <textarea class="form-control" id="supplierAddress1"
-                                                            rows="3">CL 055311414, Kg Tinangol, Jalan Tinangol, 89050 Kudat, Sabah.</textarea>
+                                                        <textarea class="form-control" id="supplierAddressEdit2"
+                                                            rows="3" name="address1"></textarea>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="supplierAddress2" class="form-label">Address 2</label>
-                                                        <textarea class="form-control" id="supplierAddress2"
-                                                            rows="3"></textarea>
+                                                        <label for="supplierAddressEdit2" class="form-label">Address 2</label>
+                                                        <textarea class="form-control" id="supplierAddressEdit2"
+                                                            rows="3" name="address2"></textarea>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="inputEmail" class="form-label">Email<span
+                                                        <label for="inputEmailEdit" class="form-label">Email<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="email" class="form-control" id="inputEmail" value="venusleong18@yahoo.com">
+                                                        <input type="email" class="form-control" id="inputEmailEdit" name="email">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="inputTel1" class="form-label">Telphone 1<span
+                                                        <label for="inputTelEdit1" class="form-label">Telphone 1<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="form-control" id="inputTel1" value="0196685729">
+                                                        <input type="tel" class="form-control" id="inputTelEdit1" name="telphone_1">
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="inputTel2" class="form-label">Telephone 2</label>
-                                                        <input type="tel" class="form-control" id="inputTel2">
+                                                        <label for="inputTelEdit2" class="form-label">Telephone 2</label>
+                                                        <input type="tel" class="form-control" id="inputTelEdit2" name="telphone_2">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="inputBankId" class="form-label">Bank ID<span
+                                                        <label for="inputBankIdEdit" class="form-label">Bank ID<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="form-control" id="inputBankId" value="AMB">
+                                                        <input type="tel" class="form-control" id="inputBankIdEdit" name="bank_id">
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <label for="inputBankAcc" class="form-label">Bank Acc.No<span
+                                                        <label for="inputBankAccEdit" class="form-label">Bank Acc.No<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="form-control" id="inputBankAcc" value="1692022005890">
+                                                        <input type="tel" class="form-control" id="inputBankAccEdit" name="bank_acc_no">
                                                     </div>
 
                                             </div>
@@ -530,7 +202,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light"
                                                 data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success ">Save Changes</button>
+                                            <button type="submit" id="submitBtn" class="btn btn-success ">Save Changes</button>
                                         </div>
                                         </form>
 
@@ -552,18 +224,6 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#HqSupplierListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
-
-            });
-        });
-    </script>
-
-
 @endsection

@@ -106,11 +106,13 @@
                                         <th>Branch Code</th>
                                         <th>Branch Name</th>
                                         <th>Branch Phone</th>
+                                        <th>Users</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($branches as $index => $branch)
+
                                         <tr>
                                             <td>
                                                 <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
@@ -120,6 +122,7 @@
                                             <td>{{ $branch->code }}</td>
                                             <td>{{ $branch->name }}</td>
                                             <td>{{ $branch->phone }}</td>
+                                            <td><a href="{{route('admin.branch-users',[base64_encode(base64_encode($branch->id))])}}" class="">{{ $branch->users_count }}</a></td>
                                             <td>
                                                 <div class="dropdown d-inline-block">
                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

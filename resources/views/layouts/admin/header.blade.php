@@ -34,9 +34,6 @@
     <link href="{{ asset('/assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/assets/admin/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="assets/libs/%40simonwep/pickr/themes/classic.min.css" /> <!-- 'classic' theme -->
-    <link rel="stylesheet" href="assets/libs/%40simonwep/pickr/themes/monolith.min.css" /> <!-- 'monolith' theme -->
-    <link rel="stylesheet" href="assets/libs/%40simonwep/pickr/themes/nano.min.css" /> <!-- 'nano' theme -->
 
 </head>
 

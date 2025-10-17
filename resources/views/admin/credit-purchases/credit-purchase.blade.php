@@ -24,7 +24,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex justify-content-between">
-                    <h4 class="card-title mb-0 flex-grow-1">Credit Purchase Listing for the month of [05/2025]</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Credit Purchase Listing for the month of [{{App\Helpers\Helper::getPeriodInFormat()}}]</h4>
                     <div class="card-toolbar">
                         <button type="button" id="PreviewPdf" data-bs-toggle="modal"
                             data-bs-target="#viewCreditPurchaseListModal"
@@ -160,7 +160,7 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row g-3">
+                    {{-- <div class="row g-3">
                         <div class="col-md-2">
                             <label for="startDate" class="form-label">Start Date</label>
                             <input type="date" id="startDate" class="form-control">
@@ -201,7 +201,7 @@
                                 <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="container-fluid mt-4">
                         <div class="table-responsive">
                             <table id="CreditPurchaseListing" class="table table-bordered table-striped nowrap align-middle"
@@ -230,184 +230,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>VCSI2504001</td>
-                                        <td>VC-A-A017</td>
-                                        <td>Aisa Binti Sadyar (K/P: 580513-12-5444)</td>
-                                        <td>3.36</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>2,802.24</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>2,802.24</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504002</td>
-                                        <td>VC-A-A030</td>
-                                        <td>Asrim@Asrin Bin Omar Maya (K/P: 630720-12-5837)</td>
-                                        <td>1.46</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,217.64</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,217.64</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504003</td>
-                                        <td>VC-A-A051</td>
-                                        <td>Asmah Binti Garip (K/P: 780901-12-5952)</td>
-                                        <td>1.64</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,367.76</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>262.00</td>
-                                        <td>0.00</td>
-                                        <td>1,105.76</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504004</td>
-                                        <td>VC-A-A093</td>
-                                        <td>Asmat Bin Umbi (K/P: 590825-12-6549)</td>
-                                        <td>5.28</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>4,403.52</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>2,700.00</td>
-                                        <td>0.00</td>
-                                        <td>1,703.52</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504005</td>
-                                        <td>VC-A-A095</td>
-                                        <td>Buanda Binti Datu Tambuyong (K/P: 581009-12-5204)</td>
-                                        <td>19.28</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>16,079.52</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>16,079.52</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504006</td>
-                                        <td>VC-A-A101</td>
-                                        <td>Hadita Binti Sulaiman (K/P: 660713-12-5684)</td>
-                                        <td>12.86</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>10,725.24</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,000.00</td>
-                                        <td>0.00</td>
-                                        <td>9,725.24</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504007</td>
-                                        <td>VC-A-J012</td>
-                                        <td>Jusna Binti Usop@Supiah Binti Yusoff (K/P: 741116-12-5646)</td>
-                                        <td>2.04</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,701.36</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,701.36</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504008</td>
-                                        <td>VC-A-K018</td>
-                                        <td>Juhaire Bin Abdul Latif (K/P: 630316-12-6205)</td>
-                                        <td>10.89</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>9,082.26</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>9,082.26</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504009</td>
-                                        <td>VC-A-K021</td>
-                                        <td>Kasim Binti Salleh (K/P: 491224-12-5208)</td>
-                                        <td>2.36</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,968.24</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,968.24</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VCSI2504010</td>
-                                        <td>VC-A-M015</td>
-                                        <td>Mohamad Bin Baagun (K/P: 700406-12-5321)</td>
-                                        <td>1.98</td>
-                                        <td>834.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,651.32</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>1,000.00</td>
-                                        <td>0.00</td>
-                                        <td>651.32</td>
-                                        <td>0.00</td>
-                                    </tr>
-                                    <!-- Add 10 more rows like above -->
+                                    @foreach ($ffbTransactions as $txn)
+                                        <tr>
+                                            <td>{{ $txn->invoice_no }}</td>
+                                            <td>{{ optional($txn->supplier)->supplier_id }}</td>
+                                            <td>{{ optional($txn->supplier)->supplier_name ?? 'N/A' }}</td> {{-- assuming relationship supplier() --}}
+                                            <td>{{ number_format($txn->weight_mt, 2) }}</td>
+                                            <td>{{ number_format($txn->price, 2) }}</td>
+                                            <td>{{ number_format($txn->incentive_rate, 2) }}</td>
+                                            <td>{{ number_format($txn->subsidy_amt, 2) }}</td>
+                                            <td>{{ number_format($txn->amt_before_ded, 2) }}</td>
+                                            <td>{{ number_format($txn->transport, 2) }}</td>
+                                            <td>{{ number_format($txn->debit_bal_bf, 2) }}</td>
+                                            <td>{{ number_format($txn->advance, 2) }}</td>
+                                            <td>{{ number_format($txn->others, 2) }}</td>
+                                            <td>{{ number_format($txn->net_pay, 2) }}</td>
+                                            <td>{{ number_format($txn->debit_bal_cf, 2) }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
+
                                 <tfoot class="table-light">
                                     <tr>
-                                        <td>68</td>
-                                        <td></td>
-                                        <td style="text-align:center"><b>TOTAL</b></td>
-                                        <td>408.85</td>
+                                        <td colspan="3" class="text-center"><b>TOTAL</b></td>
+                                        <td>{{ number_format($ffbTransactions->sum('weight_mt'), 2) }}</td>
                                         <td></td>
                                         <td></td>
-                                        <td>0.00</td>
-                                        <td>3,41,040.90</td>
-                                        <td>0.00</td>
-                                        <td>88,822.00</td>
-                                        <td>0.00</td>
-                                        <td>0.00</td>
-                                        <td>2,52,218.90</td>
-                                        <td>3,224.16</td>
+                                        <td>{{ number_format($ffbTransactions->sum('subsidy_amt'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('amt_before_ded'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('transport'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('debit_bal_bf'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('advance'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('others'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('net_pay'), 2) }}</td>
+                                        <td>{{ number_format($ffbTransactions->sum('debit_bal_cf'), 2) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>

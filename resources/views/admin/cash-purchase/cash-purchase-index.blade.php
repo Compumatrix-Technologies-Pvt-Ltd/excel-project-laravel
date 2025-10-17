@@ -25,7 +25,6 @@
             <div class="card">
                 <div class="card-header align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Cash Purchases Listing</h4>
-                    <h4 class="card-title mb-0 flex-grow-1 text-danger"><strong>Branch:</strong> VC Majumas SDN BHD</h4>
                     <div class="card-toolbar">
                          <button type="button" data-bs-toggle="modal" data-bs-target="#branchModal" class="btn btn-warning btn-label waves-effect waves-ligh">
                             <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
@@ -41,7 +40,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form data-toggle="validator" method="POST" action="" class="d-flex row" novalidate="true">
+                    {{-- <form data-toggle="validator" method="POST" action="" class="d-flex row" novalidate="true">
                         <input type="hidden" name="_token" value="" autocomplete="off">
                         <input type="hidden" name="_method" value="POST">
                         <div class="col-md-2">
@@ -76,18 +75,14 @@
                                     class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export
                                 Data</button>
                         </div>
-                    </form>
+                    </form> --}}
                     <div class="container-fluid mt-4">
                         <div class="row">
                             <div class="col-md-12">
-                                <table  id="BranchListing" class="table nowrap dt-responsive align-middle" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" style="width: 10px;">
-                                                <div class="form-check">
-                                                    <input class="form-check-input fs-15" type="checkbox" id="checkAll">
-                                                </div>
-                                            </th>
+                                <table id="CashPurchaseListing" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
                                         <th>Date</th>
                                         <th>Cash Bill No.</th>
                                         <th>Supplier ID</th>
@@ -98,160 +93,21 @@
                                         <th>Subsidy (RM)</th>
                                         <th>Net Pay (RM)</th>
                                     </tr>
-                                    </thead>
-                                    <tbody>
+                                </thead>
+
+                                <tfoot>
                                     <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>02-May-2025</td>
-                                        <td>VCCB2505001</td>
-                                        <td>VC-B-M063</td>
-                                        <td>Mohd Wan Hafiz Bin Rahman</td>
-                                        <td>894163</td>
-                                        <td>400</td>
-                                        <td>180.00</td>
-                                        <td> -40.00</td>
-                                        <td>140.00</td>
+                                        <!-- 6 columns merged -->
+                                        <th colspan="6" style="text-align:right;"><b>TOTAL</b></th>
+                                        <!-- last 4 are individual columns -->
+                                        <th id="total-weight"></th>
+                                        <th></th>
+                                        <th id="total-subsidy"></th>
+                                        <th id="total-netpay"></th>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>02-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-S005</td>
-                                        <td>Suhail Bin Salim</td>
-                                        <td>894164</td>
-                                        <td>1000</td>
-                                        <td>400.00</td>
-                                        <td>-60.00</td>
-                                        <td>340.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>02-May-2025</td>
-                                         <td>VCCB2505002</td>                                
-                                        <td>VC-B-N044</td>
-                                        <td>Nadihrah Binti Ghani</td>
-                                        <td>894165</td>
-                                        <td>1760</td>
-                                        <td>704.00</td>
-                                        <td>-60.00</td>
-                                        <td>644.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-M063</td>
-                                        <td>Mohd Wan Hafiz Bin Rahman</td>
-                                        <td>894323</td>
-                                        <td>2200</td>
-                                        <td>1120.00</td>
-                                        <td>-56.00</td>
-                                        <td>1064.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-S005</td>
-                                        <td>Suhail Bin Salim</td>
-                                        <td>894327</td>
-                                        <td>1700</td>
-                                        <td>850.00</td>
-                                        <td>-52.00</td>
-                                        <td>798.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-M063</td>
-                                        <td>Mohd Wan Hafiz Bin Rahman</td>
-                                        <td>894329</td>
-                                        <td>1500</td>
-                                        <td>750.00</td>
-                                        <td>-50.00</td>
-                                        <td>700.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-M103</td>
-                                        <td>Mazrinah Binti John</td>
-                                        <td>894331</td>
-                                        <td>1600</td>
-                                        <td>840.00</td>
-                                        <td>-42.00</td>
-                                        <td>798.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-M063</td>
-                                        <td>Mohd Wan Hafiz Bin Rahman</td>
-                                        <td>894333</td>
-                                        <td>2300</td>
-                                        <td>1210.00</td>
-                                        <td>-48.00</td>
-                                        <td>1162.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-S005</td>
-                                        <td>Suhail Bin Salim</td>
-                                        <td>894339</td>
-                                        <td>700</td>
-                                        <td>350.00</td>
-                                        <td>-28.00</td>
-                                        <td>322.00</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    name="checkAll"></div>
-                                        </th>
-                                        <td>04-May-2025</td>
-                                        <td>VCCB2505002</td>
-                                        <td>VC-B-S013</td>
-                                        <td>Sudin Bin Haji Aluk</td>
-                                        <td>894342</td>
-                                        <td>1680</td>
-                                        <td>840.00</td>
-                                        <td>-42.00</td>
-                                        <td>798.00</td>
-                                    </tr>
-                                </tbody>
-                                </table>
+                                </tfoot>
+                            </table>
+
                                 
                             </div>
                         </div>

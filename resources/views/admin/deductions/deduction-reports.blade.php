@@ -61,7 +61,7 @@
 
 
                 <div class="card-body">
-                    <div class="row g-3">
+                    {{-- <div class="row g-3">
                         <div class="col-md-2">
                             <label for="startDate" class="form-label">Start Date</label>
                             <input type="date" id="startDate" class="form-control">
@@ -102,7 +102,7 @@
                                 <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="container-fluid mt-4">
                         <div class="table-responsive">
                             <table id="DeductionReportsListing"

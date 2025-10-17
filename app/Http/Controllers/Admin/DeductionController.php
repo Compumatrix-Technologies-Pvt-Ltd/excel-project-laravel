@@ -28,6 +28,7 @@ class DeductionController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         $this->ViewData['Suppliers'] = Suppliers::with('user')
             ->where('user_id', $userId)
+            ->where('supplier_mode', 'hq')
             ->get();
 
         return view($this->ModuleView . 'deduction-index', $this->ViewData);

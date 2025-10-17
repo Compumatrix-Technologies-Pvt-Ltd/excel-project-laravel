@@ -41,6 +41,13 @@ class SupplierController extends Controller
         return view($this->ModuleView . 'create', $this->ViewData);
     }
 
+    public function hqSuppliers()
+    {
+        $this->ModuleTitle = __('HQ Suppliers');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view($this->ModuleView . 'suppliers-hq', $this->ViewData);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -59,26 +66,51 @@ class SupplierController extends Controller
             ], 500);
         }
     }
+    public function hqSuppliersStore(Suppliersrequest $request)
+    {
+        // dd($request->all());
+        try {
+            $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.hq-suppliers.index');
+            return response()->json($response);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An unexpected error occurred.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     public function _storeOrUpdate($SuppliersData, $request)
     {
 
         $user = auth()->user();
-
         if ($user->hasRole('branch')) {
             $prefix = $request->prefix;
             $type = $request->type;
+            $supplier_mode = 'branch';
 
             $supplierId = $this->BaseModel->generateSupplierId($prefix, $type);
             $SuppliersData->supplier_id = $supplierId;
 
         } elseif ($user->hasRole('hq')) {
-            $SuppliersData->supplier_id = $request->supplier_id;
+            if(!empty($request->supplier_type) && !empty($request->prefix) && !empty($request->type)){
+                $prefix = $request->prefix;
+                $type = $request->type;
+                $supplier_mode = 'branch';
 
+                $supplierId = $this->BaseModel->generateSupplierId($prefix, $type);
+                $SuppliersData->supplier_id = $supplierId;
+            }else{
+                $SuppliersData->supplier_id = $request->supplier_id;
+                $supplier_mode = 'hq';
+            }
         }
         $userId = $user->id;
         $SuppliersData->user_id = $userId;
         $SuppliersData->supplier_type = $request->supplier_type;
+        $SuppliersData->supplier_mode = $supplier_mode;
         $SuppliersData->supplier_name = $request->supplier_name;
         $SuppliersData->address1 = $request->address1;
         $SuppliersData->address2 = $request->address2;
@@ -116,52 +148,48 @@ class SupplierController extends Controller
         return response()->json($this->JsonData);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function editHqSupplier(string $encID)
+    {
+        $intID = base64_decode(base64_decode($encID));
+        $data = $this->BaseModel->find($intID);
+        $this->JsonData['status'] = __('success');
+        $this->JsonData['data'] = $data;
+        return response()->json($this->JsonData);
+    }
+    
     public function edit(string $encID)
     {
         $intID = base64_decode(base64_decode($encID));
-
         $data = $this->BaseModel->find($intID);
         $parts = explode('-', $data->supplier_id);
-
         $data->prefix = $parts[0] ?? '';
         $data->type = $parts[1] ?? '';
         $data->sequence = $parts[2] ?? '';
-
         if (!$data) {
-
             return redirect()->route('admin.suppliers.index')->with('error', 'Supplier not found');
         }
-
         $this->ViewData['supplier'] = $data;
         $this->ViewData['moduleAction'] = "Edit Supplier";
-
         return view($this->ModuleView . 'edit', $this->ViewData);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Suppliersrequest $request, string $id)
     {
-        // dd($id);
         $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.suppliers.index', $id);
         return response()->json($response);
     }
 
-     public function update1(Suppliersrequest $request)
+    public function update1(Suppliersrequest $request)
     {
-        // dd($request->all());
         $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.suppliers.index', $request->id);
         return response()->json($response);
     }
+    public function suppliersUpdate(Suppliersrequest $request)
+    {
+        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.hq-suppliers.index', $request->hidden_id);
+        return response()->json($response);
+    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $encID)
     {
         $response = Helper::destroyRecord($this->BaseModel, $encID);
@@ -200,6 +228,7 @@ class SupplierController extends Controller
             // Branch-user can only see their own suppliers
             $baseQuery->where('user_id', $loggedInUser->id);
         }
+        $baseQuery->where('supplier_mode', 'branch');
 
 
         $intTotalData = $baseQuery->count();
@@ -229,6 +258,12 @@ class SupplierController extends Controller
 
         foreach ($objects as $supplier) {
             $data[] = [
+                'checkbox'=>'<th scope="col" style="width: 10px;">
+                    <div class="form-check">
+                        <input class="form-check-input fs-15" type="checkbox" id="checkAll">
+                    </div>
+                </th>',
+                'id' => $count ?? 'N/A',
                 'supplier_id' => $supplier->supplier_id ?? 'N/A',
                 'supplier_name' => $supplier->supplier_name ?? 'N/A',
                 'email' => $supplier->email ?? 'N/A',
@@ -258,6 +293,7 @@ class SupplierController extends Controller
                 </div>
             ',
             ];
+            $count++;
         }
 
         return response()->json([
@@ -268,8 +304,102 @@ class SupplierController extends Controller
         ]);
     }
 
+    public function HQgetRecords(Request $request)
+    {
 
+        $start = $request->start ?? 0;
+        $length = $request->length ?? 10;
 
+        $column = 0;
+        $dir = 'asc';
+
+        if ($request->has('order') && isset($request->order[0])) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+        }
+
+        $filter = [
+            0 => 'supplier_id',
+            1 => 'supplier_name',
+            2 => 'email',
+            3 => 'telphone_1',
+        ];
+
+        $sortColumn = $filter[$column] ?? 'supplier_id';
+
+        $loggedInUser = auth()->user();
+
+        $baseQuery = $this->BaseModel::with('user');
+
+        if ($loggedInUser->hasRole('hq')) {
+            $baseQuery->where('user_id', $loggedInUser->id);
+        } elseif ($loggedInUser->hasRole('branch')) {
+            // Branch-user can only see their own suppliers
+            $baseQuery->where('user_id', $loggedInUser->id);
+        }
+        $intTotalData = $baseQuery->count();
+        $modelQuery = clone $baseQuery;
+        if (!empty($request->search['value'])) {
+            $strSearch = $request->search['value'];
+
+            $modelQuery->where(function ($query) use ($strSearch) {
+                $query->where('supplier_id', 'LIKE', "%{$strSearch}%")
+                    ->orWhere('supplier_name', 'LIKE', "%{$strSearch}%")
+                    ->orWhere('email', 'LIKE', "%{$strSearch}%")
+                    ->orWhere('telphone_1', 'LIKE', "%{$strSearch}%");
+            });
+        }
+
+        $intTotalFiltered = $modelQuery->count();
+        $objects = $modelQuery->orderBy($sortColumn, $dir)
+            ->skip($start)
+            ->take($length)
+            ->get();
+        $data = [];
+        $count = $start + 1;
+
+        foreach ($objects as $supplier) {
+            $data[] = [
+                'checkbox'=>'<th scope="col" style="width: 10px;">
+                        <div class="form-check">
+                            <input class="form-check-input fs-15" type="checkbox" id="checkAll">
+                        </div>
+                    </th>',
+                'id' => $count ?? 'N/A',
+                'supplier_id' => $supplier->supplier_id ?? 'N/A',
+                'supplier_name' => $supplier->supplier_name ?? 'N/A',
+                'email' => $supplier->email ?? 'N/A',
+                'telphone_1' => $supplier->telphone_1 ?? 'N/A',
+                'actions' => '
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown">
+                        <i class="ri-more-fill align-middle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item edit-supplier-btn" href="javascript:void(0)" data-id="'.base64_encode(base64_encode($supplier->id)).'">
+                                <i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route('admin.suppliers.destroy', [base64_encode(base64_encode($supplier->id))]) . '" class="dropdown-item remove-item-btn">
+                                <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            ',
+            ];
+            $count++;
+        }
+
+        return response()->json([
+            'draw' => intval($request->draw),
+            'recordsTotal' => $intTotalData,
+            'recordsFiltered' => $intTotalFiltered,
+            'data' => $data,
+        ]);
+    }
 
     public function importSuppliers(Request $request)
     {
