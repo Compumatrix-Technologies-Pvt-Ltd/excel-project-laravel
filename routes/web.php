@@ -31,6 +31,10 @@ use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\BranchController;
 use App\Http\Controllers\Admin\RolesController;
+use App\Http\Controllers\Admin\PurchaseInvoiceController;
+use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\CashBillController;
+use App\Http\Controllers\Admin\PurchaseAnalysisController;
 
 
 
@@ -180,12 +184,10 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('supplies-analysis/pdf', [AnalysisController::class, 'generateSuppliesAnalysisPDF'])->name('supplies.analysis.generatePDF');
 
     Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
-    Route::get('purchase-analysis', [AdminUserController::class, 'purchaseAnalysisIndex'])->name('purchaseAnalysis.index');
 
     Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
     
     Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
-    Route::get('supplier-cash-bill', [CommonController::class, 'supplierCashBill'])->name('supplier.cash.bill');
 
     Route::get('subscription-&-billing', [CommonController::class, 'subscriptionAndBilling'])->name('subscription.and.billing');
     Route::get('usages-&-feature-flags', [CommonController::class, 'usagesAndFeatureFlags'])->name('usages.and.feature.flags');
@@ -221,10 +223,28 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash-purchase-summary/getRecords', [MasterController::class, 'cashPurchaseSummaryGetRecords']);
     Route::get('daily-cash-purchase-summary', [MasterController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
     Route::get('daily-cash-purchase-summary/getRecords', [MasterController::class, 'dailyCashPurchaseSummaryGetRecords']);
-    Route::get('payments', [MasterController::class, 'paymentIndex'])->name('payments.index');
-    Route::get('payments/getRecords', [MasterController::class, 'paymentgetRecords']);
-    Route::get('sales-invoice', [MasterController::class, 'salesInvoice'])->name('sales.invoice');
+    
 
+    Route::get('sales-invoice-view/{id}', [PurchaseInvoiceController::class, 'salesInvoice'])->name('sales-invoice.view');
+    Route::get('sales-invoice', [PurchaseInvoiceController::class, 'salesInvoiceIndex'])->name('sales.invoice.index');
+    Route::get('sales-invoices/getRecords', [PurchaseInvoiceController::class, 'salesInvoiceRecords']);
+    Route::get('sales-invoice/{id}/preview', [PurchaseInvoiceController::class, 'preview'])->name('sales.invoice.preview');
+    Route::get('sales-invoice/{id}/pdf', [PurchaseInvoiceController::class, 'createPdf'])->name('sales.invoice.pdf');
+
+
+
+    Route::get('supplier-cash-bill-view/{id}', [CashBillController::class, 'supplierCashBillView'])->name('supplier.cash.bill.view');
+    Route::get('scb', [CashBillController::class, 'supplierCashBill'])->name('supplier.cash.bill');
+    Route::get('scb/getRecords', [CashBillController::class, 'supplierCashBillGetRecords'])->name('supplier.cash.bill.getRecords');
+    Route::get('supplier/cash-bill/details/{invoice_no}', [CashBillController::class, 'getCashBillDetails'])->name('supplier.cash.bill.details');
+    Route::get('cash-bill/{id}/preview', [CashBillController::class, 'preview'])->name('cash.bill.preview');
+    Route::get('supplier/cash-bill/pdf/{invoice_no}', [CashBillController::class, 'generateCashBillPdf'])
+    ->name('admin.supplier.cash.bill.pdf');
+
+    Route::get('payments', [PaymentController::class, 'paymentIndex'])->name('payments.index');
+    Route::get('payments/getRecords', [PaymentController::class, 'paymentgetRecords']);
+    Route::post('payments/pdf', [PaymentController::class, 'createPaymentListPdf'])->name('payments.pdf');
+    Route::get('/payments/pdf-preview', [PaymentController::class, 'previewPaymentListPdf'])->name('payments.pdf.preview');
 
     // Master Module Route HQ
     Route::get('hq-main', [MasterController::class, 'HQmainForm'])->name('hqMainForm.index');
@@ -247,6 +267,17 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('get-supplier-details/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetails'])->name('ffb.transaction.getSupplierDetails');
     Route::get('get-supplier-details-main/{supplier_id}/{type}', [MasterController::class, 'getSupplierDetailsMain'])->name('ffb.transaction.getSupplierDetailsMain');
     Route::post('branch-main/getValues', [MasterController::class, 'getBranchSupplierDropDownValues'])->name('branch.main.getValues');
+
+    Route::get('purchase-analysis', [PurchaseAnalysisController::class, 'index'])->name('purchaseAnalysis.index');
+    Route::get('purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'supplierCashBillGetRecords'])->name('purchaseAnalysis.index');
+    Route::get('purchase-analysis/chart-data', [PurchaseAnalysisController::class, 'getPurchaseChartData'])
+    ->name('purchase.analysis.chart.data');
+    Route::get('credit-purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'getCreditPurchaseAnalysisRecords'])
+    ->name('credit.purchase.analysis.getRecords');
+    Route::get('purchase-analysis/pdf', [PurchaseAnalysisController::class, 'purchaseAnalysisPdf'])
+    ->name('purchase.analysis.pdf');
+    Route::get('credit-purchase-analysis/pdf', [PurchaseAnalysisController::class, 'creditPurchaseAnalysisPdf'])
+    ->name('credit.purchase.analysis.pdf');
 
 
 });

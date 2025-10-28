@@ -213,12 +213,7 @@ class AdminUserController extends Controller
         return view('admin.analysis.credit-purchase-analysis', $this->ViewData);
     }
 
-    public function purchaseAnalysisIndex()
-    {
-        $this->ModuleTitle = __('Purches Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.analysis.purchase-analysis', $this->ViewData);
-    }
+    
 
 
 

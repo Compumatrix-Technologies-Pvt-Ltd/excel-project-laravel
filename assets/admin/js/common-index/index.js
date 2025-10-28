@@ -484,40 +484,306 @@
 
 
     var action = ADMINURL + '/transactions/getRecords/hq';
-        $('#TransactionListingHq').DataTable({
-            scroller: true,
+    $('#TransactionListingHq').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+        },
+        columns: [
+            { 
+            data: null, 
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            },
+            searchable: false,
+            orderable: false 
+        },
+            { data: 'trx_no', name: 'trx_no' },
+            { data: 'trx_date', name: 'trx_date' },
+            { data: 'supplier_id', name: 'supplier_id' },
+            { data: 'ticket_no', name: 'ticket_no' },
+            { data: 'weight', name: 'weight' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false },
+        ],
+
+        columnDefs: [
+            { "orderable": false, "targets": [1, 2, 3, 4] },
+        ],
+        aaSorting: [
+            [0, 'DESC']
+        ],
+    });
+
+    var action = ADMINURL + '/sales-invoices/getRecords';
+    $('#SalesInvoiceListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+        },
+        columns: [
+            { 
+            data: null, 
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            },
+            searchable: false,
+            orderable: false 
+        },
+            { data: 'bill_date', name: 'bill_date' },
+            { data: 'invoice_no', name: 'invoice_no' },
+            { data: 'supplier_name', name: 'supplier_name' },
+            { data: 'total_deductions', name: 'total_deductions' },
+            { data: 'net_pay', name: 'net_pay' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false },
+        ],
+
+        columnDefs: [
+            { "orderable": false, "targets": [1, 2, 3, 4] },
+        ],
+        aaSorting: [
+            [0, 'DESC']
+        ],
+    });
+
+    var selectedValue = '';
+    var action = ADMINURL + '/payments/getRecords';
+    var PaymentListing = $('#PaymentListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+            data: function (d) {
+                d.payment_method = selectedValue;
+            },
+            dataSrc: function (json) {
+                if (json.footerTotals) {
+                    $('#grand-total').html(json.footerTotals.grand_total);
+                }
+                return json.data;
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'invoice_no', name: 'invoice_no' },
+            { data: 'supplier_id', name: 'supplier_id' },
+            { data: 'supplier_name', name: 'supplier_name' },
+            { data: 'bill_date', name: 'bill_date' },
+            { data: 'net_pay', name: 'net_pay', className: "text-end" },
+        ],
+        order: [[4, 'desc']], // sort by bill_date
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+
+            // Convert strings to numbers
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/,/g, '')) || 0
+                    : (typeof i === 'number' ? i : 0);
+            };
+
+            // Calculate grand total for current page
+            var grandTotal = api
+                .column(5, { page: 'current' })
+                .data()
+                .reduce((a, b) => a + intVal(b), 0);
+
+            $('#grand-total').html(grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        }
+    });
+    $(document).on('change','#paymentMethod',function(){
+        selectedValue = $(this).val(); 
+        PaymentListing.column(1).search(selectedValue).draw(); 
+    });
+
+    var action = ADMINURL + '/scb/getRecords';
+    var supplierCashBillListing = $('#supplierCashBillListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: false,
+        ajax: {
+            url: action,
+            type: "GET",
+            data: function (d) {
+                d.payment_method = selectedValue;
+            },
+            dataSrc: function (json) {
+                if (json.footerTotals) {
+                    $('#grand-total').html(json.footerTotals.grand_total);
+                }
+                return json.data;
+            }
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'date', name: 'date' },
+            { data: 'supplier_name', name: 'supplier_name' },
+            { data: 'net_weight', name: 'net_weight', className: "text-end" },
+            { data: 'price', name: 'price', className: "text-end" },
+            { data: 'amount', name: 'amount', className: "text-end" },
+            { data: 'actions', name: 'actions', className: "text-end" },
+        ],
+        order: [[4, 'desc']], // sort by bill_date
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+
+            // Convert strings to numbers
+            var intVal = function (i) {
+                return typeof i === 'string'
+                    ? parseFloat(i.replace(/,/g, '')) || 0
+                    : (typeof i === 'number' ? i : 0);
+            };
+
+            // Calculate grand total for current page
+            var grandTotal = api
+                .column(5, { page: 'current' })
+                .data()
+                .reduce((a, b) => a + intVal(b), 0);
+
+            $('#grand-total').html(grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 }));
+        }
+    });
+    /*************** Credit Purchase Analysis ***************/
+        var action = ADMINURL + '/credit-purchase-analysis/getRecords';
+        var CreditPurchaseAnalysisListing = $('#CreditPurchaseAnalysisListing').DataTable({
+            processing: true,
             serverSide: true,
-            responsive: false,
             ajax: {
                 url: action,
                 type: "GET",
+                data: function (d) {
+                    d.year = $('#yearSelect').val() || new Date().getFullYear();
+                    d.mspo_certification = $('#mspo_certification').val();
+                    d.purchases = $('#purchases').val();
+                    d.analysis_in = $('#analysis_in').val();
+                },
+                dataSrc: function (json) {
+                    if (json.footerTotals) {
+                        const footerCells = $('#CreditPurchaseAnalysisListing tfoot tr td');
+                        json.footerTotals.forEach((val, i) => $(footerCells[i]).html(val));
+                    }
+                    return json.data;
+                },
+                error: function(xhr, error, code) {
+                    showToast(false, 'Error loading data. Please try again just refresh the page');
+                }
             },
             columns: [
-              { 
-                data: null, 
-                render: function(data, type, row, meta) {
-                    return meta.row + 1; 
-                },
-                searchable: false,
-                orderable: false 
-            },
-                { data: 'trx_no', name: 'trx_no' },
-                { data: 'trx_date', name: 'trx_date' },
-                { data: 'supplier_id', name: 'supplier_id' },
-                { data: 'ticket_no', name: 'ticket_no' },
-                { data: 'weight', name: 'weight' },
-                { data: 'actions', name: 'actions', orderable: false, searchable: false },
-            ],
+                {
+                    data: null,
+                    name: 'supplier_name',
+                    render: function (data) {
+                        return `${data.sID} ${data.supplier_name}`;
 
+                    }
+                },
+                { data: 'Jan', name: 'Jan' },
+                { data: 'Feb', name: 'Feb' },
+                { data: 'Mar', name: 'Mar' },
+                { data: 'Apr', name: 'Apr' },
+                { data: 'May', name: 'May' },
+                { data: 'Jun', name: 'Jun' },
+                { data: 'Jul', name: 'Jul' },
+                { data: 'Aug', name: 'Aug' },
+                { data: 'Sep', name: 'Sep' },
+                { data: 'Oct', name: 'Oct' },
+                { data: 'Nov', name: 'Nov' },
+                { data: 'Dec', name: 'Dec' },
+                { data: 'total', name: 'total' },
+            ],
+            order: [[0, 'asc']],
             columnDefs: [
-                { "orderable": false, "targets": [1, 2, 3, 4] },
+                { "orderable": false, "targets": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] },
             ],
-            aaSorting: [
-                [0, 'DESC']
-            ],
+            pageLength: 10,
+            responsive: true,
+            searching: true,
         });
 
-          $(document).on('click','#edit-transaction-btn',function(){
+        $('#yearSelect').on('change', function () {
+        updateTitle();
+        CreditPurchaseAnalysisListing.ajax.reload();
+    });
+
+    $('#mspo_certification').on('change', function () {
+        updateTitle();
+        CreditPurchaseAnalysisListing.ajax.reload();
+    });
+
+    $('#purchases').on('change', function () {
+        updateTitle();
+        CreditPurchaseAnalysisListing.ajax.reload();
+    });
+
+    $('#analysis_in').on('change', function () {
+        let unit = $(this).val();
+        let label = unit === 'rm' ? 'Total (RM)' : 'Total (M/Ton)';
+        $('#CreditPurchaseAnalysisListing thead th:last').text(label);
+        updateTitle();
+        CreditPurchaseAnalysisListing.ajax.reload();
+    });
+
+    // ✅ Function to dynamically update title text
+    function updateTitle() {
+        const year = $('#yearSelect').val() || new Date().getFullYear();
+        const analysisIn = $('#analysis_in').val() === 'rm' ? 'RM' : 'M/Ton';
+        const purchases = $('#purchases').val() || 'credit';
+        const mspoCertification = $('#mspo_certification').val() || 'registered';
+        const purchaseType = purchases.charAt(0).toUpperCase() + purchases.slice(1);
+        const mspoCertificationStr = mspoCertification.charAt(0).toUpperCase() + mspoCertification.slice(1);
+        $('.title').text(`${purchaseType} Purchase Analysis by Supplier in ${analysisIn} for [ ${year} ] for ${mspoCertificationStr} MSPO License Supplier`);
+    }
+
+    /*************** Credit Purchase Analysis **************/
+
+    
+    var action = ADMINURL + '/purchase-analysis/getRecords';
+    var PurchaseAnalysisListing = $('#PurchaseAnalysisListing').DataTable({
+        scroller: true,
+        serverSide: true,
+        responsive: true,
+        searching: false,
+        paging: false, // no need for pagination since you only have 12 rows
+        info: false,
+        ajax: {
+            url: action,
+            type: "GET",
+            data: function (d) {
+                d.year = $('#yearSelect').val();
+            },
+            dataSrc: function (json) {
+                if (json.footerTotals) {
+                    // update footer totals
+                    $('#total-credit').html(json.footerTotals.total_credit);
+                    $('#total-cash').html(json.footerTotals.total_cash);
+                    $('#total-weight').html(json.footerTotals.total_weight);
+                }
+                return json.data;
+            }
+        },
+        columns: [
+            { data: 'month', name: 'month' },
+            { data: 'credit', name: 'credit', className: 'text-end' },
+            { data: 'cash', name: 'cash', className: 'text-end' },
+            { data: 'total', name: 'total', className: 'text-end' },
+        ],
+        columnDefs: [
+            { "orderable": false, "targets": [0,1,2, 3] },
+        ],
+    });
+    $(document).on('change','#yearSelect',function(){
+        selectedValue = $(this).val(); 
+        PurchaseAnalysisListing.column(1).search(selectedValue).draw(); 
+    });
+
+    $(document).on('click','#edit-transaction-btn',function(){
 
        $('#transactionEditModal').modal('show');
         var encrypted_id = $(this).attr("data-id");

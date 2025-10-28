@@ -61,11 +61,7 @@ class CommonController extends Controller
     //     return view('admin.daily-transactions.hq-index', $this->ViewData);
     // }
     
-    public function supplierCashBill(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Supplier Cash Bill";
-        return view('admin.supplier-cash-bill.supplier-cash-bill', $this->ViewData);
-    }
+    
     public function subscriptionAndBilling(Request $request)
     {
         $this->ViewData['moduleAction'] = "Subscription & Billing";

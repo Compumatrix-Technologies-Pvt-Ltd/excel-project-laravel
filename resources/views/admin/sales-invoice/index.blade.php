@@ -6,12 +6,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Supplier Cash Bill </h4>
+                <h4 class="mb-sm-0">Sales Invoice </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">Supplier Cash Bill Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.suppliers.index') }}">Supplier
-                                Cash Bill Listing</a>
+                        <li class="breadcrumb-item active"><a href="">Sales Invoice Management</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.suppliers.index') }}">Sales
+                                Invoice Listing</a>
                         </li>
                     </ol>
                 </div>
@@ -24,32 +24,26 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">Supplier Cash Bill Listing</h4>
+                    <h4 class="card-title mb-0 flex-grow-1">Sales Invoice Listing</h4>
                 </div>
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
-                                <table id="supplierCashBillListing" class="table nowrap dt-responsive align-middle" style="width:100%">
+                                <table id="SalesInvoiceListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Date</th>
+                                            <th>Invoice No.</th>
                                             <th>Supplier Name</th>
-                                            <th>Net Weight (M ton)</th>
-                                            <th>Price/MT (RM)</th>
-                                            <th>Amount</th>
+                                            <th>Total Deductions</th>
+                                            <th>Net Pay</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                     </tbody>
-                                     <tfoot>
-                                    <tr>
-                                        <th colspan="5" class="text-end">Total:</th>
-                                        <th id="grand-total" class="text-end">0.00</th>
-                                    </tr>
-                                </tfoot>
                                 </table>
                         </div>
                     </div>

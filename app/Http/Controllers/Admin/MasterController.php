@@ -639,19 +639,7 @@ class MasterController extends Controller
         }
     }
 
-    public function paymentIndex(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Payments";
-        return view('admin.payments.index', $this->ViewData);
-    }
+    
 
-    public function paymentgetRecords(){
-        
-    }
-
-    public function salesInvoice(Request $request)
-    {
-        $this->ViewData['moduleAction'] = "Sales Invoice";
-        return view('admin.sales-invoice.sales-invoice', $this->ViewData);
-    }
+   
 }

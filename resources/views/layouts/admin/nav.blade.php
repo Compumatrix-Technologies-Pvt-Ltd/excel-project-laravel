@@ -170,10 +170,11 @@
                 @endif
 
                 @if (Auth::user()->hasRole('hq'))
-                    <li class="menu-title"><span data-key="t-menu" class="text-light">HQ Modules</span></li>
                     <li class="text-light">
                         <hr>
                     </li>
+                        <li class="menu-title"><span data-key="t-menu" class="text-light">HQ</span></li>
+
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
                             href="{{ route('admin.dashboard') }}">
@@ -309,10 +310,10 @@
                         </div>
                     </li>
 
-                    <li class="text-light">
+                   <li class="text-light">
                         <hr>
                     </li>
-                   
+                        <li class="menu-title"><span data-key="t-menu" class="text-light">Branch</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
                             href="{{ route('admin.mainForm.index') }}">
@@ -348,7 +349,7 @@
                     <!-- Sales Invoice -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/sales-invoice') ? 'active' : '' }}"
-                            href="{{ route('admin.sales.invoice') }}">
+                            href="{{ route('admin.sales.invoice.index') }}">
                             <i class="ri-bill-line"></i> <span data-key="t-widgets">Sales Invoice</span>
                         </a>
                     </li>

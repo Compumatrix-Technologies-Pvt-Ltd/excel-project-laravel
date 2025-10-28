@@ -423,7 +423,7 @@
                                             <div class="mb-2">
                                                 <label class="form-label mb-1">Debit Bal. B/F:</label>
                                                 <input type="number" step="0.01"
-                                                    class="form-control form-control-sm">
+                                                    class="form-control form-control-sm DebitBalBF">
                                             </div>
                                             <div class="mb-2">
                                                 <label class="form-label mb-1">Transport:</label>
@@ -594,17 +594,38 @@
                 part1.readOnly = true;
                 part2.readOnly = true;
                 // Disable Pay By section
-              payByFieldset.removeAttribute('disabled');
+                payByFieldset.removeAttribute('disabled');
                 payInputs.forEach(input => input.disabled = false);
+
+                $('.incentive_rate').attr('readonly', false);
+                $('.DebitBalBF').attr('readonly', false);
+                $('[name="transport"]').attr('readonly', false);
+                $('[name="advance"]').attr('readonly', false);
+                $('[name="others"]').attr('readonly', false);
+                $('[name="others_desc"]').attr('readonly', false);
+
             } else if (cashRadio.checked) {
                 // Cash: Particulars
                 part1.value = "FFB Ticket No.";
-                particulars_hidden.value = "FFB Ticket No.";
                 part2.value = "";
                 part1.readOnly = false;
                 part2.readOnly = false;
+
+                $(document).on('keyup', '#part2', function() {
+                    particulars_hidden.value = "FFB Ticket No. " + part2.value;
+                });
+
                 // Enable Pay By section
                 payByFieldset.setAttribute('disabled', false);
+
+                $('.incentive_rate').attr('readonly', true);
+                $('.DebitBalBF').val(0).attr('readonly', true);
+                $('[name="transport"]').val(0).attr('readonly', true);
+                $('[name="advance"]').val(0).attr('readonly', true);
+                $('[name="others"]').val(0).attr('readonly', true);
+                $('[name="others_desc"]').attr('readonly', true);
+
+
                 payInputs.forEach(input => input.disabled = false);
                 
             }
