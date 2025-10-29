@@ -351,6 +351,7 @@
                                         <span class="text-danger err_supplier_id"></span>
                                     </div>
                                     <div class="col-md-3 col-lg-3">
+                                        
                                         <label class="form-label mb-0 supplier_name"></label>
                                         <input type="hidden" name="company_id" value="{{ Auth::user()->company_id }}">
                                         <input type="hidden" name="branch_id" value="{{ Auth::user()->branch_id }}">

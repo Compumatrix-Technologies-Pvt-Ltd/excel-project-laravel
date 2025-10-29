@@ -66,6 +66,9 @@
         ajax: {
             url: action,
             type: "GET",
+            data: function (d) {
+                d.userId = $('#hidden_user_id').val();
+            },
             dataSrc: function(json) {
                 return json.data; 
             },
@@ -160,6 +163,9 @@
         responsive: false,
         ajax: {
             url: action,
+             data: function (d) {
+                    d.userId = $('#hidden_user_id').val();
+                },
             type: "GET",
         },
         columns: [
@@ -426,6 +432,9 @@
             responsive: false,
             ajax: {
                 url: action,
+                data: function (d) {
+                    d.userId = $('#hidden_user_id').val();
+                },
                 type: "GET",
             },
             columns: [
@@ -524,6 +533,9 @@
         responsive: false,
         ajax: {
             url: action,
+             data: function (d) {
+                    d.userId = $('#hidden_user_id').val();
+                },
             type: "GET",
         },
         columns: [
@@ -650,6 +662,165 @@
             $('#grand-total').html(grandTotal.toLocaleString(undefined, { minimumFractionDigits: 2 }));
         }
     });
+    /*************** Consolidated Credit Purchase Analysis Start***************/
+        var action = ADMINURL + '/consolidated/credit/purchase/getRecords';
+        var consolidatedCreditPurchaseAnalysisTable = $('#consolidatedCreditPurchaseAnalysisTable').DataTable({
+            processing: true,
+            serverSide: false,
+            paging: false,
+            searching: false,
+            ordering: false,
+            ajax: {
+                url: action,
+                type: 'GET',
+                data: function (d) {
+                    d.year = $('#yearSelect').val() || new Date().getFullYear();
+                    d.branch_id = $('#selectBranch').val();
+                    d.purchaseType = 'credit';
+                },
+                dataSrc: function (json) {
+                    // Append footer totals
+                    if (json.footer) {
+                        setTimeout(() => updateFooter(json.footer), 100);
+                    }
+                    return json.data;
+                }
+            },
+            columns: [
+                { data: 'supplier_name', name: 'supplier_name' },
+                { data: 'month_1', name: 'Jan' },
+                { data: 'month_2', name: 'Feb' },
+                { data: 'month_3', name: 'Mar' },
+                { data: 'month_4', name: 'Apr' },
+                { data: 'month_5', name: 'May' },
+                { data: 'month_6', name: 'Jun' },
+                { data: 'month_7', name: 'Jul' },
+                { data: 'month_8', name: 'Aug' },
+                { data: 'month_9', name: 'Sep' },
+                { data: 'month_10', name: 'Oct' },
+                { data: 'month_11', name: 'Nov' },
+                { data: 'month_12', name: 'Dec' },
+                { data: 'total', name: 'total' }
+            ],
+            language: {
+                emptyTable: "Please select a branch to view supplier data"
+            }
+        });
+
+        $('#selectBranch').on('change', function () {
+            consolidatedCreditPurchaseAnalysisTable.ajax.reload();
+        });
+        $('#yearSelect').on('change', function () {
+            var unitt = $(this).val();
+            $('.yearDoc').text(unitt);
+            consolidatedCreditPurchaseAnalysisTable.ajax.reload();
+        });
+
+        // Dynamically populate footer
+        function updateFooter(footer) {
+            let footerHtml = `
+                <tr class="fw-bold table-light">
+                    <td>${footer.supplier_name}</td>
+                    <td>${footer.month_1}</td>
+                    <td>${footer.month_2}</td>
+                    <td>${footer.month_3}</td>
+                    <td>${footer.month_4}</td>
+                    <td>${footer.month_5}</td>
+                    <td>${footer.month_6}</td>
+                    <td>${footer.month_7}</td>
+                    <td>${footer.month_8}</td>
+                    <td>${footer.month_9}</td>
+                    <td>${footer.month_10}</td>
+                    <td>${footer.month_11}</td>
+                    <td>${footer.month_12}</td>
+                    <td>${footer.total}</td>
+                </tr>`;
+            $('#consolidatedCreditPurchaseAnalysisTable tfoot').remove();
+            $('#consolidatedCreditPurchaseAnalysisTable').append(`<tfoot>${footerHtml}</tfoot>`);
+        }
+    /*************** Consolidated Credit Purchase Analysis End ***************/
+
+
+    /*************** Consolidated Cash Purchase Analysis Start***************/
+        var action = ADMINURL + '/consolidated/credit/purchase/getRecords';
+        var consolidatedCashPurchaseAnalysisTable = $('#consolidatedCashPurchaseAnalysisTable').DataTable({
+            processing: true,
+            serverSide: false,
+            paging: false,
+            searching: false,
+            ordering: false,
+            ajax: {
+                url: action,
+                type: 'GET',
+                data: function (d) {
+                    d.year = $('#yearSelect').val() || new Date().getFullYear();
+                    d.branch_id = $('#selectBranch').val();
+                    d.purchaseType = 'cash';
+
+                },
+                dataSrc: function (json) {
+                    // Append footer totals
+                    if (json.footer) {
+                        setTimeout(() => updateFooter(json.footer), 100);
+                    }
+                    return json.data;
+                }
+            },
+            columns: [
+                { data: 'supplier_name', name: 'supplier_name' },
+                { data: 'month_1', name: 'Jan' },
+                { data: 'month_2', name: 'Feb' },
+                { data: 'month_3', name: 'Mar' },
+                { data: 'month_4', name: 'Apr' },
+                { data: 'month_5', name: 'May' },
+                { data: 'month_6', name: 'Jun' },
+                { data: 'month_7', name: 'Jul' },
+                { data: 'month_8', name: 'Aug' },
+                { data: 'month_9', name: 'Sep' },
+                { data: 'month_10', name: 'Oct' },
+                { data: 'month_11', name: 'Nov' },
+                { data: 'month_12', name: 'Dec' },
+                { data: 'total', name: 'total' }
+            ],
+            language: {
+                emptyTable: "Please select a branch to view supplier data"
+            }
+        });
+
+        $('#selectBranch').on('change', function () {
+            consolidatedCashPurchaseAnalysisTable.ajax.reload();
+        });
+        $('#yearSelect').on('change', function () {
+            var unitt = $(this).val();
+            $('.yearDoc').text(unitt);
+            consolidatedCashPurchaseAnalysisTable.ajax.reload();
+        });
+
+        // Dynamically populate footer
+        function updateFooter(footer) {
+            let footerHtml = `
+                <tr class="fw-bold table-light">
+                    <td>${footer.supplier_name}</td>
+                    <td>${footer.month_1}</td>
+                    <td>${footer.month_2}</td>
+                    <td>${footer.month_3}</td>
+                    <td>${footer.month_4}</td>
+                    <td>${footer.month_5}</td>
+                    <td>${footer.month_6}</td>
+                    <td>${footer.month_7}</td>
+                    <td>${footer.month_8}</td>
+                    <td>${footer.month_9}</td>
+                    <td>${footer.month_10}</td>
+                    <td>${footer.month_11}</td>
+                    <td>${footer.month_12}</td>
+                    <td>${footer.total}</td>
+                </tr>`;
+            $('#consolidatedCreditPurchaseAnalysisTable tfoot').remove();
+            $('#consolidatedCreditPurchaseAnalysisTable').append(`<tfoot>${footerHtml}</tfoot>`);
+        }
+    /*************** Consolidated Cash Purchase Analysis End ***************/
+
+
     /*************** Credit Purchase Analysis ***************/
         var action = ADMINURL + '/credit-purchase-analysis/getRecords';
         var CreditPurchaseAnalysisListing = $('#CreditPurchaseAnalysisListing').DataTable({
@@ -709,41 +880,74 @@
 
         $('#yearSelect').on('change', function () {
         updateTitle();
-        CreditPurchaseAnalysisListing.ajax.reload();
+            CreditPurchaseAnalysisListing.ajax.reload();
+        });
+
+        $('#mspo_certification').on('change', function () {
+            updateTitle();
+            CreditPurchaseAnalysisListing.ajax.reload();
+        });
+
+        $('#purchases').on('change', function () {
+            updateTitle();
+            CreditPurchaseAnalysisListing.ajax.reload();
+        });
+
+        $('#analysis_in').on('change', function () {
+            let unit = $(this).val();
+            let label = unit === 'rm' ? 'Total (RM)' : 'Total (M/Ton)';
+            $('#CreditPurchaseAnalysisListing thead th:last').text(label);
+            updateTitle();
+            CreditPurchaseAnalysisListing.ajax.reload();
+        });
+
+        // ✅ Function to dynamically update title text
+        function updateTitle() {
+            const year = $('#yearSelect').val() || new Date().getFullYear();
+            const analysisIn = $('#analysis_in').val() === 'rm' ? 'RM' : 'M/Ton';
+            const purchases = $('#purchases').val() || 'credit';
+            const mspoCertification = $('#mspo_certification').val() || 'registered';
+            const purchaseType = purchases.charAt(0).toUpperCase() + purchases.slice(1);
+            const mspoCertificationStr = mspoCertification.charAt(0).toUpperCase() + mspoCertification.slice(1);
+            $('.title').text(`${purchaseType} Purchase Analysis by Supplier in ${analysisIn} for [ ${year} ] for ${mspoCertificationStr} MSPO License Supplier`);
+        }
+
+    /*************** Credit Purchase Analysis End **************/
+
+    /*************** GPS Start **************/
+    var action = ADMINURL + '/suppliers/gps/getRecords';
+
+    var SuppliergpsListing = $('#SuppliergpsListing').DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        ajax: {
+            url: action,
+            type: "GET",
+        },
+        columns: [
+            { data: 'supplier_id', name: 'supplier_id' },
+            { data: 'supplier_name', name: 'supplier_name' },
+            { data: 'mpob_lic_no', name: 'mpob_lic_no' },
+            { data: 'mspo_cert_no', name: 'mspo_cert_no' },
+            { data: 'land_size', name: 'land_size', className: 'text-end' },
+            { data: 'latitude', name: 'latitude', className: 'text-center' },
+            { data: 'longitude', name: 'longitude', className: 'text-center' },
+        ],
+        order: [[0, 'asc']],
+        columnDefs: [
+            { "orderable": false, "targets": [0, 1, 2, 3, 4, 5, 6] },
+        ],
+        pageLength: 10,
+        language: {
+            searchPlaceholder: "Search suppliers...",
+        }
     });
+    /*************** GPS End **************/
 
-    $('#mspo_certification').on('change', function () {
-        updateTitle();
-        CreditPurchaseAnalysisListing.ajax.reload();
-    });
-
-    $('#purchases').on('change', function () {
-        updateTitle();
-        CreditPurchaseAnalysisListing.ajax.reload();
-    });
-
-    $('#analysis_in').on('change', function () {
-        let unit = $(this).val();
-        let label = unit === 'rm' ? 'Total (RM)' : 'Total (M/Ton)';
-        $('#CreditPurchaseAnalysisListing thead th:last').text(label);
-        updateTitle();
-        CreditPurchaseAnalysisListing.ajax.reload();
-    });
-
-    // ✅ Function to dynamically update title text
-    function updateTitle() {
-        const year = $('#yearSelect').val() || new Date().getFullYear();
-        const analysisIn = $('#analysis_in').val() === 'rm' ? 'RM' : 'M/Ton';
-        const purchases = $('#purchases').val() || 'credit';
-        const mspoCertification = $('#mspo_certification').val() || 'registered';
-        const purchaseType = purchases.charAt(0).toUpperCase() + purchases.slice(1);
-        const mspoCertificationStr = mspoCertification.charAt(0).toUpperCase() + mspoCertification.slice(1);
-        $('.title').text(`${purchaseType} Purchase Analysis by Supplier in ${analysisIn} for [ ${year} ] for ${mspoCertificationStr} MSPO License Supplier`);
-    }
-
-    /*************** Credit Purchase Analysis **************/
 
     
+    /*************** Purchase Analysis Start ***************/
     var action = ADMINURL + '/purchase-analysis/getRecords';
     var PurchaseAnalysisListing = $('#PurchaseAnalysisListing').DataTable({
         scroller: true,
@@ -782,6 +986,7 @@
         selectedValue = $(this).val(); 
         PurchaseAnalysisListing.column(1).search(selectedValue).draw(); 
     });
+    /*************** Purchase Analysis End ***************/
 
     $(document).on('click','#edit-transaction-btn',function(){
 
@@ -868,6 +1073,9 @@
                 ajax: {
                     url: action,
                     type: "GET",
+                    data: function (d) {
+                        d.userId = $('#hidden_user_id').val();
+                    },
                     dataSrc: function (json) {
                         $('#grandTransport').html('<strong>' + json.grandTotals.transport + '</strong>');
                         $('#grandAdvance').html('<strong>' + json.grandTotals.advance + '</strong>');

@@ -53,6 +53,7 @@
                                             <div class="row gy-4">
                                                 <div class="col-md-6 form-group">
                                                     <label for="TRXDate" class="form-label">TRX Date</label>
+                                                    <input type="hidden" name="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                                                     <input type="date" class="form-control" id="TRXDate" name="trx_date"
                                                         required data-error="Please enter the TRX date">
                                                     <span class="help-block with-errors err_trx_date"
@@ -116,6 +117,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <table id="TransactionListing" class="table nowrap dt-responsive align-middle"
                                 style="width:100%">
                                 <thead>
@@ -149,6 +151,7 @@
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" id="hidden_id" name="id">
+                                        <input type="hidden" name="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                                         <div class="modal-body">
                                             <div class="row gy-4">
                                                 <div class="col-md-6 form-group">

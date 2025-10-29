@@ -23,17 +23,21 @@ class TransactionController extends Controller
         $this->ModuleView = 'admin.daily-transactions.';
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $userId = auth()->user()->id;
-        $this->ModuleTitle = __('Transactions');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['Suppliers'] = Suppliers::with('user')
-            ->where('user_id', $userId)
-            ->where('supplier_mode', 'branch')
-            ->get();
-        return view($this->ModuleView . 'index', $this->ViewData);
-    }
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+
+        $this->ViewData = [
+            'userId' => $encodedId ?? null,
+            'moduleAction' => 'Transaction Listing',
+            'Suppliers' => Suppliers::with('user')
+                ->where('user_id', $userId)
+                ->where('supplier_mode', 'branch')
+                ->get(),
+        ];
+            return view($this->ModuleView . 'index', $this->ViewData);
+        }
 
     public function hqTransactionIndex(Request $request)
     {
@@ -59,12 +63,14 @@ class TransactionController extends Controller
     {
         // dd($request->all());
         try {
-            $user = auth()->user();
-            if ($user->hasRole('branch')) {
-                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transactions.index');
-                return response()->json($response);
-            } elseif ($user->hasRole('hq')) {
+            if (!empty($request->vehicle_id) && !empty($request->mill_id)) {
                 $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transaction.management');
+                return response()->json($response);
+            } else {
+                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transactions.index');
+                if (!empty($request->hidden_user_id)) {
+                    $response['url'] .= '?encodedId=' . urlencode($request->hidden_user_id);
+                }
                 return response()->json($response);
             }
 
@@ -79,7 +85,7 @@ class TransactionController extends Controller
 
     public function _storeOrUpdate($TransctionData, $request)
     {
-        $TransctionData->user_id = auth()->user()->id;
+        $TransctionData->user_id =  $request->hidden_user_id ? base64_decode(base64_decode($request->hidden_user_id)) : auth()->user()->id;
         $TransctionData->trx_date = $request->trx_date;
         $TransctionData->ticket_no = $request->ticket_no;
         $TransctionData->trx_no = $request->trx_no;
@@ -112,21 +118,17 @@ class TransactionController extends Controller
 
     public function update(Request $request)
     {
-        // dd("here");
-        $user = auth()->user();
-        // $id = base64_decode(base64_decode($request->id));
-        if ($user->hasRole('branch')) {
-            $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
-            return response()->json($response);
-        } elseif ($user->hasRole('hq')) {
-
-            // dd($request->all());
+        if (!empty($request->vehicle_id) && !empty($request->mill_id)) {
             $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transaction.management', $request->id);
+            return response()->json($response);
+        } else {
+            $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
+            if (!empty($request->hidden_user_id)) {
+                $response['url'] .= '?encodedId=' . urlencode($request->hidden_user_id);
+                }
             return response()->json($response);
         }
     }
-
-
 
     public function destroy(string $encID)
     {
@@ -137,6 +139,7 @@ class TransactionController extends Controller
     public function getRecords(Request $request)
     {
         try {
+        
             $start = $request->start ?? 0;
             $length = $request->length ?? 10;
 
@@ -166,9 +169,17 @@ class TransactionController extends Controller
             //     ], 403);
             // }
 
-            $baseQuery = $this->BaseModel::with(['supplier'])
-                ->where('user_id', $loggedInUser->id)->where('transaction_by','branch');
+            $baseQuery = $this->BaseModel::with(['supplier'])->where('transaction_by','branch');
+            if ($loggedInUser->hasRole('hq') && empty($request->userId)) {
+                $baseQuery->where('user_id', $loggedInUser->id);
+            } elseif ($loggedInUser->hasRole('branch') && empty($request->userId)) {
+                $baseQuery->where('user_id', $loggedInUser->id);
+            }
 
+            if (!empty($request->userId)) {
+                $userId = base64_decode(base64_decode($request->userId));
+                $baseQuery->where('user_id', $userId);
+            }
             $intTotalData = $baseQuery->count();
 
             $modelQuery = clone $baseQuery;

@@ -46,6 +46,7 @@
                                                 <div class="col-md-6 form-group">
                                                     <label for="deductionDate" class="form-label">Date<span
                                                             class="text-danger">*</span></label>
+                                                    <input type="hidden" name="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                                                     <input type="date" class="form-control" name="date" id="deductionDate"
                                                         required data-error="Please select date">
                                                     <span class="help-block with-errors err_date" style="color:red;"></span>
@@ -115,6 +116,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <table id="DeductionListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead class="table-light">
                                     <tr>                                        

@@ -132,15 +132,22 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::put('hq-suppliers.update', [SupplierController::class, 'suppliersUpdate'])->name('hq-suppliers.update');
     Route::post('hq-suppliers/store', [SupplierController::class, 'hqSuppliersStore'])->name('hq-suppliers.store');
 
+
+
     Route::resource('suppliers', SupplierController::class)->names('suppliers');
     Route::post('suppliers/import', [SupplierController::class, 'importSuppliers'])->name('suppliers.import');
     Route::post('suppliers/export', [SupplierController::class, 'exportSuppliers'])->name('suppliers.export');
+    Route::get('suppliers-gps-list', [SupplierController::class, 'suppliersGpsList'])->name('suppliersGps.index');
+    Route::get('suppliers/gps/getRecords', [SupplierController::class, 'getSupplierGPSRecords']);
+    Route::get('/suppliers/pdf/licence-expiry', [SupplierController::class, 'supplierLicenceExpiryPDF'])
+        ->name('admin.suppliers.pdf.licenceExpiry');
 
-    Route::get('suppliers-gps-list', [AdminUserController::class, 'suppliersGpsList'])->name('suppliersGps.index');
+    Route::get('/suppliers/pdf/gps-coordinates', [SupplierController::class, 'supplierGPSPDF'])
+        ->name('admin.suppliers.pdf.gps');
 
     // Deduction Routes
     Route::get('deductions/getRecords', [DeductionController::class, 'getRecords'])->name('deductions.getRecords');
-    Route::get('deduction-reports/getRcords', [DeductionController::class, 'deductionReporGetRecords'])->name('deductions.report.getRecords');
+    Route::get('deduction-reports/getRcords', [DeductionController::class, 'deductionReportGetRecords'])->name('deductions.report.getRecords');
    
     Route::get('deduction-reports', [DeductionController::class, 'deductionReportIndex'])->name('deductions.report.index');
 
@@ -183,7 +190,6 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('supplies-analysis/getRecords', [AnalysisController::class, 'suppliesAnalysisGetRecords'])->name('supplies.analysis.getRecords');
     Route::get('supplies-analysis/pdf', [AnalysisController::class, 'generateSuppliesAnalysisPDF'])->name('supplies.analysis.generatePDF');
 
-    Route::get('credit-purchase-analysis', [AdminUserController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
 
     Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
     
@@ -203,13 +209,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     // Consolidated FFB Routes(HQ)
     Route::get('yearly-cash-credit', [ConsolidatedFFBController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');
     Route::get('yearly-cash-credit/getRecords', [ConsolidatedFFBController::class, 'getYearlyCashCreditRecords'])->name('YearlyCashCredit.getRecords');
-
-    Route::get('credit/purchase', [ConsolidatedFFBController::class, 'creditPurchase'])->name('credit.purchase.index');
-    Route::get('credit/purchase/getRecords', [ConsolidatedFFBController::class, 'creditPurchaseRecords'])->name('credit.purchase.getRecords');
-
-    Route::get('cash/purchase', [ConsolidatedFFBController::class, 'cashPurchase'])->name('cash.purchase.index');
+    Route::get('consolidated/credit/purchase', [ConsolidatedFFBController::class, 'creditPurchase'])->name('credit.purchase.index');
+    Route::get('consolidated/credit/purchase/getRecords', [ConsolidatedFFBController::class, 'getConsolidatedCreditPurchaseAnalysisRecords'])->name('credit.purchase.getRecords');
+    Route::get('consolidated/cash/purchase', [ConsolidatedFFBController::class, 'cashPurchase'])->name('cash.purchase.index');
     Route::get('purchase-salse', [ConsolidatedFFBController::class, 'purchaseSalse'])->name('purchaseSalse.index');
-
+    Route::get('purchase-analysis/consolidated/pdf',
+        [ConsolidatedFFBController::class, 'exportConsolidatedCreditPurchaseAnalysisPDF']
+    )->name('admin.purchaseAnalysis.consolidated.pdf');
 
 
 
@@ -278,6 +284,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     ->name('purchase.analysis.pdf');
     Route::get('credit-purchase-analysis/pdf', [PurchaseAnalysisController::class, 'creditPurchaseAnalysisPdf'])
     ->name('credit.purchase.analysis.pdf');
+    Route::get('credit-purchase-analysis', [PurchaseAnalysisController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
 
 
 });

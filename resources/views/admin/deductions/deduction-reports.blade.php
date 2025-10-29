@@ -103,6 +103,7 @@
                             </button>
                         </div>
                     </div> --}}
+                    <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                     <div class="container-fluid mt-4">
                         <div class="table-responsive">
                             <table id="DeductionReportsListing"

@@ -37,6 +37,8 @@ class PurchaseInvoiceController extends Controller
 
     public function salesInvoiceIndex(Request $request)
     {
+        $encodedId = $request->query('encodedId');
+        $this->ViewData['userId'] = $encodedId ?? null;
         $this->ViewData['moduleAction'] = "Sales Invoice";
         return view('admin.sales-invoice.index', $this->ViewData);   
     }
@@ -64,7 +66,11 @@ class PurchaseInvoiceController extends Controller
             $sortColumn = $filter[$column] ?? 'bill_date';
 
             $baseQuery = FFBTransactionsModel::with('supplier')->where(['purchase_type'=>'cash','period'=>Helper::getPeriod()]);
-            
+            if (!empty($request->userId)) {
+                $userId = base64_decode(base64_decode($request->userId));
+                $baseQuery->where('user_id', $userId);
+            }
+
             if ($request->has('start_date') && $request->start_date) {
                 $baseQuery->where('bill_date','>=',$request->start_date);
             }

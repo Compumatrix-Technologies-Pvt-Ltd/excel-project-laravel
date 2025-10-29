@@ -50,6 +50,7 @@
                                                 <div class="col-md-6 form-group">
                                                     <label for="bankId" class="form-label">Bank ID<span
                                                             class="text-danger">*</span></label>
+                                                    <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                                                     <input type="text" class="form-control" id="bankId" name="bank_id"
                                                         required data-error="Please enter bank Id">
                                                     <span class="help-block with-errors err_bank_id"
@@ -180,6 +181,7 @@
                                             <div class="row gy-4">
                                                 <div class="col-md-6 form-group">
                                                     <input type="hidden" id="hidden_id" name="id">
+                                                    <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                                                     <label for="bankIdInput" class="form-label">Bank ID<span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="bankIdInput" name="bank_id">

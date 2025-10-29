@@ -38,6 +38,10 @@
 
                             <div class="row align-items-center mb-3">
                                     <div class="col-md-6 d-flex align-items-center form-group">
+                                        @php
+                                            $encodedId = request()->query('encodedId');
+                                        @endphp
+                                        <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ $encodedId }}">
                                         <label class="me-3">Supplier Type: <span class="text-danger">*</span></label>
 
                                         <div class="form-check form-check-inline">

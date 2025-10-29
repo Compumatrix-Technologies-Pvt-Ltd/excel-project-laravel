@@ -28,6 +28,12 @@ class PurchaseAnalysisController extends Controller
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         return view($this->ModuleView . 'purchase-analysis', $this->ViewData);
     }
+    public function creditPurchaseAnalysisIndex()
+    {
+        $this->ModuleTitle = __('Credit Purches Listing');
+        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        return view($this->ModuleView . 'credit-purchase-analysis', $this->ViewData);
+    }
     
     public function supplierCashBillGetRecords(Request $request)
     {

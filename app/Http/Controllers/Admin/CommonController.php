@@ -48,20 +48,6 @@ class CommonController extends Controller
     }
   
     
-    
-    
-    // public function millManagement(Request $request)
-    // {
-    //     $this->ViewData['moduleAction'] = "Mill Management";
-    //     return view('admin.mill.index', $this->ViewData);
-    // }
-    // public function hqTransactionIndex(Request $request)
-    // {
-    //     $this->ViewData['moduleAction'] = "HQ Transactions";
-    //     return view('admin.daily-transactions.hq-index', $this->ViewData);
-    // }
-    
-    
     public function subscriptionAndBilling(Request $request)
     {
         $this->ViewData['moduleAction'] = "Subscription & Billing";

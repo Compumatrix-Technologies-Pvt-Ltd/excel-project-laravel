@@ -22,11 +22,13 @@ class BankController extends Controller
 
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $this->ModuleTitle = __('Bank Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['banks'] = $this->BaseModel->all();
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = $userId;
+        $this->ViewData['moduleAction'] = 'Bank Listing';
+        $this->ViewData['banks'] = $this->BaseModel->where('user_id', $userId)->get();
         return view('admin.banks.index', $this->ViewData);
     }
     public function ViaBank()

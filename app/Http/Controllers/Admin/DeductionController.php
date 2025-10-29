@@ -20,17 +20,18 @@ class DeductionController extends Controller
         $this->JsonDate = [];
         $this->ModuleView = 'admin.deductions.';
     }
-    public function index()
+    public function index(Request $request)
     {
-        $userId = auth()->user()->id;
-        // dd($userId);
-        $this->ModuleTitle = __('Deduction Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['Suppliers'] = Suppliers::with('user')
-            ->where('user_id', $userId)
-            ->where('supplier_mode', 'hq')
-            ->get();
-
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData = [
+            'userId' => $encodedId ?? null,
+            'moduleAction' => 'Deduction Listing',
+            'Suppliers' => Suppliers::with('user')
+                ->where('user_id', $userId)
+                ->where('supplier_mode', 'branch')
+                ->get(),
+        ];
         return view($this->ModuleView . 'deduction-index', $this->ViewData);
     }
 
@@ -41,9 +42,11 @@ class DeductionController extends Controller
 
     public function store(DeductionRequest $request)
     {
-        // dd($request->all());
         try {
             $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.deductions.index');
+            if (!empty($request->hidden_user_id)) {
+                $response['url'] .= '?encodedId=' . urlencode($request->hidden_user_id);
+            }
             return response()->json($response);
 
         } catch (Exception $e) {
@@ -56,14 +59,12 @@ class DeductionController extends Controller
     }
     public function _storeOrUpdate($DeductionsData, $request)
     {
-
         $DeductionsData->date = $request->date;
         $DeductionsData->period = $request->period;
         $DeductionsData->supplier_id = $request->supplier_id;
         $DeductionsData->type = $request->type;
         $DeductionsData->amount = $request->amount;
         $DeductionsData->remark = $request->remark;
-
         $DeductionsData->save();
 
         return $DeductionsData;
@@ -119,20 +120,23 @@ class DeductionController extends Controller
             $sortColumn = $filter[$column] ?? 'supplier_id';
 
             $loggedInUser = auth()->user();
+            $decodedUserId = null;
 
-            $baseQuery = $this->BaseModel::with('supplier.user');
+            if (!empty($request->userId)) {
+                $decoded = base64_decode(base64_decode($request->userId), true);
+                if ($decoded !== false && is_numeric($decoded)) {
+                    $decodedUserId = (int) $decoded;
+                }
+            }
 
-            // if ($loggedInUser->role === 'hq') {
-            //     $baseQuery->whereHas('supplier.user', function ($q) {
-            //         $q->where('role', 'hq');
-            //     });
-            // } elseif ($loggedInUser->role === 'branch-user') {
-            //     $baseQuery->whereHas('supplier.user', function ($q) {
-            //         $q->where('role', 'branch-user');
-            //     });
-            // }
+            $userId = $decodedUserId ?? auth()->id();
 
+            $Suppliers = Suppliers::where('user_id', $userId)
+                ->where('supplier_mode', 'branch')
+                ->pluck('id')
+                ->toArray();
 
+            $baseQuery = $this->BaseModel::with('supplier.user')->whereIn('supplier_id', $Suppliers);
             $intTotalData = $baseQuery->count();
 
             $modelQuery = clone $baseQuery;
@@ -191,14 +195,15 @@ class DeductionController extends Controller
     }
 
 
-    public function deductionReportIndex()
+    public function deductionReportIndex(Request $request)
     {
-        $this->ModuleTitle = __('Deduction Reports');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $encodedId = $request->query('encodedId');
+         $this->ViewData['userId'] = $encodedId ?? null;
+        $this->ViewData['moduleAction'] = 'Deduction Reports';
         return view($this->ModuleView . 'deduction-reports', $this->ViewData);
     }
 
-    public function deductionReporGetRecords(Request $request)
+    public function deductionReportGetRecords(Request $request)
     {
         try {
             $start = $request->start ?? 0;
@@ -206,6 +211,23 @@ class DeductionController extends Controller
 
             $baseQuery = $this->BaseModel::with('supplier');
 
+            $decodedUserId = null;
+
+            if (!empty($request->userId)) {
+                $decoded = base64_decode(base64_decode($request->userId), true);
+                if ($decoded !== false && is_numeric($decoded)) {
+                    $decodedUserId = (int) $decoded;
+                }
+            }
+
+            $userId = $decodedUserId ?? auth()->id();
+
+            $Suppliers = Suppliers::where('user_id', $userId)
+                ->where('supplier_mode', 'branch')
+                ->pluck('id')
+                ->toArray();
+
+            $baseQuery->whereIn('supplier_id', $Suppliers);
             // Apply search filter
             if (!empty($request->search['value'])) {
                 $search = $request->search['value'];

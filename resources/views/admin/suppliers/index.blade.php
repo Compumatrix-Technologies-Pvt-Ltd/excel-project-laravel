@@ -54,7 +54,10 @@
                                 <i class="mdi mdi-database-export label-icon align-middle fs-16 me-2"></i> Export Data
                             </button>
                         </form>
-                        <a href="{{route('admin.suppliers.create')}}" class="btn btn-info btn-label waves-effect waves-light">
+                        @php
+                            $encodedId = request()->query('encodedId');
+                        @endphp
+                        <a href="{{ route('admin.suppliers.create', ['encodedId' => $encodedId]) }}" class="btn btn-info btn-label waves-effect waves-light">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add New
                         </a>
                     </div>
@@ -63,6 +66,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <table id="SuppliersListing" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>

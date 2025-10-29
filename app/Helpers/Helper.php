@@ -283,7 +283,17 @@ class Helper{
 
 
 
- 
+    public static function decodeUserId($encodedId)
+    {
+        if (empty($encodedId)) {
+            return null;
+        }
+
+        $decoded = base64_decode(base64_decode($encodedId), true);
+        return ($decoded !== false && is_numeric($decoded)) ? (int) $decoded : null;
+    }
+    
+
 
     
     

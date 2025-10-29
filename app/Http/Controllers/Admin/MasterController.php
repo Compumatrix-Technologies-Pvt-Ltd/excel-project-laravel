@@ -345,12 +345,12 @@ class MasterController extends Controller
         return response()->json($this->JsonData);
     }
 
-    public function creditPurchaseIndex()
+    public function creditPurchaseIndex(Request $request)
     {
-        $this->ModuleTitle = __('Credit Purches Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['ffbTransactions'] = FFBTransactionsModel::with('supplier')->where('period',Helper::getPeriod())->where('purchase_type','credit')->where('user_id',auth()->user()->id)->get();
-        //dd($creditPurchase);
+        $this->ViewData['moduleAction'] = 'Credit Purches Listing';
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['ffbTransactions'] = FFBTransactionsModel::with('supplier')->where('period',Helper::getPeriod())->where('purchase_type','credit')->where('user_id',$userId)->get();
         return view('admin.credit-purchases.credit-purchase', $this->ViewData);
     }
     public function cashPurchaseList(Request $request)

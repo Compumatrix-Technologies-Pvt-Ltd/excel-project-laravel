@@ -161,61 +161,12 @@ class AdminUserController extends Controller
         //
     }
 
-
-    // public function suppliersIndex(){
-    //     $this->ModuleTitle = __('Suppliers Listing');
-    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
-    //     return view('admin.suppliers.index', $this->ViewData);
-    // }
-
-    // public function suppliersCreate(){
-    //      $this->ModuleTitle = __('Create Supplier');
-    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
-    //     return view('admin.suppliers.create', $this->ViewData);
-    // }
     public function suppliersedit()
     {
         $this->ModuleTitle = __('Edit Supplier');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
         return view('admin.suppliers.edit', $this->ViewData);
     }
-
-    public function suppliersGpsList()
-    {
-        $this->ModuleTitle = __('Supplier GPS Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.suppliers.suppliers-gps-list', $this->ViewData);
-    }
-
-    // public function transactionIndex(){
-    //      $this->ModuleTitle = __('Transactions');
-    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
-    //     return view('admin.daily-transactions.index', $this->ViewData);
-    // }
-
-    // public function bankIndex(){
-    //      $this->ModuleTitle = __('Bank Listing');
-    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
-    //     return view('admin.banks.index', $this->ViewData);
-    // }
-    // public function deductionIndex(){
-    //      $this->ModuleTitle = __('Deduction Listing');
-    //     $this->ViewData['moduleAction'] = $this->ModuleTitle;
-    //     return view('admin.deductions.deduction-index', $this->ViewData);
-    // }
-
-    
-
-    public function creditPurchaseAnalysisIndex()
-    {
-        $this->ModuleTitle = __('Credit Purches Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view('admin.analysis.credit-purchase-analysis', $this->ViewData);
-    }
-
-    
-
-
 
     public function plansIndex()
     {
