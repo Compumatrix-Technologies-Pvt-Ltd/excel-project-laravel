@@ -26,7 +26,7 @@ class BankController extends Controller
     {
         $encodedId = $request->query('encodedId');
         $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
-        $this->ViewData['userId'] = $userId;
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId));
         $this->ViewData['moduleAction'] = 'Bank Listing';
         $this->ViewData['banks'] = $this->BaseModel->where('user_id', $userId)->get();
         return view('admin.banks.index', $this->ViewData);
@@ -68,6 +68,9 @@ class BankController extends Controller
             }
 
             $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.banks.index');
+            if (!empty($request->hidden_user_id)) {
+                $response['url'] .= '?encodedId=' . urlencode($request->hidden_user_id);
+            }
             return response()->json($response);
 
         } catch (Exception $e) {
@@ -81,14 +84,16 @@ class BankController extends Controller
 
     public function update(Request $request)
     {
-        // dd("here");
-        // dd($request->all());
         $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.banks.index', $request->id);
+        if (!empty($request->hidden_user_id)) {
+            $response['url'] .= '?encodedId=' . urlencode($request->hidden_user_id);
+        }
         return response()->json($response);
     }
 
     public function _storeOrUpdate($bankData, $request)
     {
+        $bankData->user_id =  $request->hidden_user_id ? base64_decode(base64_decode($request->hidden_user_id)) : auth()->user()->id;
         $bankData->bank_id = $request->bank_id;
         $bankData->name = $request->name;
         $bankData->bic_code = $request->bic_code;

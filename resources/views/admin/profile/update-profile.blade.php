@@ -186,14 +186,6 @@
                                     </div>
 
                                     <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <label for="descriptionInput" class="form-label">Description</label>
-                                            <textarea class="form-control" id="descriptionInput" name="description" placeholder="Enter Description"
-                                                rows="3" required>{{ $profile->company->description ?? '' }}</textarea>
-                                            <div class="invalid-feedback">Please enter a description</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="submit" class="btn btn-primary">Updates</button>
                                             <button type="button" class="btn btn-soft-success">Cancel</button>
@@ -342,9 +334,9 @@
                                                     @if (!isset($Data->c_logo) && $Data->c_logo == '') {{ 'required' }} @endif
                                                     data-error="Please select image." id="companyLogoinput">
                                                 <input type="hidden" name="old_c_logo" value="{{ $Data->c_logo }}">
-                                                @if (isset($Data->c_logo) && !empty($Data->c_logo) && Storage::exists('logo-images/' . $Data->c_logo))
+                                                @if (isset($Data->c_logo) && !empty($Data->c_logo))
                                                     <div>
-                                                        <img src= "{{ url('storage/app/logo-images/' . $Data->c_logo) }}"
+                                                        <img src= "{{ asset('storage/app/public/company-logos/' . $Data->c_logo) }}"
                                                             style="width: 100px;height: 100px;border-radius: 50%;border: 2px solid #3699ff;" />
                                                     </div>
                                                 @endif

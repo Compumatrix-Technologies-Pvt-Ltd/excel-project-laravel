@@ -36,9 +36,12 @@ class SupplierController extends Controller
         $this->ViewData['moduleAction'] = 'Suppliers Listing';
         return view($this->ModuleView . 'index', $this->ViewData);
     }
-    public function suppliersGpsList()
+    public function suppliersGpsList(Request $request)
     {
         $this->ViewData['moduleAction'] = 'Supplier GPS Listing';
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId));
         return view($this->ModuleView . 'suppliers-gps-list', $this->ViewData);
     }
 
@@ -464,7 +467,7 @@ class SupplierController extends Controller
     public function getSupplierGPSRecords(Request $request)
     {
         try {
-                    $loggedInUser = auth()->user();
+            $loggedInUser = auth()->user();
 
             $start = $request->start ?? 0;
             $length = $request->length ?? 10;
@@ -490,11 +493,14 @@ class SupplierController extends Controller
                         ->orWhere('mspo_cert_no', 'LIKE', "%{$search}%");
                 });
             }
-            if ($loggedInUser->hasRole('hq')) {
+            if ($loggedInUser->hasRole('hq') && empty($request->hidden_user_id)) {
                 $query->where('user_id', $loggedInUser->id);
                 $query->where('supplier_mode', 'branch');
-            } elseif ($loggedInUser->hasRole('branch')) {
+            } elseif ($loggedInUser->hasRole('branch') && empty($request->hidden_user_id)) {
                 $query->where('user_id', $loggedInUser->id);
+            }
+            if(!empty($request->hidden_user_id)) {
+                $query->where('user_id', base64_decode(base64_decode($request->hidden_user_id)));
             }
 
             $totalRecords = $query->count();

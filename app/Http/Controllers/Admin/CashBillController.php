@@ -35,6 +35,9 @@ class CashBillController extends Controller
     }
     public function supplierCashBill(Request $request)
     {
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
         $this->ViewData['moduleAction'] = "Supplier Cash Bill";
         return view($this->ModuleView.'supplier-cash-bill', $this->ViewData);
     }
@@ -78,6 +81,7 @@ class CashBillController extends Controller
     public function supplierCashBillGetRecords(Request $request)
     {
         try {
+       
             $start = $request->start ?? 0;
             $length = $request->length ?? 10;
             $column = 0;
@@ -102,6 +106,13 @@ class CashBillController extends Controller
             $baseQuery = FFBTransactionsModel::with('supplier')
                 ->where(['purchase_type' => 'cash', 'period' => Helper::getPeriod()]);
 
+            // User filter
+            if ($request->hidden_user_id) {
+                $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                $baseQuery->where('user_id', $decodedUserId);
+            } else {
+                $baseQuery->where('user_id', auth()->id());
+            }
             // Optional filter
             if ($request->has('payment_method') && $request->payment_method) {
                 $baseQuery->where('pay_by', '=', $request->payment_method);

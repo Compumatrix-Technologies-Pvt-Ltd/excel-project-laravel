@@ -355,7 +355,10 @@ class MasterController extends Controller
     }
     public function cashPurchaseList(Request $request)
     {
-        $this->ViewData['moduleAction'] = "Cash Purchases";
+        $this->ViewData['moduleAction'] = "Cash Purchases Listing";
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
         return view('admin.cash-purchase.cash-purchase-index', $this->ViewData);
     }
     public function cashPurchaseGetRecords(Request $request)
@@ -391,6 +394,18 @@ class MasterController extends Controller
                 $baseQuery->where('bill_date','<=',$request->end_date);
             }
 
+            $decodedUserId = null;
+
+            if (!empty($request->userId)) {
+                $decoded = base64_decode(base64_decode($request->userId), true);
+                if ($decoded !== false && is_numeric($decoded)) {
+                    $decodedUserId = (int) $decoded;
+                }
+            }
+
+            $userId = $decodedUserId ?? auth()->id();
+            $baseQuery->where('user_id', $userId);
+            
             // 🔍 Apply search filter
             if (!empty($request->search['value'])) {
                 $search = $request->search['value'];
@@ -457,7 +472,10 @@ class MasterController extends Controller
     }
     public function cashPurchaseSummary(Request $request)
     {
-        $this->ViewData['moduleAction'] = "Cash Summary";
+        $this->ViewData['moduleAction'] = "Cash Purchase Summary";
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
         return view('admin.cash-purchase.cash-purchase-summary', $this->ViewData);
     }
     public function cashPurchaseSummaryGetRecords(Request $request)
@@ -488,6 +506,11 @@ class MasterController extends Controller
             $baseQuery = FFBTransactionsModel::query()
                 ->join('suppliers', 'suppliers.id', '=', 'ffb_transactions.supplier_id')
                 ->where(['purchase_type' => 'cash', 'period' => Helper::getPeriod()]);
+
+            // 🔹 User Filter
+            if ($request->has('hidden_user_id') && $request->hidden_user_id) {
+                $baseQuery->where('ffb_transactions.user_id', '=', base64_decode(base64_decode($request->hidden_user_id)));
+            }
 
             // 🔹 Date Filters
             if ($request->has('start_date') && $request->start_date) {
@@ -572,6 +595,9 @@ class MasterController extends Controller
 
     public function dailyCashPurchaseSummary(Request $request)
     {
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
         $this->ViewData['moduleAction'] = "Daily Cash Purchase Summary";
         return view('admin.cash-purchase.daily-cash-purchase-summary', $this->ViewData);
     }
@@ -583,6 +609,13 @@ class MasterController extends Controller
                 'period' => Helper::getPeriod()
             ]);
 
+            // User filter
+            if ($request->hidden_user_id) {
+                $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                $query->where('user_id', $decodedUserId);
+            } else {
+                $query->where('user_id', auth()->id());
+            }
             // Optional date filters
             if ($request->start_date) {
                 $query->where('bill_date', '>=', $request->start_date);

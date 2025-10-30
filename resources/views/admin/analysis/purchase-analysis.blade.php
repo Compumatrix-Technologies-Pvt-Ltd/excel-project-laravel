@@ -118,6 +118,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <div class="table-responsive">
                                 <table id="PurchaseAnalysisListing" class="table nowrap dt-responsive align-middle"
                                     style="width:100%">
@@ -200,7 +201,8 @@
                 url: ADMINURL + '/purchase-analysis/chart-data',
                 type: 'GET',
                 data: {
-                    year: $year
+                    year: $year,
+                    hidden_user_id: $('#hidden_user_id').val(),
                 },
                 success: function(response) {
                     let credit = parseFloat(response.summary.credit) || 0;

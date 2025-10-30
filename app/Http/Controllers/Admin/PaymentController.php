@@ -21,8 +21,11 @@ class PaymentController extends Controller
 
     public function paymentIndex(Request $request)
     {
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
         $this->ViewData['moduleAction'] = "Payments";
-        return view('admin.payments.index', $this->ViewData);
+        return view($this->ModuleView .'index', $this->ViewData);
     }
 
    
@@ -52,6 +55,17 @@ class PaymentController extends Controller
 
             $baseQuery = FFBTransactionsModel::with('supplier')
                 ->where(['purchase_type' => 'cash', 'period' => Helper::getPeriod()]);
+            $decodedUserId = null;
+
+            if (!empty($request->userId)) {
+                $decoded = base64_decode(base64_decode($request->userId), true);
+                if ($decoded !== false && is_numeric($decoded)) {
+                    $decodedUserId = (int) $decoded;
+                }
+            }
+
+            $userId = $decodedUserId ?? auth()->id();
+            $baseQuery->where('user_id', $userId);
 
             if ($request->has('payment_method') && $request->payment_method) {
                 $baseQuery->where('pay_by', '=', $request->payment_method);

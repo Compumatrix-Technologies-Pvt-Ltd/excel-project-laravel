@@ -158,7 +158,15 @@
                     data: function (d) {
                         d.year = $('#selectYear').val();
                         d.type = $('input[name="analysis_type"]:checked').val();
+                    },
+                    error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
                     }
+                }
+
                 },
                 columns: [
                     { data: 'supplier', title: 'Supplier' },
