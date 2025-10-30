@@ -490,13 +490,13 @@
                                             <fieldset class="border rounded p-2 h-100" id="payByFieldset">
                                                 <legend class="small w-auto m-0 px-2">Pay By</legend>
                                                 <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payCash" checked><label
+                                                        name="pay_by" value="cash" id="payCash" checked><label
                                                         class="form-check-label" for="payCash">Cash</label></div>
                                                 <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payCheque"><label class="form-check-label"
+                                                        name="pay_by" value="cheque" id="payCheque"><label class="form-check-label"
                                                         for="payCheque">Cheque</label></div>
                                                 <div class="form-check"><input class="form-check-input" type="radio"
-                                                        name="payBy" id="payBank"><label class="form-check-label"
+                                                        name="pay_by" value="bank" id="payBank"><label class="form-check-label"
                                                         for="payBank">Bank</label></div>
                                             </fieldset>
                                         </div>
