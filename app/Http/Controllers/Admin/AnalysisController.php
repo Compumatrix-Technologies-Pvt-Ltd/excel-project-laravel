@@ -30,7 +30,7 @@ class AnalysisController extends Controller
         $type = $request->type;
 
         $query = Transaction::selectRaw('supplier_id, mill_id, MONTH(trx_date) as month, SUM(weight) as total_weight')
-            ->whereYear('trx_date', $year);
+            ->whereYear('trx_date', $year)->where('transaction_by','hq');
 
         $summary = $query->groupBy('supplier_id', 'mill_id', 'month')->get();
 

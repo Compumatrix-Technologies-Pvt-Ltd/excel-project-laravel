@@ -202,7 +202,9 @@ class SuppliesController extends Controller
         $loggedInUser = auth()->user();
 
         $query = Transaction::with(['supplier', 'vehicle']);
-
+        $query->whereHas('supplier', function ($q2) {
+            $q2->where('supplier_mode', 'hq');
+        });
         if ($loggedInUser->hasRole('hq')) {
             $query->where('user_id', $loggedInUser->id);
         }
@@ -271,7 +273,7 @@ class SuppliesController extends Controller
         $supplierId = $request->supplier_id;
 
         $loggedInUser = auth()->user();
-
+        $transactionsSummary =[];
         $query = Transaction::with(['supplier']);
 
         if ($loggedInUser->hasRole('hq')) {
@@ -330,7 +332,7 @@ class SuppliesController extends Controller
             'company_Name' => $companyName,
         ];
 
-        $pdf = Pdf::loadView($this->ModuleView . 'supplies-summary-pdf', $viewData);
+        $pdf = Pdf::loadView($this->ModuleView . 'supplies-summary-pdf', $viewData)->setPaper('A4', 'landscape');
 
         if ($request->has('preview')) {
             return $pdf->stream('Supplies_Summary_Preview.pdf');

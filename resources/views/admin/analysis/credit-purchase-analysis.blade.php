@@ -70,6 +70,7 @@
                     </div>
                     <div class="container-fluid mt-4">
                         <div class="table-responsive">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <table id="CreditPurchaseAnalysisListing" class="table nowrap dt-responsive align-middle"
                                 style="width:100%">
                                 <thead class="table-light">

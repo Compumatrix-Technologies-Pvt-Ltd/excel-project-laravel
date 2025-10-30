@@ -103,8 +103,8 @@ class ProfileController extends Controller
     public function companyUpdate(Request $request,$encid){
 
         try{
-            $id = Auth::user()->id;
-            $collection             = $this->CompanyInfoModel->find($id);
+            $id = Auth::user()->company_id;
+            $collection = $this->CompanyInfoModel->find($id);
             if(!$collection){
                 $collection = new CompanyInfoModel;
             }
@@ -118,6 +118,7 @@ class ProfileController extends Controller
                 $allowedFileExtension = ['jpg', 'png', 'jpeg'];
                 $file = $request->file('logo');
                 $strPath = 'company-logos/';
+
                 $images_path = storage_path() . '/app/' . $strPath;
                 if (!file_exists($images_path)) {
                     mkdir($images_path, 0777, true);

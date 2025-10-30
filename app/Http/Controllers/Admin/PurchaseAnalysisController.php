@@ -22,16 +22,20 @@ class PurchaseAnalysisController extends Controller
         $this->ModuleView = 'admin.analysis.';
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $this->ModuleTitle = __('Purches Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
+        $this->ViewData['moduleAction'] = 'Purches Listing';
         return view($this->ModuleView . 'purchase-analysis', $this->ViewData);
     }
-    public function creditPurchaseAnalysisIndex()
+    public function creditPurchaseAnalysisIndex(Request $request)
     {
-        $this->ModuleTitle = __('Credit Purches Listing');
-        $this->ViewData['moduleAction'] = $this->ModuleTitle;
+        $this->ViewData['moduleAction'] = 'Credit Purches Listing';
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId)) ?? null;
         return view($this->ModuleView . 'credit-purchase-analysis', $this->ViewData);
     }
     
@@ -48,8 +52,15 @@ class PurchaseAnalysisController extends Controller
                 ->whereYear('bill_date', $year)
                 //->where('period', Helper::getPeriod())
                 ->groupBy(DB::raw('MONTH(bill_date)'))
-                ->orderBy(DB::raw('MONTH(bill_date)'))
-                ->get();
+                ->orderBy(DB::raw('MONTH(bill_date)'));
+
+                if ($request->hidden_user_id) {
+                    $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                    $query->where('user_id', $decodedUserId);
+                } else {
+                    $query->where('user_id', auth()->id());
+                }
+                $query = $query->get();
 
             // Month mapping (1–12)
             $months = [
@@ -110,8 +121,14 @@ class PurchaseAnalysisController extends Controller
                 ->whereYear('bill_date', $year)
                 //->where('period', Helper::getPeriod())
                 ->groupBy(DB::raw('MONTH(bill_date)'))
-                ->orderBy(DB::raw('MONTH(bill_date)'))
-                ->get();
+                ->orderBy(DB::raw('MONTH(bill_date)'));
+                if ($request->hidden_user_id) {
+                    $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                    $query->where('user_id', $decodedUserId);
+                } else {
+                    $query->where('user_id', auth()->id());
+                }
+                $query = $query->get();
 
             // Monthly data for each month (Jan–Dec)
             $months = [
@@ -270,7 +287,23 @@ class PurchaseAnalysisController extends Controller
                 ->orderBy('supplier_id');
 
             // Actually execute it
+            if ($request->hidden_user_id) {
+                $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                $query->where('user_id', $decodedUserId);
+            } else {
+                $query->where('user_id', auth()->id());
+            }
+
             $records = $query->get();
+
+
+            $userId = $decodedUserId ?? auth()->id();
+
+            $Suppliers = Suppliers::where('user_id', $userId)
+                ->where('supplier_mode', 'branch')
+                ->pluck('id')
+                ->toArray();
+
 
             // -------------------------------------------
             // 3️⃣ Prepare reference data

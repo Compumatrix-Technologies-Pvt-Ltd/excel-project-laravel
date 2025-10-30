@@ -102,6 +102,7 @@
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="row">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <table id="SuppliergpsListing" class="table table-bordered nowrap dt-responsive align-middle"
                                 style="width:100%">
                                 <thead>

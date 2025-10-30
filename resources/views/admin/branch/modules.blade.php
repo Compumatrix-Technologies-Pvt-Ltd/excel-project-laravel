@@ -157,7 +157,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/hfmdczge.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.payments.index', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Pay List</h5>
                             </a>
                         </div>
@@ -168,7 +168,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/xhebrhsj.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.cash.purchase.list', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Cash Purchase</h5>
                             </a>
                         </div>
@@ -179,7 +179,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/ucvsemjq.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.cash.purchase.summary', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Cash Purchase Summary</h5>
                             </a>
                         </div>
@@ -190,7 +190,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/auvicynv.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.daily.cash.purchase.summary', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Daily CP Summary</h5>
                             </a>
                         </div>
@@ -201,7 +201,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/auvicynv.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.supplier.cash.bill', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">SCB</h5>
                             </a>
                         </div>
@@ -212,7 +212,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/auvicynv.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.purchaseAnalysis.index', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Analysis 1</h5>
                             </a>
                         </div>
@@ -223,7 +223,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/auvicynv.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.creditPurchaseAnalysis.index', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Analysis 2</h5>
                             </a>
                         </div>
@@ -234,7 +234,7 @@
                         <div class="card-body text-center py-4">
                             <lord-icon src="https://cdn.lordicon.com/auvicynv.json" trigger="hover"
                                 colors="primary:#405189" target="div" style="width:50px;height:50px"></lord-icon>
-                            <a href="#!" class="stretched-link">
+                            <a href="{{ route('admin.suppliersGps.index', ['encodedId' => base64_encode(base64_encode($UserModules->id))]) }}" class="stretched-link">
                                 <h5 class="mt-4">Supplier List By coordinates</h5>
                             </a>
                         </div>

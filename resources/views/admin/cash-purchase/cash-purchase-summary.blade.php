@@ -78,6 +78,8 @@
                     </form>
                     <div class="container-fluid mt-4">
                         <div class="row">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id"
+                                value="{{ isset($userId) ? $userId : null }}">
                             <div class="col-md-12">
                                 <table id="CashPurchaseSummaryTable" class="table nowrap dt-responsive align-middle" style="width:100%">
                                     <thead class="table-light">

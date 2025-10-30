@@ -1,5 +1,7 @@
  $(document).ready(function () {
 
+    function showToast(e,t){Swal.fire({toast:!0,icon:e?"success":"error",title:t,animation:!1,position:"top-right",showConfirmButton:!1,timer:3e3,timerProgressBar:!0,customClass:"small-toast",didOpen:e=>{e.addEventListener("mouseenter",Swal.stopTimer),e.addEventListener("mouseleave",Swal.resumeTimer)}})}
+
     $('.CommonListing').DataTable({
         paging: true,
         searching: true,
@@ -72,8 +74,12 @@
             dataSrc: function(json) {
                 return json.data; 
             },
-            error: function(xhr, error, code) {
-                showToast(false, 'Error loading data. Please try again just refresh the page');
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         },
         columns: [
@@ -103,8 +109,12 @@
             dataSrc: function(json) {
                 return json.data; 
             },
-            error: function(xhr, error, code) {
-                showToast(false, 'Error loading data. Please try again just refresh the page');
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         },
         columns: [
@@ -167,6 +177,13 @@
                     d.userId = $('#hidden_user_id').val();
                 },
             type: "GET",
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
+            }
         },
         columns: [
               { 
@@ -240,6 +257,13 @@
                 }else{
                     alert('Something went wrong');
                 } 
+            },
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         });
     });
@@ -256,6 +280,9 @@
     ajax: {
         url: action,
         type: "GET",
+        data: {
+            userId: $('#hidden_user_id').val()
+        },
         dataSrc: function (json) {
             // ✅ If backend sends totals, you can still use them here (optional)
             if (json.footerTotals) {
@@ -265,6 +292,13 @@
             }
             return json.data;
         },
+        error: function (xhr, status, error) {
+        if (status === 'error') {
+            showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+        } else {
+            alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+        }
+    }   
        
     },
     columns: [
@@ -323,13 +357,23 @@
     ajax: {
         url: ADMINURL + '/cash-purchase-summary/getRecords', // 👈 your backend route (Laravel)
         type: 'GET',
+        data: {
+            hidden_user_id: $('#hidden_user_id').val()
+        },
         dataSrc: function (json) {
             // Optional: if backend already sends footerTotals
             if (json.footerTotals) {
                 updateFooter(json.footerTotals);
             }
             return json.data;
-        }
+        },
+        error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
+            }
     },
         columns: [
             { data: 'supplier_id', title: 'Supp. Id' },
@@ -385,12 +429,22 @@
             ajax: {
                 url: action,
                 type: "GET",
+                data: {
+                    hidden_user_id: $('#hidden_user_id').val()
+                },
                 dataSrc: function (json) {
                     if (json.footerTotals) {
                         $('#daily-total-weight').html(json.footerTotals.total_weight);
                         $('#daily-total-dailytotal').html(json.footerTotals.daily_total);
                     }
                     return json.data;
+                },
+                error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                    }
                 }
             },
             columns: [
@@ -436,6 +490,13 @@
                     d.userId = $('#hidden_user_id').val();
                 },
                 type: "GET",
+                error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                    }
+                }
             },
             columns: [
               { 
@@ -500,6 +561,13 @@
         ajax: {
             url: action,
             type: "GET",
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
+            }
         },
         columns: [
             { 
@@ -510,7 +578,7 @@
             searchable: false,
             orderable: false 
         },
-            { data: 'trx_no', name: 'trx_no' },
+            { data: 'ticket_no', name: 'ticket_no' },
             { data: 'trx_date', name: 'trx_date' },
             { data: 'supplier_id', name: 'supplier_id' },
             { data: 'ticket_no', name: 'ticket_no' },
@@ -537,6 +605,13 @@
                     d.userId = $('#hidden_user_id').val();
                 },
             type: "GET",
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
+            }
         },
         columns: [
             { 
@@ -574,12 +649,20 @@
             type: "GET",
             data: function (d) {
                 d.payment_method = selectedValue;
+                d.userId = $('#hidden_user_id').val();
             },
             dataSrc: function (json) {
                 if (json.footerTotals) {
                     $('#grand-total').html(json.footerTotals.grand_total);
                 }
                 return json.data;
+            },
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         },
         columns: [
@@ -625,12 +708,20 @@
             type: "GET",
             data: function (d) {
                 d.payment_method = selectedValue;
+                d.hidden_user_id = $('#hidden_user_id').val();
             },
             dataSrc: function (json) {
                 if (json.footerTotals) {
                     $('#grand-total').html(json.footerTotals.grand_total);
                 }
                 return json.data;
+            },
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         },
         columns: [
@@ -684,6 +775,13 @@
                         setTimeout(() => updateFooter(json.footer), 100);
                     }
                     return json.data;
+                },
+                error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                    }
                 }
             },
             columns: [
@@ -764,6 +862,13 @@
                         setTimeout(() => updateFooter(json.footer), 100);
                     }
                     return json.data;
+                },
+                error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                    }
                 }
             },
             columns: [
@@ -834,6 +939,7 @@
                     d.mspo_certification = $('#mspo_certification').val();
                     d.purchases = $('#purchases').val();
                     d.analysis_in = $('#analysis_in').val();
+                    d.hidden_user_id = $('#hidden_user_id').val();
                 },
                 dataSrc: function (json) {
                     if (json.footerTotals) {
@@ -842,8 +948,12 @@
                     }
                     return json.data;
                 },
-                error: function(xhr, error, code) {
-                    showToast(false, 'Error loading data. Please try again just refresh the page');
+                error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                    }
                 }
             },
             columns: [
@@ -924,6 +1034,16 @@
         ajax: {
             url: action,
             type: "GET",
+            data: function (d) {
+                d.hidden_user_id = $('#hidden_user_id').val();
+            },
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
+            }
         },
         columns: [
             { data: 'supplier_id', name: 'supplier_id' },
@@ -961,6 +1081,7 @@
             type: "GET",
             data: function (d) {
                 d.year = $('#yearSelect').val();
+                d.hidden_user_id = $('#hidden_user_id').val();
             },
             dataSrc: function (json) {
                 if (json.footerTotals) {
@@ -970,6 +1091,13 @@
                     $('#total-weight').html(json.footerTotals.total_weight);
                 }
                 return json.data;
+            },
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         },
         columns: [
@@ -1011,6 +1139,13 @@
                 }else{
                     alert('Something went wrong');
                 } 
+            },
+            error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                }
             }
         });
     });
@@ -1082,6 +1217,13 @@
                         $('#grandOthers').html('<strong>' + json.grandTotals.others + '</strong>');
 
                         return json.data;
+                    },
+                    error: function (xhr, status, error) {
+                        if (status === 'error') {
+                            showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                        } else {
+                            alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                        }
                     }
                 },
                 columns: [
@@ -1116,6 +1258,13 @@
                     d.start_date = $('#startDate').val();
                     d.end_date = $('#endDate').val();
                     d.supplier_id = $('#selectSupplier').val();
+                },
+                error: function (xhr, status, error) {
+                    if (status === 'error') {
+                        showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                    } else {
+                        alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
+                    }
                 }
             },
             columns: [
@@ -1172,7 +1321,14 @@
                     d.start_date = $('#startDate').val();
                     d.end_date = $('#endDate').val();
                     d.supplier_id = $('#selectSupplier').val();
+                },
+                error: function (xhr, status, error) {
+                if (status === 'error') {
+                    showToast(false, 'Server Error (' + xhr.status + '). Please refresh the page.');
+                } else {
+                    alert('Server Error (' + xhr.status + '): ' + xhr.responseText);
                 }
+            }
             },
             columns: [
                 { data: 'supplier_id' },
