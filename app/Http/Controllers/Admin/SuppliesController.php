@@ -27,7 +27,7 @@ class SuppliesController extends Controller
     {
         $this->ModuleTitle = __('Supplies Details');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['Suppliers'] = Suppliers::with('user')->where('user_id', auth()->user()->id)->get();
+        $this->ViewData['Suppliers'] = Suppliers::with('user')->where('user_id', auth()->user()->id)->where('supplier_mode','hq')->get();
         $this->ViewData['allMills'] = Mill::all();
         return view($this->ModuleView . 'supplies-details', $this->ViewData);
     }

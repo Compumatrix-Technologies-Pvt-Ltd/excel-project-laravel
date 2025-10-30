@@ -220,6 +220,10 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
     Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
 
+    Route::get('via-bank-deductions/getRecords', [BankController::class, 'viaBankDeductionGetRecords'])
+    ->name('admin.viaBankDeduction.getRecords');
+
+
     Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
 
     Route::get('subscription-&-billing', [CommonController::class, 'subscriptionAndBilling'])->name('subscription.and.billing');

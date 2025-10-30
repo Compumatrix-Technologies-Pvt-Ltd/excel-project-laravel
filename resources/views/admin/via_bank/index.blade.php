@@ -31,6 +31,7 @@
                 <div class="card-body">
                    <div class="container-fluid">
                         <div class="row">
+                            <input type="hidden" name="hidden_user_id" id="hidden_user_id" value="{{ isset($userId) ? $userId : null }}">
                             <table id="viaBankDeductionListing"  class="table dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
@@ -62,39 +63,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>1</td>
-                                        <td>PBB</td>
-                                        <td>4854993131</td>
-                                        <td>PBBEMYKL</td>
-                                        <td>ASHARIN BIN SUHARDI (K/P: 810504-12-5507)</td>
-                                        <td>N</td>
-                                        <td>810504125507</td>
-                                        <td class="text-end">3,486.36</td>
-                                        <td>FFB Final - 042025</td>
-                                        <td>asharin@email.com</td>
-                                        <td></td>
-                                        <td>0138772457</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Congrats! Your payment…</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#paymentModal">
-                                                <i class="ri-eye-line align-middle"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <!-- Other rows ... (copy as needed) -->
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -114,16 +83,6 @@
     <script src="{{asset('/assets/admin/plugins/custom/datatables/responsive/js/dataTables.responsive.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#viaBankDeductionListing').DataTable({
-                paging: true,
-                searching: true,
-                ordering: true
-            });
-        });
-    </script>
 
 
 @endsection
