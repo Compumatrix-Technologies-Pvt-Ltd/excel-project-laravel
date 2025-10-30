@@ -1240,8 +1240,53 @@
 
      // ************** End Deduction Repors ********************
 
- 
-      
+     /************** Via Bank Code Start ********************/
+
+     const viaBankActionUrl = ADMINURL + '/via-bank-deductions/getRecords';
+
+        $('#viaBankDeductionListing').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: {
+                url: viaBankActionUrl,
+                type: 'GET',
+                data: function (d) {
+                    d.hidden_user_id = $('#hidden_user_id').val();
+                },
+                error: function (xhr, status, error) {
+                    showToast(false, 'Server Error (' + xhr.status + ') Please refresh and try again.');
+                }
+            },
+            columns: [
+                { data: 'checkbox', orderable: false, searchable: false },
+                { data: 'sr_no' },
+                { data: 'payment_type' },
+                { data: 'bene_account_no' },
+                { data: 'bic' },
+                { data: 'bene_full_name' },
+                { data: 'id_type' },
+                { data: 'bene_id_no' },
+                { data: 'amount', className: 'text-end' },
+                { data: 'recipient_reference' },
+                { data: 'bene_email1' },
+                { data: 'bene_email2' },
+                { data: 'bene_mobile1' },
+                { data: 'bene_mobile2' },
+                { data: 'joint_bene_name' },
+                { data: 'joint_bene_id' },
+                { data: 'email_line1' },
+                { data: 'email_line2' },
+                { data: 'email_line3' },
+                { data: 'email_line4' },
+                { data: 'email_line5' },
+                { data: 'action', orderable: false, searchable: false }
+            ],
+            order: [[1, 'asc']]
+        });
+     /************** Via Bank Code End *********************/
+
+
        // ************** Supplies Details Listing ********************
 
         var actionUrl = ADMINURL + '/supplies-details/getRecords';

@@ -8,6 +8,7 @@ use App\Models\Bank;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\FFBTransactionsModel;
 
 class BankController extends Controller
 {
@@ -31,17 +32,19 @@ class BankController extends Controller
         $this->ViewData['banks'] = $this->BaseModel->where('user_id', $userId)->get();
         return view('admin.banks.index', $this->ViewData);
     }
-    public function ViaBank()
+    public function ViaBank(Request $request)
     {
         $this->ModuleTitle = __('Via Bank Listing');
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId));
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['banks'] = $this->BaseModel->all();
+        $this->ViewData['banks'] = $this->BaseModel->where('user_id', $userId)->get();
         return view('admin.via_bank.index', $this->ViewData);
     }
 
     public function store(Request $request)
     {
-        // dd($request->all());
         try {
             $rules = [
                 'bank_id' => 'required|unique:banks,bank_id',
@@ -104,7 +107,6 @@ class BankController extends Controller
 
     public function edit($encID)
     {
-        // dd("here");
         $intID = base64_decode(base64_decode($encID));
         $data = $this->BaseModel->find($intID);
         $this->JsonData['status'] = __('success');
@@ -114,10 +116,96 @@ class BankController extends Controller
 
     public function destroy($encID)
     {
-        // dd("here");
-        // dd($encID);
         $response = Helper::destroyRecord($this->BaseModel, $encID);
         return response()->json($response);
 
     }
+
+
+    public function viaBankDeductionGetRecords(Request $request)
+    {
+        try {
+            $period = Helper::getPeriod(); // current period helper
+            $query = FFBTransactionsModel::with('supplier')
+                //->where('pay_by', 'bank')
+                ->where('period', $period);
+
+            if ($request->hidden_user_id) {
+                $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                dd($decodedUserId);
+                $query->where('user_id', $decodedUserId);
+            } else {
+                $query->where('user_id', auth()->id());
+            }
+            $totalData = $query->count();
+
+            // ✅ Search
+            if (!empty($request->search['value'])) {
+                $search = $request->search['value'];
+                $query->where(function ($q) use ($search) {
+                    $q->where('invoice_no', 'LIKE', "%{$search}%")
+                        ->orWhere('bank_bic', 'LIKE', "%{$search}%")
+                        ->orWhere('bene_name', 'LIKE', "%{$search}%")
+                        ->orWhere('bene_id_no', 'LIKE', "%{$search}%")
+                        ->orWhere('recipient_reference', 'LIKE', "%{$search}%");
+                });
+            }
+
+            // ✅ Sorting and Pagination
+            $start = $request->start ?? 0;
+            $length = $request->length ?? 10;
+            $records = $query
+                ->offset($start)
+                ->limit($length)
+                ->orderBy('id', 'desc')
+                ->get();
+                dd($records);
+
+            $data = [];
+            $count = $start + 1;
+
+            foreach ($records as $r) {
+                $data[] = [
+                    'checkbox' => '<div class="form-check"><input class="form-check-input fs-15" type="checkbox"></div>',
+                    'sr_no' => $count++,
+                    'payment_type' => $r->bank_name ?? 'N/A',
+                    'bene_account_no' => $r->bank_account ?? 'N/A',
+                    'bic' => $r->bank_bic ?? 'N/A',
+                    'bene_full_name' => $r->bene_name ?? 'N/A',
+                    'id_type' => $r->bene_id_type ?? '-',
+                    'bene_id_no' => $r->bene_id_no ?? '-',
+                    'amount' => number_format($r->net_pay, 2),
+                    'recipient_reference' => $r->recipient_reference ?? '-',
+                    'bene_email1' => $r->bene_email_1 ?? '-',
+                    'bene_email2' => $r->bene_email_2 ?? '-',
+                    'bene_mobile1' => $r->bene_mobile_1 ?? '-',
+                    'bene_mobile2' => $r->bene_mobile_2 ?? '-',
+                    'joint_bene_name' => $r->joint_bene_name ?? '-',
+                    'joint_bene_id' => $r->joint_bene_id ?? '-',
+                    'email_line1' => $r->email_line_1 ?? '-',
+                    'email_line2' => $r->email_line_2 ?? '-',
+                    'email_line3' => $r->email_line_3 ?? '-',
+                    'email_line4' => $r->email_line_4 ?? '-',
+                    'email_line5' => $r->email_line_5 ?? '-',
+                    'action' => '
+                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                            <i class="ri-eye-line align-middle"></i>
+                        </button>'
+                ];
+            }
+
+            return response()->json([
+                'draw' => intval($request->draw),
+                'recordsTotal' => $totalData,
+                'recordsFiltered' => $totalData,
+                'data' => $data,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

@@ -2,29 +2,62 @@
 <html>
 
 <head>
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        margin: 20px;
+    }
 
-        th,
-        td {
-            padding: 5px;
-            text-align: center;
-            border: 1px solid black;
-        }
+    .page-border {
+        border: 2px solid black;
+        padding: 10px;
+    }
 
-        h2,
-        h4 {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-    </style>
+    h2 {
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 5px 0;
+    }
+
+    h4 {
+        text-align: center;
+        margin: 5px 0 15px 0;
+        font-weight: normal;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    th, td {
+        border: 1px solid black;
+        text-align: center;
+        padding: 4px 6px;
+    }
+
+    thead th {
+        background-color: #f9f9f9;
+        font-weight: bold;
+    }
+
+    tfoot th {
+        font-weight: bold;
+        background-color: #f2f2f2;
+    }
+
+    /* Tighten row spacing */
+    tr td {
+        padding: 3px 5px;
+    }
+</style>
+
 </head>
 
-<body>
+<body class="page-border">
 
     <h2>{{ $company_Name }}</h2>
 

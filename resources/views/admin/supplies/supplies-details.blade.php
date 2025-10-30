@@ -23,6 +23,12 @@
 @section('content')
 
 
+<style>
+    .supplier-select {
+        font-family: monospace;
+        white-space: pre;
+    }
+</style>
 
     <div class="row">
         <div class="col-lg-12">
@@ -48,18 +54,19 @@
                                     <div class="modal-body">
                                         <form action="javascript:void(0);" class="row g-3">
                                             <div class="row">
-
                                                 <div class="col-md-12">
                                                     <label for="selectSupplier" class="form-label">Supplier</label>
-                                                    <select id="selectSupplier" class="form-select">
-                                                        <option value="">Select Supplier</option>
+                                                    <select id="selectSupplier" class="form-select supplier-select" style="font-family: monospace;">
+                                                        <option value="">Supplier ID             Supplier Name</option>
                                                         @foreach ($Suppliers as $supplier)
-                                                            <option value="{{ $supplier->id }}">{{ $supplier->supplier_id }}
+                                                            <option value="{{ $supplier->id }}"
+                                                                data-fullname="{{ $supplier->supplier_name }} {{ $supplier->company_reg_no ? '(' . $supplier->company_reg_no . ')' : '' }}">
+                                                                {{ str_pad($supplier->supplier_id, 20, ' ', STR_PAD_RIGHT) }} {{ $supplier->supplier_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <small><strong>Wira Jayamas Sdn Bhd 201101027032 (955167-P)</strong></small>
+                                                <small id="supplierFullName" class="text-muted fw-bold"></small>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="startDate" class="form-label">Start Date</label>
