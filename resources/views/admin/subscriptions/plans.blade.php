@@ -75,10 +75,10 @@
                                                         <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>Edit
                                                     </a>
                                                 </li>
-                                                <li>
-                                                    <a class="dropdown-item remove-item-btn" href="javascript:void(0);">
-                                                        <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete
-                                                    </a>
+                                                <li><a href="javascript:void(0)" onclick="return deleteCollection(this)"
+                                                        data-href="{{route('admin.plans.delete', [base64_encode(base64_encode($plan->id))])}}"
+                                                        class="dropdown-item remove-plan-btn"><i
+                                                            class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -231,7 +231,8 @@
                                                 <label class="form-label">Plan Features</label>
                                                 <div id="editFeaturesWrapper"></div>
                                                 <button type="button" class="btn btn-sm btn-secondary mt-2"
-                                                    id="addFeatureBtn" name="features[]"><i class="mdi mdi-plus"></i> Add More
+                                                    id="addFeatureBtn" name="features[]"><i class="mdi mdi-plus"></i> Add
+                                                    More
                                                     Feature</button>
                                             </div>
                                         </div>
@@ -314,30 +315,30 @@
                             if (data.features && data.features.length > 0) {
                                 data.features.forEach((feature, index) => {
                                     $('#editFeaturesWrapper').append(`
-                                    <div class="row mb-2 feature-row">
-                                        <div class="col-md-10">
-                                            ${index === 0 ? '<label class="form-label">Plan Features <span class="text-danger">*</span></label>' : ''}
-                                            <input type="text" class="form-control mt-2" name="features[]" value="${feature}">
+                                        <div class="row mb-2 feature-row">
+                                            <div class="col-md-10">
+                                                ${index === 0 ? '<label class="form-label">Plan Features <span class="text-danger">*</span></label>' : ''}
+                                                <input type="text" class="form-control mt-2" name="features[]" value="${feature}">
+                                            </div>
+                                            <div class="col-md-2 d-flex align-items-end">
+                                                ${index === 0
+                                            ? `<button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>`
+                                            : `<button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>`}
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 d-flex align-items-end">
-                                            ${index === 0
-                                        ? `<button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>`
-                                        : `<button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>`}
-                                        </div>
-                                    </div>
-                                `);
+                                    `);
                                 });
                             } else {
                                 $('#editFeaturesWrapper').append(`
-                                                            <div class="row mb-2 feature-row">
-                                                                <div class="col-md-10">
-                                                                    <input type="text" class="form-control" name="features[]" value="">
+                                                                <div class="row mb-2 feature-row">
+                                                                    <div class="col-md-10">
+                                                                        <input type="text" class="form-control" name="features[]" value="">
+                                                                    </div>
+                                                                    <div class="col-md-2 d-flex align-items-end">
+                                                                        <button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-2 d-flex align-items-end">
-                                                                    <button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        `);
+                                                            `);
                             }
                         } else {
                             alert('Error loading plan data.');
@@ -352,14 +353,14 @@
             // Add/Remove feature rows dynamically
             $(document).on('click', '.addBtn', function () {
                 let newRow = `
-                        <div class="row mb-2 feature-row">
-                            <div class="col-md-10">
-                                <input type="text" class="form-control mt-2" name="features[]" value="">
-                            </div>
-                            <div class="col-md-2 d-flex align-items-end">
-                                <button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>
-                            </div>
-                        </div>`;
+                            <div class="row mb-2 feature-row">
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control mt-2" name="features[]" value="">
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>
+                                </div>
+                            </div>`;
                 $('#createFeaturesWrapper').append(newRow);
             });
 
@@ -371,17 +372,17 @@
             // Fix: Add More Feature button inside Edit Modal
             $(document).on('click', '#addFeatureBtn', function () {
                 $('#editFeaturesWrapper').append(`
-                    <div class="row mb-2 feature-row">
-                        <div class="col-md-10">
-                            <input type="text" class="form-control mt-2" name="features[]" value="">
+                        <div class="row mb-2 feature-row">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control mt-2" name="features[]" value="">
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="button" class="btn btn-md btn-danger removeBtn">
+                                    <i class="mdi mdi-minus"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="button" class="btn btn-md btn-danger removeBtn">
-                                <i class="mdi mdi-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                `);
+                    `);
             });
 
             // Make sure all preloaded feature rows show remove buttons when Edit Modal opens

@@ -121,7 +121,7 @@
                                                             </a>
                                                         </li>
                                                         <li><a href="javascript:void(0)" onclick="return deleteCollection(this)"
-                                                                data-href="{{route('admin.mill.destroy', [base64_encode(base64_encode($faq->id))])}}"
+                                                                data-href="{{route('admin.faq.destroy', [base64_encode(base64_encode($faq->id))])}}"
                                                                 class="dropdown-item remove-item-btn"><i
                                                                     class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>Delete</a>
                                                         </li>

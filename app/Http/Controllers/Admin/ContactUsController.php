@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUs;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,9 +25,8 @@ class ContactUsController extends Controller
     public function index()
     {
         $this->ModuleTitle = __('Contact Us Listing');
-        $this->ViewData['modulePath'] = $this->ModulePath;
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        return view($this->ModuleView . 'index', $this->ViewData);
+        return view($this->ModuleView . 'contact-us-listing', $this->ViewData);
     }
 
     public function store(Request $request)
@@ -147,5 +147,38 @@ class ContactUsController extends Controller
         return response()->json($this->JsonData);
     }
 
+
+    public function destroy($encID)
+    {
+
+        $this->JsonData['status'] = __('error');
+        $this->JsonData['msg'] = __('Faild to delete');
+        $intId = base64_decode(base64_decode($encID));
+        $BaseModel = $this->BaseModel->find($intId);
+        if (isset($BaseModel)) {
+            $update = $this->BaseModel->where('id', $intId)->delete();
+        }
+        if ($update) {
+            $this->JsonData['status'] = __('success');
+            $this->JsonData['msg'] = __('Record deleted successfully.');
+        }
+        return response()->json($this->JsonData);
+    }
+
+
+    public function viewContactUsMessage(Request $request, $encID)
+    {
+
+        $intID = base64_decode(base64_decode($encID));
+        $data = $this->BaseModel::select('message', 'id', 'is_read', 'subject')->where('id', $intID)->first();
+        if ($data->is_read == 'no') {
+            $update = $this->BaseModel->where('id', $intID)->update(['is_read' => 'yes']);
+        }
+        $this->JsonData['status'] = __('success');
+        $this->JsonData['data'] = $data;
+        return response()->json($this->JsonData);
+
+
+    }
 
 }

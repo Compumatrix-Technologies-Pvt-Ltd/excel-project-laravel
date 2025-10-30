@@ -106,7 +106,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::resource('faq', FaqController::class)->names('faq');
     Route::put('faqs/update', [FaqController::class, 'updateFaq'])->name('faq.updateFaq');
 
-
+    Route::get('contacts/getRecords', [ContactUsController::class, 'getRecords'])->name('contact-us-listing.getRecords');
+    Route::get('view-contact-us-message/{id}', [ContactUsController::class, 'viewContactUsMessage'])->name('contact-us.message');
     Route::get('contacts', [ContactUsController::class, 'index'])->name('contacts.index');
 
     Route::delete('contacts/delete', [ContactUsController::class, 'destroy'])->name('contact-us.destroy');
