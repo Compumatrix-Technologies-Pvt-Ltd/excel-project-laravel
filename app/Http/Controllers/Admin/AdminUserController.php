@@ -11,6 +11,7 @@ use App\Models\BranchModel;
 use App\Models\CompanyModel;
 use App\Models\Suppliers;
 use App\Models\Transaction;
+use App\Models\CompanyInfoModel;
 use App\Models\User;
 use DB;
 use Exception;
@@ -40,7 +41,7 @@ class AdminUserController extends Controller
     {
         $this->ModuleTitle = __('User Listing');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['BranchUsers'] = $this->BaseModel->where('company_id',auth()->user()->company_id)->with('branch')->whereHas('roles', function ($query) {
+        $this->ViewData['BranchUsers'] = $this->BaseModel->where('company_id', auth()->user()->company_id)->with('branch')->whereHas('roles', function ($query) {
             $query->where('name', 'branch');
         })->get();
         $this->ViewData['rolesCollection'] = $this->RoleModel
@@ -63,7 +64,7 @@ class AdminUserController extends Controller
             ->whereNotIn('name', ['super-admin', 'hq'])
             ->orderBy('name', 'ASC')
             ->get();
-        $this->ViewData['Branches'] = BranchModel::where('company_id',auth()->user()->company_id)->get();
+        $this->ViewData['Branches'] = BranchModel::where('company_id', auth()->user()->company_id)->get();
         return view($this->ModuleView . 'create', $this->ViewData);
 
     }
@@ -178,10 +179,51 @@ class AdminUserController extends Controller
     {
         $this->ModuleTitle = __('Users');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
+
+        $planUsers = User::with('company')
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'super-admin');
+            })
+            ->get();
+        // dd($planUsers);
+        $this->ViewData['allPlanUsers'] = $planUsers;
+
         return view('admin.subscriptions.users', $this->ViewData);
     }
 
-    
+    public function getCompanyDetails($company_id)
+    {
+        $company = CompanyInfoModel::find($company_id);
+
+        if (!$company) {
+            return response()->json(['status' => false, 'message' => 'Company not found.']);
+        }
+
+        $user = User::where('company_id', $company_id)->first();
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'company_name' => $company->name ?? '',
+                'company_email' => $company->email ?? '',
+                'company_mobile' => $company->phone ?? '',
+                'code' => $company->code,
+                'email' => $company->email,
+                'phone' => $company->phone,
+                'address' => $company->address,
+                'registration_no' => $company->registration_no,
+                'mpob_license_no' => $company->mpob_license_no,
+                'mpob_expiry' => $company->mpob_expiry,
+                'mspo_cert_no' => $company->mspo_cert_no,
+                'mspo_expiry' => $company->mspo_expiry,
+                'status' => $company->status,
+            ],
+        ]);
+    }
+
+
+
+
 }
 
 

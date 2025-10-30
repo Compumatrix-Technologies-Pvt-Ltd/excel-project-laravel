@@ -4,8 +4,11 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AnalysisController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\ConsolidatedFFBController;
+use App\Http\Controllers\Admin\ContactUsController;
 use App\Http\Controllers\Admin\DeductionController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\MillController;
+use App\Http\Controllers\Admin\PlansController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\SuppliesController;
@@ -78,13 +81,36 @@ Route::post('/admin/password-reset/{id}', [ForgotPasswordController::class, 'res
 Route::get('logout', [LoginController::class, 'logout'])->name('admin.logout');
 
 
+// Contact Us
+
+
+Route::post('contacts/store', [ContactUsController::class, 'store'])->name('contacts.store');
+
 Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->group(function () {
 
     # Dashboard
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('plans', [AdminUserController::class, 'plansIndex'])->name('plans');
-    Route::get('plans/users', [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
+    Route::get('plans/users', action: [AdminUserController::class, 'planUsersIndex'])->name('plans.users');
+    Route::get('company/details/{id}', action: [AdminUserController::class, 'getCompanyDetails'])
+        ->name('company.details');
+
+    // Plans 
+    Route::get('plans', [PlansController::class, 'index'])->name('plans');
+    Route::post('plans/store', [PlansController::class, 'store'])->name('plans.store');
+    Route::get('plans/edit/{id}', [PlansController::class, 'edit'])->name('plans.edit');
+    Route::put('plans/update', [PlansController::class, 'update'])->name('plans.update');
+    Route::delete('plans/delete/{id}', [PlansController::class, 'destroy'])->name('plans.delete');
+
+    // FAQ
+    Route::resource('faq', FaqController::class)->names('faq');
+    Route::put('faqs/update', [FaqController::class, 'updateFaq'])->name('faq.updateFaq');
+
+
+    Route::get('contacts', [ContactUsController::class, 'index'])->name('contacts.index');
+
+    Route::delete('contacts/delete', [ContactUsController::class, 'destroy'])->name('contact-us.destroy');
+
 
     Route::resource('users', AdminUserController::class)->names('users');
     Route::put('users/update', [AdminUserController::class, 'update'])->name('user.update');
@@ -125,7 +151,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     // Suppliers Route
     Route::get('suppliers/getRecords', [SupplierController::class, 'getRecords'])->name('suppliers.getRecords');
 
-        // HQ- Suppliers
+    // HQ- Suppliers
     Route::get('hq-suppliers', [SupplierController::class, 'hqSuppliers'])->name('hq-suppliers.index');
     Route::get('hq-suppliers/getRecords', [SupplierController::class, 'HQgetRecords']);
     Route::get('edit-hq-supplier/{id}', [SupplierController::class, 'editHqSupplier']);
@@ -148,7 +174,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     // Deduction Routes
     Route::get('deductions/getRecords', [DeductionController::class, 'getRecords'])->name('deductions.getRecords');
     Route::get('deduction-reports/getRcords', [DeductionController::class, 'deductionReportGetRecords'])->name('deductions.report.getRecords');
-   
+
     Route::get('deduction-reports', [DeductionController::class, 'deductionReportIndex'])->name('deductions.report.index');
 
     Route::resource('deductions', DeductionController::class)->names('deductions');
@@ -192,7 +218,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
-    
+
     Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
 
     Route::get('subscription-&-billing', [CommonController::class, 'subscriptionAndBilling'])->name('subscription.and.billing');
@@ -213,7 +239,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('consolidated/credit/purchase/getRecords', [ConsolidatedFFBController::class, 'getConsolidatedCreditPurchaseAnalysisRecords'])->name('credit.purchase.getRecords');
     Route::get('consolidated/cash/purchase', [ConsolidatedFFBController::class, 'cashPurchase'])->name('cash.purchase.index');
     Route::get('purchase-salse', [ConsolidatedFFBController::class, 'purchaseSalse'])->name('purchaseSalse.index');
-    Route::get('purchase-analysis/consolidated/pdf',
+    Route::get(
+        'purchase-analysis/consolidated/pdf',
         [ConsolidatedFFBController::class, 'exportConsolidatedCreditPurchaseAnalysisPDF']
     )->name('admin.purchaseAnalysis.consolidated.pdf');
 
@@ -229,7 +256,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('cash-purchase-summary/getRecords', [MasterController::class, 'cashPurchaseSummaryGetRecords']);
     Route::get('daily-cash-purchase-summary', [MasterController::class, 'dailyCashPurchaseSummary'])->name('daily.cash.purchase.summary');
     Route::get('daily-cash-purchase-summary/getRecords', [MasterController::class, 'dailyCashPurchaseSummaryGetRecords']);
-    
+
 
     Route::get('sales-invoice-view/{id}', [PurchaseInvoiceController::class, 'salesInvoice'])->name('sales-invoice.view');
     Route::get('sales-invoice', [PurchaseInvoiceController::class, 'salesInvoiceIndex'])->name('sales.invoice.index');
@@ -245,7 +272,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('supplier/cash-bill/details/{invoice_no}', [CashBillController::class, 'getCashBillDetails'])->name('supplier.cash.bill.details');
     Route::get('cash-bill/{id}/preview', [CashBillController::class, 'preview'])->name('cash.bill.preview');
     Route::get('supplier/cash-bill/pdf/{invoice_no}', [CashBillController::class, 'generateCashBillPdf'])
-    ->name('admin.supplier.cash.bill.pdf');
+        ->name('admin.supplier.cash.bill.pdf');
 
     Route::get('payments', [PaymentController::class, 'paymentIndex'])->name('payments.index');
     Route::get('payments/getRecords', [PaymentController::class, 'paymentgetRecords']);
@@ -277,13 +304,13 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('purchase-analysis', [PurchaseAnalysisController::class, 'index'])->name('purchaseAnalysis.index');
     Route::get('purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'supplierCashBillGetRecords'])->name('purchaseAnalysis.index');
     Route::get('purchase-analysis/chart-data', [PurchaseAnalysisController::class, 'getPurchaseChartData'])
-    ->name('purchase.analysis.chart.data');
+        ->name('purchase.analysis.chart.data');
     Route::get('credit-purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'getCreditPurchaseAnalysisRecords'])
-    ->name('credit.purchase.analysis.getRecords');
+        ->name('credit.purchase.analysis.getRecords');
     Route::get('purchase-analysis/pdf', [PurchaseAnalysisController::class, 'purchaseAnalysisPdf'])
-    ->name('purchase.analysis.pdf');
+        ->name('purchase.analysis.pdf');
     Route::get('credit-purchase-analysis/pdf', [PurchaseAnalysisController::class, 'creditPurchaseAnalysisPdf'])
-    ->name('credit.purchase.analysis.pdf');
+        ->name('credit.purchase.analysis.pdf');
     Route::get('credit-purchase-analysis', [PurchaseAnalysisController::class, 'creditPurchaseAnalysisIndex'])->name('creditPurchaseAnalysis.index');
 
 
