@@ -132,7 +132,6 @@ class BankController extends Controller
 
             if ($request->hidden_user_id) {
                 $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
-                dd($decodedUserId);
                 $query->where('user_id', $decodedUserId);
             } else {
                 $query->where('user_id', auth()->id());
@@ -159,7 +158,6 @@ class BankController extends Controller
                 ->limit($length)
                 ->orderBy('id', 'desc')
                 ->get();
-                dd($records);
 
             $data = [];
             $count = $start + 1;
