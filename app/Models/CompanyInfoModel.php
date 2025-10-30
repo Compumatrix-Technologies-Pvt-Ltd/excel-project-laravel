@@ -12,4 +12,6 @@ class CompanyInfoModel extends Model
     public function branches(){
         return $this->hasMany(BranchModel::class);
     }
+
+    
 }

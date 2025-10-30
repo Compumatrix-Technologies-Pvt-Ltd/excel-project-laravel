@@ -10,7 +10,8 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item active"><a href="">Clients Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">Clients Listing</a></li>
+                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">Clients Listing</a>
+                        </li>
                     </ol>
                 </div>
 
@@ -47,188 +48,130 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>1</td>
-                                        <td><img src="{{ asset('assets/admin/images/companies/img-2.png') }}" class="avatar-sm p-2" alt=""></td>
-                                        <td>TCS</td>
-                                        <td>Amit Joshi</td>
-                                        <td>amit.joshi@example.com</td>
-                                        <td>+91 9812234455</td>
-                                        <td><span class="badge bg-success">Active</span></td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>2</td>
-                                        <td><img src="{{ asset('assets/admin/images/companies/img-3.png') }}" class="avatar-sm p-2" alt=""></td>
-                                        <td>TCS</td>
-                                        <td>Neha Reddy</td>
-                                        <td>neha.reddy@example.com</td>
-                                        <td>+91 9823456789</td>
-                                        <td><span class="badge bg-warning">Inactive</span></td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>3</td>
-                                        <td><img src="{{ asset('assets/admin/images/companies/img-4.png') }}" class="avatar-sm p-2" alt=""></td>
-                                        <td>TCS</td>
-                                        <td>Rohan Malhotra</td>
-                                        <td>rohan.malhotra@example.com</td>
-                                        <td>+91 9933445566</td>
-                                        <td><span class="badge bg-danger">Locked</span></td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>4</td>
-                                        <td><img src="{{ asset('assets/admin/images/companies/img-5.png') }}" class="avatar-sm p-2" alt=""></td>
-                                        <td>TCS</td>
-                                        <td>Sapna Chawla</td>
-                                        <td>sapna.chawla@example.com</td>
-                                        <td>+91 9755123400</td>
-                                        <td><span class="badge bg-success">Active</span></td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>5</td>
-                                        <td><img src="{{ asset('assets/admin/images/companies/img-6.png') }}" class="avatar-sm p-2" alt=""></td>
-                                        <td>TCS</td>
-                                        <td>Farhan Sheikh</td>
-                                        <td>farhan.sheikh@example.com</td>
-                                        <td>+91 9876543201</td>
-                                        <td><span class="badge bg-warning">Inactive</span></td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
-                                            </div>
-                                        </th>
-                                        <td>6</td>
-                                        <td><img src="{{ asset('assets/admin/images/companies/img-1.png') }}" class="avatar-sm p-2" alt=""></td>
-                                        <td>TCS</td>
-                                        <td>Divya Kapoor</td>
-                                        <td>divya.kapoor@example.com</td>
-                                        <td>+91 9123409876</td>
-                                        <td><span class="badge bg-danger">Locked</span></td>
-                                        <td><button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-warning"><i class="ri-eye-line align-middle"></i></button></td>
-                                        
-                                    </tr>
+
+                                    @foreach ($allPlanUsers as $index => $user)
+                                        <tr>
+                                            <th scope="row">
+                                                <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
+                                                </div>
+                                            </th>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>
+                                                @if ($user->company && $user->company->logo && file_exists(storage_path('app/public/company-logos/' . $user->company->logo)))
+                                                    <img src="{{ asset('storage/company-logos/' . $user->company->logo) }}"
+                                                        class="avatar-sm p-2 rounded" alt="Company Logo">
+                                                @else
+                                                    <img src="{{ asset('assets/admin/images/companies/img-2.png') }}"
+                                                        class="avatar-sm p-2 rounded" alt="Default Logo">
+                                                @endif
+                                            </td>
+
+                                            <td>{{$user->company->name}}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->mobile_number }}</td>
+                                            <td>@if ($user->status == 'active')
+                                                <span class="badge bg-success">{{ $user->status }}</span>
+                                            @else
+                                                    <span class="badge bg-warning">{{ $user->status }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning openCompanyModal"
+                                                    data-bs-toggle="modal" data-bs-target="#myModal"
+                                                    data-company-id="{{ $user->company->id }}">
+                                                    <i class="ri-eye-line align-middle"></i>
+                                                </button>
+                                            </td>
+
+
+                                        </tr>
+                                    @endforeach
+
                                 </tbody>
 
                             </table>
 
                         </div><!--end row-->
 
-                        <div id="myModal" class="modal fade" tabindex="-1" aria-labelledby="myModal"
-                            aria-hidden="true" style="display: none;">
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="myModal">View Details</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                        </button>
+                                    <div class="modal-header bg-light">
+                                        <h5 class="modal-title" id="myModalLabel">Company Details</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
 
-                                        <div class="row gy-4">
-                                            <form action="javascript:void(0);" class="row g-3">
-                                                <div class="col-md-12">
-                                                    <label for="fullnameInput" class="form-label">Name<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="fullnameInput"
-                                                        value="Amit Joshi">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="inputEmail4" class="form-label">Email<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="inputEmail4"
-                                                        value="amit.joshi@example.com">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="phoneNumberInput" class="form-label">Phone Number</label>
-                                                    <input type="tel" class="form-control" id="phoneNumberInput"
-                                                        value="+91 9876543210">
-                                                </div>
-                                               
-                                                <div class="col-6">
-                                                    <label for="status" class="form-label d-block">Status</label>
-                                                    <div class="d-flex gap-3">
-                                                        <div class="form-check form-check-inline form-radio-success">
-                                                            <input class="form-check-input" type="radio" name="status"
-                                                                id="statusActive" value="active" checked>
-                                                            <label class="form-check-label"
-                                                                for="statusActive">Active</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline form-radio-warning">
-                                                            <input class="form-check-input" type="radio" name="status"
-                                                                id="statusInactive" value="inactive">
-                                                            <label class="form-check-label"
-                                                                for="statusInactive">Inactive</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline form-radio-danger">
-                                                            <input class="form-check-input" type="radio" name="status"
-                                                                id="statusLocked" value="locked">
-                                                            <label class="form-check-label"
-                                                                for="statusLocked">Locked</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="fullnameInput" class="form-label">Company Name<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="fullnameInput"
-                                                        value="TCS">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="inputEmail4" class="form-label">Company Logo<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="file" class="form-control" id="inputEmail4">
-                                                    <div>
-                                                        <img src="{{ asset('assets/admin/images/companies/img-1.png') }}" class="avatar-sm p-2" alt=""></div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="phoneNumberInput" class="form-label">MPOB Lic Number</label>
-                                                    <input type="tel" class="form-control" id="phoneNumberInput"
-                                                        value="675687436536">
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label for="phoneNumberInput" class="form-label">TIN</label>
-                                                    <input type="tel" class="form-control" id="phoneNumberInput"
-                                                        value="675687436536">
-                                                </div>
+                                    <div class="modal-body">
+                                        <div class="row g-3">
+                                            {{-- User Details --}}
+
+                                            {{-- Company Details --}}
+                                            <div class="col-md-6">
+                                                <label class="form-label">Company Name</label>
+                                                <input type="text" id="modal_company_name" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Code</label>
+                                                <input type="text" id="modal_company_code" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Email</label>
+                                                <input type="text" id="modal_company_email" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Phone</label>
+                                                <input type="text" id="modal_company_phone" class="form-control" readonly>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="form-label">Address</label>
+                                                <textarea id="modal_company_address" class="form-control" readonly rows="3"
+                                                    cols="3"></textarea>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Registration No.</label>
+                                                <input type="text" id="modal_company_registration" class="form-control"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">MPOB License No.</label>
+                                                <input type="text" id="modal_company_mpob_license" class="form-control"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">MPOB Expiry</label>
+                                                <input type="text" id="modal_company_mpob_expiry" class="form-control"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">MSPO Certificate No.</label>
+                                                <input type="text" id="modal_company_mspo_cert" class="form-control"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">MSPO Expiry</label>
+                                                <input type="text" id="modal_company_mspo_expiry" class="form-control"
+                                                    readonly>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Status</label>
+                                                <input type="text" id="modal_company_status" class="form-control" readonly>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                    </form>
 
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
 
                 </div>
@@ -254,7 +197,46 @@
                 ordering: true
             });
         });
+
+        $(document).on('click', '.openCompanyModal', function () {
+            let companyId = $(this).data('company-id');
+            let modal = $('#myModal');
+
+            $.ajax({
+                url: ADMINURL + '/company/details/' + companyId,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    modal.find('input').val('');
+                },
+                success: function (response) {
+                    if (response.status) {
+                        let data = response.data;
+
+                        $('#modal_company_name').val(data.company_name);
+
+                        $('#modal_company_code').val(data.code);
+                        $('#modal_company_email').val(data.company_email);
+                        $('#modal_company_phone').val(data.company_mobile);
+                        $('#modal_company_address').val(data.address);
+                        $('#modal_company_registration').val(data.registration_no);
+                        $('#modal_company_mpob_license').val(data.mpob_license_no);
+                        $('#modal_company_mpob_expiry').val(data.mpob_expiry);
+                        $('#modal_company_mspo_cert').val(data.mspo_cert_no);
+                        $('#modal_company_mspo_expiry').val(data.mspo_expiry);
+                        $('#modal_company_status').val(data.status);
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert('Failed to load company details.');
+                }
+            });
+        });
+
     </script>
+
 
 
 @endsection

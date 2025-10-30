@@ -119,7 +119,7 @@
                             <i class="mdi mdi-content-save-edit" aria-hidden="true"></i>
                             <span data-key="t-widgets">Global Masters & CMS</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ (request()->is('admin/emails-sms-edit/1', 'admin/emails-sms', 'admin/cms-pages', 'admin/cms-pages-edit/1')) ? 'show' : ''  }}"
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/emails-sms-edit/1', 'admin/emails-sms', 'admin/cms-pages', 'admin/cms-pages-edit/1', 'admin/faq')) ? 'show' : ''  }}"
                             id="CMSPages">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
@@ -131,6 +131,17 @@
                                     <a href="{{ route('admin.cms.pages') }}"
                                         class="nav-link {{ (request()->is('admin/cms-pages', 'admin/cms-pages-edit/1')) ? 'active' : ''  }}"
                                         data-key="t-horizontal">CMS Pages</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.faq.index') }}"
+                                        class="nav-link {{ (request()->is('admin/faq')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">FAQ</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.contacts.index') }}"
+                                        class="nav-link {{ (request()->is('admin/contacts')) ? 'active' : ''  }}"
+                                        data-key="t-horizontal">Contact Us Listing</a>
                                 </li>
 
                             </ul>
@@ -173,7 +184,7 @@
                     <li class="text-light">
                         <hr>
                     </li>
-                        <li class="menu-title"><span data-key="t-menu" class="text-light">HQ</span></li>
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">HQ</span></li>
 
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/dashboard') ? 'active' : '' }}"
@@ -181,9 +192,9 @@
                             <i class="ri-dashboard-2-line"></i> <span data-key="t-widgets">Dashboard</span>
                         </a>
                     </li>
-                    
 
-                   
+
+
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/hq-suppliers') ? 'active' : '' }}"
                             href="{{ route('admin.hq-suppliers.index') }}">
@@ -197,7 +208,7 @@
                             <i class="mdi mdi-factory"></i> <span data-key="t-widgets">Mill</span>
                         </a>
                     </li>
-                   
+
                     <!-- Transaction Management -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/transaction-management') ? 'active' : '' }}"
@@ -230,12 +241,13 @@
                             <i class="mdi mdi-magnify me-2"></i> <span data-key="t-widgets">Analysis</span>
                         </a>
                     </li>
-                     
+
                     <!-- Supplies Summary -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/supplies-summary') ? 'active' : '' }}"
                             href="{{ route('admin.supplies.summary.index') }}">
-                            <i class="mdi mdi-order-bool-descending-variant"></i> <span data-key="t-widgets">Supplies Summary</span>
+                            <i class="mdi mdi-order-bool-descending-variant"></i> <span data-key="t-widgets">Supplies
+                                Summary</span>
                         </a>
                     </li>
 
@@ -276,8 +288,8 @@
                             </ul>
                         </div>
                     </li>
-                       <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/vehicles','admin/branch','admin/users') ? ' collapsed active' : '' }}"
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/vehicles', 'admin/branch', 'admin/users') ? ' collapsed active' : '' }}"
                             href="#OtherManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="OtherManagement">
                             <i class="mdi mdi-store"></i>
@@ -285,7 +297,7 @@
                             <span data-key="t-base-ui">Other</span>
 
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/vehicles','admin/branch','admin/users') ? 'show' : '' }}"
+                        <div class="collapse menu-dropdown {{ request()->is('admin/vehicles', 'admin/branch', 'admin/users') ? 'show' : '' }}"
                             id="OtherManagement">
                             <ul class="nav nav-sm flex-column">
                                 <!-- Branch Management -->
@@ -305,15 +317,15 @@
                                         class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}"
                                         data-key="t-horizontal">Manage Users</a>
                                 </li>
-                               
+
                             </ul>
                         </div>
                     </li>
 
-                   <li class="text-light">
+                    <li class="text-light">
                         <hr>
                     </li>
-                        <li class="menu-title"><span data-key="t-menu" class="text-light">Branch</span></li>
+                    <li class="menu-title"><span data-key="t-menu" class="text-light">Branch</span></li>
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
                             href="{{ route('admin.mainForm.index') }}">
@@ -321,12 +333,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers','admin/suppliers/create','admin/suppliers/*/edit') ? 'active' : '' }}"
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers/*/edit') ? 'active' : '' }}"
                             href="{{ route('admin.suppliers.index') }}">
                             <i class="mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
                         </a>
                     </li>
-              
+
                     <!-- Daily Credit Transactions -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/transactions') ? 'active' : '' }}"
@@ -447,10 +459,11 @@
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
                             href="{{ route('admin.suppliersGps.index') }}">
-                            <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS Listing</span>
+                            <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS
+                                Listing</span>
                         </a>
                     </li>
-                   
+
 
                 @endif
                 @if (Auth::user()->hasRole('branch'))
@@ -474,12 +487,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/suppliers','admin/suppliers/create','admin/suppliers/*/edit') ? 'active' : '' }}"
+                        <a class="nav-link menu-link {{ request()->is('admin/suppliers', 'admin/suppliers/create', 'admin/suppliers/*/edit') ? 'active' : '' }}"
                             href="{{ route('admin.suppliers.index') }}">
                             <i class="mdi mdi-store"></i> <span data-key="t-widgets">Suppliers</span>
                         </a>
                     </li>
-              
+
                     <!-- Daily Credit Transactions -->
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/transactions') ? 'active' : '' }}"
@@ -600,14 +613,15 @@
                     <li class="nav-item">
                         <a class="nav-link menu-link {{ request()->is('admin/suppliers-gps-list') ? 'active' : '' }}"
                             href="{{ route('admin.suppliersGps.index') }}">
-                            <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS Listing</span>
+                            <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS
+                                Listing</span>
                         </a>
                     </li>
-                   
 
 
 
-                    
+
+
                 @endif
 
 
