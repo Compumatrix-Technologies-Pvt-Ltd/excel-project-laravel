@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Deduction;
 use App\Models\FFBTransactionsModel;
 use App\Models\Mill;
+use App\Models\Plans;
+use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -48,9 +51,18 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+
+
         $user = auth()->user();
         $this->ViewData['moduleAction'] = "Dashboard";
+        $hasSubscription = Subscription::where('user_id', $user->id)->exists();
 
+        if (!Helper::hasActiveSubscription()) {
+            $this->ViewData['moduleAction'] = "Subscriptions";
+            $plans = Plans::with('features')->orderBy('id')->get();
+            $this->ViewData['plans'] = $plans;
+            return view('admin.subscriptions.plan-pricing', $this->ViewData);
+        }
         if ($user->hasRole('hq')) {
 
             $todaysTickets = Transaction::where([
@@ -352,6 +364,8 @@ class DashboardController extends Controller
 
 
         }
+
+
 
         return view('admin.dashboard', $this->ViewData);
     }

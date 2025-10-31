@@ -256,7 +256,7 @@
 
 
     <!-- start plan -->
-    <section class="section" id="plans">
+    {{-- <section class="section" id="plans">
         <div class="bg-overlay bg-overlay-pattern"></div>
         <div class="container">
             <div class="row justify-content-center">
@@ -573,6 +573,84 @@
             <!--end row-->
         </div>
         <!-- end container -->
+    </section> --}}
+
+    <section class="section" id="plans">
+        <div class="bg-overlay bg-overlay-pattern"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="text-center mb-5">
+                        <h3 class="mb-3 fw-semibold">Choose the plan that's right for you</h3>
+                        <p class="text-muted mb-4">Simple pricing. No hidden fees. Advanced features for your business.
+                        </p>
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div>
+                                <h5 class="fs-14 mb-0">Month</h5>
+                            </div>
+                            <div class="form-check form-switch fs-20 ms-3" onclick="togglePlans()">
+                                <input class="form-check-input" type="checkbox" id="plan-switch">
+                                <label class="form-check-label" for="plan-switch"></label>
+                            </div>
+                            <div>
+                                <h5 class="fs-14 mb-0">Annual <span class="badge bg-success-subtle text-success">Save
+                                        20%</span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row gy-4">
+                @foreach ($plans as $plan)
+                    <div class="col-lg-4 plan-card" data-duration="{{ strtolower($plan->plan_duration) }}">
+                        <div class="card plan-box mb-0">
+                            <div class="card-body p-4 m-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h5 class="mb-1 fw-semibold">{{ $plan->plan_name }}</h5>
+                                        <p class="text-muted mb-0">{{ $plan->plan_sub_title }}</p>
+                                    </div>
+                                    <div class="avatar-sm">
+                                        <div class="avatar-title bg-light rounded-circle text-primary">
+                                            <i class="{{ $plan->icon ?? 'ri-book-mark-line' }} fs-20"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="py-4 text-center">
+                                    <h1>
+                                        <sup><small>RM</small></sup>
+                                        <span class="ff-secondary fw-bold">{{ number_format($plan->plan_price, 2) }}</span>
+                                        <span class="fs-13 text-muted">/{{ ucfirst($plan->plan_duration) }}</span>
+                                    </h1>
+                                </div>
+
+                                <div>
+                                    <ul class="list-unstyled text-muted vstack gap-3 ff-secondary">
+                                        @foreach ($plan->features as $feature)
+                                            <li>
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0 text-success me-1">
+                                                        <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
+                                                    </div>
+                                                    <div class="flex-grow-1">{{ $feature->features }}</div>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+
+                                    <div class="mt-4">
+                                        <a href="javascript:void(0);" class="btn btn-soft-success w-100">Get Started</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </section>
     <!-- end plan -->
 
@@ -602,7 +680,7 @@
             <div class="row g-lg-5 g-4">
                 <div class="col-lg-12">
 
-                    <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box"
+                    <!-- <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box"
                         id="genques-accordion">
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="genques-headingOne">
@@ -615,8 +693,7 @@
                             <div id="genques-collapseOne" class="accordion-collapse collapse show"
                                 aria-labelledby="genques-headingOne" data-bs-parent="#genques-accordion">
                                 <div class="accordion-body ff-secondary">
-                                    Yes. We provide guided import for suppliers, daily transactions, purchases, and
-                                    deductions.
+                                    Yes. We provide guided import for suppliers, daily transactions, purchases, and deductions.
                                 </div>
                             </div>
                         </div>
@@ -646,14 +723,37 @@
                             <div id="genques-collapseThree" class="accordion-collapse collapse"
                                 aria-labelledby="genques-headingThree" data-bs-parent="#genques-accordion">
                                 <div class="accordion-body ff-secondary">
-                                    Yes. You can customize invoice numbers by enabling the appropriate settings in the
-                                    theme options.
+                                    Yes. You can customize invoice numbers by enabling the appropriate settings in the theme options.
                                 </div>
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
                     <!--end accordion-->
+
+                    <div class="accordion custom-accordionwithicon custom-accordion-border accordion-border-box"
+                        id="faq-accordion">
+                        @foreach($faqs as $index => $faq)
+                            @php $collapseId = 'faq-collapse' . $index; @endphp
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faq-heading{{ $index }}">
+                                    <button class="accordion-button {{ $index > 0 ? 'collapsed' : '' }}" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#{{ $collapseId }}"
+                                        aria-expanded="{{ $index == 0 ? 'true' : 'false' }}"
+                                        aria-controls="{{ $collapseId }}">
+                                        {{ $faq->question }}
+                                    </button>
+                                </h2>
+                                <div id="{{ $collapseId }}"
+                                    class="accordion-collapse collapse {{ $index == 0 ? 'show' : '' }}"
+                                    aria-labelledby="faq-heading{{ $index }}" data-bs-parent="#faq-accordion">
+                                    <div class="accordion-body ff-secondary">
+                                        {!! nl2br(e($faq->answer)) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
 
                 </div>
 
@@ -869,7 +969,7 @@
     <script src="{{ asset('/assets/admin/js/plugins.js') }}"></script>
     <script src="{{ asset('/assets/admin/libs/swiper/swiper-bundle.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/js/pages/nft-landing.init.js') }}"></script>
-    <script>
+    {{-- <script>
         function check() {
             var n = document.getElementById("plan-switch"),
                 e = document.getElementsByClassName("month"),
@@ -880,7 +980,9 @@
             })
         }
         check();
-    </script>
+    </script> --}}
+
+   
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
 
 </body>
