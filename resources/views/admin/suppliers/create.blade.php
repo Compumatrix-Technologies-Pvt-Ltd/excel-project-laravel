@@ -155,30 +155,41 @@
                                         required data-error="Please enter Email">
                                     <span class="help-block with-errors err_email" style="color:red;"></span>
                                 </div>
-                                <div class="col-md-2 form-group">
+                                <div class="col-md-4 form-group">
                                     <label for="telphone_1" class="form-label">Tel. 1: <span
                                             class="text-danger">*</span></label>
                                     <input type="tel" name="telphone_1" id="telphone_1" class="form-control form-control-sm"
                                         required data-error="Please enter Telephone number">
                                     <span class="help-block with-errors err_telphone_1" style="color:red;"></span>
                                 </div>
-                                <div class="col-md-2 form-group">
+                                <div class="col-md-4 form-group">
                                     <label for="telphone_2" class="form-label">Tel. 2:</label>
                                     <input type="tel" name="telphone_2" id="telphone_2"
                                         class="form-control form-control-sm">
                                 </div>
-                                <div class="col-md-2 form-group">
-                                    <label for="bank_id" class="form-label">Bank ID: <span
-                                            class="text-danger">*</span></label>
-                                    <select name="bank_id" id="bank_id" class="form-select form-select-sm" required
-                                        data-error="Please select bank Id">
-                                        <option value="">Select</option>
-                                        <option value="MBBS">MBBS</option>
-                                        <option value="RHB">RHB</option>
+                              
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4 form-group">
+                                    <label for="bank_id" class="form-label">Bank</label>
+                                    <select id="bank_id" name="bank_id" class="form-select bank-select" style="font-family: monospace;">
+                                        <option value="">
+                                            {{ str_pad('Bank ID', 124) }}{{ str_pad('Bank Name', 422) }}{{ str_pad('BIC Code', 15) }}{{ str_pad('Pay Type', 10) }}
+                                        </option>
+                                        @foreach ($banks as $val)
+                                            <option value="{{ $val->id }}">
+                                                {{ str_pad($val->bank_id, 132) }}
+                                                {{ str_pad($val->name, 322) }}
+                                                {{ str_pad($val->bic_code ?? '-', 15) }}
+                                                {{ str_pad($val->pay_type ?? '-', 10) }}
+                                            </option>
+                                        @endforeach
                                     </select>
+                                    <small id="supplierFullName" class="text-muted fw-bold"></small>
                                     <span class="help-block with-errors err_bank_id" style="color:red;"></span>
                                 </div>
-                                <div class="col-md-2 form-group">
+
+                                <div class="col-md-4 form-group">
                                     <label for="bank_acc_no" class="form-label">Bank A/C No.: <span
                                             class="text-danger">*</span></label>
                                     <input type="text" name="bank_acc_no" id="bank_acc_no"
@@ -186,9 +197,7 @@
                                         data-error="Please bank account number">
                                     <span class="help-block with-errors err_bank_acc_no" style="color:red;"></span>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col form-group">
+                                <div class="col-4 form-group">
                                     <label for="remark" class="form-label">Remark:</label>
                                     <input type="text" name="remark" id="remark" class="form-control form-control-sm">
                                 </div>

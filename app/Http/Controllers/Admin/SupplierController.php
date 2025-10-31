@@ -7,6 +7,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Suppliersrequest;
 use App\Models\Suppliers;
+use App\Models\Bank;
 use Exception;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -48,9 +49,12 @@ class SupplierController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
         $this->ViewData['moduleAction'] = 'Create Supplier';
+        $this->ViewData['banks'] = Bank::where('user_id',$userId)->get();
         return view($this->ModuleView . 'create', $this->ViewData);
     }
 
@@ -171,8 +175,12 @@ class SupplierController extends Controller
         return response()->json($this->JsonData);
     }
     
-    public function edit(string $encID)
+    public function edit(Request $request,string $encID)
     {
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+                $this->ViewData['banks'] = Bank::where('user_id',$userId)->get();
+
         $intID = base64_decode(base64_decode($encID));
         $data = $this->BaseModel->find($intID);
         $parts = explode('-', $data->supplier_id);
