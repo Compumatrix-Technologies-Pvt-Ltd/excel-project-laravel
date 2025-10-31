@@ -767,10 +767,10 @@
                     chart: { type: "bar", height: 280, toolbar: { show: false } },
                     series: [{
                         name: "Amount (RM)",
-                        data: @json($data)
+                        data: @json($hq_data)
                     }],
                     xaxis: {
-                        categories: @json($categories),
+                        categories: @json($hq_categories),
                         title: { text: "Deduction Type" }
                     },
                     yaxis: {

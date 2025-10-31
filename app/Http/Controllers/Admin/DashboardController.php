@@ -183,16 +183,16 @@ class DashboardController extends Controller
                 ->groupBy('type')
                 ->pluck('total_amount', 'type');
 
-            $categories = ['Advance', 'Transport', 'Others'];
+            $hq_categories = ['Advance', 'Transport', 'Others'];
 
-            $data = [
+            $hq_data = [
                 $deductions['advance'] ?? 0,
                 $deductions['transport'] ?? 0,
                 $deductions['others'] ?? 0,
             ];
 
-            $this->ViewData['categories'] = $categories;
-            $this->ViewData['data'] = $data;
+            $this->ViewData['hq_categories'] = $hq_categories;
+            $this->ViewData['hq_data'] = $hq_data;
 
 
             $currentDate = Carbon::now();
@@ -247,8 +247,9 @@ class DashboardController extends Controller
 
 
 
-            $totalCashTransactions = FFBTransactionsModel::where('purchase_type', 'cash')->count();
-            $totalCashRM = FFBTransactionsModel::where('purchase_type', 'cash')->sum('net_pay');
+            $totalCashTransactions = FFBTransactionsModel::where('purchase_type', 'cash')->whereDate('created_at', today())->count();
+            $totalCashRM = FFBTransactionsModel::where('purchase_type', 'cash')
+                ->whereDate('created_at', today())->sum('net_pay');
 
 
             $currentMonth = Carbon::now()->month;
@@ -354,7 +355,5 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', $this->ViewData);
     }
-
-
 
 }
