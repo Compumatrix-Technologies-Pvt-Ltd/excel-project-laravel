@@ -108,108 +108,111 @@ new ApexCharts(document.querySelector('#upgrade_heatmap'), {
 }).render();
 
 
-new ApexCharts(document.querySelector('#hq_tickets_by_day'), {
-  chart:{ type:'bar', height:300, toolbar:{show:false}},
-  series:[{ name:'MT', data:[3.2, 5.8, 4.1, 0, 6.7, 7.4, 2.9] }], // per day
-  xaxis:{ categories:['01','02','03','04','05','06','07'] },
-  yaxis:{ labels:{ formatter:v=>v.toFixed(2) } },
-  colors:['#3B82F6'],
-  dataLabels:{ enabled:false },
-  grid:{ borderColor:'#eee' },
-  tooltip:{ y:{ formatter:v=>v.toFixed(3)+' MT' } }
-}).render();
-
-const suppliers = ['Aplas','VC','WJ','SM','SP','Raymond','Sahabat TK','HJ Dev','LCH','Prolific'];
-const mt = [164.28, 142.10, 138.55, 121.90, 118.30, 110.40, 104.25, 98.60, 95.10, 90.00];
-new ApexCharts(document.querySelector('#hq_top_suppliers'), {
-  chart:{ type:'bar', height:380, toolbar:{show:false}},
-  plotOptions:{ bar:{ horizontal:true, barHeight:'60%' } },
-  series:[{ name:'MT', data: mt }],
-  xaxis:{ categories: suppliers, labels:{ formatter:v=>v.toFixed(2) } },
-  colors:['#22C55E'],
-  dataLabels:{ enabled:true, formatter:v=>v.toFixed(2)+' MT' }
-}).render();
-
-new ApexCharts(document.querySelector('#hq_mill_mix'), {
-  chart:{ type:'donut', height:300 },
-  series:[1240.5, 320.3, 210.1, 88.6], // MT by mill
-  labels:['LCH','Mill 2','Mill 3','Mill 4'],
-  colors:['#3B82F6','#A78BFA','#22C55E','#F59E0B'],
-  dataLabels:{ enabled:true, formatter:(v,opts)=>opts.w.config.series[opts.seriesIndex].toFixed(0)+' MT' },
-  legend:{ position:'bottom' }
-}).render();
-
-new ApexCharts(document.querySelector('#hq_credit_cash'), {
-  chart:{ type:'bar', height:300, toolbar:{show:false}},
-  series:[
-    { name:'Credit (Invoices)', data:[92000, 101500, 98400, 110200, 103600, 115300] },
-    { name:'Cash Purchases', data:[38000, 41000, 39000, 36000, 42000, 39500] }
-  ],
-  colors:['#111827','#10B981'],
-  xaxis:{ categories:['Apr','May','Jun','Jul','Aug','Sep'] },
-  yaxis:{ labels:{ formatter:v=>'RM '+v.toLocaleString() } },
-  dataLabels:{ enabled:false },
-  tooltip:{ y:{ formatter:v=>'RM '+v.toLocaleString() } },
-  legend:{ position:'top' }
-}).render();
-
-new ApexCharts(document.querySelector('#hq_deductions'), {
-  chart:{ type:'bar', height:280, toolbar:{show:false}},
-  series:[{ name:'Amount', data:[3250, 1880, 940] }],
-  xaxis:{ categories:['Advance','Transport','Other'] },
-  colors:['#EF4444'],
-  dataLabels:{ enabled:true, formatter:v=>'RM '+v.toLocaleString() }
-}).render();
+// new ApexCharts(document.querySelector('#hq_tickets_by_day'), {
+//   chart:{ type:'bar', height:300, toolbar:{show:false}},
+//   series:[{ name:'MT', data:[3.2, 5.8, 4.1, 0, 6.7, 7.4, 2.9] }], // per day
+//   xaxis:{ categories:['01','02','03','04','05','06','07'] },
+//   yaxis:{ labels:{ formatter:v=>v.toFixed(2) } },
+//   colors:['#3B82F6'],
+//   dataLabels:{ enabled:false },
+//   grid:{ borderColor:'#eee' },
+//   tooltip:{ y:{ formatter:v=>v.toFixed(3)+' MT' } }
+// }).render();
 
 
-new ApexCharts(document.querySelector('#hq_price_per_mt'), {
-  chart:{ type:'line', height:300, toolbar:{show:false}},
-  series:[{ name:'RM per MT', data:[834, 820, 845, 860, 855, 872] }],
-  xaxis:{ categories:['Apr','May','Jun','Jul','Aug','Sep'] },
-  colors:['#2563EB'],
-  stroke:{ width:3, curve:'smooth' },
-  dataLabels:{ enabled:false },
-  tooltip:{ y:{ formatter:v=>'RM '+v.toFixed(2)+'/MT' } }
-}).render();
 
-new ApexCharts(document.querySelector('#br_tickets_14d'), {
-  chart:{ type:'bar', height:300, toolbar:{show:false}},
-  series:[{ name:'Tickets', data:[12,9,15,18,11,0,0,14,16,10,13,17,9,8] }],
-  xaxis:{ categories:['Aug 16','17','18','19','20','21','22','23','24','25','26','27','28','29'] },
-  colors:['#3B82F6'],
-  dataLabels:{ enabled:false },
-  grid:{ borderColor:'#eee' }
-}).render();
+// const suppliers = ['Aplas','VC','WJ','SM','SP','Raymond','Sahabat TK','HJ Dev','LCH','Prolific'];
+// const mt = [164.28, 142.10, 138.55, 121.90, 118.30, 110.40, 104.25, 98.60, 95.10, 90.00];
+// new ApexCharts(document.querySelector('#hq_top_suppliers'), {
+//   chart:{ type:'bar', height:380, toolbar:{show:false}},
+//   plotOptions:{ bar:{ horizontal:true, barHeight:'60%' } },
+//   series:[{ name:'MT', data: mt }],
+//   xaxis:{ categories: suppliers, labels:{ formatter:v=>v.toFixed(2) } },
+//   colors:['#22C55E'],
+//   dataLabels:{ enabled:true, formatter:v=>v.toFixed(2)+' MT' }
+// }).render();
 
-new ApexCharts(document.querySelector('#br_supplier_top10'), {
-  chart:{ type:'bar', height:340, toolbar:{show:false}},
-  plotOptions:{ bar:{ columnWidth:'45%' }},
-  series:[{ name:'MT', data:[42.6,38.1,33.3,29.8,27.4,24.9,22.0,20.7,18.4,16.3] }],
-  xaxis:{ categories:['VC','Aplas','WJ','SM','SP','Raymond','Sahabat','Maju','HKSE','Koh'], labels:{ rotate:-25 }},
-  colors:['#6366F1'],
-  dataLabels:{ enabled:false },
-  tooltip:{ y:{ formatter:v=>v.toFixed(2)+' MT' } }
-}).render();
+// new ApexCharts(document.querySelector('#hq_mill_mix'), {
+//   chart:{ type:'donut', height:300 },
+//   series:[1240.5, 320.3, 210.1, 88.6], // MT by mill
+//   labels:['LCH','Mill 2','Mill 3','Mill 4'],
+//   colors:['#3B82F6','#A78BFA','#22C55E','#F59E0B'],
+//   dataLabels:{ enabled:true, formatter:(v,opts)=>opts.w.config.series[opts.seriesIndex].toFixed(0)+' MT' },
+//   legend:{ position:'bottom' }
+// }).render();
 
-new ApexCharts(document.querySelector('#br_cash_daily'), {
-  chart:{ type:'area', height:300, toolbar:{show:false}},
-  series:[{ name:'Cash Paid (RM)', data:[0,1200,0,3500,2200,0,0,4100,1800,0,2600,0,0,3200,1500] }],
-  xaxis:{ categories:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'] },
-  colors:['#22C55E'],
-  stroke:{ width:2, curve:'smooth' },
-  fill:{ opacity:0.35 },
-  tooltip:{ y:{ formatter:v=>'RM '+v.toLocaleString() } }
-}).render();
+// new ApexCharts(document.querySelector('#hq_credit_cash'), {
+//   chart:{ type:'bar', height:300, toolbar:{show:false}},
+//   series:[
+//     { name:'Credit (Invoices)', data:[92000, 101500, 98400, 110200, 103600, 115300] },
+//     { name:'Cash Purchases', data:[38000, 41000, 39000, 36000, 42000, 39500] }
+//   ],
+//   colors:['#111827','#10B981'],
+//   xaxis:{ categories:['Apr','May','Jun','Jul','Aug','Sep'] },
+//   yaxis:{ labels:{ formatter:v=>'RM '+v.toLocaleString() } },
+//   dataLabels:{ enabled:false },
+//   tooltip:{ y:{ formatter:v=>'RM '+v.toLocaleString() } },
+//   legend:{ position:'top' }
+// }).render();
 
-new ApexCharts(document.querySelector('#br_deductions_donut'), {
-  chart:{ type:'donut', height:300 },
-  series:[2450, 1380, 720],
-  labels:['Advance','Transport','Other'],
-  colors:['#F59E0B','#3B82F6','#EF4444'],
-  dataLabels:{ enabled:true },
-  tooltip:{ y:{ formatter:v=>'RM '+v.toLocaleString() } },
-  legend:{ position:'bottom' }
-}).render();
+// new ApexCharts(document.querySelector('#hq_deductions'), {
+//   chart:{ type:'bar', height:280, toolbar:{show:false}},
+//   series:[{ name:'Amount', data:[3250, 1880, 940] }],
+//   xaxis:{ categories:['Advance','Transport','Other'] },
+//   colors:['#EF4444'],
+//   dataLabels:{ enabled:true, formatter:v=>'RM '+v.toLocaleString() }
+// }).render();
+
+
+// new ApexCharts(document.querySelector('#hq_price_per_mt'), {
+//   chart:{ type:'line', height:300, toolbar:{show:false}},
+//   series:[{ name:'RM per MT', data:[834, 820, 845, 860, 855, 872] }],
+//   xaxis:{ categories:['Apr','May','Jun','Jul','Aug','Sep'] },
+//   colors:['#2563EB'],
+//   stroke:{ width:3, curve:'smooth' },
+//   dataLabels:{ enabled:false },
+//   tooltip:{ y:{ formatter:v=>'RM '+v.toFixed(2)+'/MT' } }
+// }).render();
+
+
+// new ApexCharts(document.querySelector('#br_tickets_14d'), {
+//   chart:{ type:'bar', height:300, toolbar:{show:false}},
+//   series:[{ name:'Tickets', data:[12,9,15,18,11,0,0,14,16,10,13,17,9,8] }],
+//   xaxis:{ categories:['Aug 16','17','18','19','20','21','22','23','24','25','26','27','28','29'] },
+//   colors:['#3B82F6'],
+//   dataLabels:{ enabled:false },
+//   grid:{ borderColor:'#eee' }
+// }).render();
+
+// new ApexCharts(document.querySelector('#br_supplier_top10'), {
+//   chart:{ type:'bar', height:340, toolbar:{show:false}},
+//   plotOptions:{ bar:{ columnWidth:'45%' }},
+//   series:[{ name:'MT', data:[42.6,38.1,33.3,29.8,27.4,24.9,22.0,20.7,18.4,16.3] }],
+//   xaxis:{ categories:['VC','Aplas','WJ','SM','SP','Raymond','Sahabat','Maju','HKSE','Koh'], labels:{ rotate:-25 }},
+//   colors:['#6366F1'],
+//   dataLabels:{ enabled:false },
+//   tooltip:{ y:{ formatter:v=>v.toFixed(2)+' MT' } }
+// }).render();
+
+// new ApexCharts(document.querySelector('#br_cash_daily'), {
+//   chart:{ type:'area', height:300, toolbar:{show:false}},
+//   series:[{ name:'Cash Paid (RM)', data:[0,1200,0,3500,2200,0,0,4100,1800,0,2600,0,0,3200,1500] }],
+//   xaxis:{ categories:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15'] },
+//   colors:['#22C55E'],
+//   stroke:{ width:2, curve:'smooth' },
+//   fill:{ opacity:0.35 },
+//   tooltip:{ y:{ formatter:v=>'RM '+v.toLocaleString() } }
+// }).render();
+
+// new ApexCharts(document.querySelector('#br_deductions_donut'), {
+//   chart:{ type:'donut', height:300 },
+//   series:[2450, 1380, 720],
+//   labels:['Advance','Transport','Other'],
+//   colors:['#F59E0B','#3B82F6','#EF4444'],
+//   dataLabels:{ enabled:true },
+//   tooltip:{ y:{ formatter:v=>'RM '+v.toLocaleString() } },
+//   legend:{ position:'bottom' }
+// }).render();
 
 
 new ApexCharts(document.querySelector('#br_today_activity'), {

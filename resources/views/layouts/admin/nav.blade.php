@@ -113,13 +113,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ (request()->is('admin/emails-sms-edit/1', 'admin/emails-sms', 'admin/cms-pages', 'admin/cms-pages-edit/1')) ? ' collapsed active' : ''  }}"
+                        <a class="nav-link menu-link {{ (request()->is('admin/emails-sms-edit/1', 'admin/emails-sms', 'admin/cms-pages', 'admin/cms-pages-edit/1', 'admin/faq', 'admin/contacts')) ? ' collapsed active' : ''  }}"
                             href="#CMSPages" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="CMSPages">
                             <i class="mdi mdi-content-save-edit" aria-hidden="true"></i>
                             <span data-key="t-widgets">Global Masters & CMS</span>
                         </a>
-                        <div class="collapse menu-dropdown {{ (request()->is('admin/emails-sms-edit/1', 'admin/emails-sms', 'admin/cms-pages', 'admin/cms-pages-edit/1', 'admin/faq')) ? 'show' : ''  }}"
+                        <div class="collapse menu-dropdown {{ (request()->is('admin/emails-sms-edit/1', 'admin/emails-sms', 'admin/cms-pages', 'admin/cms-pages-edit/1', 'admin/faq', 'admin/contacts')) ? 'show' : ''  }}"
                             id="CMSPages">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">

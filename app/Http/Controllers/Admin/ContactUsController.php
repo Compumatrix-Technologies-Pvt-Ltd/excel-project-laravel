@@ -58,13 +58,14 @@ class ContactUsController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Contact submitted successfully.',
+                'url' => route('/'),
+                'msg' => 'Contact submitted successfully.',
             ]);
 
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'An unexpected error occurred.',
+                'msg' => 'An unexpected error occurred.',
                 'error' => $e->getMessage(),
             ], 500);
         }
