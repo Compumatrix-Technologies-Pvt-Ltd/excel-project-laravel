@@ -64,7 +64,11 @@ class TransactionController extends Controller
         // dd($request->all());
         try {
             if (!empty($request->vehicle_id) && !empty($request->mill_id)) {
-                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transaction.management');
+                if($request->has('hq_main')){
+                    $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.hqMainForm.index');
+                }else{
+                    $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transaction.management');
+                }
                 return response()->json($response);
             } else {
                 $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.transactions.index');
@@ -90,6 +94,9 @@ class TransactionController extends Controller
         $TransctionData->ticket_no = $request->ticket_no;
         $TransctionData->trx_no = $request->trx_no;
         $TransctionData->vehicle_id = $request->vehicle_id;
+        if(!empty($request->mill_id) && isset($request->mill_id)){
+            $TransctionData->transaction_by = 'hq';
+        }
         $TransctionData->supplier_id = $request->supplier_id;
         $TransctionData->mill_id = $request->mill_id;
         $TransctionData->weight = $request->weight;
@@ -119,8 +126,12 @@ class TransactionController extends Controller
     public function update(Request $request)
     {
         if (!empty($request->vehicle_id) && !empty($request->mill_id)) {
-            $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transaction.management', $request->id);
-            return response()->json($response);
+            if($request->has('hq_main')){
+                    $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.hqMainForm.index',$request->id);
+                }else{
+                    $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transaction.management', $request->id);
+                }
+                return response()->json($response);
         } else {
             $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.transactions.index', $request->id);
             if (!empty($request->hidden_user_id)) {
@@ -324,6 +335,7 @@ class TransactionController extends Controller
                     'trx_date' => $transaction->trx_date ?? 'N/A',
                     'supplier_id' => $transaction->supplier->supplier_id . ' ' . $transaction->supplier->supplier_name ?? 'N/A',
                     'vehicle_id' => $transaction->vehicle->name ?? 'N/A',
+                    
                     'mill_id' => $transaction->mill->name ?? 'N/A',
                     'weight' => $transaction->weight ?? 'N/A',
                     'actions' => '

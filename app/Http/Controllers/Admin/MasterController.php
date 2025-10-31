@@ -14,6 +14,7 @@ use App\Models\Suppliers;
 use App\Models\FFBTransactionsModel;
 use App\Models\Transaction;
 use App\Models\Deduction;
+use App\Models\Bank;
 
 use Log;
 use Exception;
@@ -68,16 +69,26 @@ class MasterController extends Controller
         return view('admin.masters.masterForm', $this->ViewData);
     }
 
-    public function HQmainForm()
+    public function HQmainForm(Request $request)
     {
         $userId = auth()->user()->id;
         $this->ModuleTitle = __('Main');
         $this->ViewData['moduleAction'] = $this->ModuleTitle;
-        $this->ViewData['Vehicles'] = Vehicle::all();
-        $this->ViewData['Mills'] = Mill::all();
+
+
+        $this->ViewData['Vehicles'] = Vehicle::where('company_id',auth()->user()->company_id)->get();
+        $this->ViewData['Mills'] = Mill::where('company_id',auth()->user()->company_id)->get();
+
+
         $this->ViewData['Suppliers'] = Suppliers::with('user')
             ->where('user_id', $userId)
+            ->where('supplier_mode', 'hq')
             ->get();
+            
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['banks'] = Bank::where('user_id', $userId)->get();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId));
         return view('admin.masters.hq-masterForm', $this->ViewData);
     }
 
@@ -85,6 +96,12 @@ class MasterController extends Controller
     {
 
         try {
+            if( Session::has('yearMonth') ? Session::get('yearMonth') : now()->format('ym') != date('ym', strtotime($request->input('bill_date'))) ){
+                $this->JsonData['status'] = 'error';
+                $this->JsonData['url'] = "";
+                $this->JsonData['msg'] = 'Bill date does not match the selected period.';
+                return response()->json($this->JsonData);   
+            }
             // dd($request->all());
 
             $this->BaseModel = new FFBTransactionsModel();
@@ -157,12 +174,18 @@ class MasterController extends Controller
 
     public function getSupplierDetails(Request $request, $id)
     {
+        //dd('h');
         $supplier = Suppliers::find($id);
         if ($supplier) {
             $yearMonth = Session::has('yearMonth') ? Session::get('yearMonth') : now()->format('Ym');
             $startOfMonth = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->startOfMonth();
             $endOfMonth = \Carbon\Carbon::createFromFormat('Ym', $yearMonth)->endOfMonth();
             //dd($startOfMonth, $endOfMonth , $id);
+            $totalWeight = Transaction::where('supplier_id', $id)
+            ->whereBetween('trx_date', [$startOfMonth, $endOfMonth])
+            ->sum('weight');
+        
+
             $deductions = Deduction::where('supplier_id', $id)
                 ->whereBetween('date', [$startOfMonth, $endOfMonth])
                 ->select('type', \DB::raw('SUM(amount) as total'))
@@ -173,7 +196,8 @@ class MasterController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $supplier,
-                'deductions' => $deductions
+                'deductions' => $deductions,
+                'total_weight' => $totalWeight
             ]);
         } else {
             return response()->json([
@@ -194,7 +218,7 @@ class MasterController extends Controller
             ])->first();
         } else {
             $FFBTransaction = FFBTransactionsModel::find($id);
-            $supplier = $FFBTransaction ? Suppliers::find($FFBTransaction->supplier_id) : null;
+            $supplier = $FFBTransaction ? Suppliers::with('bankDetails')->find($FFBTransaction->supplier_id) : null;
         }
 
         return response()->json([
@@ -203,6 +227,30 @@ class MasterController extends Controller
             'FFBTransaction' => $FFBTransaction,
         ]);
     }
+    public function getFfbTransaction($id)
+    {
+        try {
+            $transaction = FFBTransactionsModel::with([
+                'supplier.bankDetails' // relationship
+            ])->find($id);
+
+            if (!$transaction) {
+                return response()->json(['status' => 'error', 'message' => 'Transaction not found.'], 404);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $transaction->supplier, // supplier data
+                'FFBTransaction' => $transaction  // transaction data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
     public function getDropDownValues(Request $request)

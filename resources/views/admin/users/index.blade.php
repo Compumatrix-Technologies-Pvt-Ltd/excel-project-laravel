@@ -28,9 +28,10 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Branch User Listing</h4>
                     <div class="card-toolbar">
-                        <a href="{{route('admin.users.create')}}" class="btn btn-info btn-label waves-effect waves-light">
+                       <button type="button" class="btn btn-info btn-label waves-effect waves-light" data-bs-toggle="modal"
+                            data-bs-target="#AddUserModal">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add User
-                    </a>
+                        </button>
                     </div>
                 </div><!-- end card header -->
                 <div class="card-body">
@@ -65,7 +66,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->mobile_number }}</td>
                                             <td>{{$user->branch->name}}</td>
-                                            <td><span class="badge bg-success">{{$user->status}}</span></td>
+                                            <td><span class="badge bg-success">{{ ucfirst($user->status) }}</span></td>
                                             <td>
                                                 <div class="dropdown d-inline-block">
                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button"
@@ -94,6 +95,113 @@
                             </table>
 
                         </div><!--end row-->
+
+
+                        <div id="AddUserModal" class="modal fade" tabindex="-1" aria-labelledby="AddUserModalLabel"
+                            aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="AddUserModalLabel">Add User</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                        </button>
+                                    </div>
+                                    <form id="AddForm" action="{{ route('admin.users.store') }}" role="form"
+                                        class="row g-3" method="post">
+                                        @csrf
+                                        @method('POST')
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id" id="hidden_id">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3 form-group">
+                                                    <label for="fullnameInput" class="form-label">Name<span
+                                                            class="text-danger">*</span></label>
+                                                    <input name="name" type="text" class="form-control" id="fullnameInput1">
+                                                    <span class="help-block with-errors err_name" style="color:red;"></span>
+
+                                                </div>
+                                                <div class="col-md-6 mb-3 form-group">
+                                                    <label for="inputEmail4" class="form-label">Email<span
+                                                            class="text-danger">*</span></label>
+                                                    <input type="email" name="email" class="form-control" id="inputEmail41">
+                                                    <span class="help-block with-errors err_email"
+                                                        style="color:red;"></span>
+                                                </div>
+                                                <div class="col-md-6 mb-3 form-group">
+                                                    <label for="phoneNumberInput1" class="form-label">Phone Number</label>
+                                                    <input type="tel" name="mobile_number" class="form-control"
+                                                        id="phoneNumberInput1">
+                                                    <span class="help-block with-errors err_mobile_number"
+                                                        style="color:red;"></span>
+                                                </div>
+                                                {{-- <div class="col-md-6">
+                                                    <label for="inputRole" class="form-label">Assign Role<span
+                                                            class="text-danger">*</span></label>
+                                                    <select class="form-control role" tabindex="1" name="role" id="user_role">
+                                                        <option selected value="" name="role">Select Role</option>
+                                                        @php
+                                                            $user_role = '';
+                                                                $user_role = auth()->user()->getRoleNames()->first();                                                            
+                                                        @endphp
+                                                        @if(!empty($rolesCollection) && sizeof($rolesCollection) > 0)
+                                                            @foreach($rolesCollection as $key => $role)
+                                                                <option value="{{ base64_encode(base64_encode($role->id)) }}"
+                                                                    name="{{$role->name}}" @if($role->name == $user_role) selected
+                                                                    @endif>
+                                                                    {{ ucfirst(str_replace('-', ' ', $role->name)) }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                    <span class="help-block with-errors err_role" style="color:red;"></span>
+                                                </div> --}}
+                                                <div class="col-md-6 mb-3 form-group">
+                                                    <label for="inputBranch" class="form-label">Assign Branch<span
+                                                            class="text-danger">*</span></label>
+                                                    <select name="branch_id" id="inputBranch" class="form-select">
+                                                        <option selected>Select Branch</option>
+                                                        @foreach ($Branches as $branch)
+                                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="help-block with-errors err_branch_id"
+                                                        style="color:red;"></span>
+                                                </div>
+
+                                                <div class="col-6 mb-3 form-group">
+                                                    <label for="status" class="form-label d-block">Status</label>
+                                                    <div class="d-flex gap-3">
+                                                        <div class="form-check form-check-inline form-radio-success">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="statusActive1" value="active">
+                                                            <label class="form-check-label"
+                                                                for="statusActive">Active</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline form-radio-warning">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="statusInactive1" value="inactive">
+                                                            <label class="form-check-label"
+                                                                for="statusInactive1">Inactive</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline form-radio-danger">
+                                                            <input class="form-check-input" type="radio" name="status"
+                                                                id="statusLocked1" value="locked">
+                                                            <label class="form-check-label"
+                                                                for="statusLocked1">Locked</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                         <div id="editUserModal" class="modal fade" tabindex="-1" aria-labelledby="editUerModalLabel"
                             aria-hidden="true" style="display: none;">
@@ -132,15 +240,14 @@
                                                     <span class="help-block with-errors err_mobile_number"
                                                         style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                {{-- <div class="col-md-6">
                                                     <label for="inputRole" class="form-label">Assign Role<span
                                                             class="text-danger">*</span></label>
                                                     <select class="form-control role" tabindex="1" name="role" id="user_role">
                                                         <option selected value="" name="role">Select Role</option>
                                                         @php
                                                             $user_role = '';
-                                                                $user_role = auth()->user()->getRoleNames()->first();
-                                                            
+                                                                $user_role = auth()->user()->getRoleNames()->first();                                                            
                                                         @endphp
                                                         @if(!empty($rolesCollection) && sizeof($rolesCollection) > 0)
                                                             @foreach($rolesCollection as $key => $role)
@@ -153,7 +260,7 @@
                                                         @endif
                                                     </select>
                                                     <span class="help-block with-errors err_role" style="color:red;"></span>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-md-6 mb-3 form-group">
                                                     <label for="inputBranch" class="form-label">Assign Branch<span
                                                             class="text-danger">*</span></label>
@@ -200,7 +307,7 @@
                                     </form>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                        </div>
                     </div>
 
                 </div>

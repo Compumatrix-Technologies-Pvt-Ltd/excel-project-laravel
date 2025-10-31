@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->decimal('land_size', 10, 2)->nullable();
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('telphone_1')->nullable();
             $table->string('telphone_2')->nullable();
             $table->string('bank_acc_no');

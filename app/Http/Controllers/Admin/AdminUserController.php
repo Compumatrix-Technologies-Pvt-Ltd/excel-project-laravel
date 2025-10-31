@@ -92,7 +92,7 @@ class AdminUserController extends Controller
     {
         $user = auth()->user();
         $plainPassword = Str::random(6);
-        $strRole = $this->RoleModel->where('id', base64_decode(base64_decode($request->role)))
+        $strRole = $this->RoleModel->where('id', 3)
             ->pluck('name')
             ->first();
         // dd($strRole);

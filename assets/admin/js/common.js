@@ -472,7 +472,7 @@ function deactivateCollection(encrypted_id, parameter) {
     $(document).on('change','.supplierSelect2',function(){
         var supplier_id = $(this).val();
         var purchase_type = $('input[name="purchase_type"]').val();
-        var action = ADMINURL+'/get-supplier-details/'+supplier_id + '/' + purchase_type;
+        var action = ADMINURL+'/get-supplier-details/'+supplier_id + '/' + purchase_type; 
         if(supplier_id){
             $.ajax({
                 type: "GET",
@@ -494,14 +494,23 @@ function deactivateCollection(encrypted_id, parameter) {
                             $('input[name="subsidy_amt"]').val('0.00');
                         }
 
+                        if(response.total_weight && response.total_weight > 0) {
+                            $('input[name="weight_mt"]').val(response.total_weight.toFixed(2)).attr('readonly', true);
+                        } else {
+                           // $('.total_weight').text('0.00');
+                            //$('input[name="total_weight"]').val('0.00');
+                        }
+
                         if(response.deductions) {
                             let transport = response.deductions.transport || 0;
                             let advance = response.deductions.advance || 0;
                             let others = response.deductions.others || 0;
+                            $('.DebitBalBF').val(0).attr('readonly', true);
                             $('input[name="transport"]').val(transport.toFixed(2));
                             $('input[name="advance"]').val(advance.toFixed(2));
                             $('input[name="others"]').val(others.toFixed(2));
                         } else {
+                            $('.DebitBalBF').val(0).attr('readonly', true);
                             $('input[name="transport"]').val('0.00');
                             $('input[name="advance"]').val('0.00');
                             $('input[name="others"]').val('0.00');
@@ -546,8 +555,41 @@ function deactivateCollection(encrypted_id, parameter) {
                     $('#inputEmailEdit').val(response.data.email);
                     $('#inputTelEdit1').val(response.data.telphone_1);
                     $('#inputTelEdit2').val(response.data.telphone_2);
-                    $('#inputBankIdEdit').val(response.data.bank_id);
+                    $('#bank_id2').select().val(response.data.bank_id).trigger('change');
                     $('#inputBankAccEdit').val(response.data.bank_acc_no);
+                    $('#hidden_id').val(encrypted_id);
+                   // setSelectedOption("department", response.data.roles[0].id);
+                    $('#submitBtn').removeClass('disabled');
+                }else{
+                    alert('Something went wrong');
+                } 
+            },
+            error: function (xhr, status, error) {
+                $.LoadingOverlay("hide");
+                alert('Server Error: Something went wrong. Please try again.');
+            }
+        });
+    });
+    $(document).on('click','#edit-transactionhq-btn',function(){
+        $('#transactionEditModalHQ').modal('show');
+        var encrypted_id = $(this).attr("data-id");
+        var action = ADMINURL+'/transactions/'+encrypted_id+'/edit';
+        $.ajax({
+            type: "GET",
+            url: action,
+            dataType:"json",
+            beforeSend: function () {
+                $.LoadingOverlay("show", { background: "rgba(75, 73, 172, 0)", maxSize: 40, imageColor: "#5236ff" });
+            },
+            success:function(response){
+                $.LoadingOverlay("hide");
+                if(response.status == 'success'){
+                    $('#ticketNoInput').val(response.data.ticket_no);
+                    $('#supplierNameInputEdit1').val(response.data.supplier_name);
+                    $('#MillInput').select().val(response.data.mill_id).trigger('change');
+                    $('#VehicleInput').select().val(response.data.vehicle_id).trigger('change');
+                    $('#wieghtMtInput').val(response.data.weight);
+                    $('#TRXDateInput').val(response.data.trx_date);
                     $('#hidden_id').val(encrypted_id);
                    // setSelectedOption("department", response.data.roles[0].id);
                     $('#submitBtn').removeClass('disabled');
