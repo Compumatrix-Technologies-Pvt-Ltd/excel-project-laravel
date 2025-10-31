@@ -863,29 +863,26 @@
     <script src="{{ asset('/assets/admin/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('/assets/admin/libs/node-waves/waves.min.js') }}"></script>
-    <script src=" {{ asset('/assets/admin/libs/feather-icons/feather.min.js') }}"></script>
-    < script src="{{ asset('/assets/admin/js/pages/plugins/lord-icon-2.1.0.js') }}">
+    <script src="{{ asset('/assets/admin/libs/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('/assets/admin/js/pages/plugins/lord-icon-2.1.0.js') }}">
     </script>
-        <script src="{{ asset('/assets/admin/js/plugins.js') }}"></script>
-        <script src=" {{ asset('/assets/admin/libs/swiper/swiper-bundle.min.js') }}"></script>
-        <script src="{{ asset('/assets/admin/js/pages/nft-landing.init.js') }}"></script>
-        <script>
-            function check() {
-                var n = document.getElementById("plan-switch"),
-                    e = document.getElementsByClassName("month"),
-                    t = document.getElementsByClassName("annual"),
-                    o = 0;
-                Array.from(e).forEach(function (e) {
-                    1 == n.checked ? (t[o].style.display = "block", e.style.display = "none") : 0 == n.checked && (t[o].style.display = "none", e.style.display = "block"), o++
-                })
-            }
-            check();
-        </script>
+    <script src="{{ asset('/assets/admin/js/plugins.js') }}"></script>
+    <script src="{{ asset('/assets/admin/libs/swiper/swiper-bundle.min.js') }}"></script>
+    <script src="{{ asset('/assets/admin/js/pages/nft-landing.init.js') }}"></script>
+    <script>
+        function check() {
+            var n = document.getElementById("plan-switch"),
+                e = document.getElementsByClassName("month"),
+                t = document.getElementsByClassName("annual"),
+                o = 0;
+            Array.from(e).forEach(function (e) {
+                1 == n.checked ? (t[o].style.display = "block", e.style.display = "none") : 0 == n.checked && (t[o].style.display = "none", e.style.display = "block"), o++
+            })
+        }
+        check();
+    </script>
+    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
+
 </body>
 
 </html>
-
-@section('scripts')
-    <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
-
-@endsection

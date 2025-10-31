@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DeductionController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\MillController;
 use App\Http\Controllers\Admin\PlansController;
+use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Admin\SubSubCategoriesController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\SuppliesController;
@@ -110,7 +111,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('view-contact-us-message/{id}', [ContactUsController::class, 'viewContactUsMessage'])->name('contact-us.message');
     Route::get('contacts', [ContactUsController::class, 'index'])->name('contacts.index');
 
-    Route::delete('contacts/delete', [ContactUsController::class, 'destroy'])->name('contact-us.destroy');
+    Route::delete('contacts/delete/{id}', [ContactUsController::class, 'destroy'])->name('contact-us.destroy');
 
 
     Route::resource('users', AdminUserController::class)->names('users');
@@ -226,12 +227,15 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('usages-&-feature-flags', [CommonController::class, 'usagesAndFeatureFlags'])->name('usages.and.feature.flags');
     Route::get('emails-sms', [CommonController::class, 'emailsAndSms'])->name('emails.and.sms');
     Route::get('emails-sms-edit/{id}', [CommonController::class, 'emailsAndSmsEdit'])->name('emails.and.sms.edit');
-    Route::get('cms-pages', [CommonController::class, 'cmsPages'])->name('cms.pages');
-    Route::get('cms-pages-edit/{id}', [CommonController::class, 'cmsPagesEdit'])->name('cms.pages.edit');
+    // Route::get('cms-pages', [CommonController::class, 'cmsPages'])->name('cms.pages');
+    // Route::get('cms-pages-edit/{id}', [CommonController::class, 'cmsPagesEdit'])->name('cms.pages.edit');
     Route::get('audit-logs', [CommonController::class, 'auditLogs'])->name('audit.logs.index');
     Route::get('impersonation-console', [CommonController::class, 'impersonationConsole'])->name('impersonation.console.index');
     Route::get('security-settings', [CommonController::class, 'securitySettings'])->name('security.settings.index');
 
+    Route::get('cms-pages', [StaticPageController::class, 'cmsPages'])->name('cms.pages');
+    Route::get('cms-pages-edit/{id}', [StaticPageController::class, 'cmsPagesEdit'])->name('cms.pages.edit');
+    Route::put('cms-pages-update/{id}', [StaticPageController::class, 'updateCmsPage'])->name('cmsPage.update');
 
     // Consolidated FFB Routes(HQ)
     Route::get('yearly-cash-credit', [ConsolidatedFFBController::class, 'YearlyCashCredit'])->name('YearlyCashCredit.index');

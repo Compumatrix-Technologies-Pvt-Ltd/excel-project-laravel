@@ -114,13 +114,12 @@
                                         <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i>
                                     </h5>
                                     <div class="d-flex align-items-center">
-                                        <div class="flex-shrink-0"><i
-                                                class="ri-service-line display-6 text-muted cfs-22"></i></div>
+                                        <div class="flex-shrink-0"><i class="ri-service-line display-6 text-muted cfs-22"></i>
+                                        </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h2 class="mb-0 cfs-22">
                                                 <span id="kpi-top-plan-name">Pro</span> ·
-                                                <span class="counter-value" id="kpi-top-plan-users"
-                                                    data-target="2659">0</span>
+                                                <span class="counter-value" id="kpi-top-plan-users" data-target="2659">0</span>
                                             </h2>
                                         </div>
                                     </div>
@@ -138,8 +137,8 @@
                                         <i class="ri-arrow-up-circle-line text-success fs-18 float-end align-middle"></i>
                                     </h5>
                                     <div class="d-flex align-items-center">
-                                        <div class="flex-shrink-0"><i
-                                                class="ri-funds-box-line display-6 text-muted cfs-22"></i></div>
+                                        <div class="flex-shrink-0"><i class="ri-funds-box-line display-6 text-muted cfs-22"></i>
+                                        </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h2 class="mb-0 cfs-22">RM <span class="counter-value" id="kpi-mrr"
                                                     data-target="98450">0</span></h2>
@@ -272,8 +271,8 @@
                         <h4 class="card-title mb-0">Plan Mix by MRR</h4>
                     </div>
                     <div class="card-body">
-                        <div id="plan_mix" data-colors='["--vz-danger", "--vz-primary", "--vz-success"]'
-                            class="apex-charts" dir="ltr"></div>
+                        <div id="plan_mix" data-colors='["--vz-danger", "--vz-primary", "--vz-success"]' class="apex-charts"
+                            dir="ltr"></div>
                     </div>
                 </div>
             </div>
@@ -291,7 +290,7 @@
             </div>
         </div>
     @endif
-    @if (Auth::user()->role == 'hq')
+    @if (auth()->user()->hasRole('hq'))
         <div class="row">
             <div class="col-xl-12">
                 <div class="card crm-widget">
@@ -305,8 +304,8 @@
                                         <i class="ri-ticket-line display-6 text-muted cfs-22"></i>
                                         <div class="ms-3">
                                             <h2 class="mb-0 cfs-22"><span class="counter-value" id="kpi-today-tickets"
-                                                    data-target="0">0</span></h2>
-                                            <div class="text-muted">MT: <span id="kpi-today-mt">0.000</span></div>
+                                                    data-target="{{ $todaysTickets }}"></span></h2>
+                                            <div class="text-muted">MT: <span id="kpi-today-mt">{{ $totalTodayMT }}</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -319,8 +318,9 @@
                                         <i class="ri-bar-chart-line display-6 text-muted cfs-22"></i>
                                         <div class="ms-3">
                                             <h2 class="mb-0 cfs-22"><span class="counter-value" id="kpi-month-mt"
-                                                    data-target="0">0</span></h2>
-                                            <div class="text-muted">Tickets: <span id="kpi-month-tickets">0</span></div>
+                                                    data-target="{{ $totalWeightThisMonth }}"></span></h2>
+                                            <div class="text-muted">Tickets: <span
+                                                    id="kpi-month-tickets">{{ $todaysTicketsThisMonth }}</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -333,8 +333,9 @@
                                         <i class="ri-file-paper-2-line display-6 text-muted cfs-22"></i>
                                         <div class="ms-3">
                                             <h2 class="mb-0 cfs-22"><span class="counter-value" id="kpi-inv-count"
-                                                    data-target="0">0</span></h2>
-                                            <div class="text-muted">RM <span id="kpi-inv-amount">0</span></div>
+                                                    data-target="{{ $totalCreditTransactions }}"></span></h2>
+                                            <div class="text-muted">RM <span id="kpi-inv-amount">{{$totalCreditRM }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -347,8 +348,9 @@
                                         <i class="ri-cash-line display-6 text-muted cfs-22"></i>
                                         <div class="ms-3">
                                             <h2 class="mb-0 cfs-22"><span class="counter-value" id="kpi-cash-count"
-                                                    data-target="0">0</span></h2>
-                                            <div class="text-muted">RM <span id="kpi-cash-amount">0</span></div>
+                                                    data-target="{{ $totalCashTransactions }}"></span></h2>
+                                            <div class="text-muted">RM <span id="kpi-cash-amount">{{ $totalCashRM }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -356,13 +358,12 @@
                             <!-- Receivables -->
                             <div class="col">
                                 <div class="py-4 px-3">
-                                    <h5 class="text-muted text-uppercase fs-13">Receivables (7d / Overdue)</h5>
+                                    <h5 class="text-muted text-uppercase fs-13">Total Mills</h5>
                                     <div class="d-flex align-items-center">
-                                        <i class="ri-inbox-unarchive-line display-6 text-muted cfs-22"></i>
+                                        <i class="ri-building-line display-6 text-muted cfs-22"></i>
                                         <div class="ms-3">
-                                            <h2 class="mb-0 cfs-22">RM <span class="counter-value" id="kpi-due7"
-                                                    data-target="0">0</span></h2>
-                                            <div class="text-muted">Overdue: RM <span id="kpi-overdue">0</span></div>
+                                            <h2 class="mb-0 cfs-22"> <span class="counter-value" id="kpi-due7"
+                                                    data-target="{{ $totalMills }}"></span></h2>
                                         </div>
                                     </div>
                                 </div>
@@ -406,8 +407,8 @@
                         <h4 class="card-title mb-0">Mill Mix (share of MT)</h4>
                     </div>
                     <div class="card-body">
-                        <div id="hq_mill_mix" data-colors='["--vz-danger", "--vz-primary", "--vz-success"]'
-                            class="apex-charts" dir="ltr"></div>
+                        <div id="hq_mill_mix" data-colors='["--vz-danger", "--vz-primary", "--vz-success"]' class="apex-charts"
+                            dir="ltr"></div>
                     </div>
                 </div>
             </div>
@@ -431,8 +432,7 @@
                         <h4 class="card-title mb-0">Deductions by Type (month-to-date)</h4>
                     </div>
                     <div class="card-body">
-                        <div id="hq_deductions" data-colors='["--vz-danger", "--vz-primary", "--vz-success"]'
-                            class="apex-charts" dir="ltr"></div>
+                        <div id="hq_deductions" class="apex-charts" dir="ltr"></div>
                     </div>
                 </div>
             </div>
@@ -450,7 +450,7 @@
             </div>
         </div>
     @endif
-    @if (Auth::user()->role == 'branch-user')
+    @if (auth()->user()->hasRole('branch'))
         <div class="row">
             <div class="col-xl-12">
                 <div class="card crm-widget">
@@ -462,7 +462,7 @@
                                     <div class="d-flex align-items-center"><i
                                             class="ri-ticket-2-line display-6 text-muted cfs-22"></i>
                                         <h2 class="mb-0 ms-3 cfs-22"><span class="counter-value" id="kpi-tickets-today"
-                                                data-target="42">0</span></h2>
+                                                data-target="{{ $todaysTickets }}"></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -473,7 +473,7 @@
                                     <div class="d-flex align-items-center"><i
                                             class="ri-scales-3-line display-6 text-muted cfs-22"></i>
                                         <h2 class="mb-0 ms-3 cfs-22"><span class="counter-value" id="kpi-weight-today"
-                                                data-target="126.48">0</span></h2>
+                                                data-target="{{ $totalTodayMT }}"></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -484,7 +484,7 @@
                                     <div class="d-flex align-items-center"><i
                                             class="ri-bill-line display-6 text-muted cfs-22"></i>
                                         <h2 class="mb-0 ms-3 cfs-22"><span class="counter-value" id="kpi-cashbills-today"
-                                                data-target="9">0</span></h2>
+                                                data-target="{{ $totalCashTransactions }}"></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -494,8 +494,8 @@
                                     <h5 class="text-muted text-uppercase fs-13">Cash Paid Today (RM)</h5>
                                     <div class="d-flex align-items-center"><i
                                             class="ri-exchange-dollar-line display-6 text-muted cfs-22"></i>
-                                        <h2 class="mb-0 ms-3 cfs-22">RM <span class="counter-value"
-                                                id="kpi-cashpaid-today" data-target="18450">0</span></h2>
+                                        <h2 class="mb-0 ms-3 cfs-22">RM <span class="counter-value" id="kpi-cashpaid-today"
+                                                data-target="{{ $totalCashRM }}"></span></h2>
                                     </div>
                                 </div>
                             </div>
@@ -505,7 +505,8 @@
                                     <h5 class="text-muted text-uppercase fs-13">Open Period</h5>
                                     <div class="d-flex align-items-center"><i
                                             class="ri-calendar-2-line display-6 text-muted cfs-22"></i>
-                                        <h2 class="mb-0 ms-3 cfs-22"><span id="kpi-period">2025‑08</span> · <span
+                                        <h2 class="mb-0 ms-3 cfs-22"><span
+                                                id="kpi-period">{{ Session::get('yearMonth') }}</span> · <span
                                                 id="kpi-period-status" class="text-success">Open</span></h2>
                                     </div>
                                 </div>
@@ -515,7 +516,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-xl-6">
                 <div class="card">
@@ -566,7 +567,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+
+        {{-- <div class="row">
             <div class="col-xl-6">
                 <div class="card">
                     <div class="card-header">
@@ -590,7 +592,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     @endif
     </div>
     </div>
@@ -606,4 +608,312 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common.js') }}"></script>
+    @if(auth()->user()->hasRole('hq'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const ticketsByDayData = @json($ticketsByDay);
+
+                if (!ticketsByDayData || !ticketsByDayData.length) {
+                    console.warn('No tickets data available for HQ this month.');
+                    return;
+                }
+
+                const options = {
+                    chart: { type: 'bar', height: 350, toolbar: { show: false } },
+                    series: [{
+                        name: 'Tickets (MT)',
+                        data: ticketsByDayData.map(t => parseFloat(t.total_mt))
+                    }],
+                    xaxis: {
+                        categories: ticketsByDayData.map(t => `Day ${t.day}`),
+                        title: { text: 'Day of Month' }
+                    },
+                    yaxis: {
+                        title: { text: 'Weight (MT)' },
+                        labels: { formatter: v => v.toFixed(2) }
+                    },
+                    colors: ['#3B82F6'],
+                    dataLabels: { enabled: false },
+                    grid: { borderColor: '#eee' },
+                    tooltip: { y: { formatter: v => v.toFixed(3) + ' MT' } }
+                };
+
+                const chart = new ApexCharts(document.querySelector('#hq_tickets_by_day'), options);
+                chart.render();
+
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const suppliers = @json($supplierNames);
+                const mt = @json($supplierMT);
+
+                var options = {
+                    chart: {
+                        type: 'bar',
+                        height: 380,
+                        toolbar: { show: false }
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                            barHeight: '55%',
+                            borderRadius: 5
+                        }
+                    },
+                    colors: ['#22C55E'],
+                    series: [{
+                        name: 'MT',
+                        data: mt
+                    }],
+                    xaxis: {
+                        categories: suppliers,
+                        labels: {
+                            formatter: val => val.toFixed(2)
+                        },
+                        title: {
+                            text: 'Total MT',
+                            style: { fontSize: '14px', fontWeight: 600 }
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        formatter: val => val.toFixed(2) + ' MT',
+                        style: { fontSize: '12px' }
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: val => val.toFixed(3) + ' MT'
+                        }
+                    }
+                };
+
+                new ApexCharts(document.querySelector("#hq_top_suppliers"), options).render();
+            });
+            document.addEventListener("DOMContentLoaded", function () {
+                const millNames = @json($millNames);
+                const millWeights = @json($millWeights);
+
+                var options = {
+                    chart: {
+                        type: 'donut',
+                        height: 300
+                    },
+                    series: millWeights,
+                    labels: millNames,
+                    colors: ['#3B82F6', '#A78BFA', '#22C55E', '#F59E0B', '#EF4444', '#14B8A6'],
+                    dataLabels: {
+                        enabled: true,
+                        formatter: (val, opts) => {
+                            const total = opts.w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                            const value = opts.w.config.series[opts.seriesIndex];
+                            const percent = ((value / total) * 100).toFixed(1);
+                            return `${value.toFixed(1)} MT (${percent}%)`;
+                        }
+                    },
+                    legend: {
+                        position: 'bottom',
+                        horizontalAlign: 'center'
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: val => `${val.toFixed(2)} MT`
+                        }
+                    }
+                };
+
+                new ApexCharts(document.querySelector("#hq_mill_mix"), options).render();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const months = @json($months);
+                const creditData = @json($credit);
+                const cashData = @json($cash);
+
+                var options = {
+                    chart: {
+                        type: 'bar',
+                        height: 300,
+                        toolbar: { show: false }
+                    },
+                    series: [
+                        { name: 'Credit (Invoices)', data: creditData },
+                        { name: 'Cash Purchases', data: cashData }
+                    ],
+                    colors: ['#111827', '#10B981'],
+                    xaxis: {
+                        categories: months,
+                        title: { text: 'Month', style: { fontSize: '14px', fontWeight: 600 } }
+                    },
+                    yaxis: {
+                        labels: { formatter: v => 'RM ' + v.toLocaleString() },
+                        title: { text: 'Total Amount (RM)', style: { fontSize: '14px', fontWeight: 600 } }
+                    },
+                    dataLabels: { enabled: false },
+                    tooltip: {
+                        y: { formatter: v => 'RM ' + v.toLocaleString() }
+                    },
+                    legend: { position: 'top' },
+                    plotOptions: {
+                        bar: { columnWidth: '40%' }
+                    },
+                    grid: { borderColor: '#f1f1f1', strokeDashArray: 4 }
+                };
+
+                new ApexCharts(document.querySelector("#hq_credit_cash"), options).render();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                new ApexCharts(document.querySelector("#hq_deductions"), {
+                    chart: { type: "bar", height: 280, toolbar: { show: false } },
+                    series: [{
+                        name: "Amount (RM)",
+                        data: @json($data)
+                    }],
+                    xaxis: {
+                        categories: @json($categories),
+                        title: { text: "Deduction Type" }
+                    },
+                    yaxis: {
+                        title: { text: "Amount (RM)" },
+                        labels: { formatter: val => "RM " + val.toLocaleString() }
+                    },
+                    colors: ["#EF4444"],
+                    dataLabels: {
+                        enabled: true,
+                        formatter: val => "RM " + val.toLocaleString()
+                    },
+                    grid: { borderColor: "#eee" }
+                }).render();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                new ApexCharts(document.querySelector("#hq_price_per_mt"), {
+                    chart: { type: "line", height: 300, toolbar: { show: false } },
+                    series: [{
+                        name: "RM per MT",
+                        data: @json($priceData)
+                    }],
+                    xaxis: { categories: @json($priceMonths) },
+                    colors: ["#2563EB"],
+                    stroke: { width: 3, curve: "smooth" },
+                    dataLabels: { enabled: false },
+                    tooltip: {
+                        y: { formatter: v => "RM " + v.toFixed(2) + "/MT" }
+                    }
+                }).render();
+            });
+
+        </script>
+    @endif
+
+    @if (auth()->user()->hasRole('branch'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var options = {
+                    chart: {
+                        type: 'bar',
+                        height: 300,
+                        toolbar: { show: false }
+                    },
+                    series: [{
+                        name: 'Tickets',
+                        data: @json($ticketData)
+                    }],
+                    xaxis: {
+                        categories: @json($ticketDates)
+                    },
+                    colors: ['#3B82F6'],
+                    dataLabels: { enabled: false },
+                    grid: { borderColor: '#eee' }
+                };
+
+                new ApexCharts(document.querySelector('#br_tickets_14d'), options).render();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var options = {
+                    chart: { type: 'bar', height: 340, toolbar: { show: false } },
+                    plotOptions: { bar: { columnWidth: '45%' } },
+                    series: [{
+                        name: 'MT',
+                        data: @json($br_supplierMT ?? [])
+                    }],
+                    xaxis: {
+                        categories: @json($br_supplierNames ?? []),
+                        labels: { rotate: -25 }
+                    },
+                    colors: ['#6366F1'],
+                    dataLabels: { enabled: false },
+                    tooltip: { y: { formatter: v => v.toFixed(2) + ' MT' } }
+                };
+
+                new ApexCharts(document.querySelector('#br_supplier_top10'), options).render();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var options = {
+                    chart: { type: 'area', height: 300, toolbar: { show: false } },
+                    series: [{
+                        name: 'Cash Paid (RM)',
+                        data: @json($br_cashAmounts ?? [])
+                    }],
+                    xaxis: {
+                        categories: @json($br_cashDays ?? []),
+                        title: { text: 'Day of Month' }
+                    },
+                    colors: ['#22C55E'],
+                    stroke: { width: 2, curve: 'smooth' },
+                    fill: { opacity: 0.35 },
+                    tooltip: {
+                        y: { formatter: v => 'RM ' + v.toLocaleString() }
+                    },
+                    dataLabels: { enabled: false },
+                    grid: { borderColor: '#eee' }
+                };
+
+                new ApexCharts(document.querySelector('#br_cash_daily'), options).render();
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const dedLabels = @json($deductionLabels ?? []);
+                const dedValues = @json($deductionValues ?? []);
+
+                if (dedLabels.length && dedValues.length) {
+                    var options = {
+                        chart: {
+                            type: 'donut',
+                            height: 300,
+                        },
+                        series: dedValues,
+                        labels: dedLabels,
+                        colors: ['#F59E0B', '#3B82F6', '#EF4444'],
+                        dataLabels: {
+                            enabled: true,
+                            formatter: val => val.toFixed(1) + '%'
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: val => 'RM ' + Number(val).toLocaleString()
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        },
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    size: '60%'
+                                }
+                            }
+                        }
+                    };
+
+                    new ApexCharts(document.querySelector("#br_deductions_donut"), options).render();
+                } else {
+                    console.warn("No deduction data available for donut chart.");
+                }
+            });
+
+        </script>
+    @endif
 @endsection
