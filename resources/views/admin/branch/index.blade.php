@@ -122,7 +122,7 @@
                                             <td>{{ $branch->code }}</td>
                                             <td>{{ $branch->name }}</td>
                                             <td>{{ $branch->phone }}</td>
-                                            <td><a href="{{route('admin.branch-users',[base64_encode(base64_encode($branch->id))])}}" class="">{{ $branch->users_count }}</a></td>
+                                            <td><a href="{{route('admin.branch-users',[base64_encode(base64_encode($branch->id))])}}" class="btn btn-primary btn-label waves-effect waves-light"><i class="mdi mdi-account-supervisor-outline label-icon align-middle fs-16 me-2"></i>{{ $branch->users_count }}</a></td>
                                             <td>
                                                 <div class="dropdown d-inline-block">
                                                     <button class="btn btn-soft-secondary btn-sm dropdown" type="button"

@@ -24,7 +24,14 @@
                 <div class="card-header align-items-center d-flex justify-content-between">
                     <h4 class="card-title mb-0 flex-grow-1">Via Bank Listing</h4>
                     <div class="card-toolbar">
-            
+                        <button type="button" id="viewPdfBtn"
+                            class="btn btn-warning btn-label waves-effect waves-light">
+                            <i class="mdi mdi-table-eye label-icon align-middle fs-16 me-2"></i> Preview PDF
+                        </button>
+                        <button type="button" id="createPdf"
+                            class="btn btn-primary btn-label waves-effect waves-light">
+                            <i class="mdi mdi-download label-icon align-middle fs-16 me-2"></i> Create PDF
+                        </button>
                     </div>
                 </div>
 
@@ -35,10 +42,7 @@
                             <table id="viaBankDeductionListing"  class="table dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <div class="form-check"><input class="form-check-input fs-15" type="checkbox"
-                                                    id="checkAll"></div>
-                                        </th>
+                                       
                                         <th>SR No.</th>
                                         <th>Payment Type</th>
                                         <th>Bene Account No.</th>
@@ -68,7 +72,21 @@
                             </table>
                         </div>
                     </div>
-
+                </div>
+                <div class="modal fade" id="pdfPreviewModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">PDF Preview</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0">
+                                <iframe id="pdfPreviewFrame" src="" width="100%" height="700px"
+                                    style="border:none;"></iframe>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,5 +102,35 @@
     <script type="text/javascript" src="{{asset('/assets/admin/js/common-index/index.js') }}"></script>
     <script type="text/javascript" src="{{asset('/assets/admin/js/common.js') }}"></script>
 
+    <script>
+     function generateLicencePDF(preview = true) {
+        let userId = $('#hidden_user_id').val();
+            let url = `${ADMINURL}/via-bank-deduction/pdf?hidden_user_id=${userId}`;
 
+            if (preview) {
+                // Show PDF in modal for preview
+                url += `&preview=1`;
+                $('#pdfPreviewFrame').attr('src', url);
+                $('#pdfPreviewModal').modal('show');
+            } else {
+                // Trigger direct download instead of opening in a new tab
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'licence.pdf'; // optional: suggest a filename
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        $('#viewPdfBtn, #previewPDF').on('click', function() {
+            generateLicencePDF(true);
+        });
+
+        $('#createPdf').on('click', function() {
+            generateLicencePDF(false);
+        });
+
+
+    </script>
 @endsection

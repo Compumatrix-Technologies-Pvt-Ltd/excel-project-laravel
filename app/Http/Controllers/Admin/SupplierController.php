@@ -58,9 +58,13 @@ class SupplierController extends Controller
         return view($this->ModuleView . 'create', $this->ViewData);
     }
 
-    public function hqSuppliers()
+    public function hqSuppliers(Request $request)
     {
         $this->ViewData['moduleAction'] = 'HQ Suppliers';
+        $encodedId = $request->query('encodedId');
+        $userId = Helper::decodeUserId($encodedId) ?? auth()->id();
+        $this->ViewData['banks'] = Bank::where('user_id', $userId)->get();
+        $this->ViewData['userId'] = base64_encode(base64_encode($userId));
         return view($this->ModuleView . 'suppliers-hq', $this->ViewData);
     }
 
@@ -86,9 +90,12 @@ class SupplierController extends Controller
     }
     public function hqSuppliersStore(Suppliersrequest $request)
     {
-        // dd($request->all());
         try {
-            $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.hq-suppliers.index');
+            if($request->has('hq_main')){
+                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.hqMainForm.index');
+            }else{
+                $response = Helper::storeRecord($this, $this->BaseModel, $request, 'admin.hq-suppliers.index');
+            }
             return response()->json($response);
 
         } catch (Exception $e) {
@@ -206,7 +213,7 @@ class SupplierController extends Controller
 
     public function update1(Suppliersrequest $request)
     {
-        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.suppliers.index', $request->id);
+        $response = Helper::updateRecord($this, $this->BaseModel, $request, 'admin.hqMainForm.index', $request->id);
         return response()->json($response);
     }
     public function suppliersUpdate(Suppliersrequest $request)
@@ -370,6 +377,7 @@ class SupplierController extends Controller
 
         if ($loggedInUser->hasRole('hq')) {
             $baseQuery->where('user_id', $loggedInUser->id);
+            $baseQuery->where('bank_acc_no', '!=', null);
         } elseif ($loggedInUser->hasRole('branch')) {
             // Branch-user can only see their own suppliers
             $baseQuery->where('user_id', $loggedInUser->id);

@@ -126,9 +126,9 @@
                                             <button type="submit" class="btn btn-success ">Save Changes</button>
                                         </div>
                                     </form>
-                                </div><!-- /.modal-content ------>
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -216,7 +216,7 @@
                                                     <label for="ticketNoInput" class="form-label">Ticket Number<span
                                                             class="text-danger">*</span></label>
                                                     <input type="text" class="form-control" id="ticketNoInput"
-                                                        name="ticket_no">
+                                                        name="ticket_no" readonly>
                                                     <span class="help-block with-errors err_ticket_no"
                                                         style="color:red;"></span>
                                                 </div>

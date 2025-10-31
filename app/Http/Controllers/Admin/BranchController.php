@@ -12,6 +12,7 @@ use Illuminate\Auth\GuardHelpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 
 class BranchController extends Controller
 {
@@ -37,7 +38,10 @@ class BranchController extends Controller
     {
         $intBranchID = base64_decode(base64_decode($encBranchID));
         $this->ViewData['moduleAction'] = "Branch Users";
-        $this->ViewData['BranchUsers'] = User::where('branch_id',$intBranchID)->get();
+        $this->ViewData['BranchUsers'] = User::where('branch_id', $intBranchID)->with('branch')->whereHas('roles', function ($query) {
+            $query->where('name', 'branch');
+        })->get();
+        
         return view('admin.branch.users-index', $this->ViewData);
     }
     public function usersModule($encUserID)

@@ -59,7 +59,8 @@
                                     <button type="button" id="firstBtn" class="btn btn-outline-secondary">&laquo;</button>
                                     <button type="button" id="prevBtn" class="btn btn-outline-secondary">&lt;
                                         Previous</button>
-                                    <button type="button" id="nextBtn" class="btn btn-outline-secondary">Next &gt;</button>
+                                    <button type="button" id="nextBtn" class="btn btn-outline-secondary">Next
+                                        &gt;</button>
                                     <button type="button" id="lastBtn" class="btn btn-outline-secondary">&raquo;</button>
                                 </div>
 
@@ -105,8 +106,9 @@
                                                 <!-- placeholder image area to mimic Excel truck photo -->
                                                 <div class="ratio ratio-16x9 border bg-light-subtle">
                                                     <img id="ticketPhoto"
-                                                        src="{{ asset('/assets/admin/images/palm-oil.jpg') }}" alt=""
-                                                        class="img-fluid" onerror="this.style.display='none'">
+                                                        src="{{ asset('/assets/admin/images/palm-oil.jpg') }}"
+                                                        alt="" class="img-fluid"
+                                                        onerror="this.style.display='none'">
                                                 </div>
                                             </div>
                                         </div>
@@ -120,7 +122,8 @@
                                                 data-bs-toggle="modal" data-bs-target="#editsupfirstModal"
                                                 class="btn btn-secondary btn-sm">Edit Supplier</a>
                                             <a href="javascript:void(0);" data-bs-toggle="modal"
-                                                data-bs-target="#mainTransactionModal" class="btn btn-secondary btn-sm">Add
+                                                data-bs-target="#mainTransactionModal"
+                                                class="btn btn-secondary btn-sm">Add
                                                 Trx</a>
                                             <a href="javascript:void(0);" data-bs-toggle="modal"
                                                 data-bs-target="#edittrxfirstModal" class="btn btn-secondary btn-sm">Edit
@@ -141,7 +144,8 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <form id="AddForm" action="{{ route('admin.transactions.store') }}"
-                                                        method="post" class="form row g-3" autocomplete="off" role="form">
+                                                        method="post" class="form row g-3" autocomplete="off"
+                                                        role="form">
                                                         @csrf
                                                         <div class="modal-body">
                                                             <div class="row gy-4">
@@ -153,14 +157,17 @@
                                                                         class="form-control auto-ticket-number"
                                                                         id="ticketNo" name="ticket_no" required
                                                                         data-error="Please enter the ticket number">
+                                                                    <input type="hidden" name="hq_main" value="hq_main">
+
                                                                     <span class="help-block with-errors err_ticket_no"
                                                                         style="color:red;"></span>
                                                                 </div>
 
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="TRXDate" class="form-label">TRX Date</label>
-                                                                    <input type="date" class="form-control" id="TRXDate"
-                                                                        name="trx_date" required
+                                                                    <label for="TRXDate" class="form-label">TRX
+                                                                        Date</label>
+                                                                    <input type="date" class="form-control"
+                                                                        id="TRXDate" name="trx_date" required
                                                                         data-error="Please enter the TRX date">
                                                                     <span class="help-block with-errors err_trx_date"
                                                                         style="color:red;"></span>
@@ -191,7 +198,8 @@
                                                                     <select id="inputSupplier" class="form-select"
                                                                         name="supplier_id" required
                                                                         data-error="Please select supplier">
-                                                                        <span class="help-block with-errors err_supplier_id"
+                                                                        <span
+                                                                            class="help-block with-errors err_supplier_id"
                                                                             style="color:red;"></span>
                                                                         <option>Select Supplier</option>
                                                                         @foreach ($Suppliers as $supplier)
@@ -211,7 +219,8 @@
                                                                             style="color:red;"></span>
                                                                         <option selected>Select Mill </option>
                                                                         @foreach ($Mills as $mill)
-                                                                            <option value="{{ $mill->id }}">{{ $mill->mill_id }}
+                                                                            <option value="{{ $mill->id }}">
+                                                                                {{ $mill->mill_id }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
@@ -219,8 +228,8 @@
                                                                 <div class="col-md-6 form-group">
                                                                     <label for="wieghtMt" class="form-label">Weight
                                                                         (MT)<span class="text-danger">*</span></label>
-                                                                    <input type="tel" class="form-control" id="wieghtMt"
-                                                                        name="weight" required
+                                                                    <input type="tel" class="form-control"
+                                                                        id="wieghtMt" name="weight" required
                                                                         data-error="Please enter weight">
                                                                     <span class="help-block with-errors err_weight"
                                                                         style="color:red;"></span>
@@ -250,8 +259,8 @@
                                                             aria-label="Close"></button>
                                                     </div>
 
-                                                    <form id="AddForm" action="" method="post" class="form row g-3"
-                                                        autocomplete="off" role="form">
+                                                    <form id="AddForm" action="" method="post"
+                                                        class="form row g-3" autocomplete="off" role="form">
                                                         @csrf
                                                         <div class="modal-body">
 
@@ -301,7 +310,8 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
 
-                                                    <form id="" action="{{ route('admin.transactionshq.update') }}"
+                                                    <form id=""
+                                                        action="{{ route('admin.transactionshq.update') }}"
                                                         method="post" class="form row g-3 commonForm" autocomplete="off"
                                                         role="form">
                                                         @csrf
@@ -323,8 +333,9 @@
                                                                     <label for="NewTicketNoInput" class="form-label">New
                                                                         Ticket Number
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="text" class="form-control" id=""
-                                                                        name="ticket_no" pattern="^T\d{5}$" required
+                                                                    <input type="text" class="form-control"
+                                                                        id="" name="ticket_no"
+                                                                        pattern="^T\d{5}$" required
                                                                         placeholder="Example: T00001"
                                                                         title="Ticket Number must start with 'T' followed by exactly 5 digits (e.g., T12345)">
                                                                     <span class="help-block with-errors err_ticket_no"
@@ -362,7 +373,8 @@
                                                                             class="text-danger">*</span></label>
                                                                     <select id="SupplierInput1" class="form-select"
                                                                         name="supplier_id">
-                                                                        <span class="help-block with-errors err_supplier_id"
+                                                                        <span
+                                                                            class="help-block with-errors err_supplier_id"
                                                                             style="color:red;"></span>
                                                                         @foreach ($Suppliers as $supplier)
                                                                             <option value="{{ $supplier->id }}">
@@ -372,15 +384,16 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="col-md-6 form-group" style="display:none;">
-                                                                    <label for="MillInput1" class="form-label">Mill Id<span
-                                                                            class="text-danger">*</span></label>
+                                                                    <label for="MillInput1" class="form-label">Mill
+                                                                        Id<span class="text-danger">*</span></label>
                                                                     <select id="MillInput1" class="form-select"
                                                                         name="mill_id">
                                                                         <span class="help-block with-errors err_mill_id"
                                                                             style="color:red;"></span>
                                                                         <option>Select Mill </option>
                                                                         @foreach ($Mills as $mill)
-                                                                            <option value="{{ $mill->id }}">{{ $mill->mill_id }}
+                                                                            <option value="{{ $mill->id }}">
+                                                                                {{ $mill->mill_id }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
@@ -420,7 +433,8 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
 
-                                                    <form id="" action="{{ route('admin.transactionshq.update') }}"
+                                                    <form id=""
+                                                        action="{{ route('admin.transactionshq.update') }}"
                                                         method="post" class="form row g-3 commonForm" autocomplete="off"
                                                         role="form">
                                                         @csrf
@@ -429,12 +443,13 @@
 
                                                         <div class="modal-body">
                                                             <div class="row gy-4">
-
                                                                 <div class="col-md-6 form-group">
                                                                     <label for="ticketNoInput" class="form-label">Ticket
                                                                         Number<span class="text-danger">*</span></label>
                                                                     <input type="text" class="form-control"
                                                                         id="ticketNoInput" name="ticket_no">
+                                                                    <input type="hidden" name="hq_main" value="hq_main">
+
                                                                     <span class="help-block with-errors err_ticket_no"
                                                                         style="color:red;"></span>
                                                                 </div>
@@ -471,7 +486,8 @@
                                                                             class="text-danger">*</span></label>
                                                                     <select id="SupplierInput" class="form-select"
                                                                         name="supplier_id">
-                                                                        <span class="help-block with-errors err_supplier_id"
+                                                                        <span
+                                                                            class="help-block with-errors err_supplier_id"
                                                                             style="color:red;"></span>
                                                                         @foreach ($Suppliers as $supplier)
                                                                             <option value="{{ $supplier->id }}">
@@ -489,7 +505,8 @@
                                                                             style="color:red;"></span>
                                                                         <option>Select Mill </option>
                                                                         @foreach ($Mills as $mill)
-                                                                            <option value="{{ $mill->id }}">{{ $mill->mill_id }}
+                                                                            <option value="{{ $mill->id }}">
+                                                                                {{ $mill->mill_id }}
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
@@ -532,101 +549,113 @@
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
-                                                    <form action="{{ route('admin.suppliers.store') }}" method="post"
+                                                    <form action="{{ route('admin.hq-suppliers.store') }}" method="post"
                                                         class="form commonForm" autocomplete="off" role="form">
                                                         @csrf
                                                         <div class="modal-body">
                                                             <div class="row mb-3">
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="supplier_id" class="form-label">Supplier
-                                                                        Id:
-                                                                        <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="supplier_id" id="supplier_id"
-                                                                        class="form-control form-control-sm" required
-                                                                        data-error="Please enter Supplier Id">
+                                                                    <label for="supplierCodeInput" class="form-label">
+                                                                        Supplier Id <span class="text-danger">*</span>
+                                                                    </label>
+                                                                    <input type="hidden" name="hq_main" value="hq_main">
+                                                                    <input type="text"
+                                                                        class="form-control form-control-sm"
+                                                                        id="supplierCodeInput" name="supplier_id" required
+                                                                        data-error="Please enter supplier id.">
                                                                     <span class="help-block with-errors err_supplier_id"
                                                                         style="color:red;"></span>
                                                                 </div>
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="name" class="form-label">Supplier Name:
-                                                                        <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="supplier_name"
-                                                                        id="supplier_name"
-                                                                        class="form-control form-control-sm" required
-                                                                        data-error="Please enter name">
+                                                                    <label for="supplierNameInput"
+                                                                        class="form-label">Supplier
+                                                                        Name<span class="text-danger">*</span></label>
+                                                                    <input type="text"
+                                                                        class="form-control form-control-sm"
+                                                                        id="supplierNameInput" name="supplier_name"
+                                                                        required data-error="Please enter supplier name.">
                                                                     <span class="help-block with-errors err_supplier_name"
                                                                         style="color:red;"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
-
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="address" class="form-label">Address 1
-                                                                        <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="address1" id="address1"
-                                                                        class="form-control form-control-sm" required
-                                                                        data-error="Please enter address">
+                                                                    <label for="supplierAddressEdit1"
+                                                                        class="form-label">Address 1<span
+                                                                            class="text-danger">*</span></label>
+                                                                    <textarea class="form-control form-control-sm" name="address1" id="supplierAddressEdit1" rows="2" required
+                                                                        data-error="Please enter address."></textarea>
                                                                     <span class="help-block with-errors err_address1"
                                                                         style="color:red;"></span>
                                                                 </div>
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="email" class="form-label">Email: <span
-                                                                            class="text-danger">*</span></label>
-                                                                    <input type="email" name="email" id="email"
-                                                                        class="form-control form-control-sm" required
-                                                                        data-error="Please enter Email">
+                                                                    <label for="supplierAddressEdit2"
+                                                                        class="form-label">Address 2</label>
+                                                                    <textarea class="form-control form-control-sm" id="supplierAddressEdit2" rows="2" name="address2"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col-md-4 form-group">
+                                                                    <label for="inputEmail"
+                                                                        class="form-label">Email</label>
+                                                                    <input type="email"
+                                                                        class="form-control form-control-sm"
+                                                                        id="inputEmail" name="email"
+                                                                        data-error="Please enter a valid email address.">
                                                                     <span class="help-block with-errors err_email"
                                                                         style="color:red;"></span>
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="row mb-3">
-
-                                                                <div class="col-md-6 form-group">
-                                                                    <label for="telphone_1" class="form-label">Tel. 1:
-                                                                        <span class="text-danger">*</span></label>
-                                                                    <input type="tel" name="telphone_1" id="telphone_1"
-                                                                        class="form-control form-control-sm" required
-                                                                        data-error="Please enter Telephone number">
-                                                                    <span class="help-block with-errors err_telphone_1"
-                                                                        style="color:red;"></span>
+                                                                <div class="col-md-4 form-group">
+                                                                    <label for="inputTel1" class="form-label">Telphone
+                                                                        1</label>
+                                                                    <input type="tel"
+                                                                        class="form-control form-control-sm"
+                                                                        id="inputTel1" name="telphone_1">
                                                                 </div>
-                                                                <div class="col-md-6 form-group">
-                                                                    <label for="telphone_2" class="form-label">Tel.
-                                                                        2:</label>
-                                                                    <input type="tel" name="telphone_2" id="telphone_2"
-                                                                        class="form-control form-control-sm">
+                                                                <div class="col-md-4 form-group">
+                                                                    <label for="inputTel2" class="form-label">Telephone
+                                                                        2</label>
+                                                                    <input type="tel"
+                                                                        class="form-control form-control-sm"
+                                                                        id="inputTel2" name="telphone_2">
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="bank_id" class="form-label">Bank ID:
-                                                                        <span class="text-danger">*</span></label>
-                                                                    <select name="bank_id" id="bank_id"
-                                                                        class="form-select form-select-sm" required
-                                                                        data-error="Please select bank Id">
-                                                                        <option value="">Select</option>
-                                                                        <option value="MBBS">MBBS</option>
-                                                                        <option value="RHB">RHB</option>
+                                                                    <label for="inputBankAcc" class="form-label">Bank<span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select id="bank_id" name="bank_id"
+                                                                        class="form-select bank-select form-select-sm"
+                                                                        style="font-family: monospace;" required
+                                                                        data-error="Please select bank.">
+                                                                        <option value="">
+                                                                            {{ str_pad('Bank ID', 124) }}{{ str_pad('Bank Name', 422) }}{{ str_pad('BIC Code', 15) }}{{ str_pad('Pay Type', 10) }}
+                                                                        </option>
+                                                                        @foreach ($banks as $val)
+                                                                            <option value="{{ $val->id }}">
+                                                                                {{ str_pad($val->bank_id, 132) }}
+                                                                                {{ str_pad($val->name, 322) }}
+                                                                                {{ str_pad($val->bic_code ?? '-', 15) }}
+                                                                                {{ str_pad($val->pay_type ?? '-', 10) }}
+                                                                            </option>
+                                                                        @endforeach
                                                                     </select>
                                                                     <span class="help-block with-errors err_bank_id"
                                                                         style="color:red;"></span>
+
                                                                 </div>
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="bank_acc_no" class="form-label">Bank A/C
-                                                                        No.:
-                                                                        <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="bank_acc_no" id="bank_acc_no"
-                                                                        class="form-control form-control-sm" required
-                                                                        data-error="Please bank account number">
-                                                                    <span class="help-block with-errors err_bank_acc_no"
+                                                                    <label for="inputBankAcc" class="form-label">Bank
+                                                                        Acc.No<span class="text-danger">*</span></label>
+                                                                    <input type="tel"
+                                                                        class="form-control form-control-sm"
+                                                                        id="inputBankAcc" name="bank_acc_no" required
+                                                                        data-error="Please enter bank account number.">
+                                                                    <span class="help-block with-errors err_bank_acc_no "
                                                                         style="color:red;"></span>
                                                                 </div>
                                                             </div>
-
-
                                                         </div>
-
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-light"
                                                                 data-bs-dismiss="modal">Close</button>
@@ -634,8 +663,8 @@
                                                                 Changes</button>
                                                         </div>
                                                     </form>
-                                                </div><!-- /.modal-content ------>
-                                            </div><!-- /.modal-dialog -->
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <!-- Edit supplier modal -->
@@ -648,8 +677,8 @@
                                                             aria-label="Close"></button>
                                                     </div>
 
-                                                    <form id="AddForm" action="" method="post" class="form row g-3"
-                                                        autocomplete="off" role="form">
+                                                    <form id="AddForm" action="" method="post"
+                                                        class="form row g-3" autocomplete="off" role="form">
                                                         @csrf
                                                         <div class="modal-body">
 
@@ -662,13 +691,15 @@
                                                                     <input class="form-check-input" type="radio"
                                                                         name="edit_option" id="normal_edit"
                                                                         value="normal_edit" checked>
-                                                                    <label class="form-check-label" for="normal_edit">Normal
+                                                                    <label class="form-check-label"
+                                                                        for="normal_edit">Normal
                                                                         Edit</label>
                                                                 </div>
 
                                                                 <div class="form-check mb-2">
                                                                     <input class="form-check-input" type="radio"
-                                                                        name="edit_option" id="edit_id" value="edit_id">
+                                                                        name="edit_option" id="edit_id"
+                                                                        value="edit_id">
                                                                     <label class="form-check-label" for="edit_id">Edit
                                                                         Supplier Id</label>
                                                                 </div>
@@ -697,8 +728,9 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
 
-                                                    <form id="" action="{{ route('admin.supplier.update') }}" method="post"
-                                                        class="form row g-3 commonForm" autocomplete="off" role="form">
+                                                    <form id="" action="{{ route('admin.supplier.update') }}"
+                                                        method="post" class="form row g-3 commonForm" autocomplete="off"
+                                                        role="form">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="modal-body">
@@ -708,16 +740,19 @@
                                                                     <label for="supplier_id" class="form-label">Supplier
                                                                         Id:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="supplier_id" id="s_id_edit"
+                                                                    <input type="text" name="supplier_id"
+                                                                        id="s_id_edit"
                                                                         class="form-control form-control-sm">
                                                                     <span class="help-block with-errors err_supplier_id"
                                                                         style="color:red;"></span>
                                                                 </div>
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="supplier_id" class="form-label">New Supplier
+                                                                    <label for="supplier_id" class="form-label">New
+                                                                        Supplier
                                                                         ID:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="supplier_id" id=""
+                                                                    <input type="text" name="supplier_id"
+                                                                        id=""
                                                                         class="form-control form-control-sm">
                                                                     <span class="help-block with-errors err_supplier_id"
                                                                         style="color:red;"></span>
@@ -727,9 +762,11 @@
                                                             <div class="hideDiv" style="display:none">
                                                                 <div class="row mb-3">
                                                                     <div class="col-md-4 form-group">
-                                                                        <label for="name1" class="form-label">Supplier Name:
+                                                                        <label for="name1" class="form-label">Supplier
+                                                                            Name:
                                                                             <span class="text-danger">*</span></label>
-                                                                        <input type="text" name="supplier_name" id="s_name1"
+                                                                        <input type="text" name="supplier_name"
+                                                                            id="s_name1"
                                                                             class="form-control form-control-sm">
                                                                         <span
                                                                             class="help-block with-errors err_supplier_name"
@@ -738,15 +775,17 @@
                                                                     <div class="col-md-4 form-group">
                                                                         <label for="address1" class="form-label">Address 1
                                                                             <span class="text-danger">*</span></label>
-                                                                        <input type="text" name="address1" id="s_add1"
+                                                                        <input type="text" name="address1"
+                                                                            id="s_add1"
                                                                             class="form-control form-control-sm">
                                                                         <span class="help-block with-errors err_address1"
                                                                             style="color:red;"></span>
                                                                     </div>
                                                                     <div class="col-md-4 form-group">
-                                                                        <label for="email1" class="form-label">Email: <span
-                                                                                class="text-danger">*</span></label>
-                                                                        <input type="email" name="email" id="s_email1"
+                                                                        <label for="email1" class="form-label">Email:
+                                                                            <span class="text-danger">*</span></label>
+                                                                        <input type="email" name="email"
+                                                                            id="s_email1"
                                                                             class="form-control form-control-sm">
                                                                         <span class="help-block with-errors err_email"
                                                                             style="color:red;"></span>
@@ -758,7 +797,8 @@
                                                                     <div class="col-md-6 form-group">
                                                                         <label for="telphone_1" class="form-label">Tel. 1:
                                                                             <span class="text-danger">*</span></label>
-                                                                        <input type="tel" name="telphone_1" id="s_tel_11"
+                                                                        <input type="tel" name="telphone_1"
+                                                                            id="s_tel_11"
                                                                             class="form-control form-control-sm">
                                                                         <span class="help-block with-errors err_telphone_1"
                                                                             style="color:red;"></span>
@@ -766,31 +806,45 @@
                                                                     <div class="col-md-6 form-group">
                                                                         <label for="telphone_2" class="form-label">Tel.
                                                                             2:</label>
-                                                                        <input type="tel" name="telphone_2" id="s_tel_22"
+                                                                        <input type="tel" name="telphone_2"
+                                                                            id="s_tel_22"
                                                                             class="form-control form-control-sm">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col-md-6 form-group">
-                                                                        <label for="bank_id" class="form-label">Bank ID:
+                                                                        <label for="s_bank_id1" class="form-label">Bank
+                                                                            ID:
                                                                             <span class="text-danger">*</span></label>
-                                                                        <select name="bank_id" id="s_bank_id1"
-                                                                            class="form-select form-select-sm">
-                                                                            <option value="">Select</option>
-                                                                            <option value="MBBS">MBBS</option>
-                                                                            <option value="RHB">RHB</option>
+                                                                        <select id="s_bank_id1" name="bank_id"
+                                                                            class="form-select bank-select"
+                                                                            style="font-family: monospace;" required
+                                                                            data-error="Please select bank.">
+                                                                            <option value="">
+                                                                                {{ str_pad('Bank ID', 124) }}{{ str_pad('Bank Name', 422) }}{{ str_pad('BIC Code', 15) }}{{ str_pad('Pay Type', 10) }}
+                                                                            </option>
+                                                                            @foreach ($banks as $val)
+                                                                                <option value="{{ $val->id }}">
+                                                                                    {{ str_pad($val->bank_id, 132) }}
+                                                                                    {{ str_pad($val->name, 322) }}
+                                                                                    {{ str_pad($val->bic_code ?? '-', 15) }}
+                                                                                    {{ str_pad($val->pay_type ?? '-', 10) }}
+                                                                                </option>
+                                                                            @endforeach
                                                                         </select>
                                                                         <span class="help-block with-errors err_bank_id"
                                                                             style="color:red;"></span>
                                                                     </div>
                                                                     <div class="col-md-6 form-group">
-                                                                        <label for="bank_acc_no" class="form-label">Bank A/C
+                                                                        <label for="bank_acc_no" class="form-label">Bank
+                                                                            A/C
                                                                             No.:
                                                                             <span class="text-danger">*</span></label>
                                                                         <input type="text" name="bank_acc_no"
                                                                             id="s_bank_acc_no1"
                                                                             class="form-control form-control-sm">
-                                                                        <span class="help-block with-errors err_bank_acc_no"
+                                                                        <span
+                                                                            class="help-block with-errors err_bank_acc_no"
                                                                             style="color:red;"></span>
                                                                     </div>
                                                                 </div>
@@ -820,8 +874,9 @@
                                                             data-bs-dismiss="modal"></button>
                                                     </div>
 
-                                                    <form id="" action="{{ route('admin.supplier.update') }}" method="post"
-                                                        class="form row g-3 commonForm" autocomplete="off" role="form">
+                                                    <form id="" action="{{ route('admin.supplier.update') }}"
+                                                        method="post" class="form row g-3 commonForm" autocomplete="off"
+                                                        role="form">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="modal-body">
@@ -831,15 +886,18 @@
                                                                     <label for="supplier_id" class="form-label">Supplier
                                                                         Id:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="supplier_id" id="s_id"
+                                                                    <input type="text" name="supplier_id"
+                                                                        id="s_id"
                                                                         class="form-control form-control-sm">
                                                                     <span class="help-block with-errors err_supplier_id"
                                                                         style="color:red;"></span>
                                                                 </div>
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="name" class="form-label">Supplier Name:
+                                                                    <label for="name" class="form-label">Supplier
+                                                                        Name:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="supplier_name" id="s_name"
+                                                                    <input type="text" name="supplier_name"
+                                                                        id="s_name"
                                                                         class="form-control form-control-sm">
                                                                     <span class="help-block with-errors err_supplier_name"
                                                                         style="color:red;"></span>
@@ -870,7 +928,8 @@
                                                                 <div class="col-md-6 form-group">
                                                                     <label for="telphone_1" class="form-label">Tel. 1:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="tel" name="telphone_1" id="s_tel_1"
+                                                                    <input type="tel" name="telphone_1"
+                                                                        id="s_tel_1"
                                                                         class="form-control form-control-sm">
                                                                     <span class="help-block with-errors err_telphone_1"
                                                                         style="color:red;"></span>
@@ -878,19 +937,30 @@
                                                                 <div class="col-md-6 form-group">
                                                                     <label for="telphone_2" class="form-label">Tel.
                                                                         2:</label>
-                                                                    <input type="tel" name="telphone_2" id="s_tel_2"
+                                                                    <input type="tel" name="telphone_2"
+                                                                        id="s_tel_2"
                                                                         class="form-control form-control-sm">
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col-md-6 form-group">
-                                                                    <label for="bank_id" class="form-label">Bank ID:
+                                                                    <label for="s_bank_id2" class="form-label">Bank ID:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <select name="bank_id" id="s_bank_id"
-                                                                        class="form-select form-select-sm">
-                                                                        <option value="">Select</option>
-                                                                        <option value="MBBS">MBBS</option>
-                                                                        <option value="RHB">RHB</option>
+                                                                    <select id="s_bank_id2" name="bank_id"
+                                                                        class="form-select bank-select"
+                                                                        style="font-family: monospace;" required
+                                                                        data-error="Please select bank.">
+                                                                        <option value="">
+                                                                            {{ str_pad('Bank ID', 124) }}{{ str_pad('Bank Name', 422) }}{{ str_pad('BIC Code', 15) }}{{ str_pad('Pay Type', 10) }}
+                                                                        </option>
+                                                                        @foreach ($banks as $val)
+                                                                            <option value="{{ $val->id }}">
+                                                                                {{ str_pad($val->bank_id, 132) }}
+                                                                                {{ str_pad($val->name, 322) }}
+                                                                                {{ str_pad($val->bic_code ?? '-', 15) }}
+                                                                                {{ str_pad($val->pay_type ?? '-', 10) }}
+                                                                            </option>
+                                                                        @endforeach
                                                                     </select>
                                                                     <span class="help-block with-errors err_bank_id"
                                                                         style="color:red;"></span>
@@ -899,7 +969,8 @@
                                                                     <label for="bank_acc_no" class="form-label">Bank A/C
                                                                         No.:
                                                                         <span class="text-danger">*</span></label>
-                                                                    <input type="text" name="bank_acc_no" id="s_bank_acc_no"
+                                                                    <input type="text" name="bank_acc_no"
+                                                                        id="s_bank_acc_no"
                                                                         class="form-control form-control-sm">
                                                                     <span class="help-block with-errors err_bank_acc_no"
                                                                         style="color:red;"></span>
@@ -988,7 +1059,7 @@
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common-create-edit.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/assets/admin/js/common.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             let options = [];
             let currentIndex = 0;
 
@@ -1000,23 +1071,24 @@
                 fetchDetails(selectedType, selectedValue);
             }
 
-            $('.supplierDetails').change(function () {
+            $('.supplierDetails').change(function() {
                 const selectedType = $(this).val();
 
                 $.ajax({
-                    url: '{{ route("admin.hqMainForm.getValues") }}',
+                    url: '{{ route('admin.hqMainForm.getValues') }}',
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
                         type: selectedType
                     },
-                    success: function (response) {
+                    success: function(response) {
                         options = response;
                         $('#SuppliersInput').empty();
 
-                        options.forEach(function (item, index) {
+                        options.forEach(function(item, index) {
                             const selected = index === 0 ? 'selected' : '';
-                            $('#SuppliersInput').append(`<option ${selected}>${item}</option>`);
+                            $('#SuppliersInput').append(
+                                `<option ${selected}>${item}</option>`);
                         });
 
                         currentIndex = 0;
@@ -1024,20 +1096,21 @@
                         if (options.length > 0) {
                             loadCurrentOption();
                         } else {
-                            $('#SuppliersInput').append('<option selected>No options found</option>');
+                            $('#SuppliersInput').append(
+                                '<option selected>No options found</option>');
                         }
                     }
                 });
             });
 
-            $('#SuppliersInput').change(function () {
+            $('#SuppliersInput').change(function() {
                 currentIndex = $('#SuppliersInput').prop('selectedIndex');
                 const selectedType = $('.supplierDetails:checked').val();
                 const selectedValue = $(this).val();
                 fetchDetails(selectedType, selectedValue);
             });
 
-            $('#prevBtn').click(function () {
+            $('#prevBtn').click(function() {
                 if (currentIndex > 0) {
                     currentIndex--;
                     loadCurrentOption();
@@ -1045,7 +1118,7 @@
                 }
             });
 
-            $('#nextBtn').click(function () {
+            $('#nextBtn').click(function() {
                 if (currentIndex < options.length - 1) {
                     currentIndex++;
                     loadCurrentOption();
@@ -1053,13 +1126,13 @@
                 }
             });
 
-            $('#firstBtn').click(function () {
+            $('#firstBtn').click(function() {
                 currentIndex = 0;
                 loadCurrentOption();
 
             });
 
-            $('#lastBtn').click(function () {
+            $('#lastBtn').click(function() {
                 currentIndex = options.length - 1;
                 loadCurrentOption();
 
@@ -1070,14 +1143,14 @@
 
             function fetchDetails(type, value) {
                 $.ajax({
-                    url: '{{ route("admin.hqMainForm.getAllDetails") }}',
+                    url: '{{ route('admin.hqMainForm.getAllDetails') }}',
                     type: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
                         type: type,
                         value: value
                     },
-                    success: function (data) {
+                    success: function(data) {
                         $('#trx_hidden_id').text(data.trx_hidden_id || '-');
                         $('#hidden_ticket_no_1').text(data.ticket_no || '-');
                         $('#ticketNo').text(data.ticket_no || '-');
@@ -1086,7 +1159,8 @@
                         $('#millId').text(data.mill_id || '-');
                         $('#millName').text(data.mill_name || '-');
                         $('#weight').text(data.weight || '-');
-                        $('#ticketPhoto').attr('src', data.ticket_photo || '{{ asset("/assets/admin/images/palm-oil.jpg") }}');
+                        $('#ticketPhoto').attr('src', data.ticket_photo ||
+                            '{{ asset('/assets/admin/images/palm-oil.jpg') }}');
 
                         $('#company_name').text(data.company_name || '-');
                         $('#supplier_hidden_id').text(data.supplier_hidden_id || '-');
@@ -1101,13 +1175,14 @@
                     }
                 });
             }
-            $(document).on('show.bs.modal', '.modal', function () {
+            $(document).on('show.bs.modal', '.modal', function() {
                 const zIndex = 1040 + (10 * $('.modal:visible').length);
                 $(this).css('z-index', zIndex);
-                setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'), 0);
+                setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1)
+                    .addClass('modal-stack'), 0);
             });
 
-            $('#editsupfirstModal button.btn-primary').on('click', function () {
+            $('#editsupfirstModal button.btn-primary').on('click', function() {
                 var selectedOption = $('input[name="edit_option"]:checked').val();
                 var selectedSupplierId = $('#supplier_hidden_id').text().trim();
                 var encodedSupplierId = btoa(btoa(selectedSupplierId));
@@ -1124,7 +1199,7 @@
                         _token: '{{ csrf_token() }}',
                         supplier_id: encodedSupplierId
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.status === 'success') {
                             $('#s_id_1').val(encodedSupplierId);
                             $('#s_id_2').val(encodedSupplierId);
@@ -1141,8 +1216,10 @@
                             $('#s_tel_22').val(response.data.telphone_2);
                             $('#s_tel_1').val(response.data.telphone_1);
                             $('#s_tel_11').val(response.data.telphone_1);
-                            $('#s_bank_id').val(response.data.bank_id);
-                            $('#s_bank_id1').val(response.data.bank_id);
+                            $('#s_bank_id1').select().val(response.data.bank_id).trigger(
+                                'change');
+                            $('#s_bank_id2').select().val(response.data.bank_id).trigger(
+                                'change');
                             $('#s_bank_acc_no').val(response.data.bank_acc_no);
                             $('#s_bank_acc_no1').val(response.data.bank_acc_no);
 
@@ -1159,14 +1236,14 @@
                             alert('Failed to fetch supplier details.');
                         }
                     },
-                    error: function () {
+                    error: function() {
                         alert('Error fetching supplier details.');
                     }
                 });
             });
 
 
-            $('#edittrxfirstModal button.btn-primary').click(function () {
+            $('#edittrxfirstModal button.btn-primary').click(function() {
                 var selectedOption = $('input[name="edit_trx_option"]:checked').val();
                 const selectedTrxId = $('#trx_hidden_id').text();
                 const encodedTrxId = btoa(btoa(selectedTrxId));
@@ -1183,7 +1260,7 @@
                         _token: '{{ csrf_token() }}',
                         id: encodedTrxId
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.status == 'success') {
                             $('#ticketNoInput').val(response.data.ticket_no);
                             $('#NewTicketNoInput').val(response.data.ticket_no);
@@ -1214,7 +1291,7 @@
                             alert('Failed to fetch supplier details.');
                         }
                     },
-                    error: function () {
+                    error: function() {
                         alert('Error fetching supplier details.');
                     }
                 });
@@ -1223,7 +1300,5 @@
 
 
         });
-
     </script>
-
 @endsection

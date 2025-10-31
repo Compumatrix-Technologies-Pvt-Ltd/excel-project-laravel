@@ -36,6 +36,10 @@ class Suppliers extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function bankDetails()
+    {
+        return $this->belongsTo(Bank::class, 'bank_id');
+    }
 
     public static function generateSupplierId($prefix, $type)
     {
