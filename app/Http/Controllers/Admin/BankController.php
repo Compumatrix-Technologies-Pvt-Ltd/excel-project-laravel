@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\CompanyInfoModel;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\FFBTransactionsModel;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Storage;
 
 class BankController extends Controller
 {
@@ -20,8 +23,6 @@ class BankController extends Controller
         $this->JsonData = [];
         $this->ModuleView = 'admin.banks.';
     }
-
-
 
     public function index(Request $request)
     {
@@ -126,8 +127,8 @@ class BankController extends Controller
     {
         try {
             $period = Helper::getPeriod(); // current period helper
-            $query = FFBTransactionsModel::with('supplier')
-                //->where('pay_by', 'bank')
+            $query = FFBTransactionsModel::with('supplier.bankDetails')
+                ->where('pay_by', 'bank')
                 ->where('period', $period);
 
             if ($request->hidden_user_id) {
@@ -164,20 +165,19 @@ class BankController extends Controller
 
             foreach ($records as $r) {
                 $data[] = [
-                    'checkbox' => '<div class="form-check"><input class="form-check-input fs-15" type="checkbox"></div>',
                     'sr_no' => $count++,
-                    'payment_type' => $r->bank_name ?? 'N/A',
-                    'bene_account_no' => $r->bank_account ?? 'N/A',
-                    'bic' => $r->bank_bic ?? 'N/A',
-                    'bene_full_name' => $r->bene_name ?? 'N/A',
+                    'payment_type' => ucfirst($r->supplier->bankDetails->pay_type) ?? 'N/A',
+                    'bene_account_no' => $r->supplier->bank_acc_no ?? 'N/A',
+                    'bic' => $r->supplier->bankDetails->bic_code ?? 'N/A',
+                    'bene_full_name' => $r->supplier->supplier_name ?? 'N/A',
                     'id_type' => $r->bene_id_type ?? '-',
                     'bene_id_no' => $r->bene_id_no ?? '-',
                     'amount' => number_format($r->net_pay, 2),
-                    'recipient_reference' => $r->recipient_reference ?? '-',
+                    'recipient_reference' => 'FFB Final - ' . $r->period ?? '-',
                     'bene_email1' => $r->bene_email_1 ?? '-',
                     'bene_email2' => $r->bene_email_2 ?? '-',
-                    'bene_mobile1' => $r->bene_mobile_1 ?? '-',
-                    'bene_mobile2' => $r->bene_mobile_2 ?? '-',
+                    'bene_mobile1' => $r->supplier->telphone_1 ?? '-',
+                    'bene_mobile2' => $r->supplier->telphone_2 ?? '-',
                     'joint_bene_name' => $r->joint_bene_name ?? '-',
                     'joint_bene_id' => $r->joint_bene_id ?? '-',
                     'email_line1' => $r->email_line_1 ?? '-',
@@ -203,6 +203,50 @@ class BankController extends Controller
                 'error' => true,
                 'message' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    public function viaBankDeductionPDF(Request $request)
+    {
+        try {
+            $period = Helper::getPeriod();
+            $query = FFBTransactionsModel::with('supplier.bankDetails')
+                ->where('pay_by', 'bank')
+                ->where('period', $period);
+
+            if ($request->hidden_user_id) {
+                $decodedUserId = base64_decode(base64_decode($request->hidden_user_id));
+                $query->where('user_id', $decodedUserId);
+            } else {
+                $query->where('user_id', auth()->id());
+            }
+
+            $records = $query->get();
+
+            if ($records->isEmpty()) {
+                return response()->json(['error' => true, 'message' => 'No records found for this period.']);
+            }
+
+            $company = CompanyInfoModel::where('id', auth()->user()->company_id)->first();
+
+            $pdfData = [
+                'records' => $records,
+                'company' => $company,
+                'period' => $period,
+            ];
+
+            $pdf = Pdf::loadView('admin.via_bank.via_bank_pdf', $pdfData)
+                    ->setPaper('A4', 'landscape');
+
+            if ($request->has('preview') && $request->preview == 1) {
+                return $pdf->stream('via-bank-deduction-preview.pdf');
+            }
+
+            $filePath = 'via_bank_deduction_' . now()->format('Ymd_His') . '.pdf';
+            return $pdf->download($filePath);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
         }
     }
 

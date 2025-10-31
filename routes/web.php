@@ -145,6 +145,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('banks/edit/{id}', [BankController::class, 'edit'])->name('banks.edit');
     Route::put('banks/update', [BankController::class, 'update'])->name('banks.update');
     Route::delete('banks/destroy/{id}', [BankController::class, 'destroy'])->name('banks.destroy');
+    Route::get('via-bank-deduction/pdf', [BankController::class, 'viaBankDeductionPDF'])->name('via-bank-deduction.pdf');
 
 
     Route::post('transaction-data-entry-form', [MasterController::class, 'index'])->name('transaction.data.entry.form');
@@ -308,7 +309,9 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::post('ffb_transaction', [MasterController::class, 'storeFFBTransaction'])->name('ffb.transaction.store');
     Route::get('get-supplier-details/{supplier_id}/{purchase_type}', [MasterController::class, 'getSupplierDetails'])->name('ffb.transaction.getSupplierDetails');
     Route::get('get-supplier-details-main/{supplier_id}/{type}', [MasterController::class, 'getSupplierDetailsMain'])->name('ffb.transaction.getSupplierDetailsMain');
+    Route::get('branch-main/get-ffb-transaction/{id}', [MasterController::class, 'getFFBTransaction'])->name('branch.main.getFFBTransaction');
     Route::post('branch-main/getValues', [MasterController::class, 'getBranchSupplierDropDownValues'])->name('branch.main.getValues');
+
 
     Route::get('purchase-analysis', [PurchaseAnalysisController::class, 'index'])->name('purchaseAnalysis.index');
     Route::get('purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'supplierCashBillGetRecords'])->name('purchaseAnalysis.index');

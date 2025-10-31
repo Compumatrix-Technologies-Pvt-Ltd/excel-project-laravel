@@ -581,7 +581,8 @@
             { data: 'ticket_no', name: 'ticket_no' },
             { data: 'trx_date', name: 'trx_date' },
             { data: 'supplier_id', name: 'supplier_id' },
-            { data: 'ticket_no', name: 'ticket_no' },
+            { data: 'vehicle_id', name: 'vehicle_id' },
+            { data: 'mill_id', name: 'mill_id' },
             { data: 'weight', name: 'weight' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false },
         ],
@@ -1259,7 +1260,6 @@
                 }
             },
             columns: [
-                { data: 'checkbox', orderable: false, searchable: false },
                 { data: 'sr_no' },
                 { data: 'payment_type' },
                 { data: 'bene_account_no' },

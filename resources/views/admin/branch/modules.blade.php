@@ -9,8 +9,10 @@
                 <h4 class="mb-sm-0">Branch User Module Management </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">Branch User Module Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">Modules Listing</a></li>
+                        <li class="breadcrumb-item"><a href="">Branch User Management</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.branch.index') }}">Branch Listing</a></li>
+                        <li class="breadcrumb-item active"><a href="{{route('admin.branch-users',[base64_encode(base64_encode($UserModules->branch->id))])}}">User Listing</a></li>
+                        <li class="breadcrumb-item active">Module Listing</li>
                     </ol>
                 </div>
 

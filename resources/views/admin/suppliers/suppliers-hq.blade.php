@@ -46,51 +46,68 @@
                                                <form id="AddForm" action="{{ route('admin.hq-suppliers.store') }}" method="post" class="form row g-3"
                             autocomplete="off" role="form">
                             @csrf
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="supplierCodeInput" class="form-label">
                                                         Supplier Id <span class="text-danger">*</span>
                                                     </label>
-                                                    <input type="text" class="form-control" id="supplierCodeInput" name="supplier_id">
+                                                    <input type="text" class="form-control" id="supplierCodeInput" name="supplier_id" required data-error="Please enter supplier id.">
+                                                    <span class="help-block with-errors err_supplier_id" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="supplierNameInput" class="form-label">Supplier Name<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" id="supplierNameInput" name="supplier_name">
+                                                    <input type="text" class="form-control" id="supplierNameInput" name="supplier_name" required data-error="Please enter supplier name.">
+                                                    <span class="help-block with-errors err_supplier_name" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="supplierAddressEdit1" class="form-label">Address 1<span
                                                             class="text-danger">*</span></label>
                                                     <textarea class="form-control" name="address1" id="supplierAddressEdit1"
-                                                        rows="3"></textarea>
+                                                        rows="3" required data-error="Please enter address."></textarea>
+                                                    <span class="help-block with-errors err_address1" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="supplierAddressEdit2" class="form-label">Address 2</label>
                                                     <textarea class="form-control" id="supplierAddressEdit2"
                                                         rows="3" name="address2"></textarea>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label for="inputEmail" class="form-label">Email<span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="email" class="form-control" id="inputEmail" name="email">
+                                                <div class="col-md-4 form-group">
+                                                    <label for="inputEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="inputEmail" name="email" data-error="Please enter a valid email address.">
+                                                    <span class="help-block with-errors err_email" style="color:red;"></span>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <label for="inputTel1" class="form-label">Telphone 1<span
-                                                            class="text-danger">*</span></label>
+                                                <div class="col-md-4 form-group">
+                                                    <label for="inputTel1" class="form-label">Telphone 1</label>
                                                     <input type="tel" class="form-control" id="inputTel1" name="telphone_1">
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-4 form-group">
                                                     <label for="inputTel2" class="form-label">Telephone 2</label>
                                                     <input type="tel" class="form-control" id="inputTel2" name="telphone_2">
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label for="inputBankId" class="form-label">Bank ID<span
+                                                <div class="col-md-6 form-group">
+                                                    <label for="inputBankAcc" class="form-label">Bank<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="tel" class="form-control" id="inputBankId" name="bank_id">
+                                                    <select id="bank_id" name="bank_id" class="form-select bank-select" style="font-family: monospace;" required data-error="Please select bank.">
+                                                        <option value="" >
+                                                            {{ str_pad('Bank ID', 124) }}{{ str_pad('Bank Name', 422) }}{{ str_pad('BIC Code', 15) }}{{ str_pad('Pay Type', 10) }}
+                                                        </option>
+                                                        @foreach ($banks as $val)
+                                                            <option value="{{ $val->id }}">
+                                                                {{ str_pad($val->bank_id, 132) }}
+                                                                {{ str_pad($val->name, 322) }}
+                                                                {{ str_pad($val->bic_code ?? '-', 15) }}
+                                                                {{ str_pad($val->pay_type ?? '-', 10) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="help-block with-errors err_bank_id" style="color:red;"></span>
+
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6 form-group">
                                                     <label for="inputBankAcc" class="form-label">Bank Acc.No<span
                                                             class="text-danger">*</span></label>
-                                                    <input type="tel" class="form-control" id="inputBankAcc" name="bank_acc_no">
+                                                    <input type="tel" class="form-control" id="inputBankAcc" name="bank_acc_no" required data-error="Please enter bank account number.">
+                                                    <span class="help-block with-errors err_bank_acc_no " style="color:red;"></span>
                                                 </div>
 
                                         </div>
@@ -149,52 +166,70 @@
                                                     method="post" class="form row g-3" autocomplete="off" role="form">
                                                     @csrf
                                                     @method('PUT')
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 form-group">
                                                         <label for="supplierCodeInputEdit1" class="form-label">
                                                             Supplier Id <span class="text-danger">*</span>
                                                         </label>
-                                                        <input type="text" class="form-control" id="supplierCodeInputEdit1" name="supplier_id">
+                                                        <input type="text" class="form-control" id="supplierCodeInputEdit1" name="supplier_id" required data-error="Please enter supplier id.">
                                                         <input type="hidden" class="form-control" id="hidden_id" name="hidden_id">
+                                                        <span class="help-block with-errors err_supplier_id" style="color:red;"></span>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 form-group">
                                                         <label for="supplierNameInputEdit1" class="form-label">Supplier Name<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="supplierNameInputEdit1" name="supplier_name">
+                                                        <input type="text" class="form-control" id="supplierNameInputEdit1" name="supplier_name" required data-error="Please enter supplier name.">
+                                                        <span class="help-block with-errors err_supplier_name" style="color:red;"></span>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 form-group">
                                                         <label for="supplierAddressEdit2" class="form-label">Address 1<span
                                                                 class="text-danger">*</span></label>
                                                         <textarea class="form-control" id="supplierAddressEdit2"
-                                                            rows="3" name="address1"></textarea>
+                                                            rows="3" name="address1" required data-error="Please enter address 1."></textarea>
+                                                        <span class="help-block with-errors err_address1" style="color:red;"></span>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 form-group">
                                                         <label for="supplierAddressEdit2" class="form-label">Address 2</label>
                                                         <textarea class="form-control" id="supplierAddressEdit2"
                                                             rows="3" name="address2"></textarea>
                                                     </div>
-                                                    <div class="col-md-4">
-                                                        <label for="inputEmailEdit" class="form-label">Email<span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" class="form-control" id="inputEmailEdit" name="email">
+                                                    <div class="col-md-4 form-group">
+                                                        <label for="inputEmailEdit" class="form-label">Email</label>
+                                                        <input type="email" class="form-control" id="inputEmailEdit" name="email" data-error="Please enter a valid email address.">
+                                                        <span class="help-block with-errors err_email" style="color:red;"></span>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 form-group">
                                                         <label for="inputTelEdit1" class="form-label">Telphone 1<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="form-control" id="inputTelEdit1" name="telphone_1">
+                                                        <input type="tel" class="form-control" id="inputTelEdit1" name="telphone_1" required data-error="Please enter telephone 1.">
+                                                        <span class="help-block with-errors err_telphone_1" style="color:red;"></span>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-4 form-group">
                                                         <label for="inputTelEdit2" class="form-label">Telephone 2</label>
                                                         <input type="tel" class="form-control" id="inputTelEdit2" name="telphone_2">
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label for="inputBankIdEdit" class="form-label">Bank ID<span
+                                                    <div class="col-md-6 form-group">
+                                                        <label for="inputBankAccEdit" class="form-label">Bank<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="form-control" id="inputBankIdEdit" name="bank_id">
+                                                       <select id="bank_id2" name="bank_id" class="form-select bank-select" style="font-family: monospace;" required data-error="Please select bank.">
+                                                        <option value="" >
+                                                            {{ str_pad('Bank ID', 124) }}{{ str_pad('Bank Name', 422) }}{{ str_pad('BIC Code', 15) }}{{ str_pad('Pay Type', 10) }}
+                                                        </option>
+                                                        @foreach ($banks as $val)
+                                                            <option value="{{ $val->id }}">
+                                                                {{ str_pad($val->bank_id, 132) }}
+                                                                {{ str_pad($val->name, 322) }}
+                                                                {{ str_pad($val->bic_code ?? '-', 15) }}
+                                                                {{ str_pad($val->pay_type ?? '-', 10) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <span class="help-block with-errors err_bank_id" style="color:red;"></span>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-6 form-group">
                                                         <label for="inputBankAccEdit" class="form-label">Bank Acc.No<span
                                                                 class="text-danger">*</span></label>
-                                                        <input type="tel" class="form-control" id="inputBankAccEdit" name="bank_acc_no">
+                                                        <input type="tel" class="form-control" id="inputBankAccEdit" name="bank_acc_no" required data-error="Please enter bank account number.">
+                                                        <span class="help-block with-errors err_bank_acc_no" style="color:red;"></span>
                                                     </div>
 
                                             </div>

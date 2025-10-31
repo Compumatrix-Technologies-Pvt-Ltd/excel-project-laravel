@@ -54,7 +54,7 @@
                                         required data-error="Please enter mobile number">
                                     <span class="help-block with-errors err_mobile_number" style="color:red;"></span>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label for="inputRole" class="form-label">Assign Role<span
                                             class="text-danger">*</span></label>
                                     <select required class="form-control role" tabindex="1" name="role"
@@ -71,7 +71,7 @@
                                     </select>
                                     <span class="help-block with-errors err_role" style="color:red;"></span>
 
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 form-group">
                                     <label for="inputBranch" class="form-label">Assign Branch<span
                                             class="text-danger">*</span></label>

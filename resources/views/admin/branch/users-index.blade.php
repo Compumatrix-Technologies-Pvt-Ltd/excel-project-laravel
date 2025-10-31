@@ -9,8 +9,9 @@
                 <h4 class="mb-sm-0">Branch User Management </h4>
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item active"><a href="">Branch User Management</a></li>
-                        <li class="breadcrumb-item active"><a href="{{ route('admin.users.index') }}">User Listing</a></li>
+                        <li class="breadcrumb-item"><a href="">Branch User Management</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.branch.index') }}">Branch Listing</a></li>
+                        <li class="breadcrumb-item active">User Listing</li>
                     </ol>
                 </div>
 
@@ -28,9 +29,9 @@
                 <div class="card-header align-items-center d-flex">
                     <h4 class="card-title mb-0 flex-grow-1">Branch User Listing</h4>
                     <div class="card-toolbar">
-                        <a href="{{route('admin.users.create')}}" class="btn btn-info btn-label waves-effect waves-light">
+                        {{-- <a href="{{route('admin.users.create')}}" class="btn btn-info btn-label waves-effect waves-light">
                             <i class="mdi mdi-plus-circle label-icon align-middle fs-16 me-2"></i> Add User
-                    </a>
+                    </a> --}}
                     </div>
                 </div><!-- end card header -->
                 <div class="card-body">
@@ -39,11 +40,11 @@
                             <table id="UsersTable" class="table nowrap dt-responsive align-middle" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 10px;">
+                                        {{-- <th scope="col" style="width: 10px;">
                                             <div class="form-check">
                                                 <input class="form-check-input fs-15" type="checkbox" id="checkAll">
                                             </div>
-                                        </th>
+                                        </th> --}}
                                         <th>SR No.</th>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -56,17 +57,17 @@
                                 <tbody>
                                     @foreach ($BranchUsers as $index => $user)
                                         <tr>
-                                            <th scope="row">
+                                            {{-- <th scope="row">
                                                 <div class="form-check"><input class="form-check-input fs-15" type="checkbox">
                                                 </div>
-                                            </th>
+                                            </th> --}}
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->mobile_number }}</td>
                                             <td>{{$user->branch->name}}</td>
-                                            <td><span class="badge bg-success">{{$user->status}}</span></td>
-                                            <td><a href="{{route('admin.branch-users.modules', [base64_encode(base64_encode($user->id))])}}">Manage Module</a></td>
+                                            <td><span class="badge bg-success">{{ ucfirst($user->status) }}</span></td>
+                                            <td><a href="{{route('admin.branch-users.modules', [base64_encode(base64_encode($user->id))])}}" class="btn btn-secondary btn-label waves-effect waves-light"><i class="mdi mdi-view-module-outline label-icon align-middle fs-16 me-2"></i> Manage Module</a></td>
                                         </tr>
                                     @endforeach
 

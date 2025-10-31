@@ -289,7 +289,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/vehicles', 'admin/branch', 'admin/users') ? ' collapsed active' : '' }}"
+                        <a class="nav-link menu-link {{ request()->is('admin/vehicles', 'admin/branch', 'admin/users','admin/branch-users') ? ' collapsed active' : '' }}"
                             href="#OtherManagement" data-bs-toggle="collapse" role="button" aria-expanded="false"
                             aria-controls="OtherManagement">
                             <i class="mdi mdi-store"></i>
@@ -297,13 +297,13 @@
                             <span data-key="t-base-ui">Other</span>
 
                         </a>
-                        <div class="collapse menu-dropdown {{ request()->is('admin/vehicles', 'admin/branch', 'admin/users') ? 'show' : '' }}"
+                        <div class="collapse menu-dropdown {{ request()->is('admin/vehicles', 'admin/branch', 'admin/users','admin/branch-users/*') ? 'show' : '' }}"
                             id="OtherManagement">
                             <ul class="nav nav-sm flex-column">
                                 <!-- Branch Management -->
                                 <li class="nav-item">
                                     <a href="{{ route('admin.branch.index') }}"
-                                        class="nav-link {{ request()->is('admin/branch') ? 'active' : '' }}"
+                                        class="nav-link {{ request()->is('admin/branch','admin/branch-users/*') ? 'active' : '' }}"
                                         data-key="t-horizontal">Branch Management</a>
                                 </li>
                                 <li class="nav-item">
@@ -321,8 +321,15 @@
                             </ul>
                         </div>
                     </li>
+                      <!-- Bank Management -->
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ request()->is('admin/banks') ? 'active' : '' }}"
+                            href="{{ route('admin.banks.index') }}">
+                            <i class="mdi mdi-bank"></i> <span data-key="t-widgets">Bank Management</span>
+                        </a>
+                    </li>
 
-                    <li class="text-light">
+                    {{-- <li class="text-light">
                         <hr>
                     </li>
                     <li class="menu-title"><span data-key="t-menu" class="text-light">Branch</span></li>
@@ -462,7 +469,7 @@
                             <i class=" mdi mdi-map-marker-multiple-outline"></i> <span data-key="t-widgets">Suppliers GPS
                                 Listing</span>
                         </a>
-                    </li>
+                    </li> --}}
 
 
                 @endif
@@ -481,7 +488,7 @@
 
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link {{ request()->is('admin/branches') ? 'active' : '' }}"
+                        <a class="nav-link menu-link {{ request()->is('admin/main') ? 'active' : '' }}"
                             href="{{ route('admin.mainForm.index') }}">
                             <i class="mdi mdi-source-fork"></i> <span data-key="t-widgets">Main</span>
                         </a>

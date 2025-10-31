@@ -29,7 +29,7 @@ class Suppliersrequest extends FormRequest
             'mpob_exp_date' => 'date',
             'mspo_cert_no' => 'numeric',
             'mspo_exp_date' => 'date',
-            'email' => 'required|email|max:255',
+            'email' => 'nullable|email|max:255',
             'tel1' => 'max:15',
             'tel2' => 'max:15',
             'bank_id' => 'required|string|max:50',
