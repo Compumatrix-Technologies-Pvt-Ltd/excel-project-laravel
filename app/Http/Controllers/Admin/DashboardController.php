@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Deduction;
 use App\Models\FFBTransactionsModel;
 use App\Models\Mill;
+use App\Models\Plans;
+use App\Models\Subscription;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -48,9 +51,18 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+
+
         $user = auth()->user();
         $this->ViewData['moduleAction'] = "Dashboard";
+        $hasSubscription = Subscription::where('user_id', $user->id)->exists();
 
+        if (!Helper::hasActiveSubscription()) {
+            $this->ViewData['moduleAction'] = "Subscriptions";
+            $plans = Plans::with('features')->orderBy('id')->get();
+            $this->ViewData['plans'] = $plans;
+            return view('admin.subscriptions.plan-pricing', $this->ViewData);
+        }
         if ($user->hasRole('hq')) {
 
             $todaysTickets = Transaction::where([
@@ -183,16 +195,16 @@ class DashboardController extends Controller
                 ->groupBy('type')
                 ->pluck('total_amount', 'type');
 
-            $categories = ['Advance', 'Transport', 'Others'];
+            $hq_categories = ['Advance', 'Transport', 'Others'];
 
-            $data = [
+            $hq_data = [
                 $deductions['advance'] ?? 0,
                 $deductions['transport'] ?? 0,
                 $deductions['others'] ?? 0,
             ];
 
-            $this->ViewData['categories'] = $categories;
-            $this->ViewData['data'] = $data;
+            $this->ViewData['hq_categories'] = $hq_categories;
+            $this->ViewData['hq_data'] = $hq_data;
 
 
             $currentDate = Carbon::now();
@@ -247,8 +259,9 @@ class DashboardController extends Controller
 
 
 
-            $totalCashTransactions = FFBTransactionsModel::where('purchase_type', 'cash')->count();
-            $totalCashRM = FFBTransactionsModel::where('purchase_type', 'cash')->sum('net_pay');
+            $totalCashTransactions = FFBTransactionsModel::where('purchase_type', 'cash')->whereDate('created_at', today())->count();
+            $totalCashRM = FFBTransactionsModel::where('purchase_type', 'cash')
+                ->whereDate('created_at', today())->sum('net_pay');
 
 
             $currentMonth = Carbon::now()->month;
@@ -352,9 +365,9 @@ class DashboardController extends Controller
 
         }
 
+
+
         return view('admin.dashboard', $this->ViewData);
     }
-
-
 
 }

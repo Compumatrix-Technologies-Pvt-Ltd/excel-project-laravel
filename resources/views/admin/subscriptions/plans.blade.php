@@ -41,6 +41,7 @@
                                 <th>Plan Title</th>
                                 <th>Plan Sub-Title</th>
                                 <th>Plan Price</th>
+                                <th>Plan Duration</th>
                                 <th>Plan Features</th>
                                 <th>Actions</th>
                             </tr>
@@ -52,6 +53,7 @@
                                     <td>{{ $plan->plan_name }}</td>
                                     <td>{{ $plan->plan_sub_title }}</td>
                                     <td>{{ $plan->plan_price }}</td>
+                                    <td>{{ ucfirst($plan->plan_duration) }}</td>
 
                                     <td>
                                         <button type="button" class="btn btn-warning btn-sm view-features-btn"
@@ -117,6 +119,15 @@
                                                 <label for="phoneNumberInput" class="form-label">Plan Price</label>
                                                 <input type="text" class="form-control" id="phoneNumberInput"
                                                     name="plan_price">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="phoneNumberInput" class="form-label">Plan Duration</label>
+                                                <select name="plan_duration" class="form-control">
+                                                    <option value="">Select Duration</option>
+                                                    <option value="3-month">For 3 Month</option>
+                                                    <option value="6-month">For 6 Month</option>
+                                                    <option value="year">For Year</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-6">
@@ -207,6 +218,14 @@
                                             <div class="col-md-6">
                                                 <label class="form-label">Plan Price</label>
                                                 <input type="number" class="form-control" name="plan_price" id="planprice">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="phoneNumberInput" class="form-label">Plan Duration</label>
+                                                <select name="plan_duration" id="plan_duration" class="form-control">
+                                                    <option value="3-month">For 3 Month</option>
+                                                    <option value="6-month">For 6 Month</option>
+                                                    <option value="year">For Year</option>
+                                                </select>
                                             </div>
                                             <div class="col-6">
                                                 <label for="editStatus" class="form-label d-block">Status</label>
@@ -304,6 +323,7 @@
                             $('#fullnameInput1').val(data.plan_name);
                             $('#subtitle').val(data.sub_title);
                             $('#planprice').val(data.price);
+                            $('#plan_duration').val(data.plan_duration);
                             // Set status
                             if (data.status === 'active') {
                                 $('#editStatusActive').prop('checked', true);
@@ -315,30 +335,30 @@
                             if (data.features && data.features.length > 0) {
                                 data.features.forEach((feature, index) => {
                                     $('#editFeaturesWrapper').append(`
-                                        <div class="row mb-2 feature-row">
-                                            <div class="col-md-10">
-                                                ${index === 0 ? '<label class="form-label">Plan Features <span class="text-danger">*</span></label>' : ''}
-                                                <input type="text" class="form-control mt-2" name="features[]" value="${feature}">
-                                            </div>
-                                            <div class="col-md-2 d-flex align-items-end">
-                                                ${index === 0
+                                                <div class="row mb-2 feature-row">
+                                                    <div class="col-md-10">
+                                                        ${index === 0 ? '<label class="form-label">Plan Features <span class="text-danger">*</span></label>' : ''}
+                                                        <input type="text" class="form-control mt-2" name="features[]" value="${feature}">
+                                                    </div>
+                                                    <div class="col-md-2 d-flex align-items-end">
+                                                        ${index === 0
                                             ? `<button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>`
                                             : `<button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>`}
-                                            </div>
-                                        </div>
-                                    `);
+                                                    </div>
+                                                </div>
+                                            `);
                                 });
                             } else {
                                 $('#editFeaturesWrapper').append(`
-                                                                <div class="row mb-2 feature-row">
-                                                                    <div class="col-md-10">
-                                                                        <input type="text" class="form-control" name="features[]" value="">
-                                                                    </div>
-                                                                    <div class="col-md-2 d-flex align-items-end">
-                                                                        <button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>
-                                                                    </div>
-                                                                </div>
-                                                            `);
+                                                                        <div class="row mb-2 feature-row">
+                                                                            <div class="col-md-10">
+                                                                                <input type="text" class="form-control" name="features[]" value="">
+                                                                            </div>
+                                                                            <div class="col-md-2 d-flex align-items-end">
+                                                                                <button type="button" class="btn btn-md btn-primary addBtn"><i class="mdi mdi-plus"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    `);
                             }
                         } else {
                             alert('Error loading plan data.');
@@ -353,14 +373,14 @@
             // Add/Remove feature rows dynamically
             $(document).on('click', '.addBtn', function () {
                 let newRow = `
-                            <div class="row mb-2 feature-row">
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control mt-2" name="features[]" value="">
-                                </div>
-                                <div class="col-md-2 d-flex align-items-end">
-                                    <button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>
-                                </div>
-                            </div>`;
+                                    <div class="row mb-2 feature-row">
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control mt-2" name="features[]" value="">
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-end">
+                                            <button type="button" class="btn btn-md btn-danger removeBtn"><i class="mdi mdi-minus"></i></button>
+                                        </div>
+                                    </div>`;
                 $('#createFeaturesWrapper').append(newRow);
             });
 
@@ -372,17 +392,17 @@
             // Fix: Add More Feature button inside Edit Modal
             $(document).on('click', '#addFeatureBtn', function () {
                 $('#editFeaturesWrapper').append(`
-                        <div class="row mb-2 feature-row">
-                            <div class="col-md-10">
-                                <input type="text" class="form-control mt-2" name="features[]" value="">
-                            </div>
-                            <div class="col-md-2 d-flex align-items-end">
-                                <button type="button" class="btn btn-md btn-danger removeBtn">
-                                    <i class="mdi mdi-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `);
+                                <div class="row mb-2 feature-row">
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control mt-2" name="features[]" value="">
+                                    </div>
+                                    <div class="col-md-2 d-flex align-items-end">
+                                        <button type="button" class="btn btn-md btn-danger removeBtn">
+                                            <i class="mdi mdi-minus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            `);
             });
 
             // Make sure all preloaded feature rows show remove buttons when Edit Modal opens

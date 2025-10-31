@@ -103,6 +103,8 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::put('plans/update', [PlansController::class, 'update'])->name('plans.update');
     Route::delete('plans/delete/{id}', [PlansController::class, 'destroy'])->name('plans.delete');
 
+    Route::post('subscriptions/store', [PlansController::class, 'subscriptionsStore'])->name('subscriptions.store');
+
     // FAQ
     Route::resource('faq', FaqController::class)->names('faq');
     Route::put('faqs/update', [FaqController::class, 'updateFaq'])->name('faq.updateFaq');
@@ -223,7 +225,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('via-bank', [BankController::class, 'viaBank'])->name('via-bank.index');
 
     Route::get('via-bank-deductions/getRecords', [BankController::class, 'viaBankDeductionGetRecords'])
-    ->name('admin.viaBankDeduction.getRecords');
+        ->name('admin.viaBankDeduction.getRecords');
 
 
     Route::get('cash-purchase-pdf', [CommonController::class, 'cashPurchasePdf'])->name('cash.purchase.pdf');
@@ -314,7 +316,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
 
 
     Route::get('purchase-analysis', [PurchaseAnalysisController::class, 'index'])->name('purchaseAnalysis.index');
-    Route::get('purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'supplierCashBillGetRecords'])->name('purchaseAnalysis.index');
+    Route::get('purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'supplierCashBillGetRecords']);
     Route::get('purchase-analysis/chart-data', [PurchaseAnalysisController::class, 'getPurchaseChartData'])
         ->name('purchase.analysis.chart.data');
     Route::get('credit-purchase-analysis/getRecords', [PurchaseAnalysisController::class, 'getCreditPurchaseAnalysisRecords'])
