@@ -139,6 +139,7 @@ $(document).ready(function () {
                         if (FFBdata) {
 
                             $("#EditTransactionBtn").attr(FFBdata.id ? 'data-fbb-id' : '', FFBdata.id);
+                            $("#TransactionDetailsBtn").attr(response.data.supplier_id ? 'data-fbb-id' : '', response.data.id);
 
 
                             $("#fbb_bill_date").val(FFBdata.bill_date);
@@ -204,73 +205,135 @@ $(document).ready(function () {
         }
     }
 
-   $(document).on("click", "#EditTransactionBtn", function () {
-    var fbbId = $(this).data("fbb-id");
-    if (!fbbId) return;
+    $(document).on("click", "#EditTransactionBtn", function () {
+        var fbbId = $(this).data("fbb-id");
+        if (!fbbId) return;
 
-    $.ajax({
-        url: `${ADMINURL}/branch-main/get-ffb-transaction/${fbbId}`,
-        type: "GET",
-        dataType: "json",
-        beforeSend: function () {
-            $.LoadingOverlay("show", {
-                background: "rgba(75,73,172,0.1)",
-                maxSize: 40,
-                imageColor: "#5236ff",
-            });
-        },
-        success: function (response) {
-            $.LoadingOverlay("hide");
-            if (response.status === "success") {
-                const supplier = response.data;
-                const tx = response.FFBTransaction;
+        $.ajax({
+            url: `${ADMINURL}/branch-main/get-ffb-transaction/${fbbId}`,
+            type: "GET",
+            dataType: "json",
+            beforeSend: function () {
+                $.LoadingOverlay("show", {
+                    background: "rgba(75,73,172,0.1)",
+                    maxSize: 40,
+                    imageColor: "#5236ff",
+                });
+            },
+            success: function (response) {
+                $.LoadingOverlay("hide");
+                if (response.status === "success") {
+                    const supplier = response.data;
+                    const tx = response.FFBTransaction;
 
-                $("#EditTransactionModal").modal("show");
+                    $("#EditTransactionModal").modal("show");
 
-                // Supplier info
-                $("#EditTransactionModal .supplier_name")
-                    .text(`${supplier.supplier_name} (K/P: ${supplier.mpob_lic_no ?? '-'})`);
+                    // Supplier info
+                    $("#EditTransactionModal .supplier_name")
+                        .text(`${supplier.supplier_name} (K/P: ${supplier.mpob_lic_no ?? '-'})`);
 
-                // Transaction fields
-                $("#EditTransactionModal #invoiceInput").val(tx.invoice_no);
-                    if (tx.purchase_type === "credit") {
-                        $("#EditTransactionModal #creditPurchase").prop("checked", true);
-                    } else if (tx.purchase_type === "cash") {
-                        $("#EditTransactionModal#cashPurchase").prop("checked", true);
+                    // Transaction fields
+                    $("#EditTransactionModal #invoiceInput").val(tx.invoice_no);
+                        if (tx.purchase_type === "credit") {
+                            $("#EditTransactionModal #creditPurchase").prop("checked", true);
+                        } else if (tx.purchase_type === "cash") {
+                            $("#EditTransactionModal#cashPurchase").prop("checked", true);
+                        }
+                        
+                    $("#EditTransactionModal [name='hidden_fbb_id']").val(tx.id);
+                    $("#EditTransactionModal [name='weight_mt']").val(tx.weight_mt);
+                    $("#EditTransactionModal [name='price']").val(tx.price);
+                    $("#EditTransactionModal [name='incentive_rate']").val(tx.incentive_rate);
+                    $("#EditTransactionModal .subsidy_amt").text(tx.subsidy_amt).show();
+                    $("#EditTransactionModal [name='subsidy_amt']").val(tx.subsidy_amt);
+                    $("#EditTransactionModal .amt_before_ded").text(tx.amt_before_ded);
+                    $("#EditTransactionModal [name='amt_before_ded']").val(tx.amt_before_ded);
+                    $("#EditTransactionModal [name='transport']").val(tx.transport);
+                    $("#EditTransactionModal [name='advance']").val(tx.advance);
+                    $("#EditTransactionModal [name='others']").val(tx.others);
+                    $("#EditTransactionModal [name='others_desc']").val(tx.others_desc);
+                    $("#EditTransactionModal .total_deductions").text(tx.total_deductions);
+                    $("#EditTransactionModal [name='total_deductions']").val(tx.total_deductions);
+                    $("#EditTransactionModal [name='bill_date']").val(tx.bill_date);
+                    $("#EditTransactionModal [name='net_pay']").val(tx.net_pay);
+                    $("#EditTransactionModal [name='remark']").val(tx.remark ?? "");
+
+                    // Payment type
+                    $(`#EditTransactionModal input[name='pay_by'][value='${tx.pay_by}']`).prop("checked", true);
+
+                    var suppliers = response.suppliers;  // This should be your list of all suppliers from the backend response
+
+                    // Populate the select2 dropdown with all suppliers
+                    var $supplierSelect = $("#EditTransactionModal #supplierSelect");
+
+                    // Clear existing options
+                    $supplierSelect.empty();
+
+                    // Loop through the suppliers and add them to the dropdown
+                    suppliers.forEach(function(supplier) {
+                        $supplierSelect.append('<option value="' + supplier.id + '">'+supplier.supplier_id  + '&nbsp;&nbsp;&nbsp; ' + supplier.supplier_name + '</option>');
+                    });
+
+                    // Check if the supplierSelect has select2 initialized
+                    if ($supplierSelect.hasClass("select2-hidden-accessible")) {
+                        // Set the selected option based on tx.supplier_id
+                        $supplierSelect.val(tx.supplier_id).trigger("change.select2");
+                    } else {
+                        // If select2 is not initialized, just set the value directly
+                        $supplierSelect.val(tx.supplier_id);
                     }
-                $("#EditTransactionModal [name='weight_mt']").val(tx.weight_mt);
-                $("#EditTransactionModal [name='price']").val(tx.price);
-                $("#EditTransactionModal [name='incentive_rate']").val(tx.incentive_rate);
-                $("#EditTransactionModal [name='subsidy_amt']").val(tx.subsidy_amt);
-                $("#EditTransactionModal [name='amt_before_ded']").val(tx.amt_before_ded);
-                $("#EditTransactionModal [name='transport']").val(tx.transport);
-                $("#EditTransactionModal [name='advance']").val(tx.advance);
-                $("#EditTransactionModal [name='others']").val(tx.others);
-                $("#EditTransactionModal [name='others_desc']").val(tx.others_desc);
-                $("#EditTransactionModal [name='total_deductions']").val(tx.total_deductions);
-                $("#EditTransactionModal [name='bill_date']").val(tx.bill_date);
-                $("#EditTransactionModal [name='net_pay']").val(tx.net_pay);
-                $("#EditTransactionModal [name='remark']").val(tx.remark ?? "");
 
-                // Payment type
-                $(`#EditTransactionModal input[name='pay_by'][value='${tx.pay_by}']`).prop("checked", true);
-
-                // Supplier dropdown (if Select2)
-                if ($("#supplierSelect").hasClass("select2-hidden-accessible")) {
-                    $("#supplierSelect").val(tx.supplier_id).trigger("change.select2");
                 } else {
-                    $("#supplierSelect").val(tx.supplier_id);
+                    showToast(false, "Failed to fetch transaction details.");
                 }
-
-            } else {
-                showToast(false, "Failed to fetch transaction details.");
+            },
+            error: function (xhr, status, error) {
+                $.LoadingOverlay("hide");
+                showToast(false, `Server Error (${xhr.status}): ${xhr.responseText}`);
             }
-        },
-        error: function (xhr, status, error) {
-            $.LoadingOverlay("hide");
-            showToast(false, `Server Error (${xhr.status}): ${xhr.responseText}`);
-        }
+        });
     });
-});
+
+
+
+    $(document).on('click', '#TransactionDetailsBtn', function() {
+        const supplierId = $(this).data("fbb-id");
+        if (!supplierId) return;
+
+        $.ajax({
+            url: `${ADMINURL}/supplier-transaction-details/${supplierId}`,
+            type: "GET",
+            dataType: "json",
+            beforeSend: function() {
+                $.LoadingOverlay("show", {
+                    background: "rgba(75,73,172,0.1)",
+                    maxSize: 40,
+                    imageColor: "#5236ff",
+                });
+            },
+            success: function(response) {
+                $.LoadingOverlay("hide");
+
+                if (response.status === "success" || response.status === "empty") {
+                    $(".TransactionDetailsContent").html(response.html);
+                    $("#TransactionDetailsModel").modal("show");
+                } else {
+                    showToast(false, "Failed to load supplier transactions.");
+                }
+            },
+            error: function(xhr, status, error) {
+                $.LoadingOverlay("hide");
+                showToast(false, `Server Error (${xhr.status}): ${xhr.responseText}`);
+            }
+        });
+    });
+
+
+
+
+
+
+
+
 
 });

@@ -311,6 +311,7 @@ Route::middleware([AdminMiddleware::class])->prefix('admin')->as('admin.')->grou
     Route::get('get-supplier-details-main/{supplier_id}/{type}', [MasterController::class, 'getSupplierDetailsMain'])->name('ffb.transaction.getSupplierDetailsMain');
     Route::get('branch-main/get-ffb-transaction/{id}', [MasterController::class, 'getFFBTransaction'])->name('branch.main.getFFBTransaction');
     Route::post('branch-main/getValues', [MasterController::class, 'getBranchSupplierDropDownValues'])->name('branch.main.getValues');
+    Route::get('supplier-transaction-details/{id}', [MasterController::class, 'supplierTransactionDetails']);
 
 
     Route::get('purchase-analysis', [PurchaseAnalysisController::class, 'index'])->name('purchaseAnalysis.index');

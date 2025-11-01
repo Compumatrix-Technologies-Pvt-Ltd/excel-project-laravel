@@ -289,8 +289,10 @@
                                         </button>
                                     </div>
                                     <div class="col-md-3">
-                                        <a href="{{ route('admin.transactions.index') }}" class="btn btn-secondary btn-sm">Trx
-                                        Details</a>
+                                        <button id="TransactionDetailsBtn" type="button" class="btn btn-secondary btn-sm" data-supplier-id="" >
+                                            Trx
+                                        Details
+                                        </button>
                                     </div>
                                     <div class="col-md-3">
                                         <a href="{{ route('admin.deductions.index') }}" class="btn btn-secondary btn-sm">Add
@@ -307,6 +309,19 @@
                     </div>
                 </div>
             </div>
+
+            <div id="TransactionDetailsModel" class="modal fade" tabindex="-1" aria-labelledby="TransactionDetailsModelLabel"
+                aria-hidden="true" data-generate-ticket-url="{{ route('admin.generate.ticket.number') }}">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content TransactionDetailsContent">
+                        
+                    
+                    </div>
+                </div>
+            </div>
+
+
+
             <div id="transactionModal" class="modal fade" tabindex="-1" aria-labelledby="transactionModalLabel"
                 aria-hidden="true" data-generate-ticket-url="{{ route('admin.generate.ticket.number') }}">
                 <div class="modal-dialog modal-xl">
@@ -538,7 +553,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
-                        <form class="form" id="updateForm" method="POST" data-toggle="validator"
+                        <form class="form" id="AddForm" method="POST" data-toggle="validator"
                             action="{{ route('admin.ffb.transaction.store') }}" autocomplete="off">
                             @csrf
                             @method('POST')
@@ -550,13 +565,13 @@
                                             <legend class="float-none w-auto fs-6 px-2 mb-0">Purchase Option</legend>
                                             <div class="form-check mb-1">
                                                 <input class="form-check-input" type="radio" name="purchase_type"
-                                                    id="creditPurchase" value="credit" disabled>
+                                                    id="creditPurchase" value="credit" readonly>
                                                 <label class="form-check-label" for="creditPurchase">Credit
                                                     Purchase</label>
                                             </div>
                                             <div class="form-check">
                                                 <input class="form-check-input" type="radio" name="purchase_type"
-                                                    id="cashPurchase" value="cash" disabled>
+                                                    id="cashPurchase" value="cash" readonly>
                                                 <label class="form-check-label" for="cashPurchase">Cash Purchase</label>
                                             </div>
                                         </fieldset>
@@ -565,7 +580,7 @@
                                     <div class="col-md-2 col-lg-2">
                                         <label class="form-label mb-0">Inv. No. / Cash Bill:</label>
                                         <input type="text" class="form-control form-control-sm" name="invoice_no"
-                                            id="invoiceInput" disabled>
+                                            id="invoiceInput" readonly>
                                         <!-- When purchase type credit -->
                                         {{-- <input type="text" name="invoice_no" value="{{ $creditInvoiceNo }}" readonly>
 
@@ -577,6 +592,7 @@
                                     <div class="col-md-3 col-lg-3 form-group">
                                         <label class="form-label mb-0">Supplier ID: <span
                                                 class="text-danger">*</span></label>
+                                        <input type="hidden" name="hidden_fbb_id" id="hidden_fbb_id">
                                         <select id="supplierSelect" required data-error="Please select a supplier"
                                             name="supplier_id" class="form-select form-select-sm supplierSelect2"></select>
                                         <span class="text-danger err_supplier_id"></span>
@@ -709,7 +725,7 @@
                                                 class="form-control form-control-sm">
                                         </div>
                                         <div class="col-md-2 mb-2">
-                                            <button class="btn btn-outline-secondary w-100 netPayButton"
+                                            <button class="btn btn-outline-secondary w-100 netPayButtonEdit"
                                                 type="button">Net
                                                 Pay</button>
                                         </div>
