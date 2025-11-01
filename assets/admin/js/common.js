@@ -469,6 +469,55 @@ function deactivateCollection(encrypted_id, parameter) {
         $('.net_pay').val(total.toFixed(2));
     });
 
+
+    $(document).on('click', '.netPayButtonEdit', function() {
+        let weight_mt = $('#EditTransactionModal input[name="weight_mt"]').val();
+        let price = $('#EditTransactionModal input[name="price"]').val();
+        let incentive_rate = $('#EditTransactionModal input[name="incentive_rate"]').val();
+
+        let transport = $('#EditTransactionModal input[name="transport"]').val();
+        let advance = $('#EditTransactionModal input[name="advance"]').val();
+        let others = $('#EditTransactionModal input[name="others"]').val();
+
+        let subsidy_amt = $('#EditTransactionModal .subsidy_amt').text();
+        if (subsidy_amt) {
+            let new_subsidy_amt = subsidy_amt / 100;
+            update_subsidy_amt = parseFloat(weight_mt) * parseFloat(new_subsidy_amt);
+            final_subsidy_amt = parseFloat(price) * parseFloat(new_subsidy_amt);
+            $('#EditTransactionModal .subsidy_amt').text(final_subsidy_amt.toFixed(2)).css('display', 'inline-block');
+            $('#EditTransactionModal input[name="subsidy_amt"]').val(final_subsidy_amt.toFixed(2));
+        }
+
+
+        let total = (parseFloat(weight_mt) * parseFloat(price)) || 0;
+        let total_deductions = (parseFloat(transport) + parseFloat(advance) + parseFloat(others)) || 0;
+
+        // Update the amount before deductions input field
+        $('#EditTransactionModal .amt_before_ded').text(total.toFixed(2));
+        $('#EditTransactionModal input[name="amt_before_ded"]').val(total.toFixed(2));
+
+        // Update the total deductions input field
+        $('#EditTransactionModal .total_deductions').text(total_deductions.toFixed(2));
+        $('#EditTransactionModal input[name="total_deductions"]').val(total_deductions.toFixed(2));
+
+        // Add incentive if applicable
+        if (incentive_rate && parseFloat(incentive_rate) > 0) {
+            let incentive = (parseFloat(weight_mt) * parseFloat(incentive_rate)) || 0;
+            total += incentive;
+            $('#EditTransactionModal .incentive_amt').text(incentive.toFixed(2)).css('display', 'inline-block');
+            $('#EditTransactionModal input[name="incentive_amt"]').val(incentive.toFixed(2));
+        } else {
+            $('#EditTransactionModal .incentive_amt').text('0.00').css('display', 'inline-block');
+            $('#EditTransactionModal input[name="incentive_amt"]').val('0.00');
+        }
+        total -= parseFloat(transport) || 0;
+        total -= parseFloat(advance) || 0;
+        total -= parseFloat(others) || 0;
+
+        // Update the net pay input field
+        $('#EditTransactionModal .net_pay').val(total.toFixed(2));
+    });
+
     $(document).on('change','.supplierSelect2',function(){
         var supplier_id = $(this).val();
         var purchase_type = $('input[name="purchase_type"]').val();

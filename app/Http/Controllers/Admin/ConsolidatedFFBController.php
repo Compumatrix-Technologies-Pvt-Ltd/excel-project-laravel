@@ -114,14 +114,18 @@ class ConsolidatedFFBController extends Controller
             $loggedInUser = auth()->user();
             $baseQuery = Suppliers::select('id', 'supplier_id', 'supplier_name');
             if ($loggedInUser->hasRole('hq')) {
-                $baseQuery->where('user_id', $loggedInUser->id);
+                //$baseQuery->where('user_id', $loggedInUser->id);
                 $baseQuery->where('supplier_mode','branch');
             }else if ($loggedInUser->hasRole('branch')) {
                 $baseQuery->where('user_id', $loggedInUser->id);
             }
+                if($request->has('purchaseType') && in_array($request->purchaseType, ['cash','credit'])){
+                    $baseQuery = $baseQuery->where('supplier_type', $request->purchaseType);
+                }
             $suppliers = $baseQuery->orderBy('supplier_name')
                 ->get();
 
+               // dd($companyId,$branchId,$request->purchaseType,$year);
             // 2️⃣ Fetch transactions for that branch/year
             $transactions = FFBTransactionsModel::where('company_id', $companyId)
                 ->where('branch_id', $branchId)
@@ -129,9 +133,8 @@ class ConsolidatedFFBController extends Controller
                 if($request->has('purchaseType') && in_array($request->purchaseType, ['cash','credit'])){
                     $transactions = $transactions->where('purchase_type', $request->purchaseType);
                 }
-            $transactions = $transactions->where('purchase_type', 'credit') // only credit purchases
-                ->get();
-
+            $transactions = $transactions->get();
+            //dd($transactions);
             $months = range(1, 12);
             $data = [];
             $monthlyTotals = array_fill_keys($months, 0);

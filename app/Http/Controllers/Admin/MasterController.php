@@ -96,15 +96,19 @@ class MasterController extends Controller
     {
 
         try {
-            if( Session::has('yearMonth') ? Session::get('yearMonth') : now()->format('ym') != date('ym', strtotime($request->input('bill_date'))) ){
+            if (Session::has('yearMonth') && Session::get('yearMonth') != date('Ym', strtotime($request->input('bill_date')))) {
                 $this->JsonData['status'] = 'error';
-                $this->JsonData['url'] = "";
                 $this->JsonData['msg'] = 'Bill date does not match the selected period.';
-                return response()->json($this->JsonData);   
+                return response()->json($this->JsonData);
             }
-            // dd($request->all());
 
-            $this->BaseModel = new FFBTransactionsModel();
+            // dd($request->all());
+            if($request->has('hidden_fbb_id')){
+                $this->BaseModel = FFBTransactionsModel::find($request->hidden_fbb_id);
+            }else{
+                $this->BaseModel = new FFBTransactionsModel();
+            }
+
             $this->BaseModel->company_id = $request->input('company_id');
             $this->BaseModel->user_id = auth()->user()->id;
             $this->BaseModel->branch_id = $request->input('branch_id');
@@ -233,7 +237,7 @@ class MasterController extends Controller
             $transaction = FFBTransactionsModel::with([
                 'supplier.bankDetails' // relationship
             ])->find($id);
-
+            $supplier = $transaction ? Suppliers::with('bankDetails')->where(['supplier_type'=>$transaction->purchase_type,'user_id'=>$transaction->user_id])->get() : null;
             if (!$transaction) {
                 return response()->json(['status' => 'error', 'message' => 'Transaction not found.'], 404);
             }
@@ -241,6 +245,8 @@ class MasterController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => $transaction->supplier, // supplier data
+                'suppliers' => $supplier, // supplier data
+
                 'FFBTransaction' => $transaction  // transaction data
             ]);
         } catch (\Exception $e) {
@@ -719,6 +725,89 @@ class MasterController extends Controller
             ], 500);
         }
     }
+
+    public function supplierTransactionDetails($supplierID)
+    {
+        try {
+            $period = Helper::getPeriod();
+
+            $transactions = FFBTransactionsModel::where('supplier_id', $supplierID)
+                ->where('period', $period)
+                ->with(['supplier.bankDetails','branch'])
+                ->get();
+
+            if ($transactions->isEmpty()) {
+                return response()->json([
+                    'status' => 'empty',
+                    'html' => '<div class="p-3 text-center text-muted">No transaction records found for this period.</div>'
+                ]);
+            }
+
+            $supplier = $transactions->first()->supplier;
+
+            $html = '
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Transaction Details For Supplier → 
+                    <strong>' . $supplier->supplier_id . '</strong> 
+                    ' . $supplier->supplier_name . ' 
+                    (K/P: ' . $supplier->mpob_lic_no . ')
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="table-responsive mt-4">
+                    <table class="table table-bordered table-sm mb-0 align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Period</th>
+                                <th>Supplier ID</th>
+                                <th>Weight (MT)</th>
+                                <th>Price (RM)</th>
+                                <th>Net Pay (RM)</th>
+                                <th>Invoice Date</th>
+                                <th>Incentive Rate</th>
+                                <th>Remark</th>
+                                <th>Subsidy</th>
+                                <th>Branch Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+
+            foreach ($transactions as $t) {
+                
+                $html .= '
+                    <tr>
+                        <td>' . e($t->invoice_no) . '</td>
+                        <td>' . e($t->period) . '</td>
+                        <td>' . e($supplier->supplier_id) . '</td>
+                        <td class="text-end">' . number_format($t->weight_mt, 2) . '</td>
+                        <td class="text-end">' . number_format($t->price, 2) . '</td>
+                        <td class="text-end">' . number_format($t->net_pay, 2) . '</td>
+                        <td>' . \Carbon\Carbon::parse($t->bill_date)->format('d-M-Y') . '</td>
+                        <td>' . number_format($t->incentive_rate, 2) . '</td>
+                        <td>' . e($t->remark ?? '-') . '</td>
+                        <td>' . number_format($t->subsidy_amt, 2) . '</td>
+                        <td>' . e($t->branch->code) . '</td>
+                    </tr>';
+            }
+
+            $html .= '</tbody></table></div></div>';
+
+            return response()->json([
+                'status' => 'success',
+                'html' => $html
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     
 
