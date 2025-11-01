@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Plans;
 use App\Models\PlanFeatures;
+use App\Models\Subscription;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -125,6 +126,7 @@ class PlansController extends Controller
             $planData->plan_name = $request->plan_name;
             $planData->plan_sub_title = $request->plan_sub_title;
             $planData->plan_price = $request->plan_price;
+            $planData->plan_duration = $request->plan_duration;
             $planData->status = $request->status;
             $planData->save();
 
@@ -213,6 +215,7 @@ class PlansController extends Controller
                     'plan_name' => $plan->plan_name,
                     'sub_title' => $plan->plan_sub_title,
                     'price' => $plan->plan_price,
+                    'plan_duration' => $plan->plan_duration,
                     'status' => $plan->status,
                     'features' => $plan->features->pluck('features')->toArray(), // ✅ fixed
                 ],
@@ -243,4 +246,46 @@ class PlansController extends Controller
             ], 500);
         }
     }
+
+    public function subscriptionsStore(Request $request)
+    {
+        $request->validate([
+            'plan_id' => 'required|exists:plans,id',
+        ]);
+
+        $user = auth()->user();
+        $plan = Plans::findOrFail($request->plan_id);
+
+        // Calculate subscription dates
+        $startDate = now();
+        switch ($plan->plan_duration) {
+            case '3-month':
+                $endDate = $startDate->copy()->addMonths(3);
+                break;
+            case '6-month':
+                $endDate = $startDate->copy()->addMonths(6);
+                break;
+            case 'year':
+                $endDate = $startDate->copy()->addYear();
+                break;
+            default:
+                return response()->json(['success' => false, 'message' => 'Invalid plan duration.']);
+        }
+
+        // Create subscription
+        Subscription::create([
+            'plan_id' => $plan->id,
+            'user_id' => $user->id,
+            'subscription_start_date' => $startDate->toDateString(),
+            'subscription_exp_date' => $endDate->toDateString(),
+            'paid_amount' => $plan->plan_price,
+            'subscription_status' => 'active',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Plan purchased successfully!',
+        ]);
+    }
+
 }

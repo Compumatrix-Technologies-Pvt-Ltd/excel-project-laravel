@@ -1,66 +1,71 @@
 <?php
 namespace App\Helpers;
+use App\Models\Subscription;
 use Auth;
 use DB;
 
 use Storage;
 
-class Helper{
+class Helper
+{
 
-    public static function formatCallLogTimestamp($timestamp) {
+    public static function formatCallLogTimestamp($timestamp)
+    {
         $dateTime = new DateTime($timestamp);
         $today = new DateTime('today');
         $yesterday = new DateTime('yesterday');
         if ($dateTime->format('Y-m-d') === $today->format('Y-m-d')) {
             return 'Today ' . $dateTime->format('h:i A');
-        }
-        elseif ($dateTime->format('Y-m-d') === $yesterday->format('Y-m-d')) {
+        } elseif ($dateTime->format('Y-m-d') === $yesterday->format('Y-m-d')) {
             return 'Yesterday ' . $dateTime->format('h:i A');
-        }
-        elseif ($dateTime->format('W') === $today->format('W')) {
-            return $dateTime->format('l h:i A'); 
-        }
-        else {
-            return $dateTime->format('Y-m-d h:i A'); 
+        } elseif ($dateTime->format('W') === $today->format('W')) {
+            return $dateTime->format('l h:i A');
+        } else {
+            return $dateTime->format('Y-m-d h:i A');
         }
     }
-    static function deactivateCollectionHtml($intID,$parameter,$checked){
+    static function deactivateCollectionHtml($intID, $parameter, $checked)
+    {
         return '<div class="text-center"><div class="form-check form-switch form-switch-right form-switch-lg form-switch-success">
-                    <input name="status" class="form-check-input" type="checkbox" id="custom-toggle-button" data-id="' .  base64_encode(base64_encode($intID)) . '"  onchange="return deactivateCollection(\'' . base64_encode(base64_encode($intID)) . '\',\''.$parameter.'\')" ' . $checked . '>
+                    <input name="status" class="form-check-input" type="checkbox" id="custom-toggle-button" data-id="' . base64_encode(base64_encode($intID)) . '"  onchange="return deactivateCollection(\'' . base64_encode(base64_encode($intID)) . '\',\'' . $parameter . '\')" ' . $checked . '>
                 </div></div>';
     }
 
-    static function activateCollectionHtml($intID,$parameter,$checked){
+    static function activateCollectionHtml($intID, $parameter, $checked)
+    {
         return '<div class="text-center"><div class="form-check form-switch form-switch-lg form-switch-right form-switch-success">
-                    <input name="status" class="form-check-input" type="checkbox" id="custom-toggle-button" data-id="' .  base64_encode(base64_encode($intID)) . '"  onchange="return activateCollection(\'' . base64_encode(base64_encode($intID)) . '\',\''.$parameter.'\')" ' . $checked . '>
+                    <input name="status" class="form-check-input" type="checkbox" id="custom-toggle-button" data-id="' . base64_encode(base64_encode($intID)) . '"  onchange="return activateCollection(\'' . base64_encode(base64_encode($intID)) . '\',\'' . $parameter . '\')" ' . $checked . '>
                 </div></div>';
 
     }
-    static function approvalCollectionHtml($intID,$parameter,$checked){
+    static function approvalCollectionHtml($intID, $parameter, $checked)
+    {
         return '<div class="text-center"><div class="form-check form-switch form-switch-lg form-switch-right form-switch-success">
-                    <input name="status" class="form-check-input" type="checkbox" id="custom-toggle-button" data-id="' .  base64_encode(base64_encode($intID)) . '"  onchange="return approvalCollection(\'' . base64_encode(base64_encode($intID)) . '\',\''.$parameter.'\')" ' . $checked . '>
+                    <input name="status" class="form-check-input" type="checkbox" id="custom-toggle-button" data-id="' . base64_encode(base64_encode($intID)) . '"  onchange="return approvalCollection(\'' . base64_encode(base64_encode($intID)) . '\',\'' . $parameter . '\')" ' . $checked . '>
                 </div></div>';
 
     }
 
-    public static function humanFileSize($size, $unit = "") {
-        if ((!$unit && $size >= 1<<30) || $unit == "GB") {
-            return number_format($size/(1<<30), 2)." GB";
+    public static function humanFileSize($size, $unit = "")
+    {
+        if ((!$unit && $size >= 1 << 30) || $unit == "GB") {
+            return number_format($size / (1 << 30), 2) . " GB";
         }
-        if ((!$unit && $size >= 1<<20) || $unit == "MB") {
-            return number_format($size/(1<<20), 2)." MB";
+        if ((!$unit && $size >= 1 << 20) || $unit == "MB") {
+            return number_format($size / (1 << 20), 2) . " MB";
         }
-        if ((!$unit && $size >= 1<<10) || $unit == "KB") {
-            return number_format($size/(1<<10), 2)." KB";
+        if ((!$unit && $size >= 1 << 10) || $unit == "KB") {
+            return number_format($size / (1 << 10), 2) . " KB";
         }
-        return number_format($size)." bytes";
+        return number_format($size) . " bytes";
     }
-    
-    public static function getLogiUserData(){
-        $user = auth()->user(); 
+
+    public static function getLogiUserData()
+    {
+        $user = auth()->user();
         return $user->getRoleNames()->first();
     }
-    
+
     public static function activate($model, $encID)
     {
         $response = ['status' => 'error', 'msg' => 'Failed to activate record.'];
@@ -113,16 +118,16 @@ class Helper{
     public static function actionButtons($id, $editRoute, $deleteRoute)
     {
         $encodedId = base64_encode(base64_encode($id));
-        
-        $btnEdit = '<a href="'.route($editRoute, [$encodedId]).'" class="btn btn-icon btn-light btn-sm" title="' . __('Edit') . '">
+
+        $btnEdit = '<a href="' . route($editRoute, [$encodedId]) . '" class="btn btn-icon btn-light btn-sm" title="' . __('Edit') . '">
             <i class="mdi mdi-clipboard-edit-outline text-primary mdi-24px"></i>
         </a>';
-        
-        $btnDelete =  '<a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="'.route($deleteRoute, [$encodedId]).'" class="delete-user action-icon btn btn-icon btn-light btn-sm" title="' . __('Delete') . '">
+
+        $btnDelete = '<a href="javascript:void(0)" onclick="return deleteCollection(this)" data-href="' . route($deleteRoute, [$encodedId]) . '" class="delete-user action-icon btn btn-icon btn-light btn-sm" title="' . __('Delete') . '">
             <i class="mdi mdi-delete-alert-outline mdi-24px text-danger"></i>
         </a>';
-        
-        return '<div class="text-center">'.$btnEdit.' '.$btnDelete.'</div>';
+
+        return '<div class="text-center">' . $btnEdit . ' ' . $btnDelete . '</div>';
     }
     public static function updateRecord($controller, $model, $request, $routeName, $encodedId)
     {
@@ -166,7 +171,8 @@ class Helper{
         }
         return $response;
     }
-    public static function getPeriod(){
+    public static function getPeriod()
+    {
         $yearMonth = session('yearMonth');
         if ($yearMonth && strlen($yearMonth) === 6) {
             $yearMonth = substr($yearMonth, 0, 4) . substr($yearMonth, 4, 2);
@@ -175,10 +181,11 @@ class Helper{
         }
         return $yearMonth;
     }
-    public static function getPeriodInFormat(){
+    public static function getPeriodInFormat()
+    {
         $yearMonth = session('yearMonth');
         if ($yearMonth && strlen($yearMonth) === 6) {
-            $yearMonth = substr($yearMonth, 0, 4) .'/'.substr($yearMonth, 4, 2);
+            $yearMonth = substr($yearMonth, 0, 4) . '/' . substr($yearMonth, 4, 2);
         } else {
             $yearMonth = date('m/Y');
         }
@@ -186,12 +193,12 @@ class Helper{
     }
     public static function convertNumberToWords($number)
     {
-        $hyphen      = ' ';
+        $hyphen = ' ';
         $conjunction = ' and ';
-        $separator   = ' ';
-        $negative    = 'negative ';
-        $decimal     = ' cents ';
-        $dictionary  = [
+        $separator = ' ';
+        $negative = 'negative ';
+        $decimal = ' cents ';
+        $dictionary = [
             0 => 'zero',
             1 => 'one',
             2 => 'two',
@@ -236,8 +243,8 @@ class Helper{
 
         $string = $fraction = null;
 
-        if (strpos((string)$number, '.') !== false) {
-            list($number, $fraction) = explode('.', (string)$number);
+        if (strpos((string) $number, '.') !== false) {
+            list($number, $fraction) = explode('.', (string) $number);
         }
 
         switch (true) {
@@ -245,15 +252,15 @@ class Helper{
                 $string = $dictionary[$number];
                 break;
             case $number < 100:
-                $tens   = ((int) ($number / 10)) * 10;
-                $units  = $number % 10;
+                $tens = ((int) ($number / 10)) * 10;
+                $units = $number % 10;
                 $string = $dictionary[$tens];
                 if ($units) {
                     $string .= $hyphen . $dictionary[$units];
                 }
                 break;
             case $number < 1000:
-                $hundreds  = (int) ($number / 100);
+                $hundreds = (int) ($number / 100);
                 $remainder = $number % 100;
                 $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
                 if ($remainder) {
@@ -261,9 +268,9 @@ class Helper{
                 }
                 break;
             default:
-                $baseUnit   = pow(1000, floor(log($number, 1000)));
+                $baseUnit = pow(1000, floor(log($number, 1000)));
                 $numBaseUnits = (int) ($number / $baseUnit);
-                $remainder  = $number % $baseUnit;
+                $remainder = $number % $baseUnit;
                 $string = self::convertNumberToWords($numBaseUnits) . ' ' . $dictionary[$baseUnit];
                 if ($remainder) {
                     $string .= $remainder < 100 ? $conjunction : $separator;
@@ -279,7 +286,7 @@ class Helper{
 
         return ucfirst($string);
     }
-    
+
 
 
 
@@ -292,10 +299,21 @@ class Helper{
         $decoded = base64_decode(base64_decode($encodedId), true);
         return ($decoded !== false && is_numeric($decoded)) ? (int) $decoded : null;
     }
-    
 
 
-    
-    
+
+    public static function hasActiveSubscription()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return false;
+        }
+
+        return Subscription::where([
+            'user_id'=>$user->id,
+            'subscription_status' => 'active'
+            ])->exists();
+    }
+
 }
 ?>
